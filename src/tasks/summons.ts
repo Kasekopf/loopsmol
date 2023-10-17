@@ -11,11 +11,10 @@ import {
   myTurncount,
   runCombat,
   use,
-  userConfirm,
   visitUrl,
   wait,
 } from "kolmafia";
-import { $item, $items, $monster, $skill, CombatLoversLocket, get, have, set } from "libram";
+import { $item, $items, $monster, $skill, CombatLoversLocket, get, have } from "libram";
 import { CombatStrategy } from "../engine/combat";
 import { debug } from "../lib";
 import { args } from "../args";
@@ -189,20 +188,6 @@ export const SummonQuest: Quest = {
       ready: () =>
         (task.ready?.() ?? true) && summonStrategy.getSourceFor(task.target) !== undefined,
       do: () => {
-        // Some extra safety around the Pygmy Witch Lawyer summon
-        if (task.target === $monster`pygmy witch lawyer`) {
-          if (get("_loopgyou_fought_pygmy", false)) {
-            if (
-              !userConfirm(
-                "We already tried to fight a pygmy witch lawyer today and lost (or failed to start the fight). Are you sure we can win this time? Consider fighting a pygymy witch lawyer yourself (buy yellow rocket; ensure you have no ML running and +50 combat initative). Press yes to let the script try the fight again, or no to abort."
-              )
-            ) {
-              throw `Abort requested`;
-            }
-          }
-          set("_loopgyou_fought_pygmy", true);
-        }
-
         // Perform the actual summon
         const source = summonStrategy.getSourceFor(task.target);
         if (source) {

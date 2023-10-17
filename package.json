@@ -1,7 +1,7 @@
 {
-  "name": "loop-gyou",
+  "name": "loopsmol",
   "version": "0.1.0",
-  "description": "Grey You script",
+  "description": "Shrunken Adventurer script",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -39,15 +39,15 @@
   },
   "author": "Kasekopf",
   "license": "ISC",
-  "repository": "https://github.com/Kasekopf/loop-casual",
+  "repository": "https://github.com/Kasekopf/loopsmol",
   "keywords": [
     "KoLMafia",
     "JS",
     "TS"
   ],
   "bugs": {
-    "url": "https://github.com/Kasekopf/loop-casual/issues"
+    "url": "https://github.com/Kasekopf/loopsmol/issues"
   },
-  "homepage": "https://github.com/Kasekopf/loop-casual",
+  "homepage": "https://github.com/Kasekopf/loopsmol",
   "private": true
 }
