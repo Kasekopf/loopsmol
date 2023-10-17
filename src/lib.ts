@@ -1,6 +1,6 @@
 import { step } from "grimoire-kolmafia";
-import { myBasestat, myFamiliar, Phylum, print, visitUrl } from "kolmafia";
-import { $familiar, $item, $stat, have, Snapper } from "libram";
+import { myFamiliar, myLevel, Phylum, print, visitUrl } from "kolmafia";
+import { $familiar, $item, have, Snapper } from "libram";
 
 export function debug(message: string, color?: string): void {
   if (color) {
@@ -25,12 +25,7 @@ export function convertMilliseconds(milliseconds: number): string {
 }
 
 export function atLevel(level: number): boolean {
-  const goal = (level - 1) ** 2 + 4;
-  return (
-    myBasestat($stat`muscle`) >= goal ||
-    myBasestat($stat`mysticality`) >= goal ||
-    myBasestat($stat`moxie`) >= goal
-  );
+  return myLevel() >= level;
 }
 
 const legionForms = [
