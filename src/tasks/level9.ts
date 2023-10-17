@@ -5,7 +5,6 @@ import {
   getWorkshed,
   Item,
   itemAmount,
-  myBasestat,
   myHp,
   myMaxhp,
   myMaxmp,
@@ -25,7 +24,6 @@ import {
   $location,
   $monster,
   $monsters,
-  $stat,
   AutumnAton,
   ensureEffect,
   get,
@@ -330,7 +328,8 @@ export const ChasmQuest: Quest = {
           have($item`industrial fire extinguisher`) ||
           (have($item`June cleaver`) && get("_juneCleaverCold", 0) >= 5)) &&
           get("smutOrcNoncombatProgress") < 15) ||
-        ((have($effect`Red Door Syndrome`) || myMeat() >= 1000) && myBasestat($stat`Moxie`) >= 350),
+        have($effect`Red Door Syndrome`) ||
+        myMeat() >= 1000,
       completed: () => step("questL09Topping") >= 1,
       prepare: () => {
         if (get("smutOrcNoncombatProgress") >= 15 && step("questL11Black") >= 2) {

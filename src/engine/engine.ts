@@ -9,8 +9,6 @@ import {
   Location,
   logprint,
   myAdventures,
-  myBasestat,
-  myBuffedstat,
   myHp,
   myLevel,
   myMaxhp,
@@ -41,7 +39,6 @@ import {
   $monster,
   $path,
   $slot,
-  $stat,
   get,
   getTodaysHolidayWanderers,
   have,
@@ -292,8 +289,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     ];
     if (get("camelSpit") === 100) monster_blacklist.push($monster`pygmy bowler`); // we will spit
     if (
-      myBasestat($stat`Moxie`) >= 200 &&
-      myBuffedstat($stat`Moxie`) >= 200 &&
       have($item`rock band flyers`) &&
       !flyersDone() &&
       (!(task.do instanceof Location) || !blacklist.has(task.do)) &&
