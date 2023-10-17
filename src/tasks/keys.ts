@@ -39,7 +39,6 @@ import { CombatStrategy } from "../engine/combat";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
-import { towerReady, towerSkip } from "./level13";
 import { args } from "../args";
 import { trainSetAvailable } from "./misc";
 import { haveFlorest } from "../lib";
@@ -76,8 +75,7 @@ const heroKeys: KeyTask[] = [
     possible: () =>
       !get("dailyDungeonDone") &&
       !get("_dailyDungeonMalwareUsed") &&
-      ((!inHardcore() &&
-        (pullsRemaining() > 0 || myTurncount() >= 1000 || args.major.delaytower)) ||
+      ((!inHardcore() && (pullsRemaining() > 0 || myTurncount() >= 1000)) ||
         have($item`daily dungeon malware`)),
     acquire: [
       { item: $item`daily dungeon malware` },
@@ -85,12 +83,12 @@ const heroKeys: KeyTask[] = [
       { item: $item`eleven-foot pole`, optional: true },
       { item: $item`ring of Detect Boring Doors`, optional: true },
     ],
-    ready: () =>
-      (step("questL13Final") !== -1 ||
-        (have($item`Pick-O-Matic lockpicks`) &&
-          have($item`ring of Detect Boring Doors`) &&
-          have($item`eleven-foot pole`))) &&
-      towerReady(),
+    ready: () => (
+      step("questL13Final") !== -1 ||
+      (have($item`Pick-O-Matic lockpicks`) &&
+        have($item`ring of Detect Boring Doors`) &&
+        have($item`eleven-foot pole`))
+    ),
     after: [],
     completed: () => get("dailyDungeonDone") || get("_dailyDungeonMalwareUsed"),
     prepare: () => {
@@ -135,12 +133,12 @@ const heroKeys: KeyTask[] = [
       { item: $item`eleven-foot pole`, optional: true },
       { item: $item`ring of Detect Boring Doors`, optional: true },
     ],
-    ready: () =>
-      (step("questL13Final") !== -1 ||
-        (have($item`Pick-O-Matic lockpicks`) &&
-          have($item`ring of Detect Boring Doors`) &&
-          have($item`eleven-foot pole`))) &&
-      towerReady(),
+    ready: () => (
+      step("questL13Final") !== -1 ||
+      (have($item`Pick-O-Matic lockpicks`) &&
+        have($item`ring of Detect Boring Doors`) &&
+        have($item`eleven-foot pole`))
+    ),
     after: ["Daily Dungeon Malware"],
     completed: () => get("dailyDungeonDone"),
     prepare: () => {
@@ -193,7 +191,6 @@ const heroKeys: KeyTask[] = [
     which: Keys.Zap,
     possible: () => get("lastZapperWandExplosionDay") <= 0,
     after: ["Wand/Wand"],
-    ready: () => towerReady(),
     completed: () => get("lastZapperWandExplosionDay") >= 1 || get("_zapCount") >= 1,
     do: () => {
       unequipAcc(keyStrategy.getZapChoice());
@@ -310,8 +307,7 @@ export const KeysQuest: Quest = {
       completed: () =>
         (have($item`star chart`) && itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
         have($item`Richard's star key`) ||
-        get("nsTowerDoorKeysUsed").includes("Richard's star key") ||
-        towerSkip(),
+        get("nsTowerDoorKeysUsed").includes("Richard's star key"),
       do: $location`The Hole in the Sky`,
       outfit: { modifier: "item", avoid: $items`broken champagne bottle` },
       combat: new CombatStrategy().kill($monster`Astronomer`).killItem(),
@@ -331,8 +327,7 @@ export const KeysQuest: Quest = {
       completed: () =>
         (have($item`skeleton bone`) && have($item`loose teeth`)) ||
         have($item`skeleton key`) ||
-        get("nsTowerDoorKeysUsed").includes("skeleton key") ||
-        towerSkip(),
+        get("nsTowerDoorKeysUsed").includes("skeleton key"),
       outfit: { modifier: "item", avoid: $items`broken champagne bottle` },
       combat: new CombatStrategy()
         .killItem($monsters`factory-irregular skeleton, remaindered skeleton, swarm of skulls`)
@@ -465,7 +460,6 @@ export const DigitalQuest: Quest = {
 
 function keyCount(): number {
   let count = itemAmount($item`fat loot token`);
-  if (towerSkip()) count += storageAmount($item`fat loot token`);
   if (have($item`Boris's key`) || get("nsTowerDoorKeysUsed").includes("Boris")) count++;
   if (have($item`Jarlsberg's key`) || get("nsTowerDoorKeysUsed").includes("Jarlsberg")) count++;
   if (have($item`Sneaky Pete's key`) || get("nsTowerDoorKeysUsed").includes("Sneaky Pete")) count++;

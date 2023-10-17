@@ -31,7 +31,6 @@ import {
 } from "libram";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
-import { args } from "../args";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 
@@ -39,7 +38,6 @@ const Challenges: Task[] = [
   {
     name: "Speed Challenge",
     after: ["Start", "Absorb/Overclocking"],
-    ready: () => towerReady(),
     completed: () => get("nsContestants1") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -53,7 +51,7 @@ const Challenges: Task[] = [
   {
     name: "Moxie Challenge",
     after: ["Start"],
-    ready: () => get("nsChallenge1") === $stat`Moxie` && towerReady(),
+    ready: () => get("nsChallenge1") === $stat`Moxie`,
     completed: () => get("nsContestants2") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -67,7 +65,7 @@ const Challenges: Task[] = [
   {
     name: "Muscle Challenge",
     after: ["Start"],
-    ready: () => get("nsChallenge1") === $stat`Muscle` && towerReady(),
+    ready: () => get("nsChallenge1") === $stat`Muscle`,
     completed: () => get("nsContestants2") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -81,7 +79,7 @@ const Challenges: Task[] = [
   {
     name: "Mysticality Challenge",
     after: ["Start"],
-    ready: () => get("nsChallenge1") === $stat`Mysticality` && towerReady(),
+    ready: () => get("nsChallenge1") === $stat`Mysticality`,
     completed: () => get("nsContestants2") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -95,7 +93,7 @@ const Challenges: Task[] = [
   {
     name: "Hot Challenge",
     after: ["Start"],
-    ready: () => get("nsChallenge2") === "hot" && towerReady(),
+    ready: () => get("nsChallenge2") === "hot",
     completed: () => get("nsContestants3") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -109,7 +107,7 @@ const Challenges: Task[] = [
   {
     name: "Cold Challenge",
     after: ["Start"],
-    ready: () => get("nsChallenge2") === "cold" && towerReady(),
+    ready: () => get("nsChallenge2") === "cold",
     completed: () => get("nsContestants3") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -123,7 +121,7 @@ const Challenges: Task[] = [
   {
     name: "Spooky Challenge",
     after: ["Start"],
-    ready: () => get("nsChallenge2") === "spooky" && towerReady(),
+    ready: () => get("nsChallenge2") === "spooky",
     completed: () => get("nsContestants3") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -137,7 +135,7 @@ const Challenges: Task[] = [
   {
     name: "Stench Challenge",
     after: ["Start"],
-    ready: () => get("nsChallenge2") === "stench" && towerReady(),
+    ready: () => get("nsChallenge2") === "stench",
     completed: () => get("nsContestants3") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -151,7 +149,7 @@ const Challenges: Task[] = [
   {
     name: "Sleaze Challenge",
     after: ["Start"],
-    ready: () => get("nsChallenge2") === "sleaze" && towerReady(),
+    ready: () => get("nsChallenge2") === "sleaze",
     completed: () => get("nsContestants3") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -277,7 +275,7 @@ const wand: Task[] = [
     after: ["Wall of Bones"],
     ready: () => !have($item`11-leaf clover`),
     completed: () =>
-      have($item`ruby W`) || have($item`WA`) || have($item`Wand of Nagamar`) || towerSkip(),
+      have($item`ruby W`) || have($item`WA`) || have($item`Wand of Nagamar`),
     do: $location`Pandamonium Slums`,
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem($monster`W imp`),
@@ -288,7 +286,7 @@ const wand: Task[] = [
     after: ["Wall of Bones"],
     ready: () => !have($item`11-leaf clover`),
     completed: () =>
-      have($item`metallic A`) || have($item`WA`) || have($item`Wand of Nagamar`) || towerSkip(),
+      have($item`metallic A`) || have($item`WA`) || have($item`Wand of Nagamar`),
     do: $location`The Penultimate Fantasy Airship`,
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem($monster`MagiMechTech MechaMech`),
@@ -299,7 +297,7 @@ const wand: Task[] = [
     after: ["Wall of Bones"],
     ready: () => !have($item`11-leaf clover`),
     completed: () =>
-      have($item`lowercase N`) || have($item`ND`) || have($item`Wand of Nagamar`) || towerSkip(),
+      have($item`lowercase N`) || have($item`ND`) || have($item`Wand of Nagamar`),
     do: $location`The Valley of Rof L'm Fao`,
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem($monster`XXX pr0n`),
@@ -310,7 +308,7 @@ const wand: Task[] = [
     after: ["Wall of Bones"],
     ready: () => !have($item`11-leaf clover`),
     completed: () =>
-      have($item`heavy D`) || have($item`ND`) || have($item`Wand of Nagamar`) || towerSkip(),
+      have($item`heavy D`) || have($item`ND`) || have($item`Wand of Nagamar`),
     do: $location`The Castle in the Clouds in the Sky (Basement)`,
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem($monster`Alphabet Giant`),
@@ -323,15 +321,13 @@ const wand: Task[] = [
     completed: () =>
       have($item`Wand of Nagamar`) ||
       ((have($item`WA`) || (have($item`ruby W`) && have($item`metallic A`))) &&
-        (have($item`ND`) || (have($item`lowercase N`) && have($item`heavy D`)))) ||
-      towerSkip(),
+        (have($item`ND`) || (have($item`lowercase N`) && have($item`heavy D`)))),
     prepare: () => use($item`11-leaf clover`),
     do: $location`The Castle in the Clouds in the Sky (Basement)`,
     limit: { tries: 1 },
   },
   {
     name: "Wand",
-    ready: () => towerReady(),
     after: ["Wand W", "Wand A", "Wand N", "Wand D", "Wand Parts"],
     completed: () => have($item`Wand of Nagamar`),
     do: () => {
@@ -569,14 +565,4 @@ export function fillHp() {
       }
     }
   }
-}
-
-/* Skip this until ronin if the tower is delayed. */
-export function towerReady() {
-  return !args.major.delaytower || myTurncount() >= 1000;
-}
-
-/* Skip this entirely, either post-ronin or when delaying until ronin. */
-export function towerSkip() {
-  return args.major.delaytower || myTurncount() >= 1000;
 }

@@ -1,12 +1,8 @@
 import {
-  availableAmount,
   cliExecute,
-  create,
   effectModifier,
   equippedAmount,
-  Item,
   itemAmount,
-  mallPrice,
   myBasestat,
   myHp,
   myMaxhp,
@@ -51,8 +47,7 @@ const Flyers: Task[] = [
   {
     name: "Flyers Start",
     after: ["Enrage"],
-    completed: () =>
-      have($item`rock band flyers`) || get("sidequestArenaCompleted") !== "none" || warSkip(),
+    completed: () => have($item`rock band flyers`) || get("sidequestArenaCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: (): void => {
       visitUrl("bigisland.php?place=concert&pwd");
@@ -65,7 +60,7 @@ const Flyers: Task[] = [
     after: ["Flyers Start"],
     priority: () => Priorities.Free,
     ready: () => flyersDone(), // Buffer for mafia tracking
-    completed: () => get("sidequestArenaCompleted") !== "none" || warSkip(),
+    completed: () => get("sidequestArenaCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: (): void => {
       visitUrl("bigisland.php?place=concert&pwd");
@@ -98,8 +93,7 @@ const Lighthouse: Task[] = [
       itemAmount($item`barrel of gunpowder`) >= 5 ||
       get("sidequestLighthouseCompleted") !== "none" ||
       !have($item`backup camera`) ||
-      !have($item`Fourth of May Cosplay Saber`) ||
-      warSkip(),
+      !have($item`Fourth of May Cosplay Saber`),
     priority: (): Priority => {
       if (AutumnAton.have()) {
         if (myBasestat($stat`Moxie`) < 200) return Priorities.BadMood;
@@ -161,9 +155,7 @@ const Lighthouse: Task[] = [
       return Priorities.None;
     },
     completed: () =>
-      itemAmount($item`barrel of gunpowder`) >= 5 ||
-      get("sidequestLighthouseCompleted") !== "none" ||
-      warSkip(),
+      itemAmount($item`barrel of gunpowder`) >= 5 || get("sidequestLighthouseCompleted") !== "none",
     do: $location`Sonofa Beach`,
     outfit: { modifier: "+combat" },
     combat: new CombatStrategy().kill($monster`lobsterfrogman`),
@@ -173,7 +165,7 @@ const Lighthouse: Task[] = [
   {
     name: "Lighthouse End",
     after: ["Lighthouse Basic"],
-    completed: () => get("sidequestLighthouseCompleted") !== "none" || warSkip(),
+    completed: () => get("sidequestLighthouseCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: (): void => {
       visitUrl("bigisland.php?place=lighthouse&action=pyro&pwd");
@@ -187,8 +179,7 @@ const Junkyard: Task[] = [
   {
     name: "Junkyard Start",
     after: ["Enrage"],
-    completed: () =>
-      have($item`molybdenum magnet`) || get("sidequestJunkyardCompleted") !== "none" || warSkip(),
+    completed: () => have($item`molybdenum magnet`) || get("sidequestJunkyardCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: (): void => {
       visitUrl("bigisland.php?action=junkman&pwd");
@@ -199,8 +190,7 @@ const Junkyard: Task[] = [
   {
     name: "Junkyard Hammer",
     after: ["Junkyard Start"],
-    completed: () =>
-      have($item`molybdenum hammer`) || get("sidequestJunkyardCompleted") !== "none" || warSkip(),
+    completed: () => have($item`molybdenum hammer`) || get("sidequestJunkyardCompleted") !== "none",
     priority: () => (myBasestat($stat`Moxie`) < 300 ? Priorities.BadMood : Priorities.None),
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
@@ -225,9 +215,7 @@ const Junkyard: Task[] = [
     name: "Junkyard Wrench",
     after: ["Junkyard Start"],
     completed: () =>
-      have($item`molybdenum crescent wrench`) ||
-      get("sidequestJunkyardCompleted") !== "none" ||
-      warSkip(),
+      have($item`molybdenum crescent wrench`) || get("sidequestJunkyardCompleted") !== "none",
     priority: () => (myBasestat($stat`Moxie`) < 300 ? Priorities.BadMood : Priorities.None),
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
@@ -252,8 +240,7 @@ const Junkyard: Task[] = [
     name: "Junkyard Pliers",
     after: ["Junkyard Start"],
     acquire: [{ item: $item`seal tooth` }],
-    completed: () =>
-      have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none" || warSkip(),
+    completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
     priority: () => (myBasestat($stat`Moxie`) < 300 ? Priorities.BadMood : Priorities.None),
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: $location`Near an Abandoned Refrigerator`,
@@ -277,9 +264,7 @@ const Junkyard: Task[] = [
     name: "Junkyard Screwdriver",
     after: ["Junkyard Start"],
     completed: () =>
-      have($item`molybdenum screwdriver`) ||
-      get("sidequestJunkyardCompleted") !== "none" ||
-      warSkip(),
+      have($item`molybdenum screwdriver`) || get("sidequestJunkyardCompleted") !== "none",
     priority: () => (myBasestat($stat`Moxie`) < 300 ? Priorities.BadMood : Priorities.None),
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
@@ -303,7 +288,7 @@ const Junkyard: Task[] = [
   {
     name: "Junkyard End",
     after: ["Junkyard Hammer", "Junkyard Wrench", "Junkyard Pliers", "Junkyard Screwdriver"],
-    completed: () => get("sidequestJunkyardCompleted") !== "none" || warSkip(),
+    completed: () => get("sidequestJunkyardCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: (): void => {
       visitUrl("bigisland.php?action=junkman&pwd");
@@ -325,8 +310,7 @@ const Orchard: Task[] = [
       have($item`filthworm royal guard scent gland`) ||
       have($effect`Filthworm Guard Stench`) ||
       have($item`heart of the filthworm queen`) ||
-      get("sidequestOrchardCompleted") !== "none" ||
-      warSkip(),
+      get("sidequestOrchardCompleted") !== "none",
     do: $location`The Hatching Chamber`,
     outfit: () => {
       if (yellowRayPossible())
@@ -349,8 +333,7 @@ const Orchard: Task[] = [
       have($item`filthworm royal guard scent gland`) ||
       have($effect`Filthworm Guard Stench`) ||
       have($item`heart of the filthworm queen`) ||
-      get("sidequestOrchardCompleted") !== "none" ||
-      warSkip(),
+      get("sidequestOrchardCompleted") !== "none",
     do: $location`The Feeding Chamber`,
     outfit: () => {
       if (yellowRayPossible())
@@ -378,8 +361,7 @@ const Orchard: Task[] = [
       have($item`filthworm royal guard scent gland`) ||
       have($effect`Filthworm Guard Stench`) ||
       have($item`heart of the filthworm queen`) ||
-      get("sidequestOrchardCompleted") !== "none" ||
-      warSkip(),
+      get("sidequestOrchardCompleted") !== "none",
     do: $location`The Royal Guard Chamber`,
     effects: $effects`Filthworm Drone Stench`,
     outfit: () => {
@@ -404,9 +386,7 @@ const Orchard: Task[] = [
     name: "Orchard Queen",
     after: ["Orchard Guard"],
     completed: () =>
-      have($item`heart of the filthworm queen`) ||
-      get("sidequestOrchardCompleted") !== "none" ||
-      warSkip(),
+      have($item`heart of the filthworm queen`) || get("sidequestOrchardCompleted") !== "none",
     do: $location`The Filthworm Queen's Chamber`,
     effects: $effects`Filthworm Guard Stench`,
     outfit: () =>
@@ -420,7 +400,7 @@ const Orchard: Task[] = [
   {
     name: "Orchard Finish",
     after: ["Orchard Queen", "Open Orchard"],
-    completed: () => get("sidequestOrchardCompleted") !== "none" || warSkip(),
+    completed: () => get("sidequestOrchardCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: (): void => {
       visitUrl("bigisland.php?place=orchard&action=stand&pwd");
@@ -434,7 +414,7 @@ const Nuns: Task[] = [
   {
     name: "Nuns",
     after: ["Open Nuns", "Absorb/Ponzi Apparatus"],
-    completed: () => get("sidequestNunsCompleted") !== "none" || warSkip(),
+    completed: () => get("sidequestNunsCompleted") !== "none",
     priority: () => (have($effect`Winklered`) ? Priorities.Effect : Priorities.None),
     prepare: () => {
       if (have($item`SongBoom™ BoomBox`) && get("boomBoxSong") !== "Total Eclipse of Your Meat")
@@ -482,8 +462,7 @@ export const WarQuest: Quest = {
     {
       name: "Outfit Hippy",
       after: ["Misc/Unlock Island"],
-      completed: () =>
-        (have($item`filthy corduroys`) && have($item`filthy knitted dread sack`)) || warSkip(),
+      completed: () => have($item`filthy corduroys`) && have($item`filthy knitted dread sack`),
       do: $location`Hippy Camp`,
       limit: { soft: 10 },
       choices: {
@@ -508,10 +487,9 @@ export const WarQuest: Quest = {
       name: "Outfit Frat",
       after: ["Start", "Outfit Hippy"],
       completed: () =>
-        (have($item`beer helmet`) &&
-          have($item`distressed denim pants`) &&
-          have($item`bejeweled pledge pin`)) ||
-        warSkip(),
+        have($item`beer helmet`) &&
+        have($item`distressed denim pants`) &&
+        have($item`bejeweled pledge pin`),
       do: $location`Frat House`,
       limit: { soft: 10 },
       choices: { 142: 3, 143: 3, 144: 3, 145: 1, 146: 3, 1433: 3 },
@@ -532,7 +510,7 @@ export const WarQuest: Quest = {
     {
       name: "Enrage",
       after: ["Start", "Misc/Unlock Island", "Misc/Unlock Island Submarine", "Outfit Frat"],
-      ready: () => warReady() && myBasestat($stat`mysticality`) >= 70,
+      ready: () => myBasestat($stat`mysticality`) >= 70,
       completed: () => step("questL12War") >= 1,
       prepare: () => {
         // Restore a bit more HP than usual
@@ -560,7 +538,7 @@ export const WarQuest: Quest = {
         { item: $item`distressed denim pants` },
         { item: $item`bejeweled pledge pin` },
       ],
-      completed: () => get("hippiesDefeated") >= 64 || warSkip(),
+      completed: () => get("hippiesDefeated") >= 64,
       outfit: () =>
         <OutfitSpec>{
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
@@ -591,7 +569,7 @@ export const WarQuest: Quest = {
         { item: $item`distressed denim pants` },
         { item: $item`bejeweled pledge pin` },
       ],
-      completed: () => get("hippiesDefeated") >= 192 || warSkip(),
+      completed: () => get("hippiesDefeated") >= 192,
       outfit: () =>
         <OutfitSpec>{
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
@@ -610,7 +588,7 @@ export const WarQuest: Quest = {
         { item: $item`distressed denim pants` },
         { item: $item`bejeweled pledge pin` },
       ],
-      completed: () => get("hippiesDefeated") >= 1000 || warSkip(),
+      completed: () => get("hippiesDefeated") >= 1000,
       outfit: () =>
         <OutfitSpec>{
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
@@ -622,28 +600,9 @@ export const WarQuest: Quest = {
       limit: { tries: 30 },
     },
     {
-      // Use stuffing fluffers to finish the war with delaywar
-      name: "Fluffers",
-      after: ["Enrage"],
-      ready: () => myTurncount() >= 1000,
-      completed: () => get("hippiesDefeated") >= 1000 || get("fratboysDefeated") >= 1000,
-      outfit: {
-        equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
-      },
-      do: (): void => {
-        while (get("hippiesDefeated") < 1000) {
-          ensureFluffers(1);
-          use($item`stuffing fluffer`);
-        }
-      },
-      limit: { tries: 1 },
-      freeaction: true,
-    },
-    {
       name: "Boss Hippie",
-      after: ["Clear", "Fluffers"],
+      after: ["Clear"],
       completed: () => step("questL12War") === 999,
-      ready: warReady,
       outfit: () =>
         <OutfitSpec>{
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
@@ -665,7 +624,6 @@ export function councilSafe(): boolean {
   // Check if it is safe to visit the council without making the war outfit worse
   // (It is harder to get the hippy outfit after the war starts)
   return (
-    args.major.delaywar ||
     !atLevel(12) ||
     (have($item`filthy corduroys`) && have($item`filthy knitted dread sack`)) ||
     (have($item`beer helmet`) &&
@@ -683,53 +641,4 @@ function dimesForGarters(): void {
   }
 
   if ($coinmaster`Quartersmaster`.availableTokens >= 2) cliExecute("make * gauze garter");
-}
-
-/* Skip this until ronin if the war is delayed. */
-function warReady() {
-  return !args.major.delaywar || myTurncount() >= 1000;
-}
-
-/* Skip this entirely, either post-ronin or when delaying until ronin. */
-function warSkip() {
-  return args.major.delaywar || myTurncount() >= 1000;
-}
-
-function ensureFluffers(flufferCount: number): void {
-  // From bean-casual
-  while (availableAmount($item`stuffing fluffer`) < flufferCount) {
-    if (itemAmount($item`cashew`) >= 3) {
-      create(1, $item`stuffing fluffer`);
-      continue;
-    }
-    const neededFluffers = flufferCount - availableAmount($item`stuffing fluffer`);
-    const stuffingFlufferSources: [Item, number][] = [
-      [$item`cashew`, 3],
-      [$item`stuffing fluffer`, 1],
-      [$item`cornucopia`, (1 / 3.5) * 3],
-    ];
-    stuffingFlufferSources.sort(
-      ([item1, mult1], [item2, mult2]) => mallPrice(item1) * mult1 - mallPrice(item2) * mult2
-    );
-    const [stuffingFlufferSource, sourceMultiplier] = stuffingFlufferSources[0];
-
-    const neededOfSource = Math.ceil(neededFluffers * sourceMultiplier);
-    cliExecute(`acquire ${neededOfSource} ${stuffingFlufferSource}`);
-    if (itemAmount(stuffingFlufferSource) < neededOfSource) {
-      throw `Unable to acquire ${stuffingFlufferSource}; maybe raising your pricing limit will help?`;
-    }
-    if (stuffingFlufferSource === $item`cornucopia`) {
-      use(neededOfSource, $item`cornucopia`);
-    }
-    if (stuffingFlufferSource !== $item`stuffing fluffer`) {
-      create(
-        clamp(Math.floor(availableAmount($item`cashew`) / 3), 0, neededFluffers),
-        $item`stuffing fluffer`
-      );
-    }
-  }
-}
-
-function clamp(n: number, min: number, max: number): number {
-  return Math.max(min, Math.min(n, max));
 }

@@ -15,18 +15,6 @@ export const args = Args.create(
   {
     sim: Args.flag({ help: "Check if you have the requirements to run this script.", setting: "" }),
     version: Args.flag({ help: "Show script version and exit.", setting: "" }),
-    class: Args.number({
-      help: "If given, break the prism and choose a class. <font color='red'>You will be reduced to 40 adventures with full organs after breaking the prism.</font>",
-      options: [
-        [1, "Seal Clubber"],
-        [2, "Turtle Tamer"],
-        [3, "Pastamancer"],
-        [4, "Saurceror"],
-        [5, "Disco Bandit"],
-        [6, "Accordion Thief"],
-      ],
-      setting: "",
-    }),
     major: Args.group("Major Options", {
       pulls: Args.number({
         help: "Number of pulls to use. Lower this if you would like to save some pulls to use for in-ronin farming. (Note that this argument is not needed if you pull all your farming items before running the script).",
@@ -34,14 +22,6 @@ export const args = Args.create(
       }),
       tune: Args.string({
         help: "Use your hewn moon-rune spoon to retune to this sign when optimal.",
-      }),
-      delaytower: Args.flag({
-        help: "Delay the NS tower until after ronin ends.",
-        default: false,
-      }),
-      delaywar: Args.flag({
-        help: "Delay the war until after ronin ends, then finish with stuffing fluffers.",
-        default: false,
       }),
       workshed: Args.item({
         help: "Workshed item to place in an empty workshed at the start of the run.",
@@ -79,10 +59,6 @@ export const args = Args.create(
       wand: Args.flag({
         help: "Always get the zap wand.",
         default: false,
-      }),
-      skills: Args.string({
-        help: "A comma-separated list of skills to get, in addition to skills that will directly help the run.",
-        default: "",
       }),
       forcelocket: Args.flag({
         help: "Always equip the combat lover's locket, in order to get monsters inside quickly.",
