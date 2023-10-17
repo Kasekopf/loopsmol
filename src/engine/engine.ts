@@ -1,15 +1,11 @@
 import {
   autosell,
-  autosellPrice,
   canAdventure,
   descToItem,
   equippedItem,
-  getInventory,
   getWorkshed,
   haveEffect,
   haveEquipped,
-  historicalPrice,
-  Item,
   Location,
   logprint,
   myAdventures,
@@ -24,14 +20,11 @@ import {
   myPath,
   myTurncount,
   numericModifier,
-  overdrink,
   print,
   printHtml,
-  putCloset,
   restoreHp,
   restoreMp,
   Slot,
-  toInt,
   totalTurnsPlayed,
   toUrl,
   use,
@@ -408,7 +401,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         !nc_task_blacklist.has(task.name) &&
         !have($effect`Teleportitis`) &&
         force_item_source?.equip !== $item`Fourth of May Cosplay Saber` &&
-        !get("_loopgyou_ncforce", false)
+        !get("_loopsmol_ncforce", false)
       ) {
         if (
           this.tasks.find(
@@ -429,10 +422,10 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
 
     equipCharging(outfit);
 
-    if (wanderers.length === 0 && this.hasDelay(task) && !get("_loopgyou_ncforce", false))
+    if (wanderers.length === 0 && this.hasDelay(task) && !get("_loopsmol_ncforce", false))
       wanderers.push(...equipUntilCapped(outfit, wandererSources));
 
-    if (get("_loopgyou_ncforce", false)) {
+    if (get("_loopsmol_ncforce", false)) {
       // Avoid some things that might override the NC and break the tracking
       outfit.equip({ avoid: $items`Kramco Sausage-o-Matic™` });
     }
@@ -578,14 +571,14 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       !task.active_priority?.has(Priorities.Wanderer) &&
       !task.active_priority?.has(Priorities.Always)
     )
-      set("_loopgyou_ncforce", false);
+      set("_loopsmol_ncforce", false);
 
     super.do(task);
     if (myAdventures() !== start_advs) getExtros();
 
     // Check if we used an NC forcer
     if (get("_spikolodonSpikeUses") > spikelodon_spikes) {
-      set("_loopgyou_ncforce", true);
+      set("_loopsmol_ncforce", true);
     }
 
     // Crash if we unexpectedly lost the fight
@@ -618,7 +611,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     )
       resetBadOrb();
     if (get("_latteBanishUsed") && shouldFinishLatte()) refillLatte();
-    absorbConsumables();
     autosellJunk();
     for (const poisoned of $effects`Hardly Poisoned at All, A Little Bit Poisoned, Somewhat Poisoned, Really Quite Poisoned, Majorly Poisoned, Toad In The Hole`) {
       if (have(poisoned)) uneffect(poisoned);
@@ -673,9 +665,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
   }
 }
 
-const consumables_blacklist = new Set<Item>(
-  $items`wet stew, wet stunt nut stew, stunt nuts, astral pilsner, astral hot dog dinner, giant marshmallow, booze-soaked cherry, sponge cake, gin-soaked blotter paper, steel margarita, bottle of Chateau de Vinegar, Bowl of Scorpions, unnamed cocktail, Flamin' Whatshisname, goat cheese, Extrovermectin™, blueberry muffin, bran muffin, chocolate chip muffin, Schrödinger's thermos, quantum taco, pirate fork, everfull glass, [glitch season reward name], Affirmation Cookie, boxed wine, piscatini, grapefruit, drive-by shooting`
-);
 function autosellJunk(): void {
   if (myPath() !== $path`Grey You`) return; // final safety
   if (myMeat() >= 10000) return;
@@ -699,61 +688,11 @@ function autosellJunk(): void {
   for (const item of wallets) {
     if (have(item)) use(item, itemAmount(item));
   }
-
-  // Sell extra consumables (after 1 has been absorbed)
-  for (const item_name in getInventory()) {
-    const item = Item.get(item_name);
-    if (
-      consumables_blacklist.has(item) ||
-      historicalPrice(item) > Math.max(5000, autosellPrice(item) * 2) ||
-      !item.tradeable ||
-      item.quest ||
-      item.gift
-    )
-      continue;
-    if (autosellPrice(item) === 0) continue;
-    if (item.inebriety > 0 || item.fullness > 0 || item.spleen > 0) {
-      autosell(item, itemAmount(item));
-    }
-  }
-}
-
-function absorbConsumables(): void {
-  if (myPath() !== $path`Grey You`) return; // final safety
-  if (myTurncount() >= 1000) return; // stop after breaking ronin
-
-  let absorbed_list = get("_loop_gyou_absorbed_consumables", "");
-  const absorbed = new Set<string>(absorbed_list.split(","));
-
-  for (const item_name in getInventory()) {
-    const item = Item.get(item_name);
-    const item_id = `${toInt(item)}`;
-    if (
-      consumables_blacklist.has(item) ||
-      historicalPrice(item) > Math.max(5000, autosellPrice(item) * 2) ||
-      !item.tradeable ||
-      item.quest ||
-      item.gift
-    )
-      continue;
-    if (item.inebriety > 0 && !absorbed.has(item_id)) {
-      overdrink(item);
-      absorbed_list += absorbed_list.length > 0 ? `,${item_id}` : item_id;
-    }
-    if (item.fullness > 0 && !absorbed.has(item_id)) {
-      if (have($item`Special Seasoning`))
-        putCloset(itemAmount($item`Special Seasoning`), $item`Special Seasoning`);
-      // eat(item);
-      visitUrl(`inv_eat.php?pwd&which=1&whichitem=${item_id}`); // hotfix for food issue
-      absorbed_list += absorbed_list.length > 0 ? `,${item_id}` : item_id;
-    }
-  }
-  set("_loop_gyou_absorbed_consumables", absorbed_list);
 }
 
 function getExtros(): void {
   // Mafia doesn't always notice the workshed
-  if (!get("_loopgyou_checkworkshed", false)) {
+  if (!get("_loopsmol_checkworkshed", false)) {
     const workshed = visitUrl("campground.php?action=workshed");
     if (
       workshed.includes("Cold Medicine Cabinet") &&
@@ -761,7 +700,7 @@ function getExtros(): void {
     ) {
       throw `Mafia is not detecting your cold medicine cabinet; consider visiting manually`;
     }
-    set("_loopgyou_checkworkshed", true);
+    set("_loopsmol_checkworkshed", true);
   }
 
   if (get("_coldMedicineConsults") >= 5) return;

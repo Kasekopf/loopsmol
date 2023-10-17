@@ -25,7 +25,7 @@ export const FriarQuest: Quest = {
       after: ["Start"],
       priority: () => {
         if (
-          get("_loopgyou_ncforce", false) &&
+          get("_loopsmol_ncforce", false) &&
           have($item`latte lovers member's mug`) &&
           !get("latteUnlocks").includes("wing")
         )
@@ -58,7 +58,7 @@ export const FriarQuest: Quest = {
       after: ["Start"],
       priority: () => {
         if (
-          get("_loopgyou_ncforce", false) &&
+          get("_loopsmol_ncforce", false) &&
           have($item`latte lovers member's mug`) &&
           !get("latteUnlocks").includes("vitamins")
         )
