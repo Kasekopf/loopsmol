@@ -75,3 +75,8 @@ export function haveFlorest(): boolean {
   }
   return cachedHaveFlorest;
 }
+
+export function underStandard(): boolean {
+  // Change when the path leaves Standard
+  return true;
+}
