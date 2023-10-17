@@ -27,7 +27,6 @@ import { OutfitSpec, step } from "grimoire-kolmafia";
 import { CombatStrategy } from "../engine/combat";
 import { Priorities } from "../engine/priority";
 import { tuneSnapper } from "../lib";
-import { globalStateCache } from "../engine/state";
 
 const Manor1: Task[] = [
   {
@@ -146,11 +145,7 @@ const Manor2: Task[] = [
     do: $location`The Haunted Bathroom`,
     choices: { 881: 1, 105: 1, 892: 1 },
     outfit: () => {
-      if (
-        !have($effect`Citizen of a Zone`) &&
-        have($familiar`Patriotic Eagle`) &&
-        !globalStateCache.absorb().isReprocessTarget($monster`toilet papergeist`)
-      ) {
+      if (!have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)) {
         return { modifier: "-combat", familiar: $familiar`Patriotic Eagle` };
       }
       return { modifier: "-combat" };

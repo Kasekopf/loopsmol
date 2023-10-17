@@ -28,7 +28,6 @@ import { Quest, Task } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
-import { globalStateCache } from "../engine/state";
 
 function manualChoice(whichchoice: number, option: number) {
   return visitUrl(`choice.php?whichchoice=${whichchoice}&pwd=${myHash()}&option=${option}`);
@@ -325,11 +324,7 @@ const Hospital: Task[] = [
         shirt: have($skill`Torso Awareness`) ? $item`surgical apron` : undefined,
         equip: $items`half-size scalpel, head mirror, surgical mask, bloodied surgical dungarees`,
       };
-      if (
-        !have($effect`Citizen of a Zone`) &&
-        have($familiar`Patriotic Eagle`) &&
-        !globalStateCache.absorb().isReprocessTarget($monster`pygmy orderlies`)
-      ) {
+      if (!have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)) {
         result.familiar = $familiar`Patriotic Eagle`;
       }
       return result;

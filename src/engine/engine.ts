@@ -13,7 +13,6 @@ import {
   Item,
   Location,
   logprint,
-  Monster,
   myAdventures,
   myBasestat,
   myBuffedstat,
@@ -100,7 +99,6 @@ import { summonStrategy } from "../tasks/summons";
 import { pullStrategy } from "../tasks/pulls";
 import { keyStrategy } from "../tasks/keys";
 import { applyEffects } from "./moods";
-import { mayLaunchGooseForStats } from "./strategies";
 
 export const wanderingNCs = new Set<string>([
   "Wooof! Wooooooof!",
@@ -329,51 +327,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       );
     }
 
-    let force_charge_goose = false;
-    let goose_weight_in_use = false;
-
-    // Try to use the goose for stats, if we can
-    if (
-      mayLaunchGooseForStats() &&
-      !undelay(task.freeaction) &&
-      task.name !== "Summon/Pygmy Witch Lawyer"
-    ) {
-      if (outfit.equip($familiar`Grey Goose`)) {
-        combat.macro(new Macro().trySkill($skill`Convert Matter to Pomade`), undefined, true);
-        goose_weight_in_use = true;
-        force_charge_goose = true;
-      }
-    }
-
-    // Absorb targeted monsters
-    const absorb_state = globalStateCache.absorb();
-    const absorb_targets = new Set<Monster>();
-    if (task.do instanceof Location) {
-      // If we have teleportitis, everything is a possible target
-      const zone = have($effect`Teleportitis`) ? undefined : task.do;
-      for (const monster of absorb_state.remainingAbsorbs(zone)) absorb_targets.add(monster);
-      for (const monster of absorb_state.remainingReprocess(zone)) absorb_targets.add(monster);
-    }
-    for (const monster of absorb_targets) {
-      if (absorb_state.isReprocessTarget(monster) && !goose_weight_in_use) {
-        outfit.equip($familiar`Grey Goose`);
-        combat.autoattack(new Macro().trySkill($skill`Re-Process Matter`), monster);
-        combat.macro(new Macro().trySkill($skill`Re-Process Matter`), monster, true);
-        debug(`Target x2: ${monster.name}`, "purple");
-      } else {
-        debug(`Target: ${monster.name}`, "purple");
-      }
-      const strategy = combat.currentStrategy(monster);
-      if (
-        strategy === "ignore" ||
-        strategy === "banish" ||
-        strategy === "ignoreNoBanish" ||
-        strategy === "ignoreSoftBanish"
-      ) {
-        combat.action("kill", monster); // TODO: KillBanish for Banish, KillNoBanish for IgnoreNoBanish
-      }
-    }
-
     if (wanderers.length === 0) {
       // Set up a banish if needed
 
@@ -421,22 +374,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         (!combat.can("banish") || !banish_state.isFullyBanished(task))
       ) {
         outfit.equip($item`miniature crystal ball`);
-        // If we are going to reprocess, it is useful to charge the goose
-        if (
-          (task.do instanceof Location &&
-            absorb_state.isReprocessTarget(
-              globalStateCache.orb().prediction(task.do) ?? $monster`none`
-            )) ||
-          [
-            "Summon/Little Man In The Canoe",
-            "Summon/One-Eyed Willie",
-            "Summon/Revolving Bugbear",
-            "Summon/Cloud Of Disembodied Whiskers",
-            "Summon/Vicious Gnauga",
-          ].includes(task.name)
-        ) {
-          force_charge_goose = true;
-        }
       }
 
       // Set up a runaway if there are combats we do not care about
@@ -509,13 +446,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       }
     }
 
-    if (
-      args.major.chargegoose > familiarWeight($familiar`Grey Goose`) &&
-      absorb_state.remainingReprocess().length === 0
-    ) {
-      force_charge_goose = true;
-    }
-    equipCharging(outfit, force_charge_goose);
+    equipCharging(outfit, false);
 
     if (wanderers.length === 0 && this.hasDelay(task) && !get("_loopgyou_ncforce", false))
       wanderers.push(...equipUntilCapped(outfit, wandererSources));
@@ -545,16 +476,12 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     // 1. If task.orbtargets is undefined, then use an orb if there are absorb targets.
     // 2. If task.orbtargets() is undefined, an orb is detrimental in this zone, do not use it.
     // 3. Otherwise, use an orb if task.orbtargets() is nonempty, or if there are absorb targets.
-    const orb_targets = task.orbtargets?.();
-    const orb_useful =
-      task.orbtargets === undefined
-        ? absorb_targets.size > 0
-        : orb_targets !== undefined && (orb_targets.length > 0 || absorb_targets.size > 0);
-    if (orb_useful && !outfit.skipDefaults) {
+    const orb_targets = task.orbtargets?.() ?? [];
+    if (orb_targets.length > 0 && !outfit.skipDefaults) {
       outfit.equip($item`miniature crystal ball`);
     }
 
-    equipDefaults(outfit, force_charge_goose);
+    equipDefaults(outfit, false);
 
     // Kill wanderers
     for (const wanderer of wanderers) {
@@ -914,10 +841,7 @@ function resetBadOrb(): boolean {
     runChoice(6);
     return true;
   } catch (e) {
-    print(
-      `We ran into an issue when gazing at a shrine for balls: ${e}.`,
-      "red"
-    );
+    print(`We ran into an issue when gazing at a shrine for balls: ${e}.`, "red");
   }
 
   return false;

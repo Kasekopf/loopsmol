@@ -1,4 +1,5 @@
 import {
+  appearanceRates,
   buy,
   cliExecute,
   Familiar,
@@ -26,7 +27,9 @@ import {
   $familiar,
   $item,
   $items,
+  $location,
   $monster,
+  $monsters,
   $skill,
   AsdonMartin,
   Counter,
@@ -46,7 +49,6 @@ import {
 } from "grimoire-kolmafia";
 import { atLevel } from "../lib";
 import { Task } from "./task";
-import { monstersAt } from "../tasks/absorb";
 import { args } from "../args";
 
 export interface Resource {
@@ -574,4 +576,15 @@ export const forceNCSources: ForceNCSorce[] = [
 
 export function forceNCPossible(): boolean {
   return forceNCSources.find((s) => s.available()) !== undefined;
+}
+
+function monstersAt(location: Location): Monster[] {
+  if (location === $location`The VERY Unquiet Garves`) {
+    // Workaround
+    return $monsters`basic lihc, party skelteon, corpulent zobmie, grave rober zmobie, senile lihc, slick lihc, gluttonous ghuol, gaunt ghuol`;
+  }
+  const result = Object.entries(appearanceRates(location))
+    .filter((i) => i[1] !== -2) // Avoid impossible monsters
+    .map((i) => Monster.get(i[0]));
+  return result;
 }

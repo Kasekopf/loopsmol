@@ -18,7 +18,6 @@ import { step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
 import { forceItemPossible } from "../engine/resources";
-import { globalStateCache } from "../engine/state";
 
 export const GiantQuest: Quest = {
   name: "Giant",
@@ -112,11 +111,7 @@ export const GiantQuest: Quest = {
         ) || step("questL10Garbage") >= 8,
       do: $location`The Castle in the Clouds in the Sky (Basement)`,
       outfit: () => {
-        if (
-          !have($effect`Citizen of a Zone`) &&
-          have($familiar`Patriotic Eagle`) &&
-          !globalStateCache.absorb().isReprocessTarget($monster`Alphabet Giant`)
-        ) {
+        if (!have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)) {
           return { modifier: "-combat", familiar: $familiar`Patriotic Eagle` };
         }
         return { modifier: "-combat" };

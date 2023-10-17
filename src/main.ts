@@ -22,7 +22,6 @@ import { $item, $path, get, set, sinceKolmafiaRevision } from "libram";
 import { Prioritization } from "./engine/priority";
 import { Args, step } from "grimoire-kolmafia";
 import { checkRequirements } from "./sim";
-import { globalStateCache } from "./engine/state";
 import { lastCommitHash } from "./_git_commit";
 import { args } from "./args";
 
@@ -112,7 +111,6 @@ export function main(command?: string): void {
     engine.propertyManager.resetAll();
   }
 
-  const absorb_state = globalStateCache.absorb();
   if (step("questL13Final") > 11) {
     print("Grey you complete!", "purple");
   } else {
@@ -140,14 +138,6 @@ export function main(command?: string): void {
       "purple"
     );
   }
-  print(
-    `   Monsters remaining: ${Array.from(absorb_state.remainingAbsorbs()).join(", ")}`,
-    "purple"
-  );
-  print(
-    `   Reprocess remaining: ${Array.from(absorb_state.remainingReprocess()).join(", ")}`,
-    "purple"
-  );
 }
 
 function runComplete(): boolean {
@@ -189,15 +179,6 @@ function printVersionInfo(): void {
 function breakPrism(into_class: number): void {
   if (step("questL13Final") <= 11)
     throw `You have not finished your Grey You run. Do not set this argument yet.`;
-  const absorb_state = globalStateCache.absorb();
-  print(
-    `   Monsters remaining: ${Array.from(absorb_state.remainingAbsorbs()).join(", ")}`,
-    "purple"
-  );
-  print(
-    `   Reprocess remaining: ${Array.from(absorb_state.remainingReprocess()).join(", ")}`,
-    "purple"
-  );
   if (step("questL13Final") === 999) return;
   visitUrl("place.php?whichplace=nstower&action=ns_11_prism");
   visitUrl("main.php");
