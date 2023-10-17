@@ -25,7 +25,6 @@ import {
   $location,
   $monster,
   $monsters,
-  $skill,
   $stat,
   AutumnAton,
   ensureEffect,
@@ -329,10 +328,7 @@ export const ChasmQuest: Quest = {
       ready: () =>
         ((have($item`frozen jeans`) ||
           have($item`industrial fire extinguisher`) ||
-          (have($item`June cleaver`) && get("_juneCleaverCold", 0) >= 5) ||
-          have($skill`Cryocurrency`) ||
-          have($skill`Cooling Tubules`) ||
-          have($skill`Snow-Cooling System`)) &&
+          (have($item`June cleaver`) && get("_juneCleaverCold", 0) >= 5)) &&
           get("smutOrcNoncombatProgress") < 15) ||
         ((have($effect`Red Door Syndrome`) || myMeat() >= 1000) && myBasestat($stat`Moxie`) >= 350),
       completed: () => step("questL09Topping") >= 1,
@@ -350,17 +346,11 @@ export const ChasmQuest: Quest = {
       outfit: () => {
         if (get("smutOrcNoncombatProgress") < 15) {
           const equip = $items`Space Trip safety headphones, HOA regulation book`;
-          if (
-            !have($skill`Cryocurrency`) &&
-            !have($skill`Cooling Tubules`) &&
-            !have($skill`Snow-Cooling System`)
-          ) {
-            if (have($item`frozen jeans`)) equip.push($item`frozen jeans`);
-            else if (have($item`June cleaver`) && get("_juneCleaverCold", 0) >= 5)
-              equip.push($item`June cleaver`);
-            else if (have($item`industrial fire extinguisher`))
-              equip.push($item`industrial fire extinguisher`);
-          }
+          if (have($item`frozen jeans`)) equip.push($item`frozen jeans`);
+          else if (have($item`June cleaver`) && get("_juneCleaverCold", 0) >= 5)
+            equip.push($item`June cleaver`);
+          else if (have($item`industrial fire extinguisher`))
+            equip.push($item`industrial fire extinguisher`);
           return {
             modifier: "item, -ML",
             equip: equip,

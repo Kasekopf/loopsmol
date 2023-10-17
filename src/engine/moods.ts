@@ -41,9 +41,12 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
     result["-combat"].push($effect`Silent Running`);
 
   // Noncombat/combat buffs
-  if (have($skill`Phase Shift`)) result["-combat"].push($effect`Shifted Phase`);
-  if (have($skill`Photonic Shroud`)) result["-combat"].push($effect`Darkened Photons`);
-  if (have($skill`Piezoelectric Honk`)) result["+combat"].push($effect`Hooooooooonk!`);
+  if (have($skill`Smooth Movement`)) result["-combat"].push($effect`Smooth Movements`);
+  if (have($skill`The Sonata of Sneakiness`))
+    result["-combat"].push($effect`The Sonata of Sneakiness`);
+  if (have($skill`Musk of the Moose`)) result["+combat"].push($effect`Musk of the Moose`);
+  if (have($skill`Carlweather's Cantata of Confrontation`))
+    result["+combat"].push($effect`Carlweather's Cantata of Confrontation`);
 
   result[" combat"] = result["+combat"];
   return result;
@@ -60,10 +63,12 @@ export function moodCompatible(modifier: string | undefined): boolean {
   // while under -combat effects, and vice-versa.
   if (modifier === undefined) return true;
   if (modifier.includes("+combat") || modifier.includes(" combat")) {
-    return !have($effect`Shifted Phase`) && !have($effect`Darkened Photons`);
+    return !have($effect`Smooth Movements`) && !have($effect`The Sonata of Sneakiness`);
   }
   if (modifier.includes("-combat")) {
-    return !have($effect`Hooooooooonk!`);
+    return (
+      !have($effect`Musk of the Moose`) && !have($effect`Carlweather's Cantata of Confrontation`)
+    );
   }
   return true;
 }
@@ -84,9 +89,7 @@ export function applyEffects(modifier: string): void {
   if (modifier.includes("-combat")) shrug(relevantEffects["+combat"]);
 
   const mpcosts = new Map<Effect, number>([
-    [$effect`Shifted Phase`, 50],
-    [$effect`Hooooooooonk!`, 50],
-    [$effect`Darkened Photons`, 40],
+    // TODO: get mp costs for more skills
   ]);
 
   // Apply all relevant effects

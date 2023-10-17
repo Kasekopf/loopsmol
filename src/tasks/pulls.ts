@@ -82,7 +82,7 @@ export const pulls: PullSpec[] = [
         !have($item`forged identification documents`)
       )
         return true;
-      if (have($skill`System Sweep`) && have($skill`Double Nanovision`)) return false; // early run is over
+      if (step("questL11Black") > 2) return false;
       return undefined;
     },
   },
@@ -124,7 +124,6 @@ export const pulls: PullSpec[] = [
     name: "Max HP with low path progression",
   },
   { pull: $item`mafia thumb ring`, optional: true },
-  { pull: $item`white page`, useful: () => !have($skill`Piezoelectric Honk`), optional: true },
   { pull: $item`portable cassette player` },
   { pull: $item`antique machete` },
   { pull: $item`book of matches` },

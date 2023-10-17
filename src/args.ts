@@ -59,10 +59,6 @@ export const args = Args.create(
         help: "Use a fax to summon a monster. Set to false if the faxbots are offline.",
         default: true,
       }),
-      seasoning: Args.boolean({
-        help: "If true, get special seasoning from SongBoom boombox after the beginning of the run.",
-        default: true,
-      }),
       lgr: Args.flag({
         help: "Pull a lucky gold ring. If pulled, it will be equipped during many combats.",
         default: false,

@@ -435,8 +435,9 @@ export class ElementalPlanner {
 export const coldPlanner = new ElementalPlanner([
   { thing: $effect`Hot Soupy Garbage`, value: 2 },
   { thing: $effect`Double Hot Soupy Garbage`, value: 2 },
-  { thing: $skill`Nanofur`, value: 3 },
-  { thing: $skill`Microweave`, value: 2 },
+  { thing: $skill`Refusal to Freeze`, value: 3 },
+  { thing: $skill`Northern Exposure`, value: 2 },
+  { thing: $skill`Crimbo Training: Dessert Steward`, value: 1 },
   { thing: $item`ice crown`, value: 3 },
   { thing: $item`ghost of a necklace`, value: 1 },
   {
@@ -455,8 +456,9 @@ export const coldPlanner = new ElementalPlanner([
 export const stenchPlanner = new ElementalPlanner([
   { thing: $effect`Shivering Spine`, value: 2 },
   { thing: $effect`Doubly Shivering Spine`, value: 4 },
-  { thing: $skill`Conifer Polymers`, value: 3 },
-  { thing: $skill`Clammy Microcilia`, value: 2 },
+  { thing: $skill`Olfactory Burnout`, value: 3 },
+  { thing: $skill`Diminished Gag Reflex`, value: 2 },
+  { thing: $skill`Dead Nostrils`, value: 2 },
   { thing: $item`ice crown`, value: 3 },
   { thing: $item`ghost of a necklace`, value: 1 },
   {

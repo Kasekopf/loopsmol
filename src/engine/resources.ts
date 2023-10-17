@@ -91,11 +91,6 @@ const banishSources: BanishSource[] = [
     do: $skill`Asdon Martin: Spring-Loaded Front Bumper`,
   },
   {
-    name: "System Sweep",
-    available: () => have($skill`System Sweep`),
-    do: $skill`System Sweep`,
-  },
-  {
     name: "Latte",
     available: () =>
       (!get("_latteBanishUsed") || (get("_latteRefillsUsed") < 2 && myTurncount() < 1000)) && // Save one refill for aftercore

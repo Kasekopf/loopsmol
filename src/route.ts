@@ -15,13 +15,7 @@ export const routing: string[] = [
   "Pull/All",
 
   // Get infinite loop
-  "Summon/Pygmy Witch Lawyer",
   "Summon/Mountain Man",
-
-  // Do other skill summons early
-  "Summon/Spectral Jellyfish",
-  "Summon/Anglerbush",
-  "Summon/Big Wheelin' Twins",
 
   // Get initial -combat
   "Knob/Start",
@@ -46,7 +40,6 @@ export const routing: string[] = [
   "Misc/Fortune",
 
   // Aim for remaining pygmies
-  "Hidden City/Bowling Skills",
   "War/Flyers Start", // Start the war and get flyers
   "War/Flyers End", // End the flyers quest ASAP in case of tracking errors
   "Giant/Airship YR Healer",
