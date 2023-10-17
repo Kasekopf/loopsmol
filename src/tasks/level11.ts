@@ -29,7 +29,6 @@ import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel, debug } from "../lib";
 import { councilSafe } from "./level12";
-import { towerSkip } from "./level13";
 
 const Diary: Task[] = [
   {
@@ -342,7 +341,7 @@ const Pyramid: Task[] = [
       cliExecute("refresh all");
     },
     outfit: () => {
-      if (!have($item`Pick-O-Matic lockpicks`) && !towerSkip())
+      if (!have($item`Pick-O-Matic lockpicks`))
         return { familiar: $familiar`Gelatinous Cubeling` }; // Ensure we get equipment
       return {};
     },

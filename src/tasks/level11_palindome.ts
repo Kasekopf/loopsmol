@@ -32,7 +32,6 @@ import { Quest, Task } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
 import { CombatStrategy } from "../engine/combat";
 import { fillHp } from "./level13";
-import { args } from "../args";
 import { globalStateCache } from "../engine/state";
 import { tuneSnapper } from "../lib";
 
@@ -495,6 +494,5 @@ export const PalindomeQuest: Quest = {
 };
 
 function cloversToSave(): number {
-  if (args.major.delaytower) return 0;
   return 1;
 }

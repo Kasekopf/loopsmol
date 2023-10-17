@@ -16,7 +16,6 @@ import { Priorities } from "../engine/priority";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 import { Keys, keyStrategy } from "./keys";
-import { towerSkip } from "./level13";
 import { trainSetAvailable } from "./misc";
 import { yellowSubmarinePossible } from "../engine/outfit";
 
@@ -40,12 +39,12 @@ export const pulls: PullSpec[] = [
   // Always pull the key items first
   {
     pull: $item`daily dungeon malware`,
-    useful: () => keyStrategy.useful(Keys.Malware) && !towerSkip(),
+    useful: () => keyStrategy.useful(Keys.Malware),
   },
   {
     name: "Key Zappable",
     pull: () => keyStrategy.getZapChoice(),
-    useful: () => keyStrategy.useful(Keys.Zap) && !towerSkip(),
+    useful: () => keyStrategy.useful(Keys.Zap),
     duplicate: true,
   },
   {

@@ -4,14 +4,12 @@ import {
   inHardcore,
   myAdventures,
   myPath,
-  myTurncount,
   print,
   pullsRemaining,
   runChoice,
   svnAtHead,
   svnExists,
   turnsPlayed,
-  userConfirm,
   visitUrl,
 } from "kolmafia";
 import { all_tasks } from "./tasks/all";
@@ -44,27 +42,12 @@ export function main(command?: string): void {
     checkRequirements();
     return;
   }
-  if (args.major.delaytower) {
-    if (
-      !userConfirm(
-        "With the January nerf to the Grey You path, delaytower is not generally useful (since we are not able to break ronin with the adventures from the first day). Are you sure you want to continue with delaytower enabled?"
-      )
-    ) {
-      return;
-    }
-  }
 
   printVersionInfo();
   if (args.version) return;
 
   if (myPath() !== $path`Grey You` && !args.debug.list)
     throw `You are not currently in a Grey You run. Please start one.`;
-
-  // Break the prism and exit if requested
-  if (args.class !== undefined) {
-    breakPrism(args.class);
-    return;
-  }
 
   // Adapt depreciated args
   if (args.minor.asdon) args.major.swapworkshed = $item`Asdon Martin keyfob`;
@@ -141,23 +124,7 @@ export function main(command?: string): void {
 }
 
 function runComplete(): boolean {
-  return (
-    step("questL13Final") > 11 ||
-    myPath() !== $path`Grey You` ||
-    (args.major.delaytower && myTurncount() < 1000 && step("questL13Final") !== -1) ||
-    (args.major.delaywar &&
-      myTurncount() < 1000 &&
-      step("questL02Larva") === 999 &&
-      step("questL03Rat") === 999 &&
-      step("questL04Bat") === 999 &&
-      step("questL05Goblin") === 999 &&
-      step("questL06Friar") === 999 &&
-      step("questL07Cyrptic") === 999 &&
-      step("questL08Trapper") === 999 &&
-      step("questL09Topping") === 999 &&
-      step("questL10Garbage") === 999 &&
-      step("questL11MacGuffin") === 999)
-  );
+  return step("questL13Final") > 11 || myPath() !== $path`Grey You`;
 }
 
 function printVersionInfo(): void {
@@ -174,16 +141,6 @@ function printVersionInfo(): void {
       debug("This script is up to date.", "red");
     }
   }
-}
-
-function breakPrism(into_class: number): void {
-  if (step("questL13Final") <= 11)
-    throw `You have not finished your Grey You run. Do not set this argument yet.`;
-  if (step("questL13Final") === 999) return;
-  visitUrl("place.php?whichplace=nstower&action=ns_11_prism");
-  visitUrl("main.php");
-  runChoice(into_class);
-  runChoice(into_class);
 }
 
 function listTasks(engine: Engine): void {

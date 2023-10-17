@@ -31,7 +31,6 @@ import {
 } from "libram";
 import { Resource } from "./resources";
 import { Keys, keyStrategy } from "../tasks/keys";
-import { towerSkip } from "../tasks/level13";
 import { Modes, Outfit, OutfitSpec, step } from "grimoire-kolmafia";
 import { atLevel, haveLoathingLegion } from "../lib";
 import { args } from "../args";
@@ -126,8 +125,7 @@ export function equipCharging(outfit: Outfit): void {
     (!have($item`eleven-foot pole`) ||
       !have($item`ring of Detect Boring Doors`) ||
       !have($item`Pick-O-Matic lockpicks`)) &&
-    keyStrategy.useful(Keys.Dungeon) !== false &&
-    !towerSkip()
+    keyStrategy.useful(Keys.Dungeon) !== false
   ) {
     outfit.equip($familiar`Gelatinous Cubeling`);
   }
