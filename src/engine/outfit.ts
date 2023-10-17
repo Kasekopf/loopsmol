@@ -5,7 +5,6 @@ import {
   outfit as equipOutfit,
   equippedAmount,
   equippedItem,
-  familiarWeight,
   Item,
   itemAmount,
   weaponHands as mafiaWeaponHands,
@@ -28,7 +27,6 @@ import {
   $slots,
   $stat,
   get,
-  getKramcoWandererChance,
   have,
 } from "libram";
 import { Resource } from "./resources";
@@ -100,7 +98,7 @@ export function equipInitial(outfit: Outfit): void {
   }
 }
 
-export function equipCharging(outfit: Outfit, force_charge_goose: boolean): void {
+export function equipCharging(outfit: Outfit): void {
   if (outfit.skipDefaults) return;
 
   const modifier = getModifiersFrom(outfit);
@@ -108,38 +106,6 @@ export function equipCharging(outfit: Outfit, force_charge_goose: boolean): void
   // Try and get the Spooky Forest ghost first
   if (myTurncount() === 0 && get("nextParanormalActivity") === 1) {
     outfit.equip($item`protonic accelerator pack`);
-  }
-
-  if (
-    familiarWeight($familiar`Grey Goose`) < 6 ||
-    (familiarWeight($familiar`Grey Goose`) >= 6 &&
-      [...outfit.equips.values()].includes($item`Kramco Sausage-o-Matic™`) &&
-      getKramcoWandererChance() === 1) ||
-    force_charge_goose
-  ) {
-    if (outfit.equip($familiar`Grey Goose`)) {
-      outfit.equip($item`yule hatchet`);
-      if (!atLevel(11)) outfit.equip($item`teacher's pen`);
-
-      // Use latte mug for familiar exp
-      if (
-        !modifier.includes("-combat") &&
-        have($item`latte lovers member's mug`) &&
-        get("latteModifier").includes("Experience (familiar): 3")
-      ) {
-        outfit.equip($item`latte lovers member's mug`);
-      }
-
-      // Equip an offhand if it is not needed for the -combat umbrella
-      if (
-        !modifier.includes("-combat") ||
-        have($skill`Photonic Shroud`) ||
-        !have($item`unbreakable umbrella`)
-      ) {
-        outfit.equip($item`ghostly reins`);
-        outfit.equip($item`familiar scrapbook`);
-      }
-    }
   }
 
   if (yellowSubmarinePossible() && itemAmount($item`yellow pixel`) < 50) {
@@ -167,7 +133,7 @@ export function equipCharging(outfit: Outfit, force_charge_goose: boolean): void
   }
 }
 
-export function equipDefaults(outfit: Outfit, force_charge_goose: boolean): void {
+export function equipDefaults(outfit: Outfit): void {
   if (have($familiar`Temporal Riftlet`)) {
     outfit.equip($familiar`Temporal Riftlet`);
   }
@@ -178,11 +144,6 @@ export function equipDefaults(outfit: Outfit, force_charge_goose: boolean): void
     }
   }
 
-  if (
-    outfit.familiar === $familiar`Grey Goose` &&
-    (familiarWeight($familiar`Grey Goose`) < 6 || force_charge_goose)
-  )
-    outfit.equip($item`grey down vest`);
   if (outfit.familiar === $familiar`Melodramedary` && get("camelSpit") < 100)
     outfit.equip($item`dromedary drinking helmet`);
 
@@ -233,11 +194,6 @@ export function equipDefaults(outfit: Outfit, force_charge_goose: boolean): void
       outfit.equip($item`Powerful Glove`);
     }
 
-    if (
-      outfit.familiar === $familiar`Grey Goose` &&
-      (familiarWeight($familiar`Grey Goose`) < 6 || force_charge_goose)
-    )
-      outfit.equip($item`teacher's pen`, $slot`acc3`);
     outfit.equip($item`backup camera`);
     outfit.equip($item`birch battery`);
     outfit.equip($item`combat lover's locket`);
@@ -263,8 +219,6 @@ export function equipDefaults(outfit: Outfit, force_charge_goose: boolean): void
   }
 
   outfit.equip($item`miniature crystal ball`);
-  // If we never found a better familiar, just keep charging the goose
-  outfit.equip($familiar`Grey Goose`);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

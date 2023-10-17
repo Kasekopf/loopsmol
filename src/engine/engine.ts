@@ -4,7 +4,6 @@ import {
   canAdventure,
   descToItem,
   equippedItem,
-  familiarWeight,
   getInventory,
   getWorkshed,
   haveEffect,
@@ -33,7 +32,6 @@ import {
   restoreMp,
   Slot,
   toInt,
-  toMonster,
   totalTurnsPlayed,
   toUrl,
   use,
@@ -43,7 +41,6 @@ import { Task } from "./task";
 import {
   $effect,
   $effects,
-  $familiar,
   $item,
   $items,
   $location,
@@ -379,20 +376,12 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       // Set up a runaway if there are combats we do not care about
       if (!outfit.skipDefaults) {
         let runaway = undefined;
-        if (
-          (combat.can("ignore") || combat.can("ignoreSoftBanish")) &&
-          familiarWeight($familiar`Grey Goose`) >= 6 &&
-          myLevel() >= 11
-        ) {
+        if ((combat.can("ignore") || combat.can("ignoreSoftBanish")) && myLevel() >= 11) {
           runaway = equipFirst(outfit, runawaySources);
           resources.provide("ignore", runaway);
           resources.provide("ignoreSoftBanish", runaway);
         }
-        if (
-          combat.can("ignoreNoBanish") &&
-          familiarWeight($familiar`Grey Goose`) >= 6 &&
-          myLevel() >= 11
-        ) {
+        if (combat.can("ignoreNoBanish") && myLevel() >= 11) {
           if (runaway !== undefined && !runaway.banishes)
             resources.provide("ignoreNoBanish", runaway);
           else
@@ -446,14 +435,14 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       }
     }
 
-    equipCharging(outfit, false);
+    equipCharging(outfit);
 
     if (wanderers.length === 0 && this.hasDelay(task) && !get("_loopgyou_ncforce", false))
       wanderers.push(...equipUntilCapped(outfit, wandererSources));
 
     if (get("_loopgyou_ncforce", false)) {
       // Avoid some things that might override the NC and break the tracking
-      outfit.equip({ avoid: $items`Kramco Sausage-o-Matic™`, familiar: $familiar`Grey Goose` });
+      outfit.equip({ avoid: $items`Kramco Sausage-o-Matic™` });
     }
 
     // Prepare full outfit
@@ -468,10 +457,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         outfit.equip($item`cursed magnifying glass`);
     }
 
-    // Prefer to charge the goose if we need it for an absorb
-    if (outfit.familiar === $familiar`Grey Goose` && familiarWeight($familiar`Grey Goose`) < 6)
-      outfit.equip($item`grey down vest`);
-
     // Determine if it is useful to target monsters with an orb (with no predictions).
     // 1. If task.orbtargets is undefined, then use an orb if there are absorb targets.
     // 2. If task.orbtargets() is undefined, an orb is detrimental in this zone, do not use it.
@@ -481,7 +466,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       outfit.equip($item`miniature crystal ball`);
     }
 
-    equipDefaults(outfit, false);
+    equipDefaults(outfit);
 
     // Kill wanderers
     for (const wanderer of wanderers) {
@@ -594,8 +579,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
   do(task: ActiveTask): void {
     const beaten_turns = haveEffect($effect`Beaten Up`);
     const start_advs = myAdventures();
-    const goose_weight = familiarWeight($familiar`Grey Goose`);
-    const reprocess_targets = get("gooseReprocessed");
     const spikelodon_spikes = get("_spikolodonSpikeUses");
 
     // The NC force is not reset by wanderers
@@ -607,22 +590,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
 
     super.do(task);
     if (myAdventures() !== start_advs) getExtros();
-
-    // If adventures went up and the goose weight went down, we probably reprocessed
-    const reprocessed =
-      familiarWeight($familiar`Grey Goose`) < goose_weight && myAdventures() >= start_advs + 4;
-    const monster = toMonster(get("lastEncounter", ""));
-    if (reprocessed && get("gooseReprocessed") === reprocess_targets) {
-      print(`WARNING: Probably reprocessed ${monster} but mafia did not notice.`, "red");
-      if (monster === $monster`none`) {
-        print("WARNING: But we were unable to tell with lastEncounter what was fought.");
-      } else {
-        const untracked = get("_loopgyou_untracked_gooseReprocessed");
-        const new_untracked = untracked.length > 0 ? `,${monster.id}` : `${monster.id}`;
-        set("_loopgyou_untracked_gooseReprocessed", new_untracked);
-        globalStateCache.invalidate();
-      }
-    }
 
     // Check if we used an NC forcer
     if (get("_spikolodonSpikeUses") > spikelodon_spikes) {
@@ -636,7 +603,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         haveEffect($effect`Beaten Up`) > beaten_turns || // Turns of beaten-up increased, so we lost
         (haveEffect($effect`Beaten Up`) === beaten_turns &&
           // Turns of beaten-up was constant but adventures went down, so we lost fight while already beaten up
-          (myAdventures() < start_advs || reprocessed))
+          myAdventures() < start_advs)
       ) {
         print(
           `Fight was lost (debug info: ${beaten_turns} => ${haveEffect(

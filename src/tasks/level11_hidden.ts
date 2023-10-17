@@ -1,7 +1,6 @@
 import {
   buy,
   cliExecute,
-  familiarWeight,
   itemAmount,
   myAscensions,
   myHash,
@@ -88,11 +87,6 @@ const Temple: Task[] = [
       itemAmount($item`stone wool`) >= 2 ||
       (itemAmount($item`stone wool`) === 1 && have($item`the Nostril of the Serpent`)) ||
       step("questL11Worship") >= 3,
-    priority: () => {
-      if (have($item`industrial fire extinguisher`)) return Priorities.None;
-      if (familiarWeight($familiar`Grey Goose`) >= 6) return Priorities.GoodGoose;
-      return Priorities.BadGoose;
-    },
     prepare: () => {
       if (
         itemAmount($item`11-leaf clover`) > 1 &&
