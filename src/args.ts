@@ -43,10 +43,6 @@ export const args = Args.create(
         help: "Delay the war until after ronin ends, then finish with stuffing fluffers.",
         default: false,
       }),
-      chargegoose: Args.number({
-        help: "If true, use extra familiar turns to charge your Grey Goose to this weight at the end of the run (for aftercore leveling). If you do not have enough extra familiar turns, the goose may be lower level.",
-        default: 20,
-      }),
       workshed: Args.item({
         help: "Workshed item to place in an empty workshed at the start of the run.",
         default: $item`model train set`,

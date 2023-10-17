@@ -304,7 +304,6 @@ const Pyramid: Task[] = [
     outfit: () => {
       return {
         modifier: "item",
-        familiar: $familiar`Grey Goose`,
         equip:
           have($item`Lil' Doctor™ bag`) && get("_otoscopeUsed") < 3 ? $items`Lil' Doctor™ bag` : [],
       };
