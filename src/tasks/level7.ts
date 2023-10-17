@@ -29,7 +29,6 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel, haveFlorest } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
-import { globalStateCache } from "../engine/state";
 
 function tuneCape(): void {
   if (
@@ -165,15 +164,7 @@ const Niche: Task[] = [
     combat: new CombatStrategy()
       .macro(slay_macro, $monster`dirty old lihc`)
       .kill($monster`dirty old lihc`)
-      .macro(
-        // Don't use the fire extinguisher if we want to absorb the lihc
-        () =>
-          new Macro().externalIf(
-            !globalStateCache.absorb().isTarget($monster`basic lihc`),
-            new Macro().trySkill($skill`Fire Extinguisher: Zone Specific`)
-          ),
-        $monster`basic lihc`
-      )
+      .macro(Macro.trySkill($skill`Fire Extinguisher: Zone Specific`), $monster`basic lihc`)
       .macro(
         new Macro().trySkill($skill`Fire Extinguisher: Zone Specific`).step(slay_macro),
         $monsters`senile lihc, slick lihc`
@@ -220,8 +211,6 @@ const Nook: Task[] = [
     },
     choices: { 155: 5, 1429: 1 },
     orbtargets: () => {
-      if (globalStateCache.absorb().isReprocessTarget($monster`party skelteon`))
-        return $monsters`party skelteon`;
       if (AutumnAton.have() && myTurncount() < 400) return []; // ignore orb early on
       else return $monsters`spiny skelelton, toothy sklelton`;
     },
@@ -237,9 +226,7 @@ const Nook: Task[] = [
     name: "Nook Eye", // In case we get eyes from outside sources (Nostalgia)
     after: ["Start"],
     priority: () => Priorities.Free,
-    ready: () =>
-      have($item`evil eye`) &&
-      !globalStateCache.absorb().isReprocessTarget($monster`party skelteon`),
+    ready: () => have($item`evil eye`),
     completed: () => get("cyrptNookEvilness") <= 13,
     do: (): void => {
       cliExecute("use * evil eye");

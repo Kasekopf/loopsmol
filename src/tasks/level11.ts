@@ -2,7 +2,6 @@ import {
   availableAmount,
   buy,
   cliExecute,
-  familiarWeight,
   itemAmount,
   myMeat,
   runChoice,
@@ -30,7 +29,6 @@ import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel, debug } from "../lib";
 import { councilSafe } from "./level12";
-import { globalStateCache } from "../engine/state";
 import { towerSkip } from "./level13";
 
 const Diary: Task[] = [
@@ -56,21 +54,6 @@ const Diary: Task[] = [
           equip: equip,
           modifier: "50 combat 5max, -1ML",
         };
-      }
-
-      if (
-        globalStateCache.absorb().isReprocessTarget($monster`black magic woman`) &&
-        familiarWeight($familiar`Grey Goose`) >= 6
-      ) {
-        const orb = globalStateCache.orb().prediction($location`The Black Forest`);
-        if (orb === $monster`black magic woman`) {
-          // Swoop in for a single adventure to reprocess the black magic woman
-          return {
-            equip: [...equip, $item`miniature crystal ball`],
-            familiar: $familiar`Grey Goose`,
-            modifier: "50 combat 5max, -1ML",
-          };
-        }
       }
 
       return {
@@ -167,13 +150,6 @@ const Desert: Task[] = [
       get("desertExploration") >= 100 ||
       have($item`drum machine`) ||
       (get("gnasirProgress") & 16) !== 0,
-    prepare: () => {
-      if (globalStateCache.absorb().hasReprocessTargets($location`The Oasis`)) {
-        // Use ghost dog chow to prepare to reprocess Blur without needing arena adventures
-        while (familiarWeight($familiar`Grey Goose`) < 6 && have($item`Ghost Dog Chow`))
-          use($item`Ghost Dog Chow`);
-      }
-    },
     do: $location`The Oasis`,
     combat: new CombatStrategy().killItem($monster`blur`),
     outfit: { modifier: "item", avoid: $items`broken champagne bottle` },
@@ -229,28 +205,7 @@ const Desert: Task[] = [
           equip: $items`industrial fire extinguisher, UV-resistant compass, dromedary drinking helmet`,
           familiar: $familiar`Melodramedary`,
         };
-      else if (
-        globalStateCache.absorb().isReprocessTarget($monster`swarm of fire ants`) &&
-        familiarWeight($familiar`Grey Goose`) >= 6 &&
-        have($item`miniature crystal ball`)
-      ) {
-        if (
-          globalStateCache.orb().prediction($location`The Arid, Extra-Dry Desert`) ===
-          $monster`swarm of fire ants`
-        ) {
-          // Swoop in for a single adventure to reprocess the fire ants
-          return {
-            equip: $items`UV-resistant compass, miniature crystal ball`,
-            familiar: $familiar`Grey Goose`,
-          };
-        } else {
-          // Wait for the orb to predict swarm of fire ants
-          return {
-            equip: $items`UV-resistant compass, miniature crystal ball`,
-            familiar: $familiar`Melodramedary`,
-          };
-        }
-      } else
+      else
         return {
           equip: $items`UV-resistant compass, dromedary drinking helmet`,
           familiar: $familiar`Melodramedary`,

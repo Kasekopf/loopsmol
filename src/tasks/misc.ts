@@ -65,7 +65,6 @@ import { Engine, wanderingNCs } from "../engine/engine";
 import { Keys, keyStrategy } from "./keys";
 import { atLevel, debug } from "../lib";
 import { args } from "../args";
-import { globalStateCache } from "../engine/state";
 import { coldPlanner, yellowSubmarinePossible } from "../engine/outfit";
 import {
   getTrainsetConfiguration,
@@ -499,30 +498,6 @@ export const MiscQuest: Quest = {
       },
       freeaction: true,
       limit: { tries: 1 },
-    },
-    {
-      name: "Dog Chow",
-      after: [],
-      ready: () => have($item`Ghost Dog Chow`) && familiarWeight($familiar`Grey Goose`) < 6,
-      completed: () => globalStateCache.absorb().remainingReprocess().length === 0,
-      do: () => {
-        use($item`Ghost Dog Chow`);
-        if (familiarWeight($familiar`Grey Goose`) < 6 && have($item`Ghost Dog Chow`))
-          use($item`Ghost Dog Chow`);
-      },
-      outfit: { familiar: $familiar`Grey Goose` },
-      freeaction: true,
-      limit: { soft: 20 },
-    },
-    {
-      name: "Cake-Shaped Arena",
-      after: [],
-      ready: () => familiarWeight($familiar`Grey Goose`) < 6 && myMeat() >= 100,
-      completed: () => globalStateCache.absorb().remainingReprocess().length === 0,
-      priority: () => Priorities.Last,
-      do: arenaFight,
-      outfit: { familiar: $familiar`Grey Goose`, modifier: "50 familiar exp, familiar weight" },
-      limit: { soft: 75 },
     },
     {
       name: "Amulet Coin",
@@ -969,9 +944,7 @@ export const WandQuest: Quest = {
         myBasestat($stat`muscle`) >= 45 &&
         myBasestat($stat`mysticality`) >= 45 &&
         myBasestat($stat`moxie`) >= 45 &&
-        (keyStrategy.useful(Keys.Zap) ||
-          args.minor.wand ||
-          !globalStateCache.absorb().skillCompleted($skill`Hivemindedness`)),
+        (keyStrategy.useful(Keys.Zap) || args.minor.wand),
       completed: () => have($item`plus sign`) || get("lastPlusSignUnlock") === myAscensions(),
       do: $location`The Enormous Greater-Than Sign`,
       outfit: { modifier: "-combat" },
@@ -985,9 +958,7 @@ export const WandQuest: Quest = {
         myMeat() >= 1000 && // Meat for goal teleportitis choice adventure
         familiarWeight($familiar`Grey Goose`) >= 6 && // Goose exp for potential absorbs during teleportits
         have($item`soft green echo eyedrop antidote`) && // Antitdote to remove teleportitis afterwards
-        (keyStrategy.useful(Keys.Zap) ||
-          args.minor.wand ||
-          !globalStateCache.absorb().skillCompleted($skill`Hivemindedness`)),
+        (keyStrategy.useful(Keys.Zap) || args.minor.wand),
       priority: () =>
         familiarWeight($familiar`Grey Goose`) >= 6 ? Priorities.GoodGoose : Priorities.None,
       completed: () => have($effect`Teleportitis`) || get("lastPlusSignUnlock") === myAscensions(),

@@ -1,12 +1,10 @@
 import { Location, Monster, print, toLocation, toMonster, visitUrl } from "kolmafia";
 import { get } from "libram";
 import { BanishState } from "./resources";
-import { AbsorbState } from "../tasks/absorb";
 import { args } from "../args";
 
 class GameState {
   private _banishes?: BanishState;
-  private _absorb?: AbsorbState;
   private _orb?: OrbState;
 
   banishes(): BanishState {
@@ -14,13 +12,6 @@ class GameState {
       this._banishes = new BanishState();
     }
     return this._banishes;
-  }
-
-  absorb(): AbsorbState {
-    if (this._absorb === undefined) {
-      this._absorb = new AbsorbState();
-    }
-    return this._absorb;
   }
 
   orb(): OrbState {
@@ -32,7 +23,6 @@ class GameState {
 
   invalidate() {
     this._banishes = undefined;
-    this._absorb = undefined;
     this._orb = undefined;
   }
 }

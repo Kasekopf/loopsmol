@@ -23,12 +23,9 @@ export const routing: string[] = [
   "Summon/Anglerbush",
   "Summon/Big Wheelin' Twins",
 
-  // "Absorb/Ponzi Apparatus", // Get +meat early, we'll want a lot
-
   // Get initial -combat
   "Knob/Start",
-  "McLargeHuge/Trapper Request", // open for absorbing
-  // "Absorb/Fluid Dynamics Simulation",
+  "McLargeHuge/Trapper Request",
   "Misc/Retune Moon",
 
   // Unlock island to start YRing
@@ -37,8 +34,6 @@ export const routing: string[] = [
   "War/Enrage",
 
   // ASAP once level 11 is hit, grab -combat
-  // Also grab +adv to ensure we have adventures
-  "Absorb/Photonic Shroud",
   // Grind tasks until level 11
   "Mosquito/Burn Delay",
   "Hidden City/Forest Coin", // First to get meat
@@ -47,14 +42,11 @@ export const routing: string[] = [
   "Hidden City/Forest Sapling", // Last to sell bar skins
   "Hidden City/Open Temple",
 
-  // Get +item
-  "Absorb/Gravitational Compression",
   "Hidden City/Open City",
   "Misc/Fortune",
 
   // Aim for remaining pygmies
   "Hidden City/Bowling Skills",
-  "Absorb/System Sweep", // Get from hidden park in hardcore
   "War/Flyers Start", // Start the war and get flyers
   "War/Flyers End", // End the flyers quest ASAP in case of tracking errors
   "Giant/Airship YR Healer",
@@ -62,7 +54,6 @@ export const routing: string[] = [
   // For MP regen, ASAP
   "Wand/Wand",
   "Misc/Hermit Clover",
-  "Absorb/Hivemindedness",
 
   // Open Hidden City with Sue buff
   "Hidden City/Open Office",
@@ -71,7 +62,6 @@ export const routing: string[] = [
 
   // Line up -combats
   "Manor/Start Floor2",
-  "Absorb/Subatomic Hardening", // Get soon after the Billiards room
   "Manor/Bedroom",
   "Manor/Bathroom Delay",
   "Manor/Gallery Delay",
