@@ -2,6 +2,7 @@ import {
   buyUsingStorage,
   cliExecute,
   inHardcore,
+  isUnrestricted,
   Item,
   itemAmount,
   myMeat,
@@ -18,6 +19,7 @@ import { step } from "grimoire-kolmafia";
 import { Keys, keyStrategy } from "./keys";
 import { trainSetAvailable } from "./misc";
 import { yellowSubmarinePossible } from "../engine/outfit";
+import { underStandard } from "../lib";
 
 /**
  * optional: If true, only pull this if there is one in storage (i.e., no mall buy).
@@ -232,6 +234,7 @@ class Pull {
     // and defer to needed if we have some.
     for (const item of this.items()) {
       if (item === undefined) return undefined; // We don't even know which item yet
+      if (!isUnrestricted(item) && underStandard()) continue;
       if (storageAmount(item) > 0) return needed;
     }
     return false;

@@ -274,8 +274,7 @@ const wand: Task[] = [
     name: "Wand W",
     after: ["Wall of Bones"],
     ready: () => !have($item`11-leaf clover`),
-    completed: () =>
-      have($item`ruby W`) || have($item`WA`) || have($item`Wand of Nagamar`),
+    completed: () => have($item`ruby W`) || have($item`WA`) || have($item`Wand of Nagamar`),
     do: $location`Pandamonium Slums`,
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem($monster`W imp`),
@@ -285,8 +284,7 @@ const wand: Task[] = [
     name: "Wand A",
     after: ["Wall of Bones"],
     ready: () => !have($item`11-leaf clover`),
-    completed: () =>
-      have($item`metallic A`) || have($item`WA`) || have($item`Wand of Nagamar`),
+    completed: () => have($item`metallic A`) || have($item`WA`) || have($item`Wand of Nagamar`),
     do: $location`The Penultimate Fantasy Airship`,
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem($monster`MagiMechTech MechaMech`),
@@ -296,8 +294,7 @@ const wand: Task[] = [
     name: "Wand N",
     after: ["Wall of Bones"],
     ready: () => !have($item`11-leaf clover`),
-    completed: () =>
-      have($item`lowercase N`) || have($item`ND`) || have($item`Wand of Nagamar`),
+    completed: () => have($item`lowercase N`) || have($item`ND`) || have($item`Wand of Nagamar`),
     do: $location`The Valley of Rof L'm Fao`,
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem($monster`XXX pr0n`),
@@ -307,8 +304,7 @@ const wand: Task[] = [
     name: "Wand D",
     after: ["Wall of Bones"],
     ready: () => !have($item`11-leaf clover`),
-    completed: () =>
-      have($item`heavy D`) || have($item`ND`) || have($item`Wand of Nagamar`),
+    completed: () => have($item`heavy D`) || have($item`ND`) || have($item`Wand of Nagamar`),
     do: $location`The Castle in the Clouds in the Sky (Basement)`,
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem($monster`Alphabet Giant`),

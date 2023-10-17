@@ -341,8 +341,7 @@ const Pyramid: Task[] = [
       cliExecute("refresh all");
     },
     outfit: () => {
-      if (!have($item`Pick-O-Matic lockpicks`))
-        return { familiar: $familiar`Gelatinous Cubeling` }; // Ensure we get equipment
+      if (!have($item`Pick-O-Matic lockpicks`)) return { familiar: $familiar`Gelatinous Cubeling` }; // Ensure we get equipment
       return {};
     },
     combat: new CombatStrategy().killHard(),

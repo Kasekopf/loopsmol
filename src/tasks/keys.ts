@@ -83,12 +83,11 @@ const heroKeys: KeyTask[] = [
       { item: $item`eleven-foot pole`, optional: true },
       { item: $item`ring of Detect Boring Doors`, optional: true },
     ],
-    ready: () => (
+    ready: () =>
       step("questL13Final") !== -1 ||
       (have($item`Pick-O-Matic lockpicks`) &&
         have($item`ring of Detect Boring Doors`) &&
-        have($item`eleven-foot pole`))
-    ),
+        have($item`eleven-foot pole`)),
     after: [],
     completed: () => get("dailyDungeonDone") || get("_dailyDungeonMalwareUsed"),
     prepare: () => {
@@ -133,12 +132,11 @@ const heroKeys: KeyTask[] = [
       { item: $item`eleven-foot pole`, optional: true },
       { item: $item`ring of Detect Boring Doors`, optional: true },
     ],
-    ready: () => (
+    ready: () =>
       step("questL13Final") !== -1 ||
       (have($item`Pick-O-Matic lockpicks`) &&
         have($item`ring of Detect Boring Doors`) &&
-        have($item`eleven-foot pole`))
-    ),
+        have($item`eleven-foot pole`)),
     after: ["Daily Dungeon Malware"],
     completed: () => get("dailyDungeonDone"),
     prepare: () => {
