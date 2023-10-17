@@ -346,14 +346,7 @@ const Pyramid: Task[] = [
         return { familiar: $familiar`Gelatinous Cubeling` }; // Ensure we get equipment
       return {};
     },
-    combat: new CombatStrategy()
-      .macro(
-        new Macro()
-          .while_("!mpbelow 20", new Macro().trySkill($skill`Infinite Loop`))
-          .attack()
-          .repeat()
-      )
-      .killHard(),
+    combat: new CombatStrategy().killHard(),
     limit: { tries: 1 },
     boss: true,
   },

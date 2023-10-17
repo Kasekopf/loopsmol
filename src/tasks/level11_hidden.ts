@@ -1,14 +1,4 @@
-import {
-  buy,
-  cliExecute,
-  itemAmount,
-  myAscensions,
-  myHash,
-  myMeat,
-  putCloset,
-  use,
-  visitUrl,
-} from "kolmafia";
+import { cliExecute, itemAmount, myAscensions, myHash, myMeat, use, visitUrl } from "kolmafia";
 import {
   $effect,
   $effects,
@@ -352,38 +342,6 @@ const Bowling: Task[] = [
     acquire: [{ item: $item`antique machete` }],
   },
   {
-    name: "Bowling Skills",
-    after: ["Open Bowling"],
-    ready: () => myMeat() >= 500,
-    acquire: [{ item: $item`Bowl of Scorpions`, optional: true }],
-    completed: () =>
-      (have($skill`System Sweep`) || get("relocatePygmyJanitor") === myAscensions()) &&
-      have($skill`Double Nanovision`),
-    prepare: () => {
-      // No need for more bowling progress after we beat the boss
-      if (get("hiddenBowlingAlleyProgress") >= 7 && have($item`bowling ball`))
-        putCloset($item`bowling ball`, itemAmount($item`bowling ball`));
-
-      // Open the hidden tavern if it is available.
-      if (get("hiddenTavernUnlock") < myAscensions() && have($item`book of matches`)) {
-        use($item`book of matches`);
-        buy($item`Bowl of Scorpions`);
-      }
-    },
-    do: $location`The Hidden Bowling Alley`,
-    combat: new CombatStrategy()
-      .killHard($monster`ancient protector spirit (The Hidden Bowling Alley)`)
-      .killItem($monster`pygmy bowler`)
-      .autoattack(new Macro().trySkill($skill`Infinite Loop`), $monster`drunk pygmy`)
-      .banish($monster`pygmy orderlies`),
-    outfit: {
-      modifier: "item",
-      avoid: $items`broken champagne bottle`,
-    },
-    choices: { 788: 1 },
-    limit: { soft: 15 },
-  },
-  {
     name: "Bowling",
     after: ["Open Bowling", "Banish Janitors"],
     ready: () => myMeat() >= 500,
@@ -393,7 +351,6 @@ const Bowling: Task[] = [
     combat: new CombatStrategy()
       .killHard($monster`ancient protector spirit (The Hidden Bowling Alley)`)
       .killItem($monster`pygmy bowler`)
-      .autoattack(new Macro().trySkill($skill`Infinite Loop`), $monster`drunk pygmy`)
       .macro(
         () =>
           Macro.externalIf(get("camelSpit") === 100, Macro.trySkill($skill`%fn, spit on them!`)),
@@ -447,7 +404,7 @@ export const HiddenQuest: Quest = {
     ...Bowling,
     {
       name: "Banish Janitors",
-      after: ["Bowling Skills"],
+      after: [],
       completed: () => get("relocatePygmyJanitor") === myAscensions(),
       do: $location`The Hidden Park`,
       outfit: { modifier: "-combat" },
@@ -465,8 +422,7 @@ export const HiddenQuest: Quest = {
       choices: { 791: 1 },
       combat: new CombatStrategy()
         .kill($monster`dense liana`)
-        .killHard($monster`Protector Spectre`)
-        .autoattack(new Macro().trySkill($skill`Infinite Loop`), $monster`dense liana`),
+        .killHard($monster`Protector Spectre`),
       limit: { tries: 4 },
       acquire: [{ item: $item`antique machete` }],
       boss: true,

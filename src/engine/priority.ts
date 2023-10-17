@@ -3,7 +3,7 @@
  */
 
 import { getCounter, Location, Monster } from "kolmafia";
-import { $effect, $item, $skill, get, getTodaysHolidayWanderers, have, undelay } from "libram";
+import { $effect, $item, get, getTodaysHolidayWanderers, have, undelay } from "libram";
 import { CombatStrategy } from "./combat";
 import { moodCompatible } from "./moods";
 import { Priority, Task } from "./task";
@@ -35,7 +35,6 @@ export class Priorities {
   static BadYR: Priority = { score: -16, reason: "Too early for yellow ray" };
   static BadSweat: Priority = { score: -20, reason: "Not enough sweat" };
   static BadProtonic: Priority = { score: -40, reason: "Protonic ghost here" };
-  static BadGoose: Priority = { score: 0, reason: "Goose not charged" };
   static BadMood: Priority = { score: -100, reason: "Wrong effects" };
   static Last: Priority = { score: -10000, reason: "Only if nothing else" };
 }
@@ -89,23 +88,6 @@ export class Prioritization {
       (have($effect`Prestidigysfunction`) || have($effect`Turned Into a Skeleton`)) &&
       task.combat &&
       task.combat.can("killItem")
-    ) {
-      result.priorities.add(Priorities.BadMood);
-    }
-
-    // Wait until we get a -combat skill before doing any -combat
-    if (
-      modifier?.includes("-combat") &&
-      !have($skill`Phase Shift`) &&
-      !(
-        // All these add up to -25 combat fine, no need to wait
-        (
-          have($item`Space Trip safety headphones`) &&
-          have($item`unbreakable umbrella`) &&
-          have($item`protonic accelerator pack`) &&
-          (!get("_olympicSwimmingPool") || have($effect`Silent Running`))
-        )
-      )
     ) {
       result.priorities.add(Priorities.BadMood);
     }

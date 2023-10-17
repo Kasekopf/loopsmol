@@ -1,16 +1,12 @@
 import {
-  abort,
   canFaxbot,
   chatPrivate,
   cliExecute,
   equippedAmount,
-  inHardcore,
-  initiativeModifier,
   isOnline,
   Item,
   itemAmount,
   Monster,
-  myFamiliar,
   myMeat,
   myTurncount,
   runCombat,
@@ -19,22 +15,10 @@ import {
   visitUrl,
   wait,
 } from "kolmafia";
-import {
-  $familiar,
-  $item,
-  $items,
-  $monster,
-  $skill,
-  CombatLoversLocket,
-  get,
-  have,
-  Macro,
-  set,
-} from "libram";
+import { $item, $items, $monster, $skill, CombatLoversLocket, get, have, set } from "libram";
 import { CombatStrategy } from "../engine/combat";
-import { atLevel, debug } from "../lib";
+import { debug } from "../lib";
 import { args } from "../args";
-import { Priorities } from "../engine/priority";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 import { yellowRayPossible } from "../engine/resources";
@@ -44,77 +28,6 @@ type SummonTarget = Omit<Task, "do" | "name" | "limit"> & {
   target: Monster;
 };
 const summonTargets: SummonTarget[] = [
-  {
-    target: $monster`pygmy witch lawyer`,
-    priority: () => Priorities.Start,
-    after: [],
-    completed: () => have($skill`Infinite Loop`),
-    acquire: [
-      {
-        item: $item`Arr, M80`,
-        num: 2,
-        useful: () =>
-          have($familiar`Vampire Vintner`) &&
-          have($item`cosmic bowling ball`) &&
-          have($item`unwrapped knock-off retro superhero cape`) &&
-          (!have($item`Lil' Doctor™ bag`) || get("_chestXRayUsed") >= 3),
-      },
-      {
-        // Backup plan if missing Vintner/bowling ball
-        item: $item`yellow rocket`,
-        num: 1,
-        useful: () =>
-          (!have($familiar`Vampire Vintner`) ||
-            !have($item`cosmic bowling ball`) ||
-            !have($item`unwrapped knock-off retro superhero cape`)) &&
-          (!have($item`Lil' Doctor™ bag`) || get("_chestXRayUsed") >= 3),
-      },
-    ],
-    prepare: () => {
-      if (
-        (equippedAmount($item`unwrapped knock-off retro superhero cape`) === 0 ||
-          myFamiliar() !== $familiar`Vampire Vintner`) &&
-        !have($item`yellow rocket`) &&
-        (equippedAmount($item`Lil' Doctor™ bag`) === 0 || get("_chestXRayUsed") >= 3)
-      )
-        abort("Not ready for pygmy locket");
-
-      if (initiativeModifier() < 50 && have($item`Clan VIP Lounge key`)) cliExecute("pool stylish");
-      if (initiativeModifier() < 50) abort("Not enough init for pygmy locket");
-    },
-    combat: new CombatStrategy().macro(
-      new Macro()
-        .trySkill($skill`Chest X-Ray`)
-        .tryItem($item`yellow rocket`)
-        .tryItem($item`cosmic bowling ball`)
-        .step("if hascombatitem 10769;use Arr;endif;") // Arr, M80; "use Arr, M80" trys and fails to funksling
-        .step("if hascombatitem 10769;use Arr;endif;")
-        .skill($skill`Pseudopod Slap`)
-        .repeat()
-    ),
-    outfit: () => {
-      if (have($item`Lil' Doctor™ bag`) && get("_chestXRayUsed") < 3) {
-        return {
-          modifier: "init",
-          equip: $items`Lil' Doctor™ bag, unwrapped knock-off retro superhero cape`,
-          modes: { retrocape: ["heck", "hold"] },
-        };
-      }
-
-      if (
-        have($familiar`Vampire Vintner`) &&
-        have($item`cosmic bowling ball`) &&
-        have($item`unwrapped knock-off retro superhero cape`)
-      )
-        return {
-          modifier: "init",
-          equip: $items`unwrapped knock-off retro superhero cape`,
-          modes: { retrocape: ["heck", "hold"] },
-          familiar: $familiar`Vampire Vintner`,
-        };
-      else return { modifier: "init, -1ML" }; // Just use yellow rocket
-    },
-  },
   {
     target: $monster`mountain man`,
     after: [],
@@ -166,40 +79,6 @@ const summonTargets: SummonTarget[] = [
         };
     },
     combat: new CombatStrategy().yellowRay(),
-  },
-  {
-    target: $monster`Spectral Jellyfish`,
-    after: [],
-    ready: () => atLevel(6),
-    completed: () => have($skill`Phase Shift`),
-    combat: new CombatStrategy().kill(),
-    outfit: {
-      equip: $items`unwrapped knock-off retro superhero cape`,
-      modes: { retrocape: ["heck", "hold"] },
-      modifier: "10 init, moxie",
-    },
-  },
-  {
-    target: $monster`anglerbush`,
-    after: [],
-    completed: () => have($skill`Ponzi Apparatus`),
-    combat: new CombatStrategy().kill(),
-  },
-  {
-    target: $monster`Big Wheelin' Twins`,
-    after: [],
-    ready: () => atLevel(11),
-    completed: () => have($skill`Overclocking`),
-    combat: new CombatStrategy().kill(),
-  },
-  {
-    target: $monster`white lion`,
-    after: ["Hidden City/Bowling Skills"],
-    ready: () => have($item`white page`),
-    completed: () => have($skill`Piezoelectric Honk`) || inHardcore() || !have($item`white page`),
-    choices: { 940: 2 },
-    outfit: { modifier: "item", avoid: $items`broken champagne bottle` },
-    combat: new CombatStrategy().killItem(),
   },
 ];
 

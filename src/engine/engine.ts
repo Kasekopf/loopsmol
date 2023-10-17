@@ -47,7 +47,6 @@ import {
   $locations,
   $monster,
   $path,
-  $skill,
   $slot,
   $stat,
   get,
@@ -141,13 +140,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     for (const task of completed_set) {
       if (!this.tasks_by_name.has(task)) debug(`Warning: Unknown completedtask ${task}`);
     }
-  }
-
-  public available(task: Task): boolean {
-    // Wait until we get Infinite Loop before doing most things
-    if (task.do instanceof Location && !have($skill`Infinite Loop`)) return false;
-
-    return super.available(task);
   }
 
   public hasDelay(task: Task): boolean {

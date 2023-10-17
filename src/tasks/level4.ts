@@ -39,10 +39,6 @@ export const BatQuest: Quest = {
       completed: () => step("questL04Bat") + itemAmount($item`sonar-in-a-biscuit`) >= 1,
       do: $location`Guano Junction`,
       ready: () => stenchPlanner.maximumPossible(true) >= 1,
-      priority: () =>
-        have($item`industrial fire extinguisher`) || have($skill`Double Nanovision`)
-          ? Priorities.None
-          : Priorities.BadMood,
       prepare: () => {
         if (numericModifier("stench resistance") < 1) ensureEffect($effect`Red Door Syndrome`);
         if (numericModifier("stench resistance") < 1)

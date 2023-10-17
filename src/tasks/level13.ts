@@ -431,12 +431,7 @@ export const TowerQuest: Quest = {
       completed: () => step("questL13Final") > 6,
       do: $location`Tower Level 1`,
       outfit: { familiar: $familiar`Shorter-Order Cook`, equip: $items`hot plate` },
-      combat: new CombatStrategy().macro(
-        new Macro()
-          .tryItem($item`beehive`)
-          .skill($skill`Grey Noise`)
-          .repeat()
-      ),
+      combat: new CombatStrategy().macro(new Macro().tryItem($item`beehive`)),
       boss: true,
       limit: { tries: 1 },
     },
