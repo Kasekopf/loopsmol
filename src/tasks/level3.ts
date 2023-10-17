@@ -1,5 +1,5 @@
 import { getProperty, numericModifier, runChoice, runCombat, visitUrl } from "kolmafia";
-import { $item, $items, $monster, get, have } from "libram";
+import { $item, $items, $monster, have } from "libram";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Priorities } from "../engine/priority";
@@ -32,15 +32,6 @@ export const TavernQuest: Quest = {
       name: "Basement",
       after: ["Tavernkeep"],
       completed: () => step("questL03Rat") >= 2,
-      priority: () =>
-        (atLevel(17) || !have($item`backup camera`)) &&
-        (!have($item`June cleaver`) ||
-          (get("_juneCleaverStench") >= 20 &&
-            get("_juneCleaverSpooky") >= 20 &&
-            get("_juneCleaverHot") >= 20 &&
-            get("_juneCleaverCold") >= 20))
-          ? Priorities.None
-          : Priorities.BadGoose, // Wait for backup camera to max out
       do: (): void => {
         visitUrl("cellar.php");
         const layout = getProperty("tavernLayout");
