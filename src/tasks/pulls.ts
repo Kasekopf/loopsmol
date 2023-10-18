@@ -55,7 +55,7 @@ export const pulls: PullSpec[] = [
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;
     },
-    name: "Legend Food"
+    name: "Legend Food",
   },
   {
     pull: $item`Ol' Scratch's salad fork`,
@@ -80,8 +80,14 @@ export const pulls: PullSpec[] = [
   },
   {
     name: "Key Zappable",
-    pull: () => keyStrategy.getZapChoice(),
+    pull: () => keyStrategy.getZapChoice(0),
     useful: () => keyStrategy.useful(Keys.Zap),
+    duplicate: true,
+  },
+  {
+    name: "Key Zappable 2",
+    pull: () => keyStrategy.getZapChoice(1),
+    useful: () => keyStrategy.useful(Keys.Zap2),
     duplicate: true,
   },
   // Other adventure pulls
@@ -94,7 +100,7 @@ export const pulls: PullSpec[] = [
   },
   // Survivability pulls
   {
-    pull: $item`nurse's hat`
+    pull: $item`nurse's hat`,
   },
   {
     pull: $item`sea salt scrubs`,
@@ -235,7 +241,7 @@ class Pull {
         const result = pull();
         if (result === undefined || result instanceof Item) return [result];
         return result;
-      }
+      };
     } else {
       this.items = () => pull;
     }
