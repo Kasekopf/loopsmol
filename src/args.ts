@@ -113,7 +113,7 @@ export const args = Args.create(
       }),
       halt: Args.number({
         help: "Halt when you have this number of adventures remaining or fewer",
-        default: 5,
+        default: 0,
       }),
     }),
   },
