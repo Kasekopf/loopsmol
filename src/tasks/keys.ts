@@ -39,7 +39,7 @@ import { step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { args } from "../args";
 import { trainSetAvailable } from "./misc";
-import { haveFlorest } from "../lib";
+import { haveFlorest, underStandard } from "../lib";
 
 export enum Keys {
   Deck = "Deck",
@@ -47,6 +47,7 @@ export enum Keys {
   Dungeon = "Daily Dungeon",
   Fantasy = "Fantasy",
   Zap = "Zap",
+  Zap2 = "Zap2",
 }
 
 type KeyTask = Omit<Task, "name"> & { which: Keys; possible: () => boolean | undefined };
@@ -71,6 +72,7 @@ const heroKeys: KeyTask[] = [
   {
     which: Keys.Malware,
     possible: () =>
+      !underStandard() &&
       !get("dailyDungeonDone") &&
       !get("_dailyDungeonMalwareUsed") &&
       ((!inHardcore() && (pullsRemaining() > 0 || myTurncount() >= 1000)) ||
@@ -170,7 +172,7 @@ const heroKeys: KeyTask[] = [
   },
   {
     which: Keys.Fantasy,
-    possible: () => get("frAlways") || get("_frToday"),
+    possible: () => (get("frAlways") || get("_frToday")) && !underStandard(),
     after: ["Misc/Open Fantasy"],
     completed: () => $location`The Bandit Crossroads`.turnsSpent >= 5,
     do: $location`The Bandit Crossroads`,
@@ -185,13 +187,27 @@ const heroKeys: KeyTask[] = [
   {
     which: Keys.Zap,
     possible: () => get("lastZapperWandExplosionDay") <= 0,
-    after: ["Wand/Wand"],
+    after: ["Wand/Wand", "Pull/Key Zappable"],
     completed: () => get("lastZapperWandExplosionDay") >= 1 || get("_zapCount") >= 1,
     do: () => {
-      unequipAcc(keyStrategy.getZapChoice());
-      if (!have(keyStrategy.getZapChoice()) && myTurncount() >= 1000)
-        buy(keyStrategy.getZapChoice(), 1, 100000);
-      cliExecute(`zap ${keyStrategy.getZapChoice()}`);
+      unequipAcc(keyStrategy.getZapChoice(0));
+      if (!have(keyStrategy.getZapChoice(0)) && myTurncount() >= 1000)
+        buy(keyStrategy.getZapChoice(0), 1, 100000);
+      cliExecute(`zap ${keyStrategy.getZapChoice(0)}`);
+    },
+    limit: { tries: 1 },
+    freeaction: true,
+  },
+  {
+    which: Keys.Zap2,
+    possible: () => get("lastZapperWandExplosionDay") <= 0,
+    after: ["Wand/Wand", "Keys/Zap", "Pull/Key Zappable 2"],
+    completed: () => get("lastZapperWandExplosionDay") >= 1 || get("_zapCount") >= 2,
+    do: () => {
+      unequipAcc(keyStrategy.getZapChoice(1));
+      if (!have(keyStrategy.getZapChoice(1)) && myTurncount() >= 1000)
+        buy(keyStrategy.getZapChoice(1), 1, 100000);
+      cliExecute(`zap ${keyStrategy.getZapChoice(1)}`);
     },
     limit: { tries: 1 },
     freeaction: true,
@@ -209,7 +225,7 @@ enum KeyState {
 class KeyStrategy {
   plan = new Map<Keys, KeyState>();
   tasks: KeyTask[];
-  zap_choice?: Item;
+  zap_choice?: Item[];
 
   constructor(tasks: KeyTask[]) {
     this.tasks = tasks;
@@ -260,11 +276,11 @@ class KeyStrategy {
     return false;
   }
 
-  public getZapChoice(): Item {
+  public getZapChoice(which: 0 | 1): Item {
     if (!this.zap_choice) {
       this.zap_choice = makeZapChoice();
     }
-    return this.zap_choice;
+    return this.zap_choice[which];
   }
 }
 export const keyStrategy = new KeyStrategy(heroKeys);
@@ -466,12 +482,14 @@ function unequipAcc(acc: Item): void {
   }
 }
 
-function makeZapChoice(): Item {
+function makeZapChoice(): Item[] {
+  function _retrieval_cost(option: Item): number {
+    if (have(option)) return -2;
+    if (storageAmount(option) > 0) return -1;
+    return mallPrice(option);
+  }
   const options = $items`Boris's ring, Jarlsberg's earring, Sneaky Pete's breath spray`;
-  for (const option of options) if (have(option)) return option;
-  for (const option of options) if (storageAmount(option) > 0) return option;
-  // If we don't have any of the zappables, just buy the lowest priced one
-  return options.sort((i, j) => mallPrice(i) - mallPrice(j))[0];
+  return options.sort((i, j) => _retrieval_cost(i) - _retrieval_cost(j));
 }
 
 function min(a: number, b: number) {
