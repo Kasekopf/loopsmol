@@ -140,7 +140,8 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${
+          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },
@@ -217,8 +218,7 @@ export const SummonQuest: Quest = {
     return {
       ...task,
       name: task.target.name.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase()), // capitalize first letter of each word
-      ready: () =>
-        (task.ready?.() ?? true) && summonStrategy.sourceReadyFor(task.target),
+      ready: () => (task.ready?.() ?? true) && summonStrategy.sourceReadyFor(task.target),
       do: () => {
         // Perform the actual summon
         const source = summonStrategy.getSourceFor(task.target);
