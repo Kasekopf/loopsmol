@@ -5,10 +5,13 @@ import {
   isUnrestricted,
   Item,
   itemAmount,
+  myAdventures,
+  myDaycount,
+  myFullness,
+  myInebriety,
   myMeat,
   myTurncount,
   pullsRemaining,
-  retrieveItem,
   storageAmount,
 } from "kolmafia";
 import { $familiar, $item, $items, $skill, get, have, set } from "libram";
@@ -35,10 +38,42 @@ type PullSpec = {
   duplicate?: boolean;
   post?: () => void;
   description?: string;
-} & ({ pull: Item } | { pull: Item[] | (() => Item | undefined); name: string });
+} & ({ pull: Item } | { pull: Item[] | (() => Item | Item[] | undefined); name: string });
 
 export const pulls: PullSpec[] = [
-  // Always pull the key items first
+  // Food
+  {
+    pull: () => {
+      const options = [];
+      if (!get("calzoneOfLegendEaten")) options.push($item`Calzone of Legend`);
+      if (!get("deepDishOfLegendEaten")) options.push($item`Pizza of Legend`);
+      if (!get("pizzaOfLegendEaten")) options.push($item`Deep Dish of Legend`);
+      return options;
+    },
+    useful: () => {
+      if (myFullness() >= 1) return false;
+      if (myDaycount() > 1 && myAdventures() > 5) return undefined;
+      return true;
+    },
+    name: "Legend Food"
+  },
+  {
+    pull: $item`Ol' Scratch's salad fork`,
+    useful: () => {
+      if (myFullness() >= 1) return false;
+      if (myDaycount() > 1 && myAdventures() > 5) return undefined;
+      return true;
+    },
+  },
+  {
+    pull: $item`Frosty's frosty mug`,
+    useful: () => {
+      if (myInebriety() >= 1) return false;
+      if (myDaycount() > 1 && myAdventures() > 5) return undefined;
+      return true;
+    },
+  },
+  // Hero keys
   {
     pull: $item`daily dungeon malware`,
     useful: () => keyStrategy.useful(Keys.Malware),
@@ -49,6 +84,23 @@ export const pulls: PullSpec[] = [
     useful: () => keyStrategy.useful(Keys.Zap),
     duplicate: true,
   },
+  // Other adventure pulls
+  {
+    pull: $item`mafia thumb ring`,
+    optional: true,
+  },
+  {
+    pull: $item`carnivorous potted plant`,
+  },
+  // Survivability pulls
+  {
+    pull: $item`nurse's hat`
+  },
+  {
+    pull: $item`sea salt scrubs`,
+    useful: () => have($skill`Torso Awareness`),
+  },
+  // General pulls
   {
     pull: $item`lucky gold ring`,
     useful: () => args.minor.lgr,
@@ -108,33 +160,10 @@ export const pulls: PullSpec[] = [
       storageAmount($item`Space Trip safety headphones`) === 0 &&
       !have($item`protonic accelerator pack`),
   },
-  {
-    pull: $items`warbear long johns, square sponge pants`,
-    useful: () => !have($item`designer sweatpants`),
-    name: "MP Regen Pants",
-  },
-  {
-    pull: $items`plastic vampire fangs, warbear goggles, burning newspaper`,
-    useful: () =>
-      !have($item`designer sweatpants`) &&
-      get("greyYouPoints") < 11 &&
-      !have($item`burning paper slippers`),
-    post: () => {
-      if (have($item`burning newspaper`)) retrieveItem($item`burning paper slippers`);
-    },
-    name: "Max HP with low path progression",
-  },
-  { pull: $item`mafia thumb ring`, optional: true },
   { pull: $item`portable cassette player` },
   { pull: $item`antique machete` },
   { pull: $item`book of matches` },
   { pull: $items`Space Trip safety headphones, HOA regulation book`, name: "-ML", optional: true },
-  { pull: $item`yule hatchet` },
-  {
-    pull: $item`grey down vest`,
-    useful: () => !have($skill`Summon Clip Art`) || get("tomeSummons") >= 3,
-  },
-  { pull: $item`teacher's pen`, duplicate: true },
   { pull: $item`blackberry galoshes`, useful: () => step("questL11Black") < 2 },
   { pull: $item`Buddy Bjorn`, useful: () => yellowSubmarinePossible(true), optional: true },
   {
@@ -202,7 +231,11 @@ class Pull {
     if (pull instanceof Item) {
       this.items = () => [pull];
     } else if (typeof pull === "function") {
-      this.items = () => [pull()];
+      this.items = () => {
+        const result = pull();
+        if (result === undefined || result instanceof Item) return [result];
+        return result;
+      }
     } else {
       this.items = () => pull;
     }
