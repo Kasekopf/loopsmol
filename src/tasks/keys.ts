@@ -379,7 +379,7 @@ export const DigitalQuest: Quest = {
     },
     {
       name: "Vanya",
-      after: ["Open", "Summon/Big Wheelin' Twins"],
+      after: ["Open"],
       completed: () => getScore() >= 10000,
       prepare: () => {
         if (
