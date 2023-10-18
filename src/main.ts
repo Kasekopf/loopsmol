@@ -16,7 +16,7 @@ import { all_tasks } from "./tasks/all";
 import { prioritize } from "./route";
 import { Engine } from "./engine/engine";
 import { convertMilliseconds, debug } from "./lib";
-import { $item, $path, get, set, sinceKolmafiaRevision } from "libram";
+import { $path, get, set, sinceKolmafiaRevision } from "libram";
 import { Prioritization } from "./engine/priority";
 import { Args, step } from "grimoire-kolmafia";
 import { checkRequirements } from "./sim";
@@ -46,11 +46,9 @@ export function main(command?: string): void {
   printVersionInfo();
   if (args.version) return;
 
-  if (myPath() !== $path`Grey You` && !args.debug.list)
-    throw `You are not currently in a Grey You run. Please start one.`;
-
-  // Adapt depreciated args
-  if (args.minor.asdon) args.major.swapworkshed = $item`Asdon Martin keyfob`;
+  // eslint-disable-next-line libram/verify-constants
+  if (myPath() !== $path`A Shrunken Adventurer Am I` && !args.debug.list)
+    throw `You are not currently in a Shrunken Adventurer run. Please start one.`;
 
   const set_time_now = get(time_property, -1) === -1;
   if (set_time_now) set(time_property, gametimeToInt());
@@ -95,9 +93,7 @@ export function main(command?: string): void {
   }
 
   if (step("questL13Final") > 11) {
-    print("Grey you complete!", "purple");
-  } else {
-    print("Grey you partially complete! Rerun after ronin ends.", "purple");
+    print("Shrunken Adventurer complete!", "purple");
   }
   print(`   Adventures used: ${turnsPlayed()}`, "purple");
   print(`   Adventures remaining: ${myAdventures()}`, "purple");
@@ -124,7 +120,8 @@ export function main(command?: string): void {
 }
 
 function runComplete(): boolean {
-  return step("questL13Final") > 11 || myPath() !== $path`Grey You`;
+  // eslint-disable-next-line libram/verify-constants
+  return step("questL13Final") > 11 || myPath() !== $path`A Shrunken Adventurer Am I`;
 }
 
 function printVersionInfo(): void {

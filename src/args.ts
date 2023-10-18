@@ -11,7 +11,7 @@ const worksheds = [
 
 export const args = Args.create(
   "loopsmol",
-  'This is a script to complete Grey You Softcore runs. Run "loopsmol sim" without quotes to check if this script will work for you.\n\nYou must ascend manually into a Grey You Softcore run before running the script. The cold medicine cabinet is required in your workshed. Prefer the Vole sign until you have finished most of the path progression. Astral mask or astral belt are both useful, but neither is required. Prefer candles for your eurdora.\n\nThe arguments accepted by the script are listed below. Note that you can combine multiple options; for example "loopsmol pulls=18 tune=blender" will save 2 pulls and switch moon sign to Blender during the run. Most options also have an associated setting to set an option permanently; for example "set loopsmol_pulls=18" will cause the script to always save 2 pulls (unless overriden by using the pulls option at runtime).',
+  'This is a script to complete Shrunken Adventurer Softcore runs. Run "loopsmol sim" without quotes to check if this script will work for you.\n\nYou must ascend manually into a Shrunken Adventurer Softcore run before running the script. Seal Clubber under a Vole sign is recommended for now. Astral mask or astral belt are both useful, but neither is required.\n\nThe arguments accepted by the script are listed below. Note that you can combine multiple options; for example "loopsmol pulls=18 tune=blender" will save 2 pulls and switch moon sign to Blender during the run. Most options also have an associated setting to set an option permanently; for example "set loopsmol_pulls=18" will cause the script to always save 2 pulls (unless overriden by using the pulls option at runtime).',
   {
     sim: Args.flag({ help: "Check if you have the requirements to run this script.", setting: "" }),
     version: Args.flag({ help: "Show script version and exit.", setting: "" }),
@@ -39,11 +39,6 @@ export const args = Args.create(
       lgr: Args.flag({
         help: "Pull a lucky gold ring. If pulled, it will be equipped during many combats.",
         default: false,
-      }),
-      asdon: Args.flag({
-        help: "Pull an Asdon Martin keyfob. If pulled, it will be used to replace the cold medicine cabinet once all Extrovermectin™ have been obtained.",
-        default: false,
-        hidden: true,
       }),
       jellies: Args.flag({
         help: "Use your Space Jellyfish to get stench jellies during the war (this may reduce your goose familiar exp).",
