@@ -9,6 +9,7 @@ import {
   Monster,
   myMeat,
   myTurncount,
+  reverseNumberology,
   runCombat,
   use,
   visitUrl,
@@ -27,6 +28,19 @@ type SummonTarget = Omit<Task, "do" | "name" | "limit"> & {
   target: Monster;
 };
 const summonTargets: SummonTarget[] = [
+  {
+    target: $monster`War Frat 151st Infantryman`,
+    completed: () =>
+      have($item`beer helmet`) &&
+      have($item`distressed denim pants`) &&
+      have($item`bejeweled pledge pin`),
+    after: [],
+    outfit: {
+      equip: $items`unwrapped knock-off retro superhero cape`,
+      modes: { retrocape: ["heck", "hold"] },
+    },
+    combat: new CombatStrategy().forceItems(),
+  },
   {
     target: $monster`mountain man`,
     after: [],
@@ -84,10 +98,22 @@ const summonTargets: SummonTarget[] = [
 type SummonSource = {
   name: string;
   available: () => number;
+  ready?: () => boolean;
   canFight: (mon: Monster) => boolean;
   summon: (mon: Monster) => void;
 };
 const summonSources: SummonSource[] = [
+  {
+    name: "Numberology",
+    available: () => {
+      if (get("skillLevel144") === 0) return 0;
+      if (get("_universeCalculated") === 3) return 0;
+      return get("_universeCalculated") < get("skillLevel144") ? 1 : 0;
+    },
+    ready: () => Object.values(reverseNumberology()).includes(51),
+    canFight: (mon: Monster) => mon === $monster`War Frat 151st Infantryman`, // Only use for war frat
+    summon: () => cliExecute("numberology 51"),
+  },
   {
     name: "Cargo Shorts",
     available: () => (have($item`Cargo Cultist Shorts`) && !get("_cargoPocketEmptied") ? 1 : 0),
@@ -114,8 +140,7 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${
-          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },
@@ -176,6 +201,13 @@ class SummonStrategy {
   public getSourceFor(monster: Monster): SummonSource | undefined {
     return this.plan.get(monster);
   }
+
+  public sourceReadyFor(monster: Monster): boolean {
+    const source = this.getSourceFor(monster);
+    if (source === undefined) return false;
+    if (source.ready === undefined) return true;
+    return source.ready();
+  }
 }
 export const summonStrategy = new SummonStrategy(summonTargets, summonSources);
 
@@ -186,7 +218,7 @@ export const SummonQuest: Quest = {
       ...task,
       name: task.target.name.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase()), // capitalize first letter of each word
       ready: () =>
-        (task.ready?.() ?? true) && summonStrategy.getSourceFor(task.target) !== undefined,
+        (task.ready?.() ?? true) && summonStrategy.sourceReadyFor(task.target),
       do: () => {
         // Perform the actual summon
         const source = summonStrategy.getSourceFor(task.target);

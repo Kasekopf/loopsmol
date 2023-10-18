@@ -457,7 +457,12 @@ export const WarQuest: Quest = {
     {
       name: "Outfit Hippy",
       after: ["Misc/Unlock Island"],
-      completed: () => have($item`filthy corduroys`) && have($item`filthy knitted dread sack`),
+      completed: () => (
+        have($item`filthy corduroys`) && have($item`filthy knitted dread sack`)
+      ) || (
+          have($item`beer helmet`) &&
+          have($item`distressed denim pants`) &&
+          have($item`bejeweled pledge pin`)),
       do: $location`Hippy Camp`,
       limit: { soft: 10 },
       choices: {
@@ -541,8 +546,8 @@ export const WarQuest: Quest = {
             !have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)
               ? $familiar`Patriotic Eagle`
               : args.minor.jellies
-              ? $familiar`Space Jellyfish`
-              : undefined,
+                ? $familiar`Space Jellyfish`
+                : undefined,
         },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
