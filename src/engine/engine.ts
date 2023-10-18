@@ -21,7 +21,6 @@ import {
   print,
   printHtml,
   restoreHp,
-  restoreMp,
   Slot,
   totalTurnsPlayed,
   toUrl,
@@ -84,7 +83,7 @@ import { removeTeleportitis, teleportitisTask } from "../tasks/misc";
 import { summonStrategy } from "../tasks/summons";
 import { pullStrategy } from "../tasks/pulls";
 import { keyStrategy } from "../tasks/keys";
-import { applyEffects } from "./moods";
+import { applyEffects, customRestoreMp } from "./moods";
 
 export const wanderingNCs = new Set<string>([
   "Wooof! Wooooooof!",
@@ -738,15 +737,6 @@ function resetBadOrb(): boolean {
   }
 
   return false;
-}
-
-export function customRestoreMp(target: number) {
-  if (myMp() >= target) return;
-  if (get("sweat", 0) >= 80) {
-    // Use visit URL to avoid needing to equip the pants
-    visitUrl("runskillz.php?action=Skillz&whichskill=7420&targetplayer=0&pwd&quantity=1");
-  }
-  restoreMp(target);
 }
 
 function ensureRecovery(property: string, items: string[], avoid: string[]): string {

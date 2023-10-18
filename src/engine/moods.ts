@@ -7,16 +7,20 @@ import {
   getInventory,
   getWorkshed,
   Item,
+  mpCost,
   myMaxmp,
   myMp,
   numericModifier,
+  restoreMp,
   Slot,
+  toSkill,
   toSlot,
+  visitUrl,
 } from "kolmafia";
 import {
   $effect,
+  $effects,
   $item,
-  $skill,
   $slot,
   AsdonMartin,
   ensureEffect,
@@ -24,29 +28,32 @@ import {
   have,
   uneffect,
 } from "libram";
-import { customRestoreMp } from "./engine";
 import { asdonFillTo, asdonFualable } from "./resources";
+import { underStandard } from "../lib";
 
 function getRelevantEffects(): { [modifier: string]: Effect[] } {
-  const result: { [name: string]: Effect[] } = {
-    "-combat": [],
-    "+combat": [],
-    " combat": [], // Maximizer has issues with "50 +combat" and similar
+  const result = {
+    "-combat": $effects`Smooth Movements, The Sonata of Sneakiness`,
+    "+combat": $effects`Carlweather's Cantata of Confrontation, Musk of the Moose`,
+    "": $effects`Empathy, Leash of Linguini, Astral Shell, Elemental Saucesphere`,
+    "fam weight": $effects`Chorale of Companionship`,
+    init: $effects`Walberg's Dim Bulb, Springy Fusilli`,
+    ML: $effects`Ur-Kel's Aria of Annoyance, Pride of the Puffin, Drescher's Annoying Noise`,
+    item: $effects`Fat Leon's Phat Loot Lyric, Singer's Faithful Ocelot`,
+    meat: $effects`Polka of Plenty`,
+    mainstat: $effects`Big, Tomato Power, Trivia Master, Gr8ness, Carol of the Hells, Carol of the Thrills`,
+    muscle: $effects`Go Get 'Em\, Tiger!, Phorcefullness, Incredibly Hulking`,
+    mysticality: $effects`Glittering Eyelashes, Mystically Oiled, On the Shoulders of Giants`,
+    moxie: $effects`Butt-Rock Hair, Superhuman Sarcasm, Cock of the Walk`,
+    " combat": [] as Effect[],
   };
 
   if (
     have($item`Clan VIP Lounge key`) &&
+    !underStandard() &&
     (!get("_olympicSwimmingPool") || have($effect`Silent Running`))
   )
     result["-combat"].push($effect`Silent Running`);
-
-  // Noncombat/combat buffs
-  if (have($skill`Smooth Movement`)) result["-combat"].push($effect`Smooth Movements`);
-  if (have($skill`The Sonata of Sneakiness`))
-    result["-combat"].push($effect`The Sonata of Sneakiness`);
-  if (have($skill`Musk of the Moose`)) result["+combat"].push($effect`Musk of the Moose`);
-  if (have($skill`Carlweather's Cantata of Confrontation`))
-    result["+combat"].push($effect`Carlweather's Cantata of Confrontation`);
 
   result[" combat"] = result["+combat"];
   return result;
@@ -88,17 +95,15 @@ export function applyEffects(modifier: string): void {
     shrug(relevantEffects["-combat"]);
   if (modifier.includes("-combat")) shrug(relevantEffects["+combat"]);
 
-  const mpcosts = new Map<Effect, number>([
-    // TODO: get mp costs for more skills
-  ]);
-
   // Apply all relevant effects
   const hotswapped: [Slot, Item][] = []; //
   for (const effect of useful_effects) {
     if (have(effect)) continue;
+    const skill = toSkill(effect);
+    if (skill !== undefined && !have(skill)) continue; // skip
 
     // If we don't have the MP for this effect, hotswap some equipment
-    const mpcost = mpcosts.get(effect) ?? 0;
+    const mpcost = mpCost(skill);
     if (mpcost > myMaxmp()) {
       hotswapped.push(...swapEquipmentForMp(mpcost));
     }
@@ -152,4 +157,13 @@ export function swapEquipmentForMp(mpgoal: number): [Slot, Item][] {
     equip(slot, slot_options[0]);
   }
   return hotswapped;
+}
+
+export function customRestoreMp(target: number) {
+  if (myMp() >= target) return;
+  if (get("sweat", 0) >= 80) {
+    // Use visit URL to avoid needing to equip the pants
+    visitUrl("runskillz.php?action=Skillz&whichskill=7420&targetplayer=0&pwd&quantity=1");
+  }
+  restoreMp(target);
 }
