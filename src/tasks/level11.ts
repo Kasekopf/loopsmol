@@ -144,7 +144,7 @@ const Desert: Task[] = [
     name: "Oasis Drum",
     after: ["Compass"],
     ready: () => have($item`worm-riding hooks`) || itemAmount($item`worm-riding manual page`) >= 15,
-    priority: () => (have($effect`Ultrahydrated`) ? Priorities.Effect : Priorities.None),
+    priority: () => (have($effect`Ultrahydrated`) ? Priorities.MinorEffect : Priorities.None),
     completed: () =>
       get("desertExploration") >= 100 ||
       have($item`drum machine`) ||
@@ -190,7 +190,7 @@ const Desert: Task[] = [
       !have($item`worm-riding hooks`) &&
       ((!get("oasisAvailable", false) && !have($effect`A Girl Named Sue`)) ||
         have($effect`Ultrahydrated`)),
-    priority: () => (have($effect`Ultrahydrated`) ? Priorities.Effect : Priorities.None),
+    priority: () => (have($effect`Ultrahydrated`) ? Priorities.MinorEffect : Priorities.None),
     completed: () => get("desertExploration") >= 100,
     do: $location`The Arid, Extra-Dry Desert`,
     outfit: (): OutfitSpec => {
