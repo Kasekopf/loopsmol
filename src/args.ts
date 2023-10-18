@@ -20,9 +20,6 @@ export const args = Args.create(
         help: "Number of pulls to use. Lower this if you would like to save some pulls to use for in-ronin farming. (Note that this argument is not needed if you pull all your farming items before running the script).",
         default: 20,
       }),
-      tune: Args.string({
-        help: "Use your hewn moon-rune spoon to retune to this sign when optimal.",
-      }),
       workshed: Args.item({
         help: "Workshed item to place in an empty workshed at the start of the run.",
         default: $item`model train set`,

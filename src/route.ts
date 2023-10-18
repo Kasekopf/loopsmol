@@ -20,7 +20,6 @@ export const routing: string[] = [
   // Get initial -combat
   "Knob/Start",
   "McLargeHuge/Trapper Request",
-  "Misc/Retune Moon",
 
   // Unlock island to start YRing
   "Misc/Unlock Island Submarine",
@@ -37,7 +36,6 @@ export const routing: string[] = [
   "Hidden City/Open Temple",
 
   "Hidden City/Open City",
-  "Misc/Fortune",
 
   // Aim for remaining pygmies
   "War/Flyers Start", // Start the war and get flyers

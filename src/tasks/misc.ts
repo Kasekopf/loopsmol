@@ -1,14 +1,12 @@
 import { CombatStrategy } from "../engine/combat";
 import {
   adv1,
-  canadiaAvailable,
   cliExecute,
   equippedAmount,
   familiarWeight,
   gamedayToInt,
   getCampground,
   getWorkshed,
-  gnomadsAvailable,
   haveEquipped,
   hermit,
   hippyStoneBroken,
@@ -20,10 +18,8 @@ import {
   myBasestat,
   myHp,
   myMaxhp,
-  myMaxmp,
   myMeat,
   myPrimestat,
-  mySign,
   myTurncount,
   numericModifier,
   print,
@@ -496,88 +492,6 @@ export const MiscQuest: Quest = {
         get("_boomBoxSongsLeft") === 0,
       do: () => cliExecute("boombox meat"),
       freeaction: true,
-      limit: { tries: 1 },
-    },
-    {
-      name: "Gnome Shirt",
-      after: [],
-      ready: () =>
-        (myMeat() >= 11000 || (myMeat() >= 6000 && getWorkshed() === $item`model train set`)) &&
-        gnomadsAvailable(),
-      completed: () => have($skill`Torso Awareness`),
-      priority: () => Priorities.Free,
-      freeaction: true,
-      do: () => {
-        visitUrl("gnomes.php?action=trainskill&whichskill=12");
-      },
-      limit: { tries: 1 },
-    },
-    {
-      name: "Gnome Items",
-      after: ["Gnome Shirt"],
-      ready: () => myMeat() >= 11000 && gnomadsAvailable(),
-      completed: () => have($skill`Powers of Observatiogn`),
-      priority: () => Priorities.Free,
-      freeaction: true,
-      do: () => {
-        visitUrl("gnomes.php?action=trainskill&whichskill=10");
-      },
-      limit: { tries: 1 },
-    },
-    {
-      name: "Tune from Muscle",
-      after: ["Unlock Beach", "Bugbear Outfit"],
-      ready: () =>
-        knollAvailable() &&
-        (mySign() !== "Vole" ||
-          ((myMaxmp() - numericModifier("Maximum MP") >= 50 ||
-            (myMaxmp() - numericModifier("Maximum MP") >= 40 && have($item`birch battery`))) &&
-            myMaxhp() - numericModifier("Maximum HP") >= 40 &&
-            myMeat() >= 6000)),
-      completed: () =>
-        !have($item`hewn moon-rune spoon`) ||
-        args.major.tune === undefined ||
-        get("moonTuned", false),
-      priority: () => Priorities.Free,
-      freeaction: true,
-      do: () => cliExecute(`spoon ${args.major.tune}`),
-      limit: { tries: 1 },
-    },
-    {
-      name: "Tune from Myst",
-      after: [],
-      ready: () => canadiaAvailable(),
-      completed: () =>
-        !have($item`hewn moon-rune spoon`) ||
-        args.major.tune === undefined ||
-        get("moonTuned", false),
-      priority: () => Priorities.Free,
-      freeaction: true,
-      do: () => cliExecute(`spoon ${args.major.tune}`),
-      limit: { tries: 1 },
-    },
-    {
-      name: "Tune from Moxie",
-      after: ["Gnome Shirt", "Gnome Items"],
-      ready: () => gnomadsAvailable(),
-      completed: () =>
-        !have($item`hewn moon-rune spoon`) ||
-        args.major.tune === undefined ||
-        get("moonTuned", false),
-      priority: () => Priorities.Free,
-      freeaction: true,
-      do: () => cliExecute(`spoon ${args.major.tune}`),
-      limit: { tries: 1 },
-    },
-    {
-      name: "Retune Moon",
-      after: ["Tune from Muscle", "Tune from Myst", "Tune from Moxie"],
-      ready: () => false,
-      completed: () =>
-        !have($item`hewn moon-rune spoon`) ||
-        args.major.tune === undefined ||
-        get("moonTuned", false),
-      do: () => false,
       limit: { tries: 1 },
     },
     {
