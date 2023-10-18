@@ -87,6 +87,8 @@ export function equipInitial(outfit: Outfit): void {
     if (get("_roboDrinks").toLowerCase().includes("drive-by shooting"))
       outfit.equip($familiar`Robortender`);
     outfit.equip($familiar`Hobo Monkey`);
+    // eslint-disable-next-line libram/verify-constants
+    outfit.equip($familiar`Jill-of-All-Trades`);
     outfit.equip($familiar`Leprechaun`); // backup
   }
   if (modifier.includes("+combat") && !modifier.includes("res"))
@@ -145,6 +147,9 @@ export function equipDefaults(outfit: Outfit): void {
   if (outfit.familiar === $familiar`Melodramedary` && get("camelSpit") < 100)
     outfit.equip($item`dromedary drinking helmet`);
 
+  // eslint-disable-next-line libram/verify-constants
+  outfit.equip($familiar`Jill-of-All-Trades`);
+
   if (outfit.skipDefaults) return;
 
   const modifier = getModifiersFrom(outfit);
@@ -166,7 +171,11 @@ export function equipDefaults(outfit: Outfit): void {
     // Allow for sombrero-mounted sparkler
     outfit.equip($item`nurse's hat`);
   }
-  if (!have($item`Jurassic Parka`) || !have($skill`Torso Awareness`)) {
+  if (
+    !have($item`Jurassic Parka`) ||
+    !have($skill`Torso Awareness`) ||
+    (!modifier.includes("-combat") && !modifier.includes("meat") && !modifier.includes("ML"))
+  ) {
     outfit.equip($item`sea salt scrubs`);
   }
 

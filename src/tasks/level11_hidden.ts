@@ -404,7 +404,7 @@ export const HiddenQuest: Quest = {
     ...Bowling,
     {
       name: "Banish Janitors",
-      after: [],
+      after: ["Open City"],
       completed: () => get("relocatePygmyJanitor") === myAscensions(),
       do: $location`The Hidden Park`,
       outfit: { modifier: "-combat" },
