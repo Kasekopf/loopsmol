@@ -58,7 +58,7 @@ import { Outfit, OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { Engine, wanderingNCs } from "../engine/engine";
 import { Keys, keyStrategy } from "./keys";
-import { atLevel } from "../lib";
+import { atLevel, underStandard } from "../lib";
 import { args } from "../args";
 import { coldPlanner, yellowSubmarinePossible } from "../engine/outfit";
 import {
@@ -509,7 +509,7 @@ export const MiscQuest: Quest = {
     {
       name: "Open Fantasy",
       after: [],
-      ready: () => get("frAlways") || get("_frToday"),
+      ready: () => (get("frAlways") || get("_frToday")) && !underStandard(),
       completed: () => have($item`FantasyRealm G. E. M.`),
       do: () => {
         visitUrl("place.php?whichplace=realm_fantasy&action=fr_initcenter");
@@ -705,7 +705,7 @@ export const MiscQuest: Quest = {
       name: "Harvest Chateau",
       after: [],
       priority: () => Priorities.Free,
-      ready: () => get("chateauAvailable"),
+      ready: () => get("chateauAvailable") && !underStandard(),
       completed: () => get("_chateauDeskHarvested"),
       do: (): void => {
         visitUrl("place.php?whichplace=chateau&action=chateau_desk2");
