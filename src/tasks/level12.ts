@@ -96,7 +96,6 @@ const Lighthouse: Task[] = [
       !have($item`Fourth of May Cosplay Saber`),
     priority: (): Priority => {
       if (AutumnAton.have()) {
-        if (myBasestat($stat`Moxie`) < 200) return Priorities.BadMood;
         if ($location`Sonofa Beach`.turnsSpent === 0) return Priorities.GoodAutumnaton;
         else if (myTurncount() < 400) return Priorities.BadAutumnaton;
       }
@@ -191,7 +190,6 @@ const Junkyard: Task[] = [
     name: "Junkyard Hammer",
     after: ["Junkyard Start"],
     completed: () => have($item`molybdenum hammer`) || get("sidequestJunkyardCompleted") !== "none",
-    priority: () => (myBasestat($stat`Moxie`) < 300 ? Priorities.BadMood : Priorities.None),
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: $location`Next to that Barrel with Something Burning in it`,
@@ -216,7 +214,6 @@ const Junkyard: Task[] = [
     after: ["Junkyard Start"],
     completed: () =>
       have($item`molybdenum crescent wrench`) || get("sidequestJunkyardCompleted") !== "none",
-    priority: () => (myBasestat($stat`Moxie`) < 300 ? Priorities.BadMood : Priorities.None),
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: $location`Over Where the Old Tires Are`,
@@ -241,7 +238,6 @@ const Junkyard: Task[] = [
     after: ["Junkyard Start"],
     acquire: [{ item: $item`seal tooth` }],
     completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
-    priority: () => (myBasestat($stat`Moxie`) < 300 ? Priorities.BadMood : Priorities.None),
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: $location`Near an Abandoned Refrigerator`,
     orbtargets: () => $monsters`spider gremlin, spider gremlin (tool)`,
@@ -265,7 +261,6 @@ const Junkyard: Task[] = [
     after: ["Junkyard Start"],
     completed: () =>
       have($item`molybdenum screwdriver`) || get("sidequestJunkyardCompleted") !== "none",
-    priority: () => (myBasestat($stat`Moxie`) < 300 ? Priorities.BadMood : Priorities.None),
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: $location`Out by that Rusted-Out Car`,
@@ -546,8 +541,8 @@ export const WarQuest: Quest = {
             !have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)
               ? $familiar`Patriotic Eagle`
               : args.minor.jellies
-              ? $familiar`Space Jellyfish`
-              : undefined,
+                ? $familiar`Space Jellyfish`
+                : undefined,
         },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
