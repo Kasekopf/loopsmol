@@ -18,6 +18,7 @@ import { MiscQuest, WandQuest } from "./misc";
 import { PullQuest } from "./pulls";
 import { DigitalQuest, KeysQuest } from "./keys";
 import { SummonQuest } from "./summons";
+import { DietQuest } from "./diet";
 import { Task } from "../engine/task";
 import { getTasks } from "grimoire-kolmafia";
 import { args } from "../args";
@@ -26,6 +27,7 @@ export function all_tasks(): Task[] {
   const quests = [
     TootQuest,
     MiscQuest,
+    DietQuest,
     PullQuest,
     WandQuest,
     KeysQuest,

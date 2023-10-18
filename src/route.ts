@@ -14,6 +14,11 @@ export const routing: string[] = [
   "Keys/Deck",
   "Pull/All",
 
+  // Eat as soon as possible
+  "Diet/Eat",
+  "Diet/Drink",
+  "Diet/Numberology",
+
   // Get infinite loop
   "Summon/Mountain Man",
 
