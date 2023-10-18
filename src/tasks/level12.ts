@@ -541,8 +541,8 @@ export const WarQuest: Quest = {
             !have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)
               ? $familiar`Patriotic Eagle`
               : args.minor.jellies
-                ? $familiar`Space Jellyfish`
-                : undefined,
+              ? $familiar`Space Jellyfish`
+              : undefined,
         },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,

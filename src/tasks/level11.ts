@@ -201,12 +201,12 @@ const Desert: Task[] = [
         have($effect`Ultrahydrated`)
       )
         return {
-          equip: $items`industrial fire extinguisher, UV-resistant compass, dromedary drinking helmet`,
+          equip: $items`survival knife, industrial fire extinguisher, UV-resistant compass, dromedary drinking helmet`,
           familiar: $familiar`Melodramedary`,
         };
       else
         return {
-          equip: $items`UV-resistant compass, dromedary drinking helmet`,
+          equip: $items`survival knife, UV-resistant compass, dromedary drinking helmet`,
           familiar: $familiar`Melodramedary`,
         };
     },
