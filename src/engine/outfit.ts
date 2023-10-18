@@ -162,8 +162,14 @@ export function equipDefaults(outfit: Outfit): void {
 
   if (get("sweat") < 15) outfit.equip($item`designer sweatpants`);
 
+  outfit.equip($item`nurse's hat`);
+  if (!have($item`Jurassic Parka`) || !have($skill`Torso Awareness`)) {
+    outfit.equip($item`sea salt scrubs`);
+  }
+
   if (modifier.length === 0) {
     // Default outfit
+    outfit.equip($item`sea salt scrubs`);
     outfit.equip($item`giant yellow hat`);
     outfit.equip($item`ice crown`);
     outfit.equip($item`June cleaver`);
