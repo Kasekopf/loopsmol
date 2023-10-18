@@ -20,6 +20,7 @@ export const routing: string[] = [
   "Diet/Numberology",
 
   // Get infinite loop
+  "Summon/War Frat 151st Infantryman",
   "Summon/Mountain Man",
 
   // Get initial -combat
@@ -99,9 +100,6 @@ export const routing: string[] = [
   "Bat/Finish", // Finish up with last delay
   "Knob/King",
   "Tower/Naughty Sorceress",
-
-  "Misc/Dog Chow", // Eat if there are no other options
-  "Misc/Cake-Shaped Arena", // Arena if there are no charged options
 ];
 
 export function prioritize(tasks: Task[]): Task[] {
