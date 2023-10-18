@@ -149,10 +149,8 @@ export function equipDefaults(outfit: Outfit): void {
 
   const modifier = getModifiersFrom(outfit);
   if (modifier.includes("-combat")) outfit.equip($familiar`Disgeist`); // low priority
-  if (!modifier.includes("meat") || !have($item`backup camera`)) {
-    // Leave room for backup camera for nuns
-    outfit.equip($item`mafia thumb ring`);
-  }
+
+  outfit.equip($item`mafia thumb ring`);
   if (atLevel(11)) outfit.equip($item`lucky gold ring`);
 
   if (myBasestat($stat`moxie`) <= 200) {

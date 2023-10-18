@@ -58,6 +58,7 @@ import {
   equipInitial,
   equipUntilCapped,
   fixFoldables,
+  getModifiersFrom,
 } from "./outfit";
 import { cliExecute, equippedAmount, itemAmount, runChoice } from "kolmafia";
 import { atLevel, debug } from "../lib";
@@ -427,9 +428,12 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     // Prepare full outfit
     if (!outfit.skipDefaults) {
       const freecombat = task.freecombat || wanderers.find((wanderer) => wanderer.chance() === 1);
+      const modifier = getModifiersFrom(outfit);
+      if (!task.boss && !freecombat && !modifier.includes("-combat") && !modifier.includes("ML"))
+        outfit.equip($item`carnivorous potted plant`);
       if (
         canChargeVoid() &&
-        (!outfit.modifier || !outfit.modifier.includes("-combat")) &&
+        !modifier.includes("-combat") &&
         !freecombat &&
         ((combat.can("kill") && !resources.has("killFree")) || combat.can("killHard") || task.boss)
       )
@@ -550,6 +554,17 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         }
         wanderer.prepare?.();
       }
+    }
+
+    // The carn potted plant may kill the enemy early,
+    // so set up the normal combat as an autoattack.
+    if (haveEquipped($item`carnivorous potted plant`)) {
+      const macro = task_combat.compile(
+        task_resources,
+        this.options?.combat_defaults,
+        task.do instanceof Location ? task.do : undefined
+      );
+      task_combat.autoattack(macro);
     }
 
     super.setCombat(task, task_combat, task_resources);
