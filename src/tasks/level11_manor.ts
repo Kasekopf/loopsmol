@@ -55,9 +55,7 @@ const Manor1: Task[] = [
       if (have($item`handful of hand chalk`) && have($item`pool cue`))
         ensureEffect($effect`Chalky Hand`);
     },
-    ready: () => myInebriety() <= 15 && (
-      myInebriety() === 1 || myDaycount() > 1
-    ), // Nonnegative contribution
+    ready: () => myInebriety() <= 15 && (myInebriety() === 1 || myDaycount() > 1), // Nonnegative contribution
     do: $location`The Haunted Billiards Room`,
     choices: { 875: 1, 900: 2, 1436: 1 },
     outfit: () => {
