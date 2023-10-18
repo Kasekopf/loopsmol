@@ -166,7 +166,6 @@ export const pulls: PullSpec[] = [
       storageAmount($item`Space Trip safety headphones`) === 0 &&
       !have($item`protonic accelerator pack`),
   },
-  { pull: $item`portable cassette player` },
   { pull: $item`antique machete` },
   { pull: $item`book of matches` },
   { pull: $items`Space Trip safety headphones, HOA regulation book`, name: "-ML", optional: true },
@@ -186,8 +185,7 @@ export const pulls: PullSpec[] = [
     useful: () => !have($item`designer sweatpants`),
   },
   { pull: $item`deck of lewd playing cards`, optional: true },
-  { pull: $item`giant yellow hat` },
-  { pull: $item`gravy boat` },
+  { pull: $item`gravy boat`, useful: () => !underStandard() },
   {
     pull: $item`Mohawk wig`,
     useful: () => (have($item`S.O.C.K.`) ? !have($item`Mohawk wig`) : undefined), // if one didn't drop naturally
@@ -267,21 +265,20 @@ class Pull {
   public shouldPull(): boolean | undefined {
     const needed = this.useful();
     if (needed === false) return false;
-    if (!this.optional) return needed;
 
-    // For optional items, return false if we have none
-    // and defer to needed if we have some.
     for (const item of this.items()) {
       if (item === undefined) return undefined; // We don't even know which item yet
       if (!isUnrestricted(item) && underStandard()) continue;
       if (storageAmount(item) > 0) return needed;
     }
-    return false;
+    if (this.optional) return false; // We don't have any, so we don't need one.
+    return needed;
   }
 
   public pull(): void {
     for (const item of this.items()) {
       if (item === undefined) throw `Unable to pull ${this.name}; the desired item is undefined`;
+      if (!isUnrestricted(item) && underStandard()) continue;
       if (storageAmount(item) > 0 || buyUsingStorage(1, item, 100000)) {
         cliExecute(`pull ${item.name}`);
         set("_loopsmol_pulls_used", get("_loopsmol_pulls_used", 0) + 1);

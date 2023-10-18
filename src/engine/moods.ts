@@ -9,6 +9,7 @@ import {
   Item,
   mpCost,
   myMaxmp,
+  myMeat,
   myMp,
   numericModifier,
   restoreMp,
@@ -35,7 +36,8 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
   const result = {
     "-combat": $effects`Smooth Movements, The Sonata of Sneakiness`,
     "+combat": $effects`Carlweather's Cantata of Confrontation, Musk of the Moose`,
-    "": $effects`Empathy, Leash of Linguini, Astral Shell, Elemental Saucesphere`,
+    "":
+      myMeat() > 0 ? $effects`Empathy, Leash of Linguini, Astral Shell, Elemental Saucesphere` : [],
     "fam weight": $effects`Chorale of Companionship`,
     init: $effects`Walberg's Dim Bulb, Springy Fusilli`,
     ML: $effects`Ur-Kel's Aria of Annoyance, Pride of the Puffin, Drescher's Annoying Noise`,

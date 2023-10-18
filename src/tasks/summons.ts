@@ -15,7 +15,7 @@ import {
   visitUrl,
   wait,
 } from "kolmafia";
-import { $item, $items, $monster, $skill, CombatLoversLocket, get, have } from "libram";
+import { $item, $items, $monster, CombatLoversLocket, get, have } from "libram";
 import { CombatStrategy } from "../engine/combat";
 import { debug } from "../lib";
 import { args } from "../args";
@@ -140,7 +140,8 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${
+          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },

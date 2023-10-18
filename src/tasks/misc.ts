@@ -173,6 +173,7 @@ export const MiscQuest: Quest = {
       name: "Voting",
       after: [],
       priority: () => Priorities.Free,
+      ready: () => !underStandard(),
       completed: () =>
         !args.minor.voterbooth ||
         have($item`"I Voted!" sticker`) ||
