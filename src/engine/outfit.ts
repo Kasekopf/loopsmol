@@ -162,7 +162,10 @@ export function equipDefaults(outfit: Outfit): void {
 
   if (get("sweat") < 15) outfit.equip($item`designer sweatpants`);
 
-  outfit.equip($item`nurse's hat`);
+  if (!modifier.includes("+combat") && !modifier.includes(" combat")) {
+    // Allow for sombrero-mounted sparkler
+    outfit.equip($item`nurse's hat`);
+  }
   if (!have($item`Jurassic Parka`) || !have($skill`Torso Awareness`)) {
     outfit.equip($item`sea salt scrubs`);
   }
