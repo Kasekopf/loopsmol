@@ -140,8 +140,7 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${
-          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },
@@ -194,9 +193,6 @@ class SummonStrategy {
         }
       }
     }
-
-    if (!have($skill`Infinite Loop`) && !this.plan.has($monster`pygmy witch lawyer`))
-      throw `Unable to summon pygmy witch lawyer`;
   }
 
   public getSourceFor(monster: Monster): SummonSource | undefined {

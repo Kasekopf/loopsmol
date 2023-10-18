@@ -83,7 +83,7 @@ export const McLargeHugeQuest: Quest = {
     },
     {
       name: "Ninja",
-      after: ["Trapper Return", "Summon/White Lion", "Palindome/Cold Snake"],
+      after: ["Trapper Return", "Palindome/Cold Snake"],
       completed: () =>
         (have($item`ninja rope`) && have($item`ninja carabiner`) && have($item`ninja crampons`)) ||
         step("questL08Trapper") >= 3,

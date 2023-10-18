@@ -37,7 +37,7 @@ import { step } from "grimoire-kolmafia";
 const Challenges: Task[] = [
   {
     name: "Speed Challenge",
-    after: ["Start", "Absorb/Overclocking"],
+    after: ["Start"],
     completed: () => get("nsContestants1") > -1,
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
@@ -500,7 +500,7 @@ export const TowerQuest: Quest = {
     },
     {
       name: "Shadow",
-      after: ["Mirror", "Absorb/Overclocking"],
+      after: ["Mirror"],
       prepare: () => {
         fillHp();
 
