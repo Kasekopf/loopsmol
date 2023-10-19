@@ -105,22 +105,14 @@ const heroKeys: KeyTask[] = [
     },
     outfit: { equip: $items`ring of Detect Boring Doors`, modifier: "init" }, // Avoid apathy
     combat: new CombatStrategy().macro(new Macro().item($item`daily dungeon malware`)).kill(),
-    choices: {
-      689: 1,
-      690: () => (have($item`ring of Detect Boring Doors`) ? 2 : 3),
-      691: () => 3, // Do not skip the second chest; there is a chance we skip all the monsters
-      692: () => {
-        if (have($item`Pick-O-Matic lockpicks`)) return 3;
-        if (have($item`Platinum Yendorian Express Card`)) return 7;
-        const skeletonKeys =
-          itemAmount($item`skeleton key`) +
-          min(itemAmount($item`skeleton bone`), itemAmount($item`loose teeth`));
-        if (skeletonKeys > 1) return 2;
-        if (have($item`skeleton key`) && get("nsTowerDoorKeysUsed").includes("skeleton key"))
-          return 2;
-        return 4;
-      },
-      693: () => (have($item`eleven-foot pole`) ? 2 : 1),
+    choices: () => {
+      return {
+        689: 1,
+        690: have($item`ring of Detect Boring Doors`) ? 2 : 3,
+        691: 3, // Do not skip the second chest; there is a chance we skip all the monsters
+        692: getDoorSolution(),
+        693: have($item`eleven-foot pole`) ? 2 : 1,
+      };
     },
     limit: { tries: 15 },
   },
@@ -151,22 +143,14 @@ const heroKeys: KeyTask[] = [
     },
     outfit: { equip: $items`ring of Detect Boring Doors`, modifier: "init" }, // Avoid apathy
     combat: new CombatStrategy().kill(),
-    choices: {
-      689: 1,
-      690: () => (have($item`ring of Detect Boring Doors`) ? 2 : 3),
-      691: () => (have($item`ring of Detect Boring Doors`) ? 2 : 3),
-      692: () => {
-        if (have($item`Pick-O-Matic lockpicks`)) return 3;
-        if (have($item`Platinum Yendorian Express Card`)) return 7;
-        const skeletonKeys =
-          itemAmount($item`skeleton key`) +
-          min(itemAmount($item`skeleton bone`), itemAmount($item`loose teeth`));
-        if (skeletonKeys > 1) return 2;
-        if (have($item`skeleton key`) && get("nsTowerDoorKeysUsed").includes("skeleton key"))
-          return 2;
-        return 4;
-      },
-      693: () => (have($item`eleven-foot pole`) ? 2 : 1),
+    choices: () => {
+      return {
+        689: 1,
+        690: have($item`ring of Detect Boring Doors`) ? 2 : 3,
+        691: 3, // Do not skip the second chest; there is a chance we skip all the monsters
+        692: getDoorSolution(),
+        693: have($item`eleven-foot pole`) ? 2 : 1,
+      };
     },
     limit: { tries: 15 },
   },
@@ -500,4 +484,15 @@ function getScore(): number {
   const score = getProperty("8BitScore");
   if (score === "") return 0;
   return parseInt(score.replace(",", ""));
+}
+
+function getDoorSolution(): number {
+  if (have($item`Pick-O-Matic lockpicks`)) return 3;
+  if (have($item`Platinum Yendorian Express Card`)) return 7;
+  const skeletonKeys =
+    itemAmount($item`skeleton key`) +
+    min(itemAmount($item`skeleton bone`), itemAmount($item`loose teeth`));
+  if (skeletonKeys > 1) return 2;
+  if (have($item`skeleton key`) && get("nsTowerDoorKeysUsed").includes("skeleton key")) return 2;
+  return 4;
 }

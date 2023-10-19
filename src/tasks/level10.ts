@@ -59,7 +59,9 @@ export const GiantQuest: Quest = {
       after: ["Grow Beanstalk"],
       completed: () => have($item`amulet of extreme plot significance`),
       do: $location`The Penultimate Fantasy Airship`,
-      choices: { 178: 2, 182: () => (have($item`model airship`) ? 1 : 4) },
+      choices: () => {
+        return { 178: 2, 182: have($item`model airship`) ? 1 : 4 };
+      },
       post: () => {
         if (have($effect`Temporary Amnesia`)) cliExecute("uneffect Temporary Amnesia");
       },
@@ -91,7 +93,9 @@ export const GiantQuest: Quest = {
       after: ["Airship YR Healer"],
       completed: () => have($item`S.O.C.K.`),
       do: $location`The Penultimate Fantasy Airship`,
-      choices: { 178: 2, 182: () => (have($item`model airship`) ? 1 : 4) },
+      choices: () => {
+        return { 178: 2, 182: have($item`model airship`) ? 1 : 4 };
+      },
       post: () => {
         if (have($effect`Temporary Amnesia`)) cliExecute("uneffect Temporary Amnesia");
       },

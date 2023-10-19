@@ -83,13 +83,13 @@ const Copperhead: Task[] = [
       }
       return {};
     },
-    choices: {
-      852: 1,
-      853: 1,
-      854: 1,
-      855: () => {
-        return get("copperheadClubHazard") !== "lantern" ? 3 : 4;
-      },
+    choices: () => {
+      return {
+        852: 1,
+        853: 1,
+        854: 1,
+        855: get("copperheadClubHazard") !== "lantern" ? 3 : 4,
+      };
     },
     limit: { tries: 30 }, // Extra waiter disguise adventures
   },
@@ -149,17 +149,15 @@ const Copperhead: Task[] = [
     completed: () => step("questL11Shen") === 999 || have($item`Murphy's Rancid Black Flag`),
     do: $location`The Castle in the Clouds in the Sky (Top Floor)`,
     outfit: { equip: $items`Mohawk wig`, modifier: "-combat" },
-    choices: {
-      675: 4,
-      676: 4,
-      677: () => {
-        return step("questL10Garbage") >= 10 ? 2 : 1;
-      },
-      678: () => {
-        return step("questL10Garbage") >= 10 ? 3 : 1;
-      },
-      679: 1,
-      1431: 4,
+    choices: () => {
+      return {
+        675: 4,
+        676: 4,
+        677: step("questL10Garbage") >= 10 ? 2 : 1,
+        678: step("questL10Garbage") >= 10 ? 3 : 1,
+        679: 1,
+        1431: 4,
+      };
     },
     combat: new CombatStrategy().killHard($monster`Burning Snake of Fire`),
     limit: { soft: 10 },
