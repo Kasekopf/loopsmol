@@ -8,6 +8,7 @@ import {
   getWorkshed,
   Item,
   mpCost,
+  myClass,
   myMaxmp,
   myMeat,
   myMp,
@@ -19,6 +20,7 @@ import {
   visitUrl,
 } from "kolmafia";
 import {
+  $class,
   $effect,
   $effects,
   $item,
@@ -39,7 +41,7 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
     "":
       myMeat() > 0 ? $effects`Empathy, Leash of Linguini, Astral Shell, Elemental Saucesphere` : [],
     "fam weight": $effects`Chorale of Companionship`,
-    init: $effects`Walberg's Dim Bulb, Springy Fusilli`,
+    init: $effects`Walberg's Dim Bulb, Springy Fusilli, Cletus's Canticle of Celerity, Suspicious Gaze, Song of Slowness`,
     ML: $effects`Ur-Kel's Aria of Annoyance, Pride of the Puffin, Drescher's Annoying Noise`,
     item: $effects`Fat Leon's Phat Loot Lyric, Singer's Faithful Ocelot`,
     meat: $effects`Polka of Plenty`,
@@ -57,6 +59,12 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
   )
     result["-combat"].push($effect`Silent Running`);
 
+  if (have($item`designer sweatpants`) && get("sweat") >= 15) {
+    result["init"].push($effect`Slippery and Speedy`);
+  }
+  if (myClass() !== $class`Pastamancer`) {
+    result["init"].push($effect`Whispering Strands`);
+  }
   result[" combat"] = result["+combat"];
   return result;
 }

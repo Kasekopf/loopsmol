@@ -93,6 +93,7 @@ export function equipInitial(outfit: Outfit): void {
   }
   if (modifier.includes("+combat") && !modifier.includes("res"))
     outfit.equip($item`thermal blanket`);
+  if (modifier.includes("init")) outfit.equip($familiar`Oily Woim`);
 
   if (args.minor.forcelocket) {
     outfit.equip($item`combat lover's locket`);

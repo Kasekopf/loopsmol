@@ -427,7 +427,7 @@ export const MiscQuest: Quest = {
       name: "Acquire Firework Hat",
       after: [],
       priority: () => Priorities.Free,
-      ready: () => myMeat() >= 500,
+      ready: () => myMeat() >= 1000, // Increased so we don't go down to 0
       completed: () =>
         have($item`sombrero-mounted sparkler`) ||
         get("_fireworksShopHatBought") ||
@@ -436,6 +436,23 @@ export const MiscQuest: Quest = {
         visitUrl("clan_viplounge.php");
         visitUrl("clan_viplounge.php?action=fwshop&whichfloor=2");
         cliExecute("acquire sombrero-mounted sparkler");
+      },
+      limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Acquire Firework Hat",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => myMeat() >= 1500, // Increased so we don't go down to 0
+      completed: () =>
+        have($item`rocket boots`) ||
+        get("_fireworksShopEquipmentBought") ||
+        !have($item`Clan VIP Lounge key`),
+      do: () => {
+        visitUrl("clan_viplounge.php");
+        visitUrl("clan_viplounge.php?action=fwshop&whichfloor=2");
+        cliExecute("acquire rocket boots");
       },
       limit: { tries: 1 },
       freeaction: true,
