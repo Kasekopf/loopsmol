@@ -10,7 +10,7 @@ import {
   use,
   useSkill,
 } from "kolmafia";
-import { $effects, $item, $items, $skill, get, have } from "libram";
+import { $effect, $effects, $item, $items, $skill, get, have } from "libram";
 import { Priorities } from "../engine/priority";
 import { Quest } from "../engine/task";
 import { atLevel } from "../lib";
@@ -24,7 +24,8 @@ export const DietQuest: Quest = {
         atLevel(5) &&
         have($item`Ol' Scratch's salad fork`) &&
         !get("pizzaOfLegendEaten") &&
-        have($item`Deep Dish of Legend`),
+        have($item`Deep Dish of Legend`) &&
+        have($effect`Ready to Eat`),
       completed: () => myFullness() > 0,
       do: () => {
         restoreMp(20);
@@ -35,7 +36,7 @@ export const DietQuest: Quest = {
         eat(1, $item`Pizza of Legend`);
       },
       outfit: {
-        equip: $items`nurse's hat, sea salt scrubs`,
+        equip: $items`nurse's hat, sea salt scrubs, familiar scrapbook`,
         modifier: "100 hot res, HP",
       },
       limit: { tries: 1 },

@@ -16,6 +16,7 @@ import {
   myAdventures,
   myAscensions,
   myBasestat,
+  myFullness,
   myHp,
   myLevel,
   myMaxhp,
@@ -441,7 +442,7 @@ export const MiscQuest: Quest = {
       freeaction: true,
     },
     {
-      name: "Acquire Firework Hat",
+      name: "Acquire Rocket Boots",
       after: [],
       priority: () => Priorities.Free,
       ready: () => myMeat() >= 1500, // Increased so we don't go down to 0
@@ -453,6 +454,25 @@ export const MiscQuest: Quest = {
         visitUrl("clan_viplounge.php");
         visitUrl("clan_viplounge.php?action=fwshop&whichfloor=2");
         cliExecute("acquire rocket boots");
+      },
+      limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Acquire Red Rocket",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => myMeat() >= 1500, // Increased so we don't go down to 0
+      completed: () =>
+        have($item`red rocket`) ||
+        get("_fireworksShopEquipmentBought") ||
+        !have($item`Clan VIP Lounge key`) ||
+        have($effect`Ready to Eat`) ||
+        myFullness() > 0,
+      do: () => {
+        visitUrl("clan_viplounge.php");
+        visitUrl("clan_viplounge.php?action=fwshop&whichfloor=2");
+        cliExecute("acquire red rocket");
       },
       limit: { tries: 1 },
       freeaction: true,
