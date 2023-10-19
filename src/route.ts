@@ -90,7 +90,7 @@ export const routing: string[] = [
   // Finish remaining quests
   "McLargeHuge/Finish",
   "Manor/Boss",
-  "Crypt/Niche",
+  "Junkyard/Finish",
   "Crypt/Niche",
   "Crypt/Alcove",
   "Giant/Finish",
