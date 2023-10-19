@@ -8,6 +8,7 @@ import {
   $monster,
   $monsters,
   $skill,
+  get,
   have,
   Macro,
 } from "libram";
@@ -85,6 +86,15 @@ export const GiantQuest: Quest = {
           };
       },
       combat: new CombatStrategy()
+        .macro(
+          () =>
+            have($item`Mohawk wig`) ||
+            !have($skill`Emotionally Chipped`) ||
+            get("_feelEnvyUsed") >= 3
+              ? new Macro()
+              : Macro.skill($skill`Feel Envy`),
+          $monster`Burly Sidekick`
+        )
         .killItem($monster`Burly Sidekick`)
         .forceItems($monster`Quiet Healer`),
     },
@@ -99,11 +109,22 @@ export const GiantQuest: Quest = {
       post: () => {
         if (have($effect`Temporary Amnesia`)) cliExecute("uneffect Temporary Amnesia");
       },
+      orbtargets: () => [],
       outfit: { modifier: "-combat" },
       limit: { soft: 50 },
       delay: () =>
         have($item`Plastic Wrap Immateria`) ? 25 : have($item`Gauze Immateria`) ? 20 : 15, // After that, just look for noncombats
-      combat: new CombatStrategy().killItem($monsters`Quiet Healer, Burly Sidekick`),
+      combat: new CombatStrategy()
+        .macro(
+          () =>
+            have($item`Mohawk wig`) ||
+            !have($skill`Emotionally Chipped`) ||
+            get("_feelEnvyUsed") >= 3
+              ? new Macro()
+              : Macro.skill($skill`Feel Envy`),
+          $monster`Burly Sidekick`
+        )
+        .killItem($monsters`Quiet Healer, Burly Sidekick`),
     },
     {
       name: "Basement Search",
