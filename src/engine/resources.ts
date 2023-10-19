@@ -106,6 +106,11 @@ const banishSources: BanishSource[] = [
     equip: $item`Lil' Doctor™ bag`,
   },
   {
+    name: "Snokebomb",
+    available: () => get("_snokebombUsed") < 3 && have($skill`Snokebomb`),
+    do: $skill`Snokebomb`,
+  },
+  {
     name: "KGB dart",
     available: () =>
       get("_kgbTranquilizerDartUses") < 3 && have($item`Kremlin's Greatest Briefcase`),
@@ -123,6 +128,11 @@ const banishSources: BanishSource[] = [
     available: () => have($item`cursed monkey's paw`) && get("_monkeyPawWishesUsed", 0) === 0,
     equip: $item`cursed monkey's paw`,
     do: $skill`Monkey Slap`,
+  },
+  {
+    name: "Feel Hatred",
+    available: () => get("_feelHatredUsed") < 3 && have($skill`Emotionally Chipped`),
+    do: $skill`Feel Hatred`,
   },
 ];
 
