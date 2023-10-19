@@ -1,4 +1,4 @@
-import { cliExecute, itemAmount, myAscensions, myHash, myMeat, use, visitUrl } from "kolmafia";
+import { buy, cliExecute, itemAmount, myAscensions, myHash, myMeat, use, visitUrl } from "kolmafia";
 import {
   $effect,
   $effects,
@@ -347,6 +347,13 @@ const Bowling: Task[] = [
     ready: () => myMeat() >= 500,
     acquire: [{ item: $item`Bowl of Scorpions`, optional: true }],
     completed: () => get("hiddenBowlingAlleyProgress") >= 7,
+    prepare: () => {
+      // Open the hidden tavern if it is available.
+      if (get("hiddenTavernUnlock") < myAscensions() && have($item`book of matches`)) {
+        use($item`book of matches`);
+        buy($item`Bowl of Scorpions`);
+      }
+    },
     do: $location`The Hidden Bowling Alley`,
     combat: new CombatStrategy()
       .killHard($monster`ancient protector spirit (The Hidden Bowling Alley)`)
