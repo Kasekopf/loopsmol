@@ -178,7 +178,7 @@ const ChallengeBosses: Task[] = [
     completed: () => get("nsContestants2") === 0,
     do: $location`A Crowd of (Stat) Adventurers`,
     combat: new CombatStrategy().killHard(),
-    limit: { tries: 1 },
+    limit: { tries: 10 },
     boss: true,
   },
   {
