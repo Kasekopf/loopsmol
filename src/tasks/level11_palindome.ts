@@ -106,6 +106,7 @@ const Copperhead: Task[] = [
     combat: new CombatStrategy().killHard($monster`Batsnake`).killItem(),
     outfit: { modifier: "item", avoid: $items`broken champagne bottle` },
     limit: { soft: 10 },
+    orbtargets: () => [],
     delay: () => (step("questL04Bat") >= 3 ? 5 : 0),
   },
   {
@@ -159,6 +160,7 @@ const Copperhead: Task[] = [
         1431: 4,
       };
     },
+    orbtargets: () => [],
     combat: new CombatStrategy().killHard($monster`Burning Snake of Fire`),
     limit: { soft: 10 },
     delay: 5,
@@ -173,6 +175,7 @@ const Copperhead: Task[] = [
     choices: { 675: 4, 676: 4, 677: 1, 678: 1, 679: 1, 1431: 4 },
     outfit: { modifier: "+combat" },
     combat: new CombatStrategy().killHard($monster`Burning Snake of Fire`),
+    orbtargets: () => [],
     limit: { soft: 10 },
     delay: 5,
   },
