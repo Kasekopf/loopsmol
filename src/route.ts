@@ -61,6 +61,7 @@ export const routing: string[] = [
   "Palindome/Bat Snake",
   "Bat/Use Sonar 3", // Reveal more delay
   "Palindome/Cold Snake",
+  "Giant/Grow Beanstalk",
 
   // Open Hidden City
   "Hidden City/Open Office",
@@ -76,9 +77,9 @@ export const routing: string[] = [
   // Second -combat group
   "Hidden City/Banish Janitors",
   "Manor/Finish Floor2",
-  "Giant/Basement",
-  "Crypt/Cranny",
   "Mosquito/Finish",
+  "Crypt/Cranny",
+  "Giant/Basement",
   "Giant/Unlock HITS",
 
   // The following 3 tasks should always stay in this order
