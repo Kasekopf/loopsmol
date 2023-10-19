@@ -51,14 +51,16 @@ export const TavernQuest: Quest = {
         return { modifier: "ML, +combat", equip: $items`old patched suit-pants` };
       },
       combat: new CombatStrategy().killHard($monster`drunken rat king`).ignoreNoBanish(),
-      choices: {
-        509: 1,
-        510: 1,
-        511: 2,
-        514: () => (numericModifier("Stench Damage") >= 20 ? 2 : 1),
-        515: () => (numericModifier("Spooky Damage") >= 20 ? 2 : 1),
-        496: () => (numericModifier("Hot Damage") >= 20 ? 2 : 1),
-        513: () => (numericModifier("Cold Damage") >= 20 ? 2 : 1),
+      choices: () => {
+        return {
+          509: 1,
+          510: 1,
+          511: 2,
+          514: numericModifier("Stench Damage") >= 20 ? 2 : 1,
+          515: numericModifier("Spooky Damage") >= 20 ? 2 : 1,
+          496: numericModifier("Hot Damage") >= 20 ? 2 : 1,
+          513: numericModifier("Cold Damage") >= 20 ? 2 : 1,
+        };
       },
       limit: { tries: 10 },
     },

@@ -464,9 +464,11 @@ export const WarQuest: Quest = {
           have($item`bejeweled pledge pin`)),
       do: $location`Hippy Camp`,
       limit: { soft: 10 },
-      choices: {
-        136: () => (have($item`filthy corduroys`) ? 2 : 1),
-        137: () => (have($item`filthy corduroys`) ? 1 : 2),
+      choices: () => {
+        return {
+          136: have($item`filthy corduroys`) ? 2 : 1,
+          137: have($item`filthy corduroys`) ? 1 : 2,
+        };
       },
       outfit: () => {
         if (forceItemPossible())

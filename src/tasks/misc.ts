@@ -52,6 +52,7 @@ import {
   Macro,
   Robortender,
   set,
+  undelay,
   uneffect,
 } from "libram";
 import { Quest, Task } from "../engine/task";
@@ -862,9 +863,10 @@ export function teleportitisTask(engine: Engine, tasks: Task[]): Task {
   const done_tasks = tasks.filter((task) => task.completed());
   const left_tasks = tasks.filter((task) => !task.completed());
   for (const task of [...left_tasks, ...done_tasks].reverse()) {
-    for (const choice_id_str in task.choices) {
+    const task_choices = undelay(task.choices);
+    for (const choice_id_str in task_choices) {
       const choice_id = parseInt(choice_id_str);
-      choices[choice_id] = task.choices[choice_id];
+      choices[choice_id] = task_choices[choice_id];
     }
   }
 

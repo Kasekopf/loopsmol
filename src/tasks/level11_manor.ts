@@ -165,16 +165,15 @@ const Manor2: Task[] = [
       (have($item`Lady Spookyraven's finest gown`) || step("questM21Dance") >= 2) &&
       have($item`Lord Spookyraven's spectacles`),
     do: $location`The Haunted Bedroom`,
-    choices: {
-      876: 1,
-      877: 1,
-      878: () => {
-        if (!have($item`Lord Spookyraven's spectacles`)) return 3;
-        else return 4;
-      },
-      879: 1,
-      880: 1,
-      897: 2,
+    choices: () => {
+      return {
+        876: 1,
+        877: 1,
+        878: !have($item`Lord Spookyraven's spectacles`) ? 3 : 4,
+        879: 1,
+        880: 1,
+        897: 2,
+      };
     },
     combat: new CombatStrategy()
       .killHard($monster`animated ornate nightstand`)

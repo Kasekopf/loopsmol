@@ -62,16 +62,14 @@ const Diary: Task[] = [
         avoid: $items`broken champagne bottle`,
       };
     },
-    choices: {
-      923: 1,
-      924: () => {
-        if (!have($familiar`Shorter-Order Cook`) && !have($item`beehive`)) return 3;
-        if (!have($item`blackberry galoshes`) && itemAmount($item`blackberry`) >= 3) return 2;
-        return 1;
-      },
-      928: 4,
-      1018: 1,
-      1019: 1,
+    choices: () => {
+      return {
+        923: 1,
+        924: beeOption(),
+        928: 4,
+        1018: 1,
+        1019: 1,
+      };
     },
     combat: new CombatStrategy()
       .ignore($monster`blackberry bush`)
@@ -377,3 +375,9 @@ export const MacguffinQuest: Quest = {
     },
   ],
 };
+
+function beeOption(): number {
+  if (!have($familiar`Shorter-Order Cook`) && !have($item`beehive`)) return 3;
+  if (!have($item`blackberry galoshes`) && itemAmount($item`blackberry`) >= 3) return 2;
+  return 1;
+}
