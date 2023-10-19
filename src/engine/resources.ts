@@ -12,7 +12,9 @@ import {
   Location,
   Monster,
   myAscensions,
+  myClass,
   myFamiliar,
+  myFury,
   myMeat,
   myTurncount,
   retrieveItem,
@@ -23,6 +25,7 @@ import {
   visitUrl,
 } from "kolmafia";
 import {
+  $class,
   $effect,
   $familiar,
   $item,
@@ -128,6 +131,13 @@ const banishSources: BanishSource[] = [
     available: () => have($item`cursed monkey's paw`) && get("_monkeyPawWishesUsed", 0) === 0,
     equip: $item`cursed monkey's paw`,
     do: $skill`Monkey Slap`,
+  },
+  {
+    name: "Batter Up",
+    available: () =>
+      have($skill`Batter Up!`) && myClass() === $class`Seal Clubber` && myFury() >= 5,
+    do: $skill`Batter Up!`,
+    equip: $item`seal-clubbing club`,
   },
   {
     name: "Feel Hatred",
