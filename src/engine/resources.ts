@@ -47,7 +47,7 @@ import {
   OutfitSpec,
   step,
 } from "grimoire-kolmafia";
-import { atLevel } from "../lib";
+import { atLevel, underStandard } from "../lib";
 import { Task } from "./task";
 import { args } from "../args";
 
@@ -130,9 +130,9 @@ export class BanishState {
   already_banished: Map<Monster, Item | Skill>;
 
   constructor() {
-    this.already_banished = new Map(
-      Array.from(getBanishedMonsters(), (entry) => [entry[1], entry[0]])
-    );
+    const banished = getBanishedMonsters();
+    if (underStandard()) banished.delete($item`ice house`);
+    this.already_banished = new Map(Array.from(banished, (entry) => [entry[1], entry[0]]));
   }
 
   // Return true if some of the monsters in the task are banished
