@@ -175,10 +175,14 @@ export const pulls: PullSpec[] = [
   { pull: $item`Buddy Bjorn`, useful: () => yellowSubmarinePossible(true), optional: true },
   {
     pull: $item`killing jar`,
-    useful: () =>
-      !have($familiar`Melodramedary`) &&
-      (get("gnasirProgress") & 4) === 0 &&
-      get("desertExploration") < 100,
+    useful: () => {
+      if (step("questM20Necklace") < 4) return undefined;
+      return (
+        !have($familiar`Melodramedary`) &&
+        (get("gnasirProgress") & 4) === 0 &&
+        get("desertExploration") < 100
+      );
+    },
   },
   { pull: $item`old patched suit-pants`, optional: true },
   {
@@ -190,7 +194,11 @@ export const pulls: PullSpec[] = [
   { pull: $item`gravy boat`, useful: () => !underStandard() },
   {
     pull: $item`Mohawk wig`,
-    useful: () => (have($item`S.O.C.K.`) ? !have($item`Mohawk wig`) : undefined), // if one didn't drop naturally
+    useful: () => {
+      if (have($skill`Emotionally Chipped`)) return false;
+      if (have($item`S.O.C.K.`)) return true; // If one didn't drop naturally
+      return undefined;
+    },
   },
   { pull: $item`11-leaf clover`, duplicate: true, useful: () => get("zeppelinProtestors") < 80 },
   {
