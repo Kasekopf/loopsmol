@@ -24,6 +24,7 @@ import {
   $effect,
   $effects,
   $item,
+  $skill,
   $slot,
   AsdonMartin,
   ensureEffect,
@@ -58,6 +59,9 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
     (!get("_olympicSwimmingPool") || have($effect`Silent Running`))
   )
     result["-combat"].push($effect`Silent Running`);
+
+  if (have($skill`Emotionally Chipped`) && get("_feelLonelyUsed") < 3)
+    result["-combat"].push($effect`Feeling Lonely`);
 
   if (have($item`designer sweatpants`) && get("sweat") >= 15) {
     result["init"].push($effect`Slippery and Speedy`);
