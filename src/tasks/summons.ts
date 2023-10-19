@@ -39,7 +39,7 @@ const summonTargets: SummonTarget[] = [
       equip: $items`unwrapped knock-off retro superhero cape`,
       modes: { retrocape: ["heck", "hold"] },
     },
-    combat: new CombatStrategy().forceItems(),
+    combat: new CombatStrategy().yellowRay(),
   },
   {
     target: $monster`mountain man`,

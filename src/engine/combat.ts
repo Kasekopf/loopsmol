@@ -28,10 +28,7 @@ export class MyActionDefaults implements ActionDefaults<CombatActions> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   kill(target?: Monster | Location) {
-    return new Macro()
-      .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
-      .attack()
-      .repeat();
+    return killMacro();
   }
 
   killHard(target?: Monster | Location) {
@@ -65,4 +62,11 @@ export class MyActionDefaults implements ActionDefaults<CombatActions> {
   forceItems(target?: Monster | Location) {
     return this.killItem(target);
   }
+}
+
+export function killMacro(): Macro {
+  return new Macro()
+    .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
+    .attack()
+    .repeat();
 }

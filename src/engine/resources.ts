@@ -53,6 +53,7 @@ import {
 import { atLevel, underStandard } from "../lib";
 import { Task } from "./task";
 import { args } from "../args";
+import { killMacro } from "./combat";
 
 export interface Resource {
   name: string;
@@ -569,6 +570,11 @@ export const forceItemSources: ForceItemSource[] = [
     prepare: () => set("choiceAdventure1387", 3),
     equip: $item`Fourth of May Cosplay Saber`,
     do: $skill`Use the Force`,
+  },
+  {
+    name: "Envy",
+    available: () => have($skill`Emotionally Chipped`) && get("_feelEnvyUsed") < 3,
+    do: Macro.skill($skill`Feel Envy`).step(killMacro()),
   },
 ];
 
