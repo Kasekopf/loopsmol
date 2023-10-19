@@ -162,7 +162,6 @@ export const pulls: PullSpec[] = [
   },
   { pull: $item`antique machete` },
   { pull: $item`book of matches` },
-  { pull: $items`Space Trip safety headphones, HOA regulation book`, name: "-ML", optional: true },
   { pull: $item`blackberry galoshes`, useful: () => step("questL11Black") < 2 },
   { pull: $item`Buddy Bjorn`, useful: () => yellowSubmarinePossible(true), optional: true },
   {
