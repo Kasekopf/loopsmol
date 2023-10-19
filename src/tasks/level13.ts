@@ -402,7 +402,9 @@ export const TowerQuest: Quest = {
       name: "Beehive",
       after: ["Macguffin/Forest"],
       completed: () =>
-        have($item`beehive`) || have($familiar`Shorter-Order Cook`) || step("questL13Final") > 6,
+        have($item`beehive`) ||
+        (have($familiar`Shorter-Order Cook`) && have($item`June cleaver`)) ||
+        step("questL13Final") > 6,
       do: $location`The Black Forest`,
       choices: {
         923: 1,
@@ -422,8 +424,18 @@ export const TowerQuest: Quest = {
       },
       completed: () => step("questL13Final") > 6,
       do: $location`Tower Level 1`,
-      outfit: { familiar: $familiar`Shorter-Order Cook`, equip: $items`hot plate` },
-      combat: new CombatStrategy().macro(new Macro().tryItem($item`beehive`)),
+      outfit: {
+        familiar: $familiar`Shorter-Order Cook`,
+        equip: $items`hot plate, June cleaver, bottle opener belt buckle`,
+      },
+      combat: new CombatStrategy()
+        .macro(
+          new Macro()
+            .tryItem($item`beehive`)
+            .attack()
+            .repeat()
+        )
+        .kill(),
       boss: true,
       limit: { tries: 1 },
     },
