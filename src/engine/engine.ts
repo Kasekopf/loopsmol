@@ -9,6 +9,7 @@ import {
   Location,
   logprint,
   myAdventures,
+  myFullness,
   myHp,
   myLevel,
   myMaxhp,
@@ -303,6 +304,16 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         undefined,
         true
       );
+    }
+
+    // Use red rocket to boost food stats
+    if (
+      have($item`red rocket`) &&
+      myFullness() === 0 &&
+      myTurncount() > 1 &&
+      !have($effect`Everything Looks Red`)
+    ) {
+      combat.macro(new Macro().tryItem($item`red rocket`), undefined, true);
     }
 
     if (wanderers.length === 0) {
