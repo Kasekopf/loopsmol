@@ -79,7 +79,7 @@ export const routing: string[] = [
   "Manor/Finish Floor2",
   "Mosquito/Finish",
   "Crypt/Cranny",
-  "Giant/Basement",
+  "Giant/Basement Finish",
   "Giant/Unlock HITS",
 
   // The following 3 tasks should always stay in this order
