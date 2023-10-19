@@ -23,21 +23,16 @@ export const DietQuest: Quest = {
       ready: () =>
         atLevel(5) &&
         have($item`Ol' Scratch's salad fork`) &&
-        ((!get("calzoneOfLegendEaten") && have($item`Calzone of Legend`)) ||
-          (!get("deepDishOfLegendEaten") && have($item`Pizza of Legend`)) ||
-          (!get("pizzaOfLegendEaten") && have($item`Deep Dish of Legend`))),
+        !get("pizzaOfLegendEaten") &&
+        have($item`Deep Dish of Legend`),
       completed: () => myFullness() > 0,
       do: () => {
         restoreMp(20);
         useSkill($skill`Cannelloni Cocoon`);
+        if (have($item`milk of magnesium`) && !get("_milkOfMagnesiumUsed"))
+          use($item`milk of magnesium`);
         eat(1, $item`Ol' Scratch's salad fork`);
-        if (!get("calzoneOfLegendEaten") && have($item`Calzone of Legend`)) {
-          eat(1, $item`Calzone of Legend`);
-        } else if (!get("deepDishOfLegendEaten") && have($item`Pizza of Legend`)) {
-          eat(1, $item`Pizza of Legend`);
-        } else if (!get("pizzaOfLegendEaten") && have($item`Deep Dish of Legend`)) {
-          eat(1, $item`Deep Dish of Legend`);
-        }
+        eat(1, $item`Pizza of Legend`);
       },
       outfit: {
         equip: $items`nurse's hat, sea salt scrubs`,

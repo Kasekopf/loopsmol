@@ -43,19 +43,13 @@ type PullSpec = {
 export const pulls: PullSpec[] = [
   // Food
   {
-    pull: () => {
-      const options = [];
-      if (!get("calzoneOfLegendEaten")) options.push($item`Calzone of Legend`);
-      if (!get("deepDishOfLegendEaten")) options.push($item`Pizza of Legend`);
-      if (!get("pizzaOfLegendEaten")) options.push($item`Deep Dish of Legend`);
-      return options;
-    },
+    pull: $item`Pizza of Legend`,
     useful: () => {
+      if (!get("pizzaOfLegendEaten")) return false;
       if (myFullness() >= 1) return false;
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;
     },
-    name: "Legend Food",
   },
   {
     pull: $item`Ol' Scratch's salad fork`,
