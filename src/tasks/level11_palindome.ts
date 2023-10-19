@@ -21,6 +21,7 @@ import {
   $monster,
   $monsters,
   $phylum,
+  $skill,
   ensureEffect,
   get,
   have,
@@ -28,10 +29,11 @@ import {
 } from "libram";
 import { Quest, Task } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
-import { CombatStrategy } from "../engine/combat";
+import { CombatStrategy, killMacro } from "../engine/combat";
 import { fillHp } from "./level13";
 import { globalStateCache } from "../engine/state";
 import { tuneSnapper } from "../lib";
+import { Priorities } from "../engine/priority";
 
 function shenItem(item: Item) {
   return (
@@ -98,12 +100,33 @@ const Copperhead: Task[] = [
     after: ["Copperhead Start", "Bat/Use Sonar 1"],
     ready: () =>
       shenItem($item`The Stankara Stone`) && $location`The Batrat and Ratbat Burrow`.turnsSpent < 5,
+    priority: () => {
+      if (
+        !have($item`killing jar`) &&
+        get("lastEncounter") === "banshee librarian" &&
+        have($skill`Emotionally Chipped`) &&
+        get("_feelEnvyUsed") < 3 &&
+        get("_feelNostalgicUsed") < 3
+      )
+        return Priorities.Wanderer;
+      else return Priorities.None;
+    },
     completed: () =>
       step("questL11Shen") === 999 ||
       have($item`The Stankara Stone`) ||
       (myDaycount() === 1 && step("questL11Shen") > 1),
     do: $location`The Batrat and Ratbat Burrow`,
-    combat: new CombatStrategy().killHard($monster`Batsnake`).killItem(),
+    combat: new CombatStrategy()
+      .macro(() => {
+        if (!have($item`killing jar`) && get("lastEncounter") === "banshee librarian") {
+          return Macro.trySkill($skill`Feel Nostalgic`)
+            .trySkill($skill`Feel Envy`)
+            .step(killMacro());
+        }
+        return new Macro();
+      }, $monsters`batrat, ratbat`)
+      .killHard($monster`Batsnake`)
+      .killItem(),
     outfit: { modifier: "item", avoid: $items`broken champagne bottle` },
     limit: { soft: 10 },
     orbtargets: () => [],
