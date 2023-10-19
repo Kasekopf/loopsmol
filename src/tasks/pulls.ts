@@ -67,6 +67,15 @@ export const pulls: PullSpec[] = [
       return true;
     },
   },
+  {
+    pull: $item`milk of magnesium`,
+    useful: () => {
+      if (get("_milkOfMagnesiumUsed")) return false;
+      if (myFullness() >= 1) return false;
+      if (myDaycount() > 1 && myAdventures() > 5) return undefined;
+      return true;
+    },
+  },
   // Hero keys
   {
     pull: $item`daily dungeon malware`,
