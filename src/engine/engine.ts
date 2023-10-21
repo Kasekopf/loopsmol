@@ -408,7 +408,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         !nc_task_blacklist.has(task.name) &&
         !have($effect`Teleportitis`) &&
         force_item_source?.equip !== $item`Fourth of May Cosplay Saber` &&
-        !get("_loopsmol_ncforce", false)
+        !get("noncombatForcerActive")
       ) {
         if (
           this.tasks.find(
@@ -429,10 +429,10 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
 
     equipCharging(outfit);
 
-    if (wanderers.length === 0 && this.hasDelay(task) && !get("_loopsmol_ncforce", false))
+    if (wanderers.length === 0 && this.hasDelay(task) && !get("noncombatForcerActive"))
       wanderers.push(...equipUntilCapped(outfit, wandererSources));
 
-    if (get("_loopsmol_ncforce", false)) {
+    if (get("noncombatForcerActive")) {
       // Avoid some things that might override the NC and break the tracking
       outfit.equip({ avoid: $items`Kramco Sausage-o-Matic™` });
     }
@@ -585,22 +585,9 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
   do(task: ActiveTask): void {
     const beaten_turns = haveEffect($effect`Beaten Up`);
     const start_advs = myAdventures();
-    const spikelodon_spikes = get("_spikolodonSpikeUses");
-
-    // The NC force is not reset by wanderers
-    if (
-      !task.active_priority?.has(Priorities.Wanderer) &&
-      !task.active_priority?.has(Priorities.Always)
-    )
-      set("_loopsmol_ncforce", false);
 
     super.do(task);
     if (myAdventures() !== start_advs) getExtros();
-
-    // Check if we used an NC forcer
-    if (get("_spikolodonSpikeUses") > spikelodon_spikes) {
-      set("_loopsmol_ncforce", true);
-    }
 
     // Crash if we unexpectedly lost the fight
     if (!task.expectbeatenup && have($effect`Beaten Up`) && haveEffect($effect`Beaten Up`) < 5) {
