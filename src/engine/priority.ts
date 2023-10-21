@@ -106,7 +106,7 @@ export class Prioritization {
 
     // Handle potential NC forcers in a zone
     if (undelay(task.ncforce)) {
-      if (get("_loopsmol_ncforce", false)) {
+      if (get("noncombatForcerActive")) {
         result.priorities.add(Priorities.GoodForceNC);
       } else if (forceNCPossible()) {
         result.priorities.add(Priorities.BadForcingNC);
