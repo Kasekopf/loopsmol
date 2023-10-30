@@ -29,7 +29,10 @@ import {
   AsdonMartin,
   ensureEffect,
   get,
+  getActiveSongs,
+  getSongLimit,
   have,
+  isSong,
   uneffect,
 } from "libram";
 import { asdonFillTo, asdonFualable } from "./resources";
@@ -108,6 +111,18 @@ export function applyEffects(modifier: string): void {
   if (modifier.includes("+combat") || modifier.includes(" combat"))
     shrug(relevantEffects["-combat"]);
   if (modifier.includes("-combat")) shrug(relevantEffects["+combat"]);
+
+  // Make room for songs
+  const songs = useful_effects.filter(isSong);
+  if (songs.length > getSongLimit()) throw "Too many AT songs.";
+  if (songs.length > 0) {
+    const extra_songs = getActiveSongs().filter((e) => !songs.includes(e));
+    while (songs.length + extra_songs.length > getSongLimit()) {
+      const to_remove = extra_songs.pop();
+      if (to_remove === undefined) break;
+      else uneffect(to_remove);
+    }
+  }
 
   // Apply all relevant effects
   const hotswapped: [Slot, Item][] = []; //
