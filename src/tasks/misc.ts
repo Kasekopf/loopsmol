@@ -20,14 +20,18 @@ import {
   myHp,
   myLevel,
   myMaxhp,
+  myMaxmp,
   myMeat,
+  myMp,
   myPrimestat,
   myTurncount,
   numericModifier,
   print,
   retrieveItem,
   runChoice,
+  totalFreeRests,
   use,
+  useSkill,
   visitUrl,
 } from "kolmafia";
 import {
@@ -43,7 +47,9 @@ import {
   $stat,
   AsdonMartin,
   AutumnAton,
+  byClass,
   byStat,
+  CinchoDeMayo,
   ensureEffect,
   get,
   getSaleValue,
@@ -56,7 +62,7 @@ import {
   uneffect,
 } from "libram";
 import { Quest, Task } from "../engine/task";
-import { Outfit, OutfitSpec, step } from "grimoire-kolmafia";
+import { Guards, Outfit, OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { Engine, wanderingNCs } from "../engine/engine";
 import { Keys, keyStrategy } from "./keys";
@@ -778,6 +784,44 @@ export const MiscQuest: Quest = {
       limit: { tries: 1 },
       freeaction: true,
     },
+    {
+      name: "Cincho Rest",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => CinchoDeMayo.currentCinch() + CinchoDeMayo.cinchRestoredBy() <= 100,
+      completed: () => !have($item`Cincho de Mayo`) || get("timesRested") >= totalFreeRests(),
+      do: () => {
+        if (myMp() === myMaxmp() && myHp() === myMaxhp()) {
+          // We cannot rest with full HP and MP, so burn 1 MP with a starting skill.
+          useSkill(
+            byClass({
+              "Seal Clubber": $skill`Seal Clubbing Frenzy`,
+              "Turtle Tamer": $skill`Patience of the Tortoise`,
+              "Pastamancer": $skill`Manicotti Meditation`,
+              "Sauceror": $skill`Sauce Contemplation`,
+              "Disco Bandit": $skill`Disco Aerobics`,
+              "Accordion Thief": $skill`Moxie of the Mariachi`,
+              default: $skill`none`
+            })
+          )
+        }
+
+        if (get("chateauAvailable") && !underStandard()) {
+          visitUrl("place.php?whichplace=chateau&action=chateau_restlabelfree");
+        } else if (get("getawayCampsiteUnlocked") && !underStandard()) {
+          visitUrl("place.php?whichplace=campaway&action=campaway_tentclick");
+        } else {
+          visitUrl("campground.php?action=rest");
+        }
+      },
+      limit: {
+        tries: 26,  // Total unrestricted free rests
+        guard: Guards.create(
+          () => myAdventures(),
+          (adv) => myAdventures() === adv  // Assert we did not use an adventure
+        )
+      }
+    }
   ],
 };
 

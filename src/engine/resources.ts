@@ -35,6 +35,7 @@ import {
   $monsters,
   $skill,
   AsdonMartin,
+  CinchoDeMayo,
   Counter,
   get,
   getBanishedMonsters,
@@ -592,6 +593,14 @@ export const forceNCSources: ForceNCSorce[] = [
       get("_spikolodonSpikeUses") + args.minor.saveparka < 5,
     equip: { equip: $items`Jurassic Parka`, modes: { parka: "spikolodon" } },
     do: Macro.skill($skill`Launch spikolodon spikes`),
+  },
+  {
+    name: "Cincho",
+    available: () =>
+      have($item`Cincho de Mayo`) &&
+      CinchoDeMayo.currentCinch() >= 60,
+    equip: { equip: $items`Cincho de Mayo` },
+    do: Macro.skill($skill`Cincho: Fiesta Exit`),
   },
 ];
 
