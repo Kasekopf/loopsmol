@@ -596,9 +596,7 @@ export const forceNCSources: ForceNCSorce[] = [
   },
   {
     name: "Cincho",
-    available: () =>
-      have($item`Cincho de Mayo`) &&
-      CinchoDeMayo.currentCinch() >= 60,
+    available: () => have($item`Cincho de Mayo`) && CinchoDeMayo.currentCinch() >= 60,
     equip: { equip: $items`Cincho de Mayo` },
     do: Macro.skill($skill`Cincho: Fiesta Exit`),
   },

@@ -797,13 +797,13 @@ export const MiscQuest: Quest = {
             byClass({
               "Seal Clubber": $skill`Seal Clubbing Frenzy`,
               "Turtle Tamer": $skill`Patience of the Tortoise`,
-              "Pastamancer": $skill`Manicotti Meditation`,
-              "Sauceror": $skill`Sauce Contemplation`,
+              Pastamancer: $skill`Manicotti Meditation`,
+              Sauceror: $skill`Sauce Contemplation`,
               "Disco Bandit": $skill`Disco Aerobics`,
               "Accordion Thief": $skill`Moxie of the Mariachi`,
-              default: $skill`none`
+              default: $skill`none`,
             })
-          )
+          );
         }
 
         if (get("chateauAvailable") && !underStandard()) {
@@ -815,13 +815,13 @@ export const MiscQuest: Quest = {
         }
       },
       limit: {
-        tries: 26,  // Total unrestricted free rests
+        tries: 26, // Total unrestricted free rests
         guard: Guards.create(
           () => myAdventures(),
-          (adv) => myAdventures() === adv  // Assert we did not use an adventure
-        )
-      }
-    }
+          (adv) => myAdventures() === adv // Assert we did not use an adventure
+        ),
+      },
+    },
   ],
 };
 
