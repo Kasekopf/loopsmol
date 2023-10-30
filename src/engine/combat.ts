@@ -15,7 +15,7 @@ const myActions = [
   "yellowRay", // Kill with a drop-everything YR action
   "forceItems", // Force items to drop with a YR or saber
 ] as const;
-export type CombatActions = typeof myActions[number];
+export type CombatActions = (typeof myActions)[number];
 export class CombatStrategy extends BaseCombatStrategy.withActions(myActions) {}
 export class MyActionDefaults implements ActionDefaults<CombatActions> {
   ignore(target?: Monster | Location) {

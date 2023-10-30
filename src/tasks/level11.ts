@@ -193,7 +193,6 @@ const Desert: Task[] = [
     do: $location`The Arid, Extra-Dry Desert`,
     outfit: (): OutfitSpec => {
       if (
-        // eslint-disable-next-line libram/verify-constants
         !have($skill`Just the Facts`) &&
         have($item`industrial fire extinguisher`) &&
         get("_fireExtinguisherCharge") >= 20 &&
@@ -213,7 +212,6 @@ const Desert: Task[] = [
     combat: new CombatStrategy()
       .macro((): Macro => {
         if (
-          // eslint-disable-next-line libram/verify-constants
           !have($skill`Just the Facts`) &&
           have($effect`Ultrahydrated`) &&
           have($item`industrial fire extinguisher`) &&
