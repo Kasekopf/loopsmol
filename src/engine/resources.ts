@@ -215,6 +215,14 @@ export interface WandererSource extends Resource {
 
 export const wandererSources: WandererSource[] = [
   {
+    name: "VHS Tape",
+    available: () => Counter.get("Spooky VHS Tape Monster") <= 0,
+    equip: [],
+    monsters: () => [get("spookyVHSTapeMonster") ?? $monster`none`],
+    chance: () => 1,
+    possible: () => Counter.get("Spooky VHS Tape Monster") <= 0,
+  },
+  {
     name: "Digitize",
     available: () => SourceTerminal.have() && Counter.get("Digitize Monster") <= 0,
     equip: [
