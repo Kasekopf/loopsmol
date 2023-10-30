@@ -18,6 +18,7 @@ import {
   $monster,
   $monsters,
   $skill,
+  ensureEffect,
   get,
   have,
   Macro,
@@ -27,7 +28,7 @@ import { Quest, Task } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
-import { atLevel, debug } from "../lib";
+import { atLevel, debug, haveLoathingIdolMicrophone } from "../lib";
 import { councilSafe } from "./level12";
 
 const Diary: Task[] = [
@@ -284,6 +285,11 @@ const Pyramid: Task[] = [
   {
     name: "Middle Chamber",
     after: ["Upper Chamber"],
+    prepare: () => {
+      if (haveLoathingIdolMicrophone()) {
+        ensureEffect($effect`Spitting Rhymes`);
+      }
+    },
     completed: () => {
       if (!get("controlRoomUnlock")) return false;
       if (get("pyramidBombUsed")) return true;

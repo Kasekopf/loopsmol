@@ -75,3 +75,13 @@ export function underStandard(): boolean {
   // Change when the path leaves Standard
   return true;
 }
+
+const microphoneForms = [
+  $item`Loathing Idol Microphone`,
+  $item`Loathing Idol Microphone (75% charged)`,
+  $item`Loathing Idol Microphone (50% charged)`,
+  $item`Loathing Idol Microphone (25% charged)`,
+];
+export function haveLoathingIdolMicrophone(): boolean {
+  return microphoneForms.some((item) => have(item));
+}
