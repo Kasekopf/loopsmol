@@ -78,7 +78,7 @@ export function equipInitial(outfit: Outfit): void {
   const modifier = getModifiersFrom(outfit);
 
   if (modifier.includes("item")) {
-    outfit.equip($familiar`Grey Goose`);
+    outfit.equip($familiar`Jill-of-All-Trades`);
     if (!modifier.includes("+combat") && !modifier.includes(" combat") && !modifier.includes("res"))
       outfit.equip($item`protonic accelerator pack`);
   }
@@ -147,11 +147,16 @@ export function equipDefaults(outfit: Outfit): void {
   if (outfit.familiar === $familiar`Melodramedary` && get("camelSpit") < 100)
     outfit.equip($item`dromedary drinking helmet`);
 
+  const modifier = getModifiersFrom(outfit);
   outfit.equip($familiar`Jill-of-All-Trades`);
+  if (
+    outfit.familiar === $familiar`Jill-of-All-Trades` &&
+    (modifier.includes("meat") || modifier.includes("item"))
+  )
+    outfit.equip($item`LED candle`);
 
   if (outfit.skipDefaults) return;
 
-  const modifier = getModifiersFrom(outfit);
   if (modifier.includes("-combat")) outfit.equip($familiar`Disgeist`); // low priority
 
   outfit.equip($item`mafia thumb ring`);
@@ -309,6 +314,15 @@ export function fixFoldables(outfit: Outfit) {
     } else {
       // +meat
       if (get("parkaMode").toLowerCase() !== "kachungasaur") cliExecute("parka kachungasaur");
+    }
+  }
+
+  // Fold Jil candle
+  if (equippedAmount($item`LED candle`) > 0) {
+    if (modifier.includes("item") && get("ledCandleMode") !== "disco") {
+      cliExecute("jillcandle disco");
+    } else if (modifier.includes("meat") && get("ledCandleMode") !== "ultraviolet") {
+      cliExecute("jillcandle ultraviolet");
     }
   }
 }
