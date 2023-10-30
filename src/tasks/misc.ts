@@ -1,6 +1,7 @@
 import { CombatStrategy } from "../engine/combat";
 import {
   adv1,
+  buy,
   cliExecute,
   equippedAmount,
   familiarWeight,
@@ -35,6 +36,7 @@ import {
   visitUrl,
 } from "kolmafia";
 import {
+  $coinmaster,
   $effect,
   $familiar,
   $item,
@@ -66,7 +68,7 @@ import { Guards, Outfit, OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { Engine, wanderingNCs } from "../engine/engine";
 import { Keys, keyStrategy } from "./keys";
-import { atLevel, underStandard } from "../lib";
+import { atLevel, haveLoathingIdolMicrophone, underStandard } from "../lib";
 import { args } from "../args";
 import { coldPlanner, yellowSubmarinePossible } from "../engine/outfit";
 import {
@@ -821,6 +823,27 @@ export const MiscQuest: Quest = {
           (adv) => myAdventures() === adv // Assert we did not use an adventure
         ),
       },
+    },
+    {
+      name: "2002 Store",
+      after: [],
+      priority: () => Priorities.Free,
+      completed: () =>
+        !have($item`2002 Mr. Store Catalog`) ||
+        (get("availableMrStore2002Credits") === 0 && get("_2002MrStoreCreditsCollected")),
+      do: () => {
+        if (!haveLoathingIdolMicrophone()) {
+          buy($coinmaster`Mr. Store 2002`, 1, $item`Loathing Idol Microphone`);
+        }
+        if (get("availableMrStore2002Credits") > 0) {
+          buy(
+            $coinmaster`Mr. Store 2002`,
+            get("availableMrStore2002Credits"),
+            $item`Spooky VHS Tape`
+          );
+        }
+      },
+      limit: { tries: 1 },
     },
   ],
 };

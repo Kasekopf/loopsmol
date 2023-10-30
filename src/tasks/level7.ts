@@ -10,6 +10,7 @@ import {
   visitUrl,
 } from "kolmafia";
 import {
+  $effect,
   $item,
   $items,
   $location,
@@ -18,6 +19,7 @@ import {
   $skill,
   $stat,
   AutumnAton,
+  ensureEffect,
   FloristFriar,
   get,
   have,
@@ -26,7 +28,7 @@ import {
 import { Priority, Quest, Task } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
 import { CombatStrategy } from "../engine/combat";
-import { atLevel, haveFlorest } from "../lib";
+import { atLevel, haveFlorest, haveLoathingIdolMicrophone } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
 
@@ -53,7 +55,12 @@ const Alcove: Task[] = [
   {
     name: "Alcove",
     after: ["Start"],
-    prepare: tuneCape,
+    prepare: () => {
+      tuneCape();
+      if (haveLoathingIdolMicrophone()) {
+        ensureEffect($effect`Poppy Performance`);
+      }
+    },
     ready: () => myBasestat($stat`Muscle`) >= 62,
     completed: () => get("cyrptAlcoveEvilness") <= 13,
     do: $location`The Defiled Alcove`,
