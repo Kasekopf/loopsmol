@@ -1,5 +1,6 @@
 import {
   canEquip,
+  cliExecute,
   create,
   Item,
   itemAmount,
@@ -9,6 +10,7 @@ import {
   restoreHp,
   runChoice,
   use,
+  useSkill,
   visitUrl,
 } from "kolmafia";
 import {
@@ -22,6 +24,7 @@ import {
   $monsters,
   $phylum,
   $skill,
+  AugustScepter,
   ensureEffect,
   get,
   have,
@@ -265,8 +268,12 @@ const Zepplin: Task[] = [
         step("questL11Shen") === 999),
     prepare: () => {
       if (have($item`lynyrd musk`)) ensureEffect($effect`Musky`);
+      if (AugustScepter.canCast(2) && !have($effect`Lucky!`))
+        useSkill($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`);
       if (itemAmount($item`11-leaf clover`) > cloversToSave() && !have($effect`Lucky!`))
         use($item`11-leaf clover`);
+      if (have($item`pocket wish`) && !have($effect`Dirty Pear`))
+        cliExecute("genie effect dirty pear");
     },
     completed: () => get("zeppelinProtestors") >= 80,
     do: $location`A Mob of Zeppelin Protesters`,
