@@ -46,8 +46,7 @@ export function main(command?: string): void {
   printVersionInfo();
   if (args.version) return;
 
-  // eslint-disable-next-line libram/verify-constants
-  if (myPath() !== $path`A Shrunken Adventurer Am I` && !args.debug.list)
+  if (myPath() !== $path`A Shrunken Adventurer am I` && !args.debug.list)
     throw `You are not currently in a Shrunken Adventurer run. Please start one.`;
 
   const set_time_now = get(time_property, -1) === -1;
@@ -119,8 +118,7 @@ export function main(command?: string): void {
 }
 
 function runComplete(): boolean {
-  // eslint-disable-next-line libram/verify-constants
-  return step("questL13Final") > 11 || myPath() !== $path`A Shrunken Adventurer Am I`;
+  return step("questL13Final") > 11 || myPath() !== $path`A Shrunken Adventurer am I`;
 }
 
 function printVersionInfo(): void {

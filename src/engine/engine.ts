@@ -143,8 +143,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     this.updatePlan();
     const available_tasks = this.tasks.filter((task) => this.available(task));
 
-    // eslint-disable-next-line libram/verify-constants
-    if (myPath() !== $path`A Shrunken Adventurer Am I`) return undefined; // Prism broken
+    if (myPath() !== $path`A Shrunken Adventurer am I`) return undefined; // Prism broken
 
     // Teleportitis overrides all
     if (have($effect`Teleportitis`)) {
@@ -674,8 +673,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
 }
 
 function autosellJunk(): void {
-  // eslint-disable-next-line libram/verify-constants
-  if (myPath() !== $path`A Shrunken Adventurer Am I`) return; // final safety
+  if (myPath() !== $path`A Shrunken Adventurer am I`) return; // final safety
   if (myMeat() >= 10000) return;
   if (myTurncount() >= 1000) return; // stop after breaking ronin
   if (have($item`pork elf goodies sack`)) use($item`pork elf goodies sack`);
