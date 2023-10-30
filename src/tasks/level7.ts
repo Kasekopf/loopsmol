@@ -11,6 +11,7 @@ import {
 } from "kolmafia";
 import {
   $effect,
+  $familiar,
   $item,
   $items,
   $location,
@@ -149,30 +150,41 @@ const Niche: Task[] = [
     prepare: tuneCape,
     ready: () => myBasestat($stat`Muscle`) >= 62,
     completed: () => get("cyrptNicheEvilness") <= 13,
+    priority: () => {
+      if (have($familiar`Patriotic Eagle`)) {
+        if (!have($effect`Everything Looks Red, White and Blue`))
+          return { score: 8, reason: "Launch RWB" };
+        if (get("rwbMonsterCount") > 1 || get("cyrptNicheEvilness") <= 16)
+          return { score: 0.1, reason: "Kill RWB monster" };
+        if (have($effect`Everything Looks Red, White and Blue`))
+          return { score: -8, reason: "Wait to launch RWB" };
+      }
+      return Priorities.None;
+    },
     do: $location`The Defiled Niche`,
     choices: { 157: 4 },
     outfit: (): OutfitSpec => {
-      if (
-        have($item`industrial fire extinguisher`) &&
-        get("_fireExtinguisherCharge") >= 20 &&
-        !get("fireExtinguisherCyrptUsed")
-      )
+      if (get("rwbMonsterCount") <= 1) {
+        // Cast it the first time, or maintain it
         return {
-          equip: $items`gravy boat, industrial fire extinguisher`,
-        };
-      else
-        return {
+          familiar: $familiar`Patriotic Eagle`,
           equip: tryCape($item`antique machete`, $item`gravy boat`),
         };
+      } else {
+        return {
+          familiar: $familiar`Patriotic Eagle`,
+          equip: tryCape($item`antique machete`, $item`gravy boat`),
+        };
+      }
     },
     combat: new CombatStrategy()
-      .macro(slay_macro, $monster`dirty old lihc`)
+      .macro(() => {
+        if (get("rwbMonsterCount") <= 1 && get("cyrptNicheEvilness") > 16)
+          return Macro.trySkill($skill`%fn, fire a Red, White and Blue Blast`);
+        return new Macro();
+      }, $monster`dirty old lihc`)
+      .macro(slay_macro, $monsters`dirty old lihc, basic lihc, senile lihc, slick lihc`)
       .kill($monster`dirty old lihc`)
-      .macro(Macro.trySkill($skill`Fire Extinguisher: Zone Specific`), $monster`basic lihc`)
-      .macro(
-        new Macro().trySkill($skill`Fire Extinguisher: Zone Specific`).step(slay_macro),
-        $monsters`senile lihc, slick lihc`
-      )
       .banish($monsters`basic lihc, senile lihc, slick lihc`),
     orbtargets: () => [$monster`dirty old lihc`],
     limit: { turns: 37 },
@@ -208,10 +220,20 @@ const Nook: Task[] = [
       }
     },
     outfit: (): OutfitSpec => {
-      return {
-        equip: tryCape($item`antique machete`, $item`gravy boat`),
-        modifier: "item 500max",
-      };
+      if (
+        have($item`industrial fire extinguisher`) &&
+        get("_fireExtinguisherCharge") >= 20 &&
+        !get("fireExtinguisherCyrptUsed")
+      )
+        return {
+          equip: $items`gravy boat, industrial fire extinguisher`,
+          modifier: "item 500max",
+        };
+      else
+        return {
+          equip: tryCape($item`antique machete`, $item`gravy boat`),
+          modifier: "item 500max",
+        };
     },
     choices: { 155: 5, 1429: 1 },
     orbtargets: () => {
@@ -221,6 +243,10 @@ const Nook: Task[] = [
     combat: new CombatStrategy()
       .macro(slay_macro, $monsters`spiny skelelton, toothy sklelton`)
       .kill($monsters`spiny skelelton, toothy sklelton`)
+      .macro(
+        new Macro().trySkill($skill`Fire Extinguisher: Zone Specific`),
+        $monster`party skelteon`
+      )
       .banish($monster`party skelteon`),
     limit: {
       soft: 37,
