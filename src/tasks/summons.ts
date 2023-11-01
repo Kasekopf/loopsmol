@@ -93,6 +93,26 @@ const summonTargets: SummonTarget[] = [
     },
     combat: new CombatStrategy().yellowRay(),
   },
+  {
+    target: $monster`Astronomer`,
+    after: [],
+    completed: () =>
+      have($item`star chart`) ||
+      have($item`Richard's star key`) ||
+      get("nsTowerDoorKeysUsed").includes("Richard's star key"),
+    combat: new CombatStrategy().kill(),
+  },
+  {
+    target: $monster`Camel's Toe`,
+    after: [],
+    completed: () =>
+      get("lastCopyableMonster") === $monster`Camel's Toe` ||
+      (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
+      have($item`Richard's star key`) ||
+      get("nsTowerDoorKeysUsed").includes("Richard's star key"),
+    outfit: { modifier: "item" },
+    combat: new CombatStrategy().killItem(),
+  },
 ];
 
 type SummonSource = {
@@ -140,8 +160,7 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${
-          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },

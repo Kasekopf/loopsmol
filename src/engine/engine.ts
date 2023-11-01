@@ -479,7 +479,12 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
 
     equipCharging(outfit);
 
-    if (wanderers.length === 0 && this.hasDelay(task) && !get("noncombatForcerActive"))
+    if (
+      wanderers.length === 0 &&
+      this.hasDelay(task) &&
+      !get("noncombatForcerActive") &&
+      !task.backup
+    )
       wanderers.push(...equipUntilCapped(outfit, wandererSources));
 
     if (get("noncombatForcerActive")) {
