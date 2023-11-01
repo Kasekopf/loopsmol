@@ -54,10 +54,12 @@ export const routing: string[] = [
 
   // Setup additional -combats
   "Manor/Start Floor2",
+  "Summon/Astronomer",
+  "Summon/Camel's Toe",
   "Hidden City/Open City",
   "Manor/Bedroom",
-  "Manor/Bathroom Delay",
   "Manor/Gallery Delay",
+  "Manor/Bathroom Delay",
   "Palindome/Bat Snake",
   "Bat/Use Sonar 3", // Reveal more delay
   "Palindome/Cold Snake",
