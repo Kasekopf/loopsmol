@@ -38,6 +38,7 @@ import {
   $locations,
   $monster,
   $path,
+  $skill,
   $slot,
   get,
   getTodaysHolidayWanderers,
@@ -64,6 +65,8 @@ import {
 import { cliExecute, equippedAmount, itemAmount, runChoice } from "kolmafia";
 import { atLevel, debug } from "../lib";
 import {
+  BackupTarget,
+  backupTargets,
   canChargeVoid,
   CombatResource,
   forceItemSources,
@@ -104,6 +107,7 @@ export const wanderingNCs = new Set<string>([
 
 type ActiveTask = Task & {
   wanderer?: WandererSource;
+  backup?: BackupTarget;
   active_priority?: Prioritization;
 };
 
@@ -166,6 +170,43 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         ...priority,
         active_priority: Prioritization.fixed(Priorities.LastCopyableMonster),
       };
+    }
+
+    // If a backup target is up try to place it in a useful location
+    const backup = backupTargets.find(
+      (target) => !target.completed() && target.monster === get("lastCopyableMonster")
+    );
+    if (backup && have($item`backup camera`)) {
+      const backup_outfit = undelay(backup.outfit) ?? {};
+      if ("equip" in backup_outfit) backup_outfit.equip?.push($item`backup camera`);
+      else backup_outfit.equip = [$item`backup camera`];
+
+      const possible_locations = available_tasks.filter(
+        (task) => this.hasDelay(task) && this.createOutfit(task).canEquip(backup_outfit)
+      );
+      if (possible_locations.length > 0) {
+        if (args.debug.verbose) {
+          printHtml(
+            `A backup target (${backup.monster}) is available to place in a delay zone. Available zones:`
+          );
+          for (const task of possible_locations) {
+            printHtml(`${task.name}`);
+          }
+        }
+        return {
+          ...possible_locations[0],
+          active_priority: Prioritization.fixed(Priorities.Wanderer),
+          backup: backup,
+        };
+      } else {
+        logprint(`Backup ${backup.monster} is ready but no tasks have delay`);
+        return {
+          name: `Backup ${backup.monster}`,
+          completed: () => false,
+          do: $location`Noob Cave`,
+          limit: { tries: backup.limit_tries },
+        };
+      }
     }
 
     // If a wanderer is up try to place it in a useful location
@@ -262,6 +303,16 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     for (const wanderer of wanderers) {
       if (!equipFirst(outfit, [wanderer]))
         throw `Wanderer equipment ${wanderer.equip} conflicts with ${task.name}`;
+    }
+
+    // Setup a backup
+    if (task.backup) {
+      if (!outfit.equip($item`backup camera`)) throw `Cannot force backup camera on ${task.name}`;
+      if (task.backup.outfit && !outfit.equip(undelay(task.backup.outfit)))
+        throw `Cannot match equip for backup ${task.backup.monster} on ${task.name}`;
+      outfit.equip({ avoid: $items`carnivorous potted plant` });
+      combat.startingMacro(Macro.trySkill($skill`Back-Up to your Last Enemy`));
+      combat.action("kill");
     }
 
     if (undelay(task.freeaction)) {

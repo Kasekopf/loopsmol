@@ -625,3 +625,40 @@ function monstersAt(location: Location): Monster[] {
     .map((i) => Monster.get(i[0]));
   return result;
 }
+
+export type BackupTarget = {
+  monster: Monster;
+  completed: () => boolean;
+  outfit?: OutfitSpec | (() => OutfitSpec);
+  limit_tries: number;
+};
+export const backupTargets: BackupTarget[] = [
+  {
+    monster: $monster`giant swarm of ghuol whelps`,
+    completed: () => get("cyrptCrannyEvilness") <= 13,
+    outfit: (): OutfitSpec => {
+      const items = $items`gravy boat, old patched suit-pants, unbreakable umbrella`;
+      if (have($item`unwrapped knock-off retro superhero cape`)) {
+        items.push($item`unwrapped knock-off retro superhero cape`, $item`antique machete`);
+      }
+      return {
+        equip: items,
+        modifier: "ML",
+        modes: {
+          umbrella: "broken",
+          retrocape: ["vampire", "kill"],
+        },
+      };
+    },
+    limit_tries: 3,
+  },
+  {
+    monster: $monster`Camel's Toe`,
+    completed: () =>
+      (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
+      have($item`Richard's star key`) ||
+      get("nsTowerDoorKeysUsed").includes("Richard's star key"),
+    outfit: { modifier: "item" },
+    limit_tries: 3,
+  },
+];
