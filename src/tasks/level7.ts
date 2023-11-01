@@ -186,6 +186,8 @@ const Niche: Task[] = [
       .macro(slay_macro, $monsters`dirty old lihc, basic lihc, senile lihc, slick lihc`)
       .kill($monster`dirty old lihc`)
       .banish($monsters`basic lihc, senile lihc, slick lihc`),
+    // Don't persist banishes while we are eagle repeating
+    ignore_banishes: () => have($familiar`Patriotic Eagle`) && myTurncount() < 200,
     orbtargets: () => [$monster`dirty old lihc`],
     limit: { turns: 37 },
   },
@@ -248,6 +250,8 @@ const Nook: Task[] = [
         $monster`party skelteon`
       )
       .banish($monster`party skelteon`),
+    // Don't persist banishes when just here for autumnaton
+    ignore_banishes: () => AutumnAton.have() && myTurncount() < 100,
     limit: {
       soft: 37,
     },

@@ -28,6 +28,7 @@ export type Task = {
   orbtargets?: () => Monster[] | undefined;
   boss?: boolean;
   ncforce?: boolean | (() => boolean);
+  ignore_banishes?: () => boolean;
 } & BaseTask<CombatActions>;
 
 export type Priority = {
