@@ -63,7 +63,7 @@ import {
   getModifiersFrom,
 } from "./outfit";
 import { cliExecute, equippedAmount, itemAmount, runChoice } from "kolmafia";
-import { atLevel, debug } from "../lib";
+import { debug } from "../lib";
 import {
   BackupTarget,
   backupTargets,
@@ -438,13 +438,13 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       }
 
       // Set up a free kill if needed, or if no free kills will ever be needed again
-      // (after L11, when Infinite Loop is less important)
+      // (after Nuns, when we have expensive buffs running)
       if (
         combat.can("killFree") ||
         (combat.can("kill") &&
           !task.boss &&
           this.tasks.every((t) => t.completed() || !t.combat?.can("killFree")) &&
-          atLevel(11))
+          get("sidequestNunsCompleted") !== "none")
       ) {
         resources.provide("killFree", equipFirst(outfit, freekillSources));
       }
