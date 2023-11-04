@@ -17,7 +17,7 @@ import {
 } from "kolmafia";
 import { $item, $items, $monster, CombatLoversLocket, get, have } from "libram";
 import { CombatStrategy } from "../engine/combat";
-import { debug } from "../lib";
+import { debug, underStandard } from "../lib";
 import { args } from "../args";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
@@ -149,7 +149,12 @@ const summonSources: SummonSource[] = [
   {
     name: "Fax",
     available: () =>
-      args.minor.fax && !get("_photocopyUsed") && have($item`Clan VIP Lounge key`) ? 1 : 0,
+      args.minor.fax &&
+      !underStandard() &&
+      !get("_photocopyUsed") &&
+      have($item`Clan VIP Lounge key`)
+        ? 1
+        : 0,
     canFight: (mon: Monster) => canFaxbot(mon),
     summon: (mon: Monster) => {
       // Default to CheeseFax unless EasyFax is the only faxbot online
@@ -160,7 +165,8 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${
+          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },

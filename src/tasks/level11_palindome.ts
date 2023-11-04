@@ -276,6 +276,7 @@ const Zepplin: Task[] = [
         cliExecute("genie effect dirty pear");
     },
     completed: () => get("zeppelinProtestors") >= 80,
+    priority: () => (have($effect`Dirty Pear`) ? Priorities.Effect : Priorities.None),
     do: $location`A Mob of Zeppelin Protesters`,
     combat: new CombatStrategy()
       .macro(new Macro().tryItem($item`cigarette lighter`))

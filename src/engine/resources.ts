@@ -35,7 +35,6 @@ import {
   $monsters,
   $skill,
   AsdonMartin,
-  CinchoDeMayo,
   Counter,
   get,
   getBanishedMonsters,
@@ -603,12 +602,6 @@ export const forceNCSources: ForceNCSorce[] = [
     equip: { equip: $items`Jurassic Parka`, modes: { parka: "spikolodon" } },
     do: Macro.skill($skill`Launch spikolodon spikes`),
   },
-  {
-    name: "Cincho",
-    available: () => have($item`Cincho de Mayo`) && CinchoDeMayo.currentCinch() >= 60,
-    equip: { equip: $items`Cincho de Mayo` },
-    do: Macro.skill($skill`Cincho: Fiesta Exit`),
-  },
 ];
 
 export function forceNCPossible(): boolean {
@@ -637,8 +630,11 @@ export const backupTargets: BackupTarget[] = [
     monster: $monster`giant swarm of ghuol whelps`,
     completed: () => get("cyrptCrannyEvilness") <= 13,
     outfit: (): OutfitSpec => {
-      const items = $items`gravy boat, old patched suit-pants, unbreakable umbrella`;
-      if (have($item`unwrapped knock-off retro superhero cape`)) {
+      const items = [];
+      for (const it of $items`gravy boat, old patched suit-pants, unbreakable umbrella`) {
+        if (have(it)) items.push(it);
+      }
+      if (have($item`unwrapped knock-off retro superhero cape`) && have($item`antique machete`)) {
         items.push($item`unwrapped knock-off retro superhero cape`, $item`antique machete`);
       }
       return {

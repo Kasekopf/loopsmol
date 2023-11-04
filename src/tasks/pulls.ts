@@ -45,7 +45,7 @@ export const pulls: PullSpec[] = [
   {
     pull: $item`Pizza of Legend`,
     useful: () => {
-      if (!get("pizzaOfLegendEaten")) return false;
+      if (get("pizzaOfLegendEaten")) return false;
       if (myFullness() >= 1) return false;
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;

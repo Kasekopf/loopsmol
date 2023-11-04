@@ -92,7 +92,7 @@ export const routing: string[] = [
   // Finish remaining quests
   "McLargeHuge/Finish",
   "Manor/Boss",
-  "Junkyard/Finish",
+  "War/Junkyard End",
   "Crypt/Niche",
   "Crypt/Alcove",
   "Giant/Finish",
@@ -107,6 +107,11 @@ export const routing: string[] = [
   "Crypt/Finish", // Finish nook late for autumnaton
   "Bat/Finish", // Finish up with last delay
   "Knob/King",
+
+  // Finish last keys
+  "Keys/All Heroes",
+  "Digital/Key",
+
   "Tower/Naughty Sorceress",
 ];
 

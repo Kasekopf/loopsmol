@@ -787,11 +787,29 @@ export const MiscQuest: Quest = {
       freeaction: true,
     },
     {
+      name: "Cincho",
+      after: ["Friar/Start"],
+      priority: () => Priorities.Free,
+      completed: () =>
+        !have($item`Cincho de Mayo`) ||
+        (get("timesRested") >= totalFreeRests() && CinchoDeMayo.currentCinch() < 60),
+      ready: () =>
+        have($item`Cincho de Mayo`) &&
+        CinchoDeMayo.currentCinch() >= 60 &&
+        !get("noncombatForcerActive"),
+      outfit: { equip: $items`Cincho de Mayo` },
+      do: () => useSkill($skill`Cincho: Fiesta Exit`),
+      limit: { unready: true },
+    },
+    {
       name: "Cincho Rest",
       after: [],
       priority: () => Priorities.Free,
       ready: () => CinchoDeMayo.currentCinch() + CinchoDeMayo.cinchRestoredBy() <= 100,
-      completed: () => !have($item`Cincho de Mayo`) || get("timesRested") >= totalFreeRests(),
+      completed: () =>
+        !have($item`Cincho de Mayo`) ||
+        get("timesRested") >= totalFreeRests() ||
+        get("timesRested") >= 6,
       do: () => {
         if (myMp() === myMaxmp() && myHp() === myMaxhp()) {
           // We cannot rest with full HP and MP, so burn 1 MP with a starting skill.
