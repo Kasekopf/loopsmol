@@ -544,16 +544,16 @@ export const WarQuest: Quest = {
         { item: $item`bejeweled pledge pin` },
       ],
       completed: () => get("hippiesDefeated") >= 64,
-      outfit: () =>
-        <OutfitSpec>{
+      outfit: () => {
+        const jelly = args.minor.jellies ? $familiar`Space Jellyfish` : undefined;
+        return {
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
           familiar:
             !have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)
               ? $familiar`Patriotic Eagle`
-              : args.minor.jellies
-                ? $familiar`Space Jellyfish`
-                : undefined,
-        },
+              : jelly,
+        };
+      },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
       combat: new CombatStrategy()
