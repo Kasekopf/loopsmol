@@ -47,7 +47,11 @@ export const TavernQuest: Quest = {
       },
       outfit: () => {
         if (have($item`June cleaver`))
-          return { modifier: "ML, -combat", equip: $items`June cleaver, old patched suit-pants` };
+          return {
+            modifier: "ML, -combat",
+            equip: $items`June cleaver, old patched suit-pants`,
+            modes: { umbrella: "cocoon" },
+          };
         return { modifier: "ML, +combat", equip: $items`old patched suit-pants` };
       },
       combat: new CombatStrategy().killHard($monster`drunken rat king`).ignoreNoBanish(),
