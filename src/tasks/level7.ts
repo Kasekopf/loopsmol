@@ -176,19 +176,15 @@ const Niche: Task[] = [
     do: $location`The Defiled Niche`,
     choices: { 157: 4 },
     outfit: (): OutfitSpec => {
+      const result = { equip: tryCape($item`antique machete`, $item`gravy boat`) } as OutfitSpec;
+      if (get("rwbMonsterCount") !== 0) {
+        result.avoid = $items`miniature crystal ball`;
+      }
       if (get("rwbMonsterCount") <= 1) {
         // Cast it the first time, or maintain it
-        return {
-          familiar: $familiar`Patriotic Eagle`,
-          equip: tryCape($item`antique machete`, $item`gravy boat`),
-        };
-      } else {
-        return {
-          familiar: $familiar`Patriotic Eagle`,
-          equip: tryCape($item`antique machete`, $item`gravy boat`),
-          avoid: $items`miniature crystal ball`,
-        };
+        result.familiar = $familiar`Patriotic Eagle`;
       }
+      return result;
     },
     combat: new CombatStrategy()
       .macro(() => {
