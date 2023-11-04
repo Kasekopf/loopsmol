@@ -157,7 +157,7 @@ const Niche: Task[] = [
         if (get("rwbMonsterCount") > 1 || get("cyrptNicheEvilness") <= 16)
           return { score: 0.1, reason: "Kill RWB monster" };
         if (have($effect`Everything Looks Red, White and Blue`))
-          return { score: -8, reason: "Wait to launch RWB" };
+          return { score: -80, reason: "Wait to launch RWB" };
       }
       return Priorities.None;
     },
@@ -174,6 +174,7 @@ const Niche: Task[] = [
         return {
           familiar: $familiar`Patriotic Eagle`,
           equip: tryCape($item`antique machete`, $item`gravy boat`),
+          avoid: $items`miniature crystal ball`,
         };
       }
     },

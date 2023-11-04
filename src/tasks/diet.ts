@@ -24,7 +24,7 @@ export const DietQuest: Quest = {
         atLevel(5) &&
         have($item`Ol' Scratch's salad fork`) &&
         !get("pizzaOfLegendEaten") &&
-        have($item`Deep Dish of Legend`) &&
+        have($item`Pizza of Legend`) &&
         have($effect`Ready to Eat`),
       completed: () => myFullness() > 0,
       do: () => {

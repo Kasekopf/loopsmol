@@ -86,8 +86,8 @@ export function equipInitial(outfit: Outfit): void {
   if (modifier.includes("meat")) {
     if (get("_roboDrinks").toLowerCase().includes("drive-by shooting"))
       outfit.equip($familiar`Robortender`);
-    outfit.equip($familiar`Hobo Monkey`);
     outfit.equip($familiar`Jill-of-All-Trades`);
+    outfit.equip($familiar`Hobo Monkey`);
     outfit.equip($familiar`Leprechaun`); // backup
   }
   if (modifier.includes("+combat") && !modifier.includes("res"))
