@@ -912,6 +912,7 @@ export const MiscQuest: Quest = {
           };
       },
       boss: true,
+      freecombat: true,
       limit: { tries: 12 },
     },
     {
