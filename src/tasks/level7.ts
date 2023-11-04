@@ -58,9 +58,10 @@ const Alcove: Task[] = [
     after: ["Start"],
     prepare: () => {
       tuneCape();
-      if (haveLoathingIdolMicrophone()) {
-        ensureEffect($effect`Poppy Performance`);
-      }
+      if (haveLoathingIdolMicrophone()) ensureEffect($effect`Poppy Performance`);
+      if (have($item`old bronzer`)) ensureEffect($effect`Sepia Tan`);
+      if (have($item`ant agonist`)) ensureEffect($effect`All Fired Up`);
+      if (have($item`Angry Farmer candy`)) ensureEffect($effect`Sugar Rush`);
     },
     ready: () => myBasestat($stat`Muscle`) >= 62,
     completed: () => get("cyrptAlcoveEvilness") <= 13,
@@ -72,8 +73,19 @@ const Alcove: Task[] = [
     },
     outfit: (): OutfitSpec => {
       return {
-        equip: tryCape($item`antique machete`, $item`gravy boat`),
+        equip: tryCape(
+          $item`antique machete`,
+          $item`gravy boat`,
+          $item`backup camera`,
+          $item`rocket boots`,
+          $item`Lord Spookyraven's ear trumpet`,
+          $item`Jurassic Parka`
+        ),
         modifier: "init 850max",
+        modes: {
+          backupcamera: "init",
+          parka: "pterodactyl",
+        },
       };
     },
     // Modern zmobie does not show up in orb
