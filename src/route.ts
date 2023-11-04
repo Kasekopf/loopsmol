@@ -107,6 +107,8 @@ export const routing: string[] = [
   "Digital/Megalo",
 
   // Bulk +meat/+item tasks
+  "Misc/Shadow Rift",
+  "Misc/Shadow Lodestone",
   "War/Nuns",
   "Crypt/Nook",
   "Orc Chasm/ABoo Clues",
