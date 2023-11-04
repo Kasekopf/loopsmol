@@ -418,6 +418,9 @@ const Nuns: Task[] = [
       $items`flapper fly, autumn dollar, pink candy heart`
         .filter((i) => have(i, 2) && !have(effectModifier(i, "Effect")))
         .forEach((i) => use(i));
+      if (have($item`pocket wish`) && !have($effect`Sinuses For Miles`)) {
+        cliExecute("genie effect sinuses for miles");
+      }
     },
     do: $location`The Themthar Hills`,
     outfit: () => {
