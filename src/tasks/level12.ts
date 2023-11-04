@@ -421,6 +421,7 @@ const Nuns: Task[] = [
       if (have($item`pocket wish`) && !have($effect`Sinuses For Miles`)) {
         cliExecute("genie effect sinuses for miles");
       }
+      if (have($item`savings bond`)) ensureEffect($effect`Earning Interest`);
     },
     do: $location`The Themthar Hills`,
     outfit: () => {

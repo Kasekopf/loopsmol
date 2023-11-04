@@ -48,7 +48,7 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
     init: $effects`Walberg's Dim Bulb, Springy Fusilli, Cletus's Canticle of Celerity, Suspicious Gaze, Song of Slowness`,
     ML: $effects`Ur-Kel's Aria of Annoyance, Pride of the Puffin, Drescher's Annoying Noise`,
     item: $effects`Fat Leon's Phat Loot Lyric, Singer's Faithful Ocelot`,
-    meat: $effects`Polka of Plenty`,
+    meat: $effects`Polka of Plenty, Disco Leer`,
     mainstat: $effects`Big, Tomato Power, Trivia Master, Gr8ness, Carol of the Hells, Carol of the Thrills`,
     muscle: $effects`Go Get 'Em\, Tiger!, Phorcefullness, Incredibly Hulking`,
     mysticality: $effects`Glittering Eyelashes, Mystically Oiled, On the Shoulders of Giants`,

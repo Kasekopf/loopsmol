@@ -48,6 +48,7 @@ import {
   $slots,
   $stat,
   AsdonMartin,
+  AugustScepter,
   AutumnAton,
   byClass,
   byStat,
@@ -873,15 +874,11 @@ export const MiscQuest: Quest = {
           !have($effect`Shadow Affinity`) &&
           get("encountersUntilSRChoice") !== 0),
       prepare: () => {
-        if (have($item`pocket wish`) && !have($effect`Frosty`)) {
-          cliExecute("genie effect frosty");
-        }
-        if (haveLoathingIdolMicrophone()) {
-          ensureEffect($effect`Spitting Rhymes`);
-        }
-        if (!get("_shadowAffinityToday")) {
-          ClosedCircuitPayphone.chooseQuest(() => 2);
-        }
+        if (AugustScepter.canCast(7)) useSkill($skill`Aug. 7th: Lighthouse Day!`);
+        if (CinchoDeMayo.currentCinch() >= 25) ensureEffect($effect`Party Soundtrack`);
+        if (have($item`pocket wish`) && !have($effect`Frosty`)) cliExecute("genie effect frosty");
+        if (haveLoathingIdolMicrophone()) ensureEffect($effect`Spitting Rhymes`);
+        if (!get("_shadowAffinityToday")) ClosedCircuitPayphone.chooseQuest(() => 2);
       },
       do: $location`Shadow Rift (The Misspelled Cemetary)`,
       post: (): void => {
