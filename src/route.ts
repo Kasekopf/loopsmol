@@ -34,6 +34,7 @@ export const routing: string[] = [
   // Grind tasks until level 11
   "Manor/Kitchen",
   "Mosquito/Burn Delay",
+  "Macguffin/Compass", // Unlock desert for ultrahydrated use
 
   // First -combat group
   "War/Enrage", // Open the War ASAP for Yellow rays
@@ -97,14 +98,28 @@ export const routing: string[] = [
   "Crypt/Alcove",
   "Giant/Finish",
   "Tavern/Finish",
-  "Macguffin/Finish",
 
+  // Setup for +meat/+item set
+  "Macguffin/Upper Chamber",
+  "War/Open Nuns",
   "Orc Chasm/Start Peaks",
+  "Digital/Vanya",
+  "Digital/Megalo",
+
+  // Bulk +meat/+item tasks
+  "War/Nuns",
+  "Crypt/Nook",
+  "Orc Chasm/ABoo Clues",
+  "Digital/Hero",
+  "Orc Chasm/Oil Jar",
+  "Macguffin/Lower Chamber",
   "Orc Chasm/Finish",
+
   "Keys/Star Key", // Allow for better use of orb
   "War/Boss Hippie",
 
-  "Crypt/Finish", // Finish nook late for autumnaton
+  "Macguffin/Finish",
+  "Crypt/Finish",
   "Bat/Finish", // Finish up with last delay
   "Knob/King",
 
