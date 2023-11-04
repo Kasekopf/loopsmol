@@ -459,6 +459,11 @@ export const freekillSources: FreekillSource[] = [
     prepare: () => asdonFillTo(100),
     do: $skill`Asdon Martin: Missile Launcher`,
   },
+  {
+    name: "Shadow Brick",
+    available: () => have($item`shadow brick`) && get("_shadowBricksUsed") < 13,
+    do: $item`shadow brick`,
+  },
 ];
 
 /**
