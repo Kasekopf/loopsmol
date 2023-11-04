@@ -379,7 +379,7 @@ export const DigitalQuest: Quest = {
       do: $location`Vanya's Castle`,
       outfit: {
         modifier: "init",
-        equip: $items`continuum transfunctioner, backup camera`,
+        equip: $items`continuum transfunctioner, backup camera, rocket boots`,
         modes: { backupcamera: "init" },
       },
       combat: new CombatStrategy().kill(),
