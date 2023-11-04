@@ -206,7 +206,7 @@ const Junkyard: Task[] = [
       )
       .banish($monster`A.M.C. gremlin`)
       .kill($monster`batwinged gremlin (tool)`)
-      .ignoreSoftBanish($monsters`batwinged gremlin, vegetable gremlin`),
+      .banish($monsters`batwinged gremlin, vegetable gremlin`),
     limit: { soft: 15 },
   },
   {
@@ -230,7 +230,7 @@ const Junkyard: Task[] = [
       )
       .banish($monster`A.M.C. gremlin`)
       .kill($monster`erudite gremlin (tool)`)
-      .ignoreSoftBanish($monsters`erudite gremlin, spider gremlin`),
+      .banish($monsters`erudite gremlin, spider gremlin`),
     limit: { soft: 15 },
   },
   {
@@ -253,7 +253,7 @@ const Junkyard: Task[] = [
       )
       .banish($monster`A.M.C. gremlin`)
       .kill($monster`spider gremlin (tool)`)
-      .ignoreSoftBanish($monsters`batwinged gremlin, spider gremlin`),
+      .banish($monsters`batwinged gremlin, spider gremlin`),
     limit: { soft: 15 },
   },
   {
@@ -277,7 +277,7 @@ const Junkyard: Task[] = [
       )
       .banish($monster`A.M.C. gremlin`)
       .kill($monster`vegetable gremlin (tool)`)
-      .ignoreSoftBanish($monsters`erudite gremlin, vegetable gremlin`),
+      .banish($monsters`erudite gremlin, vegetable gremlin`),
     limit: { soft: 15 },
   },
   {
@@ -551,8 +551,8 @@ export const WarQuest: Quest = {
             !have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)
               ? $familiar`Patriotic Eagle`
               : args.minor.jellies
-              ? $familiar`Space Jellyfish`
-              : undefined,
+                ? $familiar`Space Jellyfish`
+                : undefined,
         },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
