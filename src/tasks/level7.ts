@@ -201,7 +201,10 @@ const Niche: Task[] = [
       .banish($monsters`basic lihc, senile lihc, slick lihc`),
     // Don't persist banishes while we are eagle repeating
     ignore_banishes: () => have($familiar`Patriotic Eagle`) && myTurncount() < 200,
-    orbtargets: () => [$monster`dirty old lihc`],
+    orbtargets: () => {
+      if (get("rwbMonsterCount") === 0) return [$monster`dirty old lihc`];
+      else return undefined;
+    },
     limit: { turns: 37 },
   },
   {
