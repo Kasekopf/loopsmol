@@ -359,7 +359,6 @@ export const DigitalQuest: Quest = {
       outfit: { modifier: "meat", equip: $items`continuum transfunctioner` },
       combat: new CombatStrategy().kill(),
       limit: { soft: 16 },
-      delay: 16,
     },
     {
       name: "Vanya",
@@ -432,7 +431,6 @@ export const DigitalQuest: Quest = {
       },
       combat: new CombatStrategy().killItem(),
       limit: { soft: 16 },
-      delay: 16,
     },
     {
       name: "Key",
