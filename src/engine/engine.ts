@@ -418,7 +418,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       // Set up a runaway if there are combats we do not care about
       if (!outfit.skipDefaults) {
         let runaway = undefined;
-        if ((combat.can("ignore") || combat.can("ignoreSoftBanish"))) {
+        if (combat.can("ignore") || combat.can("ignoreSoftBanish")) {
           runaway = equipFirst(outfit, runawaySources);
           resources.provide("ignore", runaway);
           resources.provide("ignoreSoftBanish", runaway);
@@ -496,15 +496,18 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     if (!outfit.skipDefaults) {
       const freecombat = task.freecombat || wanderers.find((wanderer) => wanderer.chance() === 1);
       const modifier = getModifiersFrom(outfit);
-      if (!task.boss && !freecombat && !modifier.includes("-combat") && !modifier.includes("ML"))
-        outfit.equip($item`carnivorous potted plant`);
-      if (
+
+      const glass_useful =
         canChargeVoid() &&
         !modifier.includes("-combat") &&
         !freecombat &&
-        ((combat.can("kill") && !resources.has("killFree")) || combat.can("killHard") || task.boss)
-      )
+        ((combat.can("kill") && !resources.has("killFree")) || combat.can("killHard") || task.boss);
+      if (glass_useful && get("_voidFreeFights") < 3)
+        // prioritize a few of these early in the run
         outfit.equip($item`cursed magnifying glass`);
+      if (!task.boss && !freecombat && !modifier.includes("-combat") && !modifier.includes("ML"))
+        outfit.equip($item`carnivorous potted plant`);
+      if (glass_useful) outfit.equip($item`cursed magnifying glass`);
     }
 
     // Determine if it is useful to target monsters with an orb (with no predictions).
