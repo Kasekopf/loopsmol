@@ -873,6 +873,12 @@ export const MiscQuest: Quest = {
           !have($effect`Shadow Affinity`) &&
           get("encountersUntilSRChoice") !== 0),
       prepare: () => {
+        if (have($item`pocket wish`) && !have($effect`Frosty`)) {
+          cliExecute("genie effect frosty");
+        }
+        if (haveLoathingIdolMicrophone()) {
+          ensureEffect($effect`Spitting Rhymes`);
+        }
         if (!get("_shadowAffinityToday")) {
           ClosedCircuitPayphone.chooseQuest(() => 2);
         }
