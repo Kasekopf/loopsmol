@@ -52,6 +52,7 @@ import {
   byClass,
   byStat,
   CinchoDeMayo,
+  ClosedCircuitPayphone,
   ensureEffect,
   get,
   getSaleValue,
@@ -861,6 +862,64 @@ export const MiscQuest: Quest = {
           );
         }
       },
+      limit: { tries: 1 },
+    },
+    {
+      name: "Shadow Rift",
+      after: ["War/Open Nuns"],
+      completed: () =>
+        !have($item`closed-circuit pay phone`) ||
+        (!get("_shadowAffinityToday") &&
+          !have($effect`Shadow Affinity`) &&
+          get("encountersUntilSRChoice") !== 0),
+      prepare: () => {
+        if (!get("_shadowAffinityToday")) {
+          ClosedCircuitPayphone.chooseQuest(() => 2);
+        }
+      },
+      do: $location`Shadow Rift (The Misspelled Cemetary)`,
+      post: (): void => {
+        if (have(ClosedCircuitPayphone.rufusTarget() as Item)) {
+          use($item`closed-circuit pay phone`);
+        }
+      },
+      choices: { 1498: 1 },
+      combat: new CombatStrategy()
+        .macro((): Macro => {
+          return Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`).while_(
+            "hasskill 226",
+            Macro.skill($skill`Perpetrate Mild Evil`)
+          );
+        }, $monster`shadow slab`)
+        .kill(),
+      outfit: () => {
+        if (
+          have($item`industrial fire extinguisher`) &&
+          get("_fireExtinguisherCharge") >= 30 // Leave some for harem
+        )
+          return {
+            modifier: "item",
+            equip: $items`industrial fire extinguisher`,
+            avoid: $items`broken champagne bottle`,
+          };
+        else
+          return {
+            modifier: "item",
+            avoid: $items`broken champagne bottle`,
+          };
+      },
+      boss: true,
+      limit: { tries: 12 },
+    },
+    {
+      name: "Shadow Lodestone",
+      after: ["Misc/Shadow Rift"],
+      completed: () => have($effect`Shadow Waters`) || !have($item`Rufus's shadow lodestone`),
+      do: $location`Shadow Rift (The Misspelled Cemetary)`,
+      choices: {
+        1500: 2,
+      },
+      combat: new CombatStrategy().macro(Macro.abort()),
       limit: { tries: 1 },
     },
   ],
