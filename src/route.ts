@@ -114,7 +114,8 @@ export const routing: string[] = [
   "Orc Chasm/ABoo Clues",
   "Digital/Hero",
   "Orc Chasm/Oil Jar",
-  "Macguffin/Lower Chamber",
+  "Macguffin/Middle Chamber",
+  "Orc Chasm/Twin Init",
   "Orc Chasm/Finish",
 
   "Keys/Star Key", // Allow for better use of orb
