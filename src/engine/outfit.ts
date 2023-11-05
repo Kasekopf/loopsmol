@@ -5,6 +5,7 @@ import {
   outfit as equipOutfit,
   equippedAmount,
   equippedItem,
+  familiarWeight,
   Item,
   itemAmount,
   weaponHands as mafiaWeaponHands,
@@ -134,6 +135,10 @@ export function equipCharging(outfit: Outfit): void {
 
   if (get("screechCombats") > 0 && !get("banishedPhyla").includes("dude")) {
     outfit.equip($familiar`Patriotic Eagle`);
+  }
+
+  if (familiarWeight($familiar`Grey Goose`) < 6) {
+    outfit.equip($familiar`Grey Goose`);
   }
 }
 

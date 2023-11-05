@@ -8,6 +8,7 @@ import {
   $monster,
   $monsters,
   $skill,
+  Counter,
   ensureEffect,
   get,
   have,
@@ -66,10 +67,24 @@ export const McLargeHugeQuest: Quest = {
     {
       name: "Goatlet",
       after: ["Trapper Request"],
+      ready: () =>
+        Counter.get("Spooky VHS Tape Monster") === 0 ||
+        get("spookyVHSTapeMonster") !== $monster`dairy goat`,
       completed: () => itemAmount($item`goat cheese`) >= 3 || step("questL08Trapper") >= 2,
       do: $location`The Goatlet`,
-      outfit: { modifier: "item", avoid: $items`broken champagne bottle` },
+      outfit: {
+        modifier: "item",
+        avoid: $items`broken champagne bottle`,
+        familiar: $familiar`Grey Goose`,
+      },
       combat: new CombatStrategy()
+        .macro(() => {
+          if (itemAmount($item`goat cheese`) === 0)
+            return Macro.trySkill($skill`Emit Matter Duplicating Drones`).tryItem(
+              $item`Spooky VHS Tape`
+            );
+          return new Macro();
+        }, $monster`dairy goat`)
         .killItem($monster`dairy goat`)
         .banish($monsters`drunk goat, sabre-toothed goat`),
       limit: { soft: 15 },
