@@ -47,6 +47,7 @@ export const routing: string[] = [
   "Manor/Billiards",
   "Friar/Finish",
   "Hidden City/Open Temple",
+  "Summon/Baa'baa'bu'ran",
 
   // Attempt to Envy into the batcave
   "Palindome/Copperhead",

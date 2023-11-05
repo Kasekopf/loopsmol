@@ -113,6 +113,16 @@ const summonTargets: SummonTarget[] = [
     outfit: { modifier: "item" },
     combat: new CombatStrategy().killItem(),
   },
+  {
+    target: $monster`Baa'baa'bu'ran`,
+    after: [],
+    completed: () =>
+      itemAmount($item`stone wool`) >= 2 ||
+      (itemAmount($item`stone wool`) === 1 && have($item`the Nostril of the Serpent`)) ||
+      step("questL11Worship") >= 3,
+    outfit: { modifier: "item" },
+    combat: new CombatStrategy().killItem(),
+  },
 ];
 
 type SummonSource = {
