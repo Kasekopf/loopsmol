@@ -24,7 +24,9 @@ export class Priorities {
   static GoodYR: Priority = { score: 10, reason: "Yellow ray" };
   static GoodAutumnaton: Priority = { score: 4, reason: "Setup Autumnaton" };
   static MinorEffect: Priority = { score: 2, reason: "Useful minor effect" };
-  static GoodBanish: Priority = { score: 0.5, reason: "Banishes committed" };
+  static GoodBanish3: Priority = { score: 0.7, reason: "3+ banishes committed" };
+  static GoodBanish2: Priority = { score: 0.6, reason: "2 banishes committed" };
+  static GoodBanish: Priority = { score: 0.5, reason: "1 banish committed" };
   static SeekJellyfish: Priority = { score: 0.1, reason: "Get Spectral Jellyfish" };
   static None: Priority = { score: 0 };
   static BadForcingNC: Priority = { score: -0.4, reason: "Not forcing NC" };
@@ -93,9 +95,10 @@ export class Prioritization {
     }
 
     // If we have already used banishes in the zone, prefer it
-    if (globalStateCache.banishes().isPartiallyBanished(task)) {
-      result.priorities.add(Priorities.GoodBanish);
-    }
+    const numBanished = globalStateCache.banishes().numPartiallyBanished(task);
+    if (numBanished === 1) result.priorities.add(Priorities.GoodBanish);
+    else if (numBanished === 2) result.priorities.add(Priorities.GoodBanish2);
+    else if (numBanished >= 3) result.priorities.add(Priorities.GoodBanish3);
 
     // Avoid ML boosting zones when a scaling holiday wanderer is due
     if (modifier?.includes("ML") && !modifier.match("-[\\d .]*ML")) {
