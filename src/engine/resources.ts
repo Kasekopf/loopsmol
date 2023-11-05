@@ -473,6 +473,12 @@ export const freekillSources: FreekillSource[] = [
     available: () => have($item`shadow brick`) && get("_shadowBricksUsed") < 13,
     do: $item`shadow brick`,
   },
+  {
+    name: "Jurassic Parka",
+    available: () => have($skill`Torso Awareness`) && have($item`Jurassic Parka`),
+    equip: { equip: $items`Jurassic Parka`, modes: { parka: "dilophosaur" } },
+    do: $skill`Spit jurassic acid`,
+  },
 ];
 
 /**
@@ -670,5 +676,10 @@ export const backupTargets: BackupTarget[] = [
       get("nsTowerDoorKeysUsed").includes("Richard's star key"),
     outfit: { modifier: "item" },
     limit_tries: 3,
+  },
+  {
+    monster: $monster`Eldritch Tentacle`,
+    completed: () => false,
+    limit_tries: 11,
   },
 ];

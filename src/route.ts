@@ -132,7 +132,10 @@ export const routing: string[] = [
 
   "Macguffin/Finish",
   "Crypt/Finish",
-  "Bat/Finish", // Finish up with last delay
+
+  // Finish up with last delay
+  "Misc/Eldritch Tentacle",
+  "Bat/Finish",
   "Knob/King",
 
   // Finish last keys
