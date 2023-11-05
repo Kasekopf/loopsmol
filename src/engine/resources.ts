@@ -141,6 +141,15 @@ const banishSources: BanishSource[] = [
     equip: $item`seal-clubbing club`,
   },
   {
+    // Use the first one generically
+    name: "Feel Hatred",
+    available: () => get("_feelHatredUsed") < 1 && have($skill`Emotionally Chipped`),
+    do: $skill`Feel Hatred`,
+  },
+];
+
+export const extraBanishSources: BanishSource[] = [
+  {
     name: "Feel Hatred",
     available: () => get("_feelHatredUsed") < 3 && have($skill`Emotionally Chipped`),
     do: $skill`Feel Hatred`,
@@ -161,14 +170,16 @@ export class BanishState {
     const targets: Monster[] = [];
     targets.push(...(task.combat?.where("banish") ?? []));
     targets.push(...(task.combat?.where("ignoreSoftBanish") ?? []));
+    targets.push(...(task.combat?.where("extraBanish") ?? []));
     if (
       (task.combat?.getDefaultAction() === "banish" ||
-        task.combat?.getDefaultAction() === "ignoreSoftBanish") &&
+        task.combat?.getDefaultAction() === "ignoreSoftBanish" ||
+        task.combat?.getDefaultAction() === "extraBanish") &&
       task.do instanceof Location
     ) {
       for (const monster of monstersAt(task.do)) {
         const strat = task.combat?.currentStrategy(monster);
-        if (strat === "banish" || strat === "ignoreSoftBanish") {
+        if (strat === "banish" || strat === "ignoreSoftBanish" || strat === "extraBanish") {
           targets.push(monster);
         }
       }
