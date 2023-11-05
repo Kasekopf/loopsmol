@@ -676,6 +676,9 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
   post(task: ActiveTask): void {
     super.post(task);
 
+    // Try to fix evil tracking after backing up
+    if (get("lastCopyableMonster") === $monster`giant swarm of ghuol whelps`) visitUrl("crypt.php");
+
     if (
       task.active_priority?.has(Priorities.BadOrb) &&
       !haveEquipped($item`miniature crystal ball`)
