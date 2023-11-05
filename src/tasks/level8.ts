@@ -7,9 +7,11 @@ import {
   $location,
   $monster,
   $monsters,
+  $skill,
   ensureEffect,
   get,
   have,
+  Macro,
 } from "libram";
 import { Quest } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
@@ -138,8 +140,12 @@ export const McLargeHugeQuest: Quest = {
           throw `Unable to ensure cold res for The Icy Peak`;
       },
       do: $location`Mist-Shrouded Peak`,
-      outfit: () => coldPlanner.outfitFor(5),
-      combat: new CombatStrategy().killHard(),
+      outfit: () => coldPlanner.outfitFor(5, { familiar: $familiar`Patriotic Eagle` }),
+      combat: new CombatStrategy().killHard().macro(() => {
+        if (!get("banishedPhyla").includes("beast"))
+          return Macro.trySkill($skill`%fn, Release the Patriotic Screech!`);
+        return new Macro();
+      }),
       boss: true,
       limit: { tries: 4 },
     },

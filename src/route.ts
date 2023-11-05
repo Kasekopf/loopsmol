@@ -66,12 +66,6 @@ export const routing: string[] = [
   "Palindome/Cold Snake",
   "Giant/Grow Beanstalk",
 
-  // Open Hidden City
-  "Hidden City/Open Office",
-  "Hidden City/Open Hospital",
-  "Hidden City/Open Apartment",
-  "Hidden City/Open Bowling",
-
   // Get and use clovers
   "Misc/Hermit Clover",
   "McLargeHuge/Trapper Return",
@@ -91,13 +85,27 @@ export const routing: string[] = [
   "Macguffin/Desert", // charge camel for protestors
 
   // Finish remaining quests
-  "McLargeHuge/Finish",
+  "McLargeHuge/Finish", // Get Eagle beast banish
+
+  // Hidden City
+  "Hidden City/Open Office",
+  "Hidden City/Open Hospital",
+  "Hidden City/Open Apartment",
+  "Hidden City/Open Bowling",
+  "Hidden City/Office Files", // Banish janitors under delay
+  "Hidden City/Apartment",
+  "Hidden City/Hospital",
+  "Hidden City/Bowling",
+
+  "Giant/Finish",
+  "Palindome/Palindome Dudes", // Use Eagle beast banish
   "Manor/Boss",
-  "War/Junkyard End",
   "Crypt/Niche",
   "Crypt/Alcove",
-  "Giant/Finish",
+  "War/Junkyard End",
+
   "Tavern/Finish",
+  "Hidden City/Office Boss", // Get Eagle dude banish
 
   // Setup for +meat/+item set
   "Macguffin/Upper Chamber",
@@ -114,8 +122,8 @@ export const routing: string[] = [
   "Orc Chasm/ABoo Clues",
   "Digital/Hero",
   "Orc Chasm/Oil Jar",
-  "Macguffin/Middle Chamber",
-  "Orc Chasm/Twin Init",
+  "Macguffin/Middle Chamber", // Avoid Eagle beast banish!
+  "Orc Chasm/Twin Init", // Use Eagle dude banish
   "Orc Chasm/Finish",
 
   "Keys/Star Key", // Allow for better use of orb

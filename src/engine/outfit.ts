@@ -131,6 +131,10 @@ export function equipCharging(outfit: Outfit): void {
   ) {
     outfit.equip($familiar`Gelatinous Cubeling`);
   }
+
+  if (get("screechCombats") > 0 && !get("banishedPhyla").includes("dude")) {
+    outfit.equip($familiar`Patriotic Eagle`);
+  }
 }
 
 export function equipDefaults(outfit: Outfit): void {
