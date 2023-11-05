@@ -329,11 +329,27 @@ const Zepplin: Task[] = [
     combat: new CombatStrategy()
       .killHard($monster`Ron "The Weasel" Copperhead`)
       .macro((): Macro => {
-        if (get("_glarkCableUses") < 5) return new Macro().tryItem($item`glark cable`);
-        else return new Macro();
+        return Macro.trySkill($skill`%fn, fire a Red, White and Blue Blast`).externalIf(
+          get("_glarkCableUses") < 5,
+          Macro.tryItem($item`glark cable`)
+        );
       }, $monsters`man with the red buttons, red skeleton, red butler`)
       .banish($monsters`Red Herring, Red Snapper`)
       .kill(),
+    orbtargets: () =>
+      get("rwbMonsterCount") > 0 && get("rwbLocation") === $location`The Red Zeppelin`
+        ? undefined
+        : $monsters`man with the red buttons, red skeleton, red butler`,
+    outfit: () => {
+      if (
+        have($familiar`Patriotic Eagle`) &&
+        !have($effect`Everything Looks Red, White and Blue`) &&
+        get("cyrptNicheEvilness") <= 13
+      ) {
+        return { familiar: $familiar`Patriotic Eagle`, modifier: "item" };
+      }
+      return { modifier: "item" };
+    },
     limit: { soft: 13 },
   },
 ];
