@@ -926,6 +926,18 @@ export const MiscQuest: Quest = {
       combat: new CombatStrategy().macro(Macro.abort()),
       limit: { tries: 1 },
     },
+    {
+      name: "Eldritch Tentacle",
+      after: ["Keys/Star Key", "Crypt/Cranny"],
+      ready: () => get("questL02Larva") !== "unstarted",
+      completed: () => get("_eldritchTentacleFought"),
+      do: () => {
+        visitUrl("place.php?whichplace=forestvillage&action=fv_scientist", false);
+        runChoice(1);
+      },
+      combat: new CombatStrategy().kill(),
+      limit: { tries: 1 },
+    },
   ],
 };
 
