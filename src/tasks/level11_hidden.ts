@@ -1,11 +1,15 @@
 import {
   buy,
   cliExecute,
+  closetAmount,
+  familiarWeight,
   Item,
   itemAmount,
   myAscensions,
   myHash,
   myMeat,
+  putCloset,
+  takeCloset,
   use,
   visitUrl,
 } from "kolmafia";
@@ -19,6 +23,7 @@ import {
   $monster,
   $monsters,
   $skill,
+  Counter,
   get,
   have,
   Macro,
@@ -371,7 +376,11 @@ const Bowling: Task[] = [
   {
     name: "Bowling",
     after: ["Open Bowling", "Banish Janitors"],
-    ready: () => myMeat() >= 500,
+    ready: () =>
+      myMeat() >= 500 &&
+      (get("hiddenBowlingAlleyProgress") + itemAmount($item`bowling ball`) < 5 ||
+        Counter.get("Spooky VHS Tape Monster") === 0 ||
+        get("spookyVHSTapeMonster") !== $monster`pygmy bowler`),
     acquire: [{ item: $item`Bowl of Scorpions`, optional: true }],
     completed: () => get("hiddenBowlingAlleyProgress") >= 7,
     prepare: () => {
@@ -380,30 +389,38 @@ const Bowling: Task[] = [
         use($item`book of matches`);
         buy($item`Bowl of Scorpions`);
       }
+      // Backload the bowling balls due to banish timers
+      if (get("hiddenBowlingAlleyProgress") + itemAmount($item`bowling ball`) < 6) {
+        if (have($item`bowling ball`))
+          putCloset($item`bowling ball`, itemAmount($item`bowling ball`));
+      } else {
+        if (closetAmount($item`bowling ball`) > 0)
+          takeCloset($item`bowling ball`, closetAmount($item`bowling ball`));
+      }
     },
     do: $location`The Hidden Bowling Alley`,
     combat: new CombatStrategy()
       .killHard($monster`ancient protector spirit (The Hidden Bowling Alley)`)
       .killItem($monster`pygmy bowler`)
-      .macro(
-        () =>
-          Macro.externalIf(get("camelSpit") === 100, Macro.trySkill($skill`%fn, spit on them!`)),
-        $monster`pygmy bowler`
-      )
+      .macro(() => {
+        if (have($familiar`Melodramedary`) && get("camelSpit") === 100)
+          return Macro.trySkill($skill`%fn, spit on them!`);
+        return Macro.tryItem($item`Spooky VHS Tape`).trySkill(
+          $skill`Emit Matter Duplicating Drones`
+        );
+      }, $monster`pygmy bowler`)
       .banish($monsters`pygmy janitor, pygmy orderlies`),
     outfit: () => {
+      const result: OutfitSpec = {
+        modifier: "item",
+        avoid: $items`broken champagne bottle`,
+      };
       if (have($familiar`Melodramedary`) && get("camelSpit") === 100) {
-        return {
-          modifier: "item",
-          avoid: $items`broken champagne bottle`,
-          familiar: $familiar`Melodramedary`,
-        };
-      } else {
-        return {
-          modifier: "item",
-          avoid: $items`broken champagne bottle`,
-        };
+        result.familiar = $familiar`Melodramedary`;
+      } else if (have($familiar`Grey Goose`) && familiarWeight($familiar`Grey Goose`) >= 6) {
+        result.familiar = $familiar`Grey Goose`;
       }
+      return result;
     },
     choices: { 788: 1 },
     limit: { soft: 25 },
