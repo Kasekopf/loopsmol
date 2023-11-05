@@ -1,4 +1,14 @@
-import { buy, cliExecute, itemAmount, myAscensions, myHash, myMeat, use, visitUrl } from "kolmafia";
+import {
+  buy,
+  cliExecute,
+  Item,
+  itemAmount,
+  myAscensions,
+  myHash,
+  myMeat,
+  use,
+  visitUrl,
+} from "kolmafia";
 import {
   $effect,
   $effects,
@@ -264,7 +274,24 @@ const Office: Task[] = [
     choices: { 786: 1 },
     combat: new CombatStrategy()
       .killHard($monster`ancient protector spirit (The Hidden Office Building)`)
-      .ignore(),
+      .ignore()
+      .macro(() => {
+        const palindome_dudes_done = have(Item.get(7262)) || step("questL11Palindome") >= 3;
+        if (
+          get("banishedPhyla").includes("beast") &&
+          officeBanishesDone() &&
+          palindome_dudes_done
+        ) {
+          return Macro.trySkill($skill`%fn, Release the Patriotic Screech!`);
+        }
+        return new Macro();
+      }),
+    outfit: () => {
+      const palindome_dudes_done = have(Item.get(7262)) || step("questL11Palindome") >= 3;
+      if (get("banishedPhyla").includes("beast") && officeBanishesDone() && palindome_dudes_done)
+        return { familiar: $familiar`Patriotic Eagle` };
+      return {};
+    },
     orbtargets: () => [],
     limit: { soft: 10 },
   },
@@ -448,4 +475,19 @@ function makeCompleteFile(): void {
   ) {
     cliExecute("make McClusky file (complete)");
   }
+}
+
+function officeBanishesDone(): boolean {
+  if (get("hiddenHospitalProgress") < 7) return false;
+  if (get("hiddenApartmentProgress") < 7) return false;
+  if (get("hiddenBowlingAlleyProgress") < 7) return false;
+  return (
+    (have($item`McClusky file (page 1)`) &&
+      have($item`McClusky file (page 2)`) &&
+      have($item`McClusky file (page 3)`) &&
+      have($item`McClusky file (page 4)`) &&
+      have($item`McClusky file (page 5)`)) ||
+    have($item`McClusky file (complete)`) ||
+    get("hiddenOfficeProgress") >= 7
+  );
 }
