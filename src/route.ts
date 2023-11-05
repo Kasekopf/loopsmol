@@ -87,6 +87,7 @@ export const routing: string[] = [
 
   // Finish remaining quests
   "McLargeHuge/Finish", // Get Eagle beast banish
+  "Crypt/Alcove",
 
   // Hidden City
   "Hidden City/Open Office",
@@ -102,7 +103,6 @@ export const routing: string[] = [
   "Palindome/Palindome Dudes", // Use Eagle beast banish
   "Manor/Boss",
   "Crypt/Niche",
-  "Crypt/Alcove",
   "War/Junkyard End",
 
   "Tavern/Finish",
