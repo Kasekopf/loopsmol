@@ -54,6 +54,7 @@ import {
   byStat,
   CinchoDeMayo,
   ClosedCircuitPayphone,
+  DaylightShavings,
   ensureEffect,
   get,
   getSaleValue,
@@ -896,20 +897,19 @@ export const MiscQuest: Quest = {
         }, $monster`shadow slab`)
         .kill(),
       outfit: () => {
+        const result: OutfitSpec = {
+          modifier: "item",
+          avoid: $items`broken champagne bottle`,
+          equip: [],
+        };
         if (
           have($item`industrial fire extinguisher`) &&
           get("_fireExtinguisherCharge") >= 30 // Leave some for harem
         )
-          return {
-            modifier: "item",
-            equip: $items`industrial fire extinguisher`,
-            avoid: $items`broken champagne bottle`,
-          };
-        else
-          return {
-            modifier: "item",
-            avoid: $items`broken champagne bottle`,
-          };
+          result.equip?.push($item`industrial fire extinguisher`);
+        else if (DaylightShavings.nextBuff() === $effect`Friendly Chops`)
+          result.equip?.push($item`Daylight Shavings Helmet`);
+        return result;
       },
       boss: true,
       freecombat: true,

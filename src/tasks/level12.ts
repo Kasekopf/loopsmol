@@ -30,6 +30,7 @@ import {
   have,
   Macro,
   set,
+  uneffect,
 } from "libram";
 import { Priority, Quest, Task } from "../engine/task";
 import { Guards, OutfitSpec, step } from "grimoire-kolmafia";
@@ -424,6 +425,15 @@ const Nuns: Task[] = [
       if (have($item`savings bond`)) ensureEffect($effect`Earning Interest`);
     },
     do: $location`The Themthar Hills`,
+    post: () => {
+      if (
+        get("sidequestNunsCompleted") !== "none" &&
+        have($effect`Friendly Chops`) &&
+        have($item`soft green echo eyedrop antidote`)
+      ) {
+        uneffect($effect`Friendly Chops`);
+      }
+    },
     outfit: () => {
       if (have($familiar`Trick-or-Treating Tot`) && have($item`li'l pirate costume`)) {
         return {

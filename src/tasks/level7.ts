@@ -20,6 +20,7 @@ import {
   $skill,
   $stat,
   AutumnAton,
+  DaylightShavings,
   ensureEffect,
   FloristFriar,
   get,
@@ -72,15 +73,18 @@ const Alcove: Task[] = [
       }
     },
     outfit: (): OutfitSpec => {
+      const items = [
+        $item`gravy boat`,
+        $item`backup camera`,
+        $item`rocket boots`,
+        $item`Lord Spookyraven's ear trumpet`,
+        $item`Jurassic Parka`,
+      ];
+      if (DaylightShavings.nextBuff() === $effect`Gull-Wing Moustache`) {
+        items.push($item`Daylight Shavings Helmet`);
+      }
       return {
-        equip: tryCape(
-          $item`antique machete`,
-          $item`gravy boat`,
-          $item`backup camera`,
-          $item`rocket boots`,
-          $item`Lord Spookyraven's ear trumpet`,
-          $item`Jurassic Parka`
-        ),
+        equip: tryCape($item`antique machete`, ...items),
         modifier: "init 850max",
         modes: {
           backupcamera: "init",

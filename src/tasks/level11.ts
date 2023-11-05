@@ -18,6 +18,7 @@ import {
   $monster,
   $monsters,
   $skill,
+  DaylightShavings,
   ensureEffect,
   get,
   have,
@@ -312,11 +313,12 @@ const Pyramid: Task[] = [
       .killItem([$monster`tomb rat`, $monster`tomb rat king`])
       .banish([$monster`tomb asp`, $monster`tomb servant`]),
     outfit: () => {
-      return {
-        modifier: "item",
-        equip:
-          have($item`Lil' Doctor™ bag`) && get("_otoscopeUsed") < 3 ? $items`Lil' Doctor™ bag` : [],
-      };
+      const result: OutfitSpec = { modifier: "item", equip: [] };
+      if (have($item`Lil' Doctor™ bag`) && get("_otoscopeUsed") < 3)
+        result.equip?.push($item`Lil' Doctor™ bag`);
+      if (DaylightShavings.nextBuff() === $effect`Spectacle Moustache`)
+        result.equip?.push($item`Daylight Shavings Helmet`);
+      return result;
     },
     delay: 9,
   },
