@@ -177,7 +177,8 @@ const Apartment: Task[] = [
     combat: new CombatStrategy()
       .killHard($monster`ancient protector spirit (The Hidden Apartment Building)`)
       .kill($monster`pygmy witch accountant`)
-      .banish($monsters`pygmy janitor, pygmy witch lawyer`)
+      .extraBanish($monster`pygmy janitor`)
+      .banish($monster`pygmy witch lawyer`)
       .ignoreNoBanish($monster`pygmy shaman`)
       .ignore(),
     orbtargets: () => {
@@ -200,7 +201,8 @@ const Apartment: Task[] = [
     do: $location`The Hidden Apartment Building`,
     combat: new CombatStrategy()
       .killHard($monster`ancient protector spirit (The Hidden Apartment Building)`)
-      .banish($monsters`pygmy janitor, pygmy witch lawyer, pygmy witch accountant`)
+      .extraBanish($monster`pygmy janitor`)
+      .banish($monsters`pygmy witch lawyer, pygmy witch accountant`)
       .ignoreNoBanish($monster`pygmy shaman`)
       .ignore(),
     orbtargets: () => {
@@ -253,7 +255,8 @@ const Office: Task[] = [
     post: makeCompleteFile,
     combat: new CombatStrategy()
       .kill($monster`pygmy witch accountant`)
-      .banish($monsters`pygmy janitor, pygmy headhunter, pygmy witch lawyer`),
+      .extraBanish($monster`pygmy janitor`)
+      .banish($monsters`pygmy headhunter, pygmy witch lawyer`),
     choices: { 786: 2 },
     limit: { soft: 10 },
   },
@@ -334,7 +337,8 @@ const Hospital: Task[] = [
       .startingMacro(Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`))
       .killHard($monster`ancient protector spirit (The Hidden Hospital)`)
       .kill($monster`pygmy witch surgeon`)
-      .banish($monsters`pygmy orderlies, pygmy janitor, pygmy witch nurse`),
+      .extraBanish($monster`pygmy janitor`)
+      .banish($monsters`pygmy orderlies, pygmy witch nurse`),
     outfit: () => {
       const result = <OutfitSpec>{
         shirt: have($skill`Torso Awareness`) ? $item`surgical apron` : undefined,
@@ -409,7 +413,8 @@ const Bowling: Task[] = [
           $skill`Emit Matter Duplicating Drones`
         );
       }, $monster`pygmy bowler`)
-      .banish($monsters`pygmy janitor, pygmy orderlies`),
+      .extraBanish($monster`pygmy janitor`)
+      .banish($monster`pygmy orderlies`),
     outfit: () => {
       const result: OutfitSpec = {
         modifier: "item",
@@ -456,7 +461,8 @@ export const HiddenQuest: Quest = {
     {
       name: "Banish Janitors",
       after: ["Open City"],
-      completed: () => get("relocatePygmyJanitor") === myAscensions(),
+      completed: () =>
+        get("relocatePygmyJanitor") === myAscensions() || have($skill`Emotionally Chipped`),
       do: $location`The Hidden Park`,
       outfit: { modifier: "-combat" },
       choices: { 789: 2 },

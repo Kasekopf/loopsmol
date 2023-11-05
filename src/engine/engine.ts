@@ -69,6 +69,7 @@ import {
   backupTargets,
   canChargeVoid,
   CombatResource,
+  extraBanishSources,
   forceItemSources,
   forceNCPossible,
   forceNCSources,
@@ -396,6 +397,10 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
             .map((b) => b.do)
             .join(", ")}`
         );
+      }
+
+      if (combat.can("extraBanish")) {
+        resources.provide("extraBanish", equipFirst(outfit, extraBanishSources));
       }
 
       // Don't equip the orb if we have a bad target
