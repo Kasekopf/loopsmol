@@ -1,5 +1,14 @@
 import { step } from "grimoire-kolmafia";
-import { myFamiliar, myLevel, Phylum, print, visitUrl } from "kolmafia";
+import {
+  appearanceRates,
+  Location,
+  Monster,
+  myFamiliar,
+  myLevel,
+  Phylum,
+  print,
+  visitUrl,
+} from "kolmafia";
 import { $familiar, $item, have, Snapper } from "libram";
 
 export function debug(message: string, color?: string): void {
@@ -84,4 +93,11 @@ const microphoneForms = [
 ];
 export function haveLoathingIdolMicrophone(): boolean {
   return microphoneForms.some((item) => have(item));
+}
+
+export function getMonsters(where?: Location): Monster[] {
+  if (where === undefined) return [];
+  return Object.entries(appearanceRates(where)) // Get the maximum HP in the location
+    .filter((i) => i[1] > 0)
+    .map((i) => Monster.get(i[0]));
 }

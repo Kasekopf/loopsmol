@@ -2,6 +2,7 @@ import {
   gametimeToInt,
   getRevision,
   inHardcore,
+  Location,
   myAdventures,
   myPath,
   print,
@@ -15,7 +16,7 @@ import {
 import { all_tasks } from "./tasks/all";
 import { prioritize } from "./route";
 import { Engine } from "./engine/engine";
-import { convertMilliseconds, debug } from "./lib";
+import { convertMilliseconds, debug, getMonsters } from "./lib";
 import { $path, get, set, sinceKolmafiaRevision } from "libram";
 import { Prioritization } from "./engine/priority";
 import { Args, step } from "grimoire-kolmafia";
@@ -137,7 +138,7 @@ function printVersionInfo(): void {
   }
 }
 
-function listTasks(engine: Engine): void {
+function listTasks(engine: Engine, show_phyla = false): void {
   engine.updatePlan();
   for (const task of engine.tasks) {
     if (task.completed()) {
@@ -150,6 +151,30 @@ function listTasks(engine: Engine): void {
         debug(`${task.name}: Available [${priority.score()}: ${why}]`);
       } else {
         debug(`${task.name}: Not Available`, "red");
+      }
+    }
+
+    if (show_phyla) {
+      // For eagle planning
+      if (task.do instanceof Location) {
+        if (task.combat?.can("banish")) {
+          for (const monster of getMonsters(task.do)) {
+            debug(
+              `  * ${
+                task.combat.currentStrategy(monster) ?? task.combat.getDefaultAction() ?? "ignore"
+              } ${monster.name} ${monster.phylum}`
+            );
+          }
+        } else {
+          for (const monster of getMonsters(task.do)) {
+            debug(
+              `  * ${
+                task.combat?.currentStrategy(monster) ?? task.combat?.getDefaultAction() ?? "ignore"
+              } ${monster.name} ${monster.phylum}`,
+              "grey"
+            );
+          }
+        }
       }
     }
   }
