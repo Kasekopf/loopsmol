@@ -259,6 +259,22 @@ const Nook: Task[] = [
       else return $monsters`spiny skelelton, toothy sklelton`;
     },
     combat: new CombatStrategy()
+      .macro(
+        () =>
+          Macro.externalIf(
+            get("lastCopyableMonster") === $monster`spiny skelelton`,
+            Macro.trySkill($skill`Feel Nostalgic`)
+          ),
+        $monster`toothy sklelton`
+      )
+      .macro(
+        () =>
+          Macro.externalIf(
+            get("lastCopyableMonster") === $monster`toothy sklelton`,
+            Macro.trySkill($skill`Feel Nostalgic`)
+          ),
+        $monster`spiny skelelton`
+      )
       .macro(slay_macro, $monsters`spiny skelelton, toothy sklelton`)
       .kill($monsters`spiny skelelton, toothy sklelton`)
       .macro(

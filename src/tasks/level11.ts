@@ -297,7 +297,6 @@ const Pyramid: Task[] = [
       }
     },
     completed: () => {
-      if (!get("controlRoomUnlock")) return false;
       if (get("pyramidBombUsed")) return true;
       const ratchets = itemAmount($item`tomb ratchet`) + itemAmount($item`crumbling wooden wheel`);
       const needed = have($item`ancient bomb`) ? 3 : have($item`ancient bronze token`) ? 7 : 10;
@@ -323,8 +322,28 @@ const Pyramid: Task[] = [
     delay: 9,
   },
   {
+    name: "Middle Chamber Delay",
+    after: ["Upper Chamber", "Middle Chamber"],
+    prepare: () => {
+      if (haveLoathingIdolMicrophone()) {
+        ensureEffect($effect`Spitting Rhymes`);
+      }
+    },
+    completed: () => {
+      if (!get("controlRoomUnlock")) return false;
+      if (get("pyramidBombUsed")) return true;
+      const ratchets = itemAmount($item`tomb ratchet`) + itemAmount($item`crumbling wooden wheel`);
+      const needed = have($item`ancient bomb`) ? 3 : have($item`ancient bronze token`) ? 7 : 10;
+      return ratchets >= needed;
+    },
+    do: $location`The Middle Chamber`,
+    limit: { soft: 30 },
+    combat: new CombatStrategy().ignore(),
+    delay: 9,
+  },
+  {
     name: "Get Token",
-    after: ["Middle Chamber"],
+    after: ["Middle Chamber Delay"],
     completed: () =>
       have($item`ancient bronze token`) || have($item`ancient bomb`) || get("pyramidBombUsed"),
     do: () => rotatePyramid(4),

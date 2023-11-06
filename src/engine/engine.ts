@@ -446,7 +446,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       // (after Nuns, when we have expensive buffs running)
       if (
         combat.can("killFree") ||
-        (combat.can("kill") &&
+        ((combat.can("kill") || combat.can("killItem")) &&
           !task.boss &&
           this.tasks.every((t) => t.completed() || !t.combat?.can("killFree")) &&
           get("sidequestNunsCompleted") !== "none")
@@ -507,7 +507,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         !modifier.includes("-combat") &&
         !freecombat &&
         ((combat.can("kill") && !resources.has("killFree")) || combat.can("killHard") || task.boss);
-      if (glass_useful && get("_voidFreeFights") < 3)
+      if (glass_useful && get("_voidFreeFights") < 4)
         // prioritize a few of these early in the run
         outfit.equip($item`cursed magnifying glass`);
       if (!task.boss && !freecombat && !modifier.includes("-combat") && !modifier.includes("ML"))
@@ -547,7 +547,12 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         "killFree",
         (combat.where("kill") ?? []).filter((mon) => !mon.boss)
       );
+      combat.action(
+        "killFree",
+        (combat.where("killItem") ?? []).filter((mon) => !mon.boss)
+      );
       if (combat.getDefaultAction() === "kill") combat.action("killFree");
+      if (combat.getDefaultAction() === "killItem") combat.action("killFree");
     }
   }
 

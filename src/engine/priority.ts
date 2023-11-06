@@ -95,10 +95,12 @@ export class Prioritization {
     }
 
     // If we have already used banishes in the zone, prefer it
-    const numBanished = globalStateCache.banishes().numPartiallyBanished(task);
-    if (numBanished === 1) result.priorities.add(Priorities.GoodBanish);
-    else if (numBanished === 2) result.priorities.add(Priorities.GoodBanish2);
-    else if (numBanished >= 3) result.priorities.add(Priorities.GoodBanish3);
+    if (!task?.ignore_banishes?.()) {
+      const numBanished = globalStateCache.banishes().numPartiallyBanished(task);
+      if (numBanished === 1) result.priorities.add(Priorities.GoodBanish);
+      else if (numBanished === 2) result.priorities.add(Priorities.GoodBanish2);
+      else if (numBanished >= 3) result.priorities.add(Priorities.GoodBanish3);
+    }
 
     // Avoid ML boosting zones when a scaling holiday wanderer is due
     if (modifier?.includes("ML") && !modifier.match("-[\\d .]*ML")) {
