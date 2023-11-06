@@ -109,7 +109,12 @@ export const McLargeHugeQuest: Quest = {
       },
       do: $location`Lair of the Ninja Snowmen`,
       outfit: () => {
-        const spec: OutfitSpec = { modifier: "50 combat, init", skipDefaults: true };
+        const spec: OutfitSpec = {
+          modifier: "50 combat, init",
+          skipDefaults: true,
+          familiar: $familiar`Jumpsuited Hound Dog`,
+          avoid: $items`miniature crystal ball`,
+        };
         if (have($familiar`Trick-or-Treating Tot`) && !have($item`li'l ninja costume`))
           spec.familiar = $familiar`Trick-or-Treating Tot`;
         if (
@@ -126,7 +131,7 @@ export const McLargeHugeQuest: Quest = {
         $monster`Frozen Solid Snake`,
         $monster`ninja snowman assassin`,
       ]),
-      orbtargets: () => [], // no assassins in orbs
+      orbtargets: () => undefined, // no assassins in orbs
     },
     {
       name: "Climb",

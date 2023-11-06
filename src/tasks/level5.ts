@@ -80,7 +80,8 @@ export const KnobQuest: Quest = {
           new Macro().trySkill($skill`Fire Extinguisher: Zone Specific`),
           $monsters`Knob Goblin Harem Guard, Knob Goblin Madam, Knob Goblin Harem Girl`
         )
-        .banish($monster`Knob Goblin Harem Guard`)
+        .yellowRay($monster`Knob Goblin Harem Girl`)
+        .banish($monsters`Knob Goblin Harem Guard, Knob Goblin Madam`)
         .killItem(),
       limit: { soft: 20 }, // Allow for Cobb's Knob lab key
     },

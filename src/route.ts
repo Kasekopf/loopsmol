@@ -63,9 +63,10 @@ export const routing: string[] = [
   "Manor/Gallery Delay",
   "Manor/Bathroom Delay",
   "Palindome/Bat Snake",
+  "Giant/Grow Beanstalk",
   "Bat/Use Sonar 3", // Reveal more delay
   "Palindome/Cold Snake",
-  "Giant/Grow Beanstalk",
+  "McLargeHuge/Climb",
 
   // Get and use clovers
   "Misc/Hermit Clover",
@@ -86,7 +87,6 @@ export const routing: string[] = [
   "Macguffin/Desert", // charge camel for protestors
 
   // Finish remaining quests
-  "McLargeHuge/Finish", // Get Eagle beast banish
   "Crypt/Alcove",
 
   // Hidden City
@@ -99,21 +99,23 @@ export const routing: string[] = [
   "Hidden City/Hospital",
   "Hidden City/Bowling",
 
+  "McLargeHuge/Finish", // Get Eagle beast banish
   "Giant/Finish",
+  "Palindome/Talisman",
   "Palindome/Palindome Dudes", // Use Eagle beast banish
   "Manor/Boss",
   "Crypt/Niche",
   "War/Junkyard End",
 
   "Tavern/Finish",
-  "Hidden City/Office Boss", // Get Eagle dude banish
 
   // Setup for +meat/+item set
-  "Macguffin/Upper Chamber",
   "War/Open Nuns",
-  "Orc Chasm/Start Peaks",
   "Digital/Vanya",
   "Digital/Megalo",
+  "Hidden City/Office Boss", // Get Eagle dude banish
+  "Macguffin/Upper Chamber",
+  "Orc Chasm/Start Peaks",
 
   // Bulk +meat/+item tasks
   "Misc/Shadow Rift",
@@ -125,22 +127,21 @@ export const routing: string[] = [
   "Orc Chasm/Oil Jar",
   "Macguffin/Middle Chamber", // Avoid Eagle beast banish!
   "Orc Chasm/Twin Init", // Use Eagle dude banish
-  "Orc Chasm/Finish",
+  "Digital/Key",
 
   "Keys/Star Key", // Allow for better use of orb
-  "War/Boss Hippie",
-
   "Macguffin/Finish",
   "Crypt/Finish",
+  "War/Boss Hippie",
+  "Orc Chasm/Finish",
 
   // Finish up with last delay
-  "Misc/Eldritch Tentacle",
   "Bat/Finish",
+  "Misc/Eldritch Tentacle",
   "Knob/King",
 
   // Finish last keys
   "Keys/All Heroes",
-  "Digital/Key",
 
   "Tower/Naughty Sorceress",
 ];

@@ -49,8 +49,8 @@ export const TavernQuest: Quest = {
         if (have($item`June cleaver`))
           return {
             modifier: "ML, -combat",
-            equip: $items`June cleaver, old patched suit-pants`,
-            modes: { umbrella: "cocoon" },
+            equip: $items`June cleaver, old patched suit-pants, unbreakable umbrella, Jurassic Parka`,
+            modes: { umbrella: "cocoon", parka: "pterodactyl" },
           };
         return { modifier: "ML, +combat", equip: $items`old patched suit-pants` };
       },

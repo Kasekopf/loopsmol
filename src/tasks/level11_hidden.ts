@@ -382,7 +382,10 @@ const Bowling: Task[] = [
     after: ["Open Bowling", "Banish Janitors"],
     ready: () =>
       myMeat() >= 500 &&
-      (get("hiddenBowlingAlleyProgress") + itemAmount($item`bowling ball`) < 5 ||
+      (get("hiddenBowlingAlleyProgress") +
+        itemAmount($item`bowling ball`) +
+        closetAmount($item`bowling ball`) <
+        5 ||
         Counter.get("Spooky VHS Tape Monster") === 0 ||
         get("spookyVHSTapeMonster") !== $monster`pygmy bowler`),
     acquire: [{ item: $item`Bowl of Scorpions`, optional: true }],
@@ -394,7 +397,12 @@ const Bowling: Task[] = [
         buy($item`Bowl of Scorpions`);
       }
       // Backload the bowling balls due to banish timers
-      if (get("hiddenBowlingAlleyProgress") + itemAmount($item`bowling ball`) < 6) {
+      if (
+        get("hiddenBowlingAlleyProgress") +
+          itemAmount($item`bowling ball`) +
+          closetAmount($item`bowling ball`) <
+        6
+      ) {
         if (have($item`bowling ball`))
           putCloset($item`bowling ball`, itemAmount($item`bowling ball`));
       } else {
@@ -427,6 +435,12 @@ const Bowling: Task[] = [
       }
       return result;
     },
+    ignore_banishes: () =>
+      get("hiddenBowlingAlleyProgress") +
+        itemAmount($item`bowling ball`) +
+        closetAmount($item`bowling ball`) +
+        (get("spookyVHSTapeMonster") === $monster`pygmy bowler` ? 1 : 0) >=
+      6,
     choices: { 788: 1 },
     limit: { soft: 25 },
   },

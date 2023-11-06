@@ -871,7 +871,7 @@ export const MiscQuest: Quest = {
       after: ["War/Open Nuns"],
       completed: () =>
         !have($item`closed-circuit pay phone`) ||
-        (!get("_shadowAffinityToday") &&
+        (get("_shadowAffinityToday") &&
           !have($effect`Shadow Affinity`) &&
           get("encountersUntilSRChoice") !== 0),
       prepare: () => {
@@ -989,6 +989,7 @@ export const WandQuest: Quest = {
       },
       do: $location`The Dungeons of Doom`,
       outfit: { modifier: "-combat, init" },
+      orbtargets: () => undefined,
       combat: new CombatStrategy()
         .banish($monster`Quantum Mechanic`)
         .kill($monsters`mimic, The Master Of Thieves`), // Avoid getting more teleportitis

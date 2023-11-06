@@ -91,7 +91,10 @@ export function moodCompatible(modifier: string | undefined): boolean {
   }
   if (modifier.includes("-combat")) {
     return (
-      !have($effect`Musk of the Moose`) && !have($effect`Carlweather's Cantata of Confrontation`)
+      !have($effect`Musk of the Moose`) &&
+      !have($effect`Carlweather's Cantata of Confrontation`) &&
+      !have($effect`Romantically Roused`) &&
+      !have($effect`Fresh Breath`)
     );
   }
   return true;
