@@ -464,7 +464,10 @@ export const freekillSources: FreekillSource[] = [
   },
   {
     name: "Jurassic Parka",
-    available: () => have($skill`Torso Awareness`) && have($item`Jurassic Parka`),
+    available: () =>
+      have($skill`Torso Awareness`) &&
+      have($item`Jurassic Parka`) &&
+      !have($effect`Everything Looks Yellow`),
     equip: { equip: $items`Jurassic Parka`, modes: { parka: "dilophosaur" } },
     do: $skill`Spit jurassic acid`,
   },
