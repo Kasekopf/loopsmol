@@ -72,6 +72,14 @@ export const args = Args.create(
         help: "Attempt to use the voter booth if we have access.",
         default: true,
       }),
+      skipfork: Args.flag({
+        help: "Skip salad forking; note that this may cause failure due to lack of remaining adventures",
+        default: true,
+      }),
+      skipmug: Args.flag({
+        help: "Skip frosty mug; note that this may cause failure due to lack of remaining adventures",
+        default: true,
+      }),
     }),
     debug: Args.group("Debug Options", {
       actions: Args.number({

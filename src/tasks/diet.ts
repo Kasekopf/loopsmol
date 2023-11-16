@@ -14,6 +14,7 @@ import { $effect, $effects, $item, $items, $skill, get, have } from "libram";
 import { Priorities } from "../engine/priority";
 import { Quest } from "../engine/task";
 import { atLevel } from "../lib";
+import { args } from "../args";
 
 export const DietQuest: Quest = {
   name: "Diet",
@@ -22,7 +23,7 @@ export const DietQuest: Quest = {
       name: "Eat",
       ready: () =>
         atLevel(5) &&
-        have($item`Ol' Scratch's salad fork`) &&
+        (have($item`Ol' Scratch's salad fork`) || args.minor.skipfork) &&
         !get("pizzaOfLegendEaten") &&
         have($item`Pizza of Legend`) &&
         have($effect`Ready to Eat`),
@@ -43,7 +44,7 @@ export const DietQuest: Quest = {
     },
     {
       name: "Drink",
-      ready: () => atLevel(11) && have($item`Frosty's frosty mug`),
+      ready: () => atLevel(11) && (have($item`Frosty's frosty mug`) || args.minor.skipmug),
       completed: () =>
         myInebriety() === 1 || (!have($item`astral pilsner`) && !have($item`astral six-pack`)),
       do: () => {
