@@ -14,6 +14,7 @@ import {
   pullsRemaining,
   runChoice,
   storageAmount,
+  useSkill,
   visitUrl,
 } from "kolmafia";
 import {
@@ -24,6 +25,7 @@ import {
   $location,
   $monster,
   $monsters,
+  $skill,
   $slots,
   ensureEffect,
   FloristFriar,
@@ -43,6 +45,7 @@ import { haveFlorest, underStandard } from "../lib";
 
 export enum Keys {
   Deck = "Deck",
+  Lockpicking = "Manual of Lock Picking",
   Malware = "Daily Dungeon Malware",
   Dungeon = "Daily Dungeon",
   Fantasy = "Fantasy",
@@ -65,6 +68,21 @@ const heroKeys: KeyTask[] = [
         if (trainSetAvailable()) cliExecute("cheat island");
         else cliExecute("cheat mine");
       }
+    },
+    limit: { tries: 1 },
+    freeaction: true,
+  },
+  {
+    which: Keys.Lockpicking,
+    possible: () => have($skill`Lock Picking`) && !get("lockPicked"),
+    after: [],
+    priority: () => Priorities.Free,
+    completed: () => !have($skill`Lock Picking`) || get("lockPicked"),
+    do: () => useSkill($skill`Lock Picking`),
+    choices: () => {
+      return {
+        1414: have($item`Boris's key`) ? (have($item`Jarlsberg's key`) ? 3 : 2) : 1,
+      };
     },
     limit: { tries: 1 },
     freeaction: true,
