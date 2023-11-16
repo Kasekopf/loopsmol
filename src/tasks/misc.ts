@@ -477,7 +477,6 @@ export const MiscQuest: Quest = {
       ready: () => myMeat() >= 1500, // Increased so we don't go down to 0
       completed: () =>
         have($item`red rocket`) ||
-        get("_fireworksShopEquipmentBought") ||
         !have($item`Clan VIP Lounge key`) ||
         have($effect`Ready to Eat`) ||
         myFullness() > 0,
