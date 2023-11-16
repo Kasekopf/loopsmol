@@ -177,7 +177,7 @@ const Apartment: Task[] = [
     combat: new CombatStrategy()
       .killHard($monster`ancient protector spirit (The Hidden Apartment Building)`)
       .kill($monster`pygmy witch accountant`)
-      .extraBanish($monster`pygmy janitor`)
+      .banish($monster`pygmy janitor`)
       .banish($monster`pygmy witch lawyer`)
       .ignoreNoBanish($monster`pygmy shaman`)
       .ignore(),
@@ -201,7 +201,7 @@ const Apartment: Task[] = [
     do: $location`The Hidden Apartment Building`,
     combat: new CombatStrategy()
       .killHard($monster`ancient protector spirit (The Hidden Apartment Building)`)
-      .extraBanish($monster`pygmy janitor`)
+      .banish($monster`pygmy janitor`)
       .banish($monsters`pygmy witch lawyer, pygmy witch accountant`)
       .ignoreNoBanish($monster`pygmy shaman`)
       .ignore(),
@@ -255,7 +255,7 @@ const Office: Task[] = [
     post: makeCompleteFile,
     combat: new CombatStrategy()
       .kill($monster`pygmy witch accountant`)
-      .extraBanish($monster`pygmy janitor`)
+      .banish($monster`pygmy janitor`)
       .banish($monsters`pygmy headhunter, pygmy witch lawyer`),
     choices: { 786: 2 },
     limit: { soft: 10 },
@@ -337,7 +337,7 @@ const Hospital: Task[] = [
       .startingMacro(Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`))
       .killHard($monster`ancient protector spirit (The Hidden Hospital)`)
       .kill($monster`pygmy witch surgeon`)
-      .extraBanish($monster`pygmy janitor`)
+      .banish($monster`pygmy janitor`)
       .banish($monsters`pygmy orderlies, pygmy witch nurse`),
     outfit: () => {
       const result = <OutfitSpec>{
@@ -421,7 +421,7 @@ const Bowling: Task[] = [
           $skill`Emit Matter Duplicating Drones`
         );
       }, $monster`pygmy bowler`)
-      .extraBanish($monster`pygmy janitor`)
+      .banish($monster`pygmy janitor`)
       .banish($monster`pygmy orderlies`),
     outfit: () => {
       const result: OutfitSpec = {

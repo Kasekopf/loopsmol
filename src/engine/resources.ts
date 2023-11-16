@@ -95,6 +95,11 @@ const banishSources: BanishSource[] = [
     do: $skill`Asdon Martin: Spring-Loaded Front Bumper`,
   },
   {
+    name: "Feel Hatred",
+    available: () => get("_feelHatredUsed") < 3 && have($skill`Emotionally Chipped`),
+    do: $skill`Feel Hatred`,
+  },
+  {
     name: "Latte",
     available: () =>
       (!get("_latteBanishUsed") || (get("_latteRefillsUsed") < 2 && myTurncount() < 1000)) && // Save one refill for aftercore
@@ -140,20 +145,6 @@ const banishSources: BanishSource[] = [
     do: $skill`Batter Up!`,
     equip: $item`seal-clubbing club`,
   },
-  {
-    // Use the first one generically
-    name: "Feel Hatred",
-    available: () => get("_feelHatredUsed") < 1 && have($skill`Emotionally Chipped`),
-    do: $skill`Feel Hatred`,
-  },
-];
-
-export const extraBanishSources: BanishSource[] = [
-  {
-    name: "Feel Hatred",
-    available: () => get("_feelHatredUsed") < 3 && have($skill`Emotionally Chipped`),
-    do: $skill`Feel Hatred`,
-  },
 ];
 
 export class BanishState {
@@ -170,16 +161,14 @@ export class BanishState {
     const targets: Monster[] = [];
     targets.push(...(task.combat?.where("banish") ?? []));
     targets.push(...(task.combat?.where("ignoreSoftBanish") ?? []));
-    targets.push(...(task.combat?.where("extraBanish") ?? []));
     if (
       (task.combat?.getDefaultAction() === "banish" ||
-        task.combat?.getDefaultAction() === "ignoreSoftBanish" ||
-        task.combat?.getDefaultAction() === "extraBanish") &&
+        task.combat?.getDefaultAction() === "ignoreSoftBanish") &&
       task.do instanceof Location
     ) {
       for (const monster of monstersAt(task.do)) {
         const strat = task.combat?.currentStrategy(monster);
-        if (strat === "banish" || strat === "ignoreSoftBanish" || strat === "extraBanish") {
+        if (strat === "banish" || strat === "ignoreSoftBanish") {
           targets.push(monster);
         }
       }

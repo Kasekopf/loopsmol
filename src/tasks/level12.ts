@@ -205,7 +205,7 @@ const Junkyard: Task[] = [
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`batwinged gremlin (tool)`
       )
-      .extraBanish($monster`A.M.C. gremlin`)
+      .banish($monster`A.M.C. gremlin`)
       .kill($monster`batwinged gremlin (tool)`)
       .banish($monsters`batwinged gremlin, vegetable gremlin`),
     limit: { soft: 15 },
@@ -229,7 +229,7 @@ const Junkyard: Task[] = [
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`erudite gremlin (tool)`
       )
-      .extraBanish($monster`A.M.C. gremlin`)
+      .banish($monster`A.M.C. gremlin`)
       .kill($monster`erudite gremlin (tool)`)
       .banish($monsters`erudite gremlin, spider gremlin`),
     limit: { soft: 15 },
@@ -252,7 +252,7 @@ const Junkyard: Task[] = [
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`spider gremlin (tool)`
       )
-      .extraBanish($monster`A.M.C. gremlin`)
+      .banish($monster`A.M.C. gremlin`)
       .kill($monster`spider gremlin (tool)`)
       .banish($monsters`batwinged gremlin, spider gremlin`),
     limit: { soft: 15 },
@@ -276,7 +276,7 @@ const Junkyard: Task[] = [
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`vegetable gremlin (tool)`
       )
-      .extraBanish($monster`A.M.C. gremlin`)
+      .banish($monster`A.M.C. gremlin`)
       .kill($monster`vegetable gremlin (tool)`)
       .banish($monsters`erudite gremlin, vegetable gremlin`),
     limit: { soft: 15 },

@@ -10,7 +10,6 @@ const myActions = [
   "killFree", // Task needs to kill it with a free kill
   "killHard", // Task needs to kill it without using a free kill (i.e., boss, or already free)
   "banish", // Task doesn't care what happens, but banishing is useful
-  "extraBanish", // Task doesn't care what happens, but banishing is useful; use the rarest banishes
   "abort", // Abort the macro and the script; an error has occured
   "killItem", // Kill with an item boost,
   "yellowRay", // Kill with a drop-everything YR action
@@ -45,10 +44,6 @@ export class MyActionDefaults implements ActionDefaults<CombatActions> {
   } // Abort if no resource provided
 
   banish(target?: Monster | Location) {
-    return this.kill(target);
-  }
-
-  extraBanish(target?: Monster | Location) {
     return this.kill(target);
   }
 
