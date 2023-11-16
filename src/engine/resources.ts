@@ -636,28 +636,6 @@ export type BackupTarget = {
 };
 export const backupTargets: BackupTarget[] = [
   {
-    monster: $monster`giant swarm of ghuol whelps`,
-    completed: () => get("cyrptCrannyEvilness") <= 13,
-    outfit: (): OutfitSpec => {
-      const items = [];
-      for (const it of $items`gravy boat, old patched suit-pants, unbreakable umbrella`) {
-        if (have(it)) items.push(it);
-      }
-      if (have($item`unwrapped knock-off retro superhero cape`) && have($item`antique machete`)) {
-        items.push($item`unwrapped knock-off retro superhero cape`, $item`antique machete`);
-      }
-      return {
-        equip: items,
-        modifier: "ML",
-        modes: {
-          umbrella: "broken",
-          retrocape: ["vampire", "kill"],
-        },
-      };
-    },
-    limit_tries: 3,
-  },
-  {
     monster: $monster`Camel's Toe`,
     completed: () =>
       (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
