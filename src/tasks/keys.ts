@@ -94,7 +94,8 @@ const heroKeys: KeyTask[] = [
       !get("dailyDungeonDone") &&
       !get("_dailyDungeonMalwareUsed") &&
       ((!inHardcore() && (pullsRemaining() > 0 || myTurncount() >= 1000)) ||
-        have($item`daily dungeon malware`)),
+        have($item`daily dungeon malware`)) &&
+      (!have($item`Deck of Every Card`) || !have($skill`Lock Picking`)),
     acquire: [
       { item: $item`daily dungeon malware` },
       { item: $item`Pick-O-Matic lockpicks`, optional: true },
