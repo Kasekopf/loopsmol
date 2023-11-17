@@ -14,6 +14,7 @@ import { $effect, $effects, $item, $items, $skill, get, have } from "libram";
 import { Priorities } from "../engine/priority";
 import { Quest } from "../engine/task";
 import { atLevel } from "../lib";
+import { args } from "../args";
 
 export const DietQuest: Quest = {
   name: "Diet",
@@ -22,7 +23,7 @@ export const DietQuest: Quest = {
       name: "Eat",
       ready: () =>
         atLevel(5) &&
-        have($item`Ol' Scratch's salad fork`) &&
+        (have($item`Ol' Scratch's salad fork`) || args.minor.skipfork) &&
         !get("pizzaOfLegendEaten") &&
         have($item`Pizza of Legend`) &&
         have($effect`Ready to Eat`),
@@ -32,7 +33,7 @@ export const DietQuest: Quest = {
         useSkill($skill`Cannelloni Cocoon`);
         if (have($item`milk of magnesium`) && !get("_milkOfMagnesiumUsed"))
           use($item`milk of magnesium`);
-        eat(1, $item`Ol' Scratch's salad fork`);
+        if (!args.minor.skipfork) eat(1, $item`Ol' Scratch's salad fork`);
         eat(1, $item`Pizza of Legend`);
       },
       outfit: {
@@ -43,14 +44,14 @@ export const DietQuest: Quest = {
     },
     {
       name: "Drink",
-      ready: () => atLevel(11) && have($item`Frosty's frosty mug`),
+      ready: () => atLevel(11) && (have($item`Frosty's frosty mug`) || args.minor.skipmug),
       completed: () =>
         myInebriety() === 1 || (!have($item`astral pilsner`) && !have($item`astral six-pack`)),
       do: () => {
         if (have($item`astral six-pack`)) use($item`astral six-pack`);
         restoreMp(20);
         useSkill($skill`Cannelloni Cocoon`);
-        drink(1, $item`Frosty's frosty mug`);
+        if (!args.minor.skipmug) drink(1, $item`Frosty's frosty mug`);
         drink(1, $item`astral pilsner`);
       },
       outfit: {

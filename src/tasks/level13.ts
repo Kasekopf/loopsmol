@@ -12,6 +12,7 @@ import {
   retrieveItem,
   runChoice,
   use,
+  useSkill,
   visitUrl,
 } from "kolmafia";
 import {
@@ -273,7 +274,7 @@ const wand: Task[] = [
   {
     name: "Wand W",
     after: ["Wall of Bones"],
-    ready: () => !have($item`11-leaf clover`),
+    ready: () => !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () => have($item`ruby W`) || have($item`WA`) || have($item`Wand of Nagamar`),
     do: $location`Pandamonium Slums`,
     outfit: { modifier: "item" },
@@ -283,7 +284,7 @@ const wand: Task[] = [
   {
     name: "Wand A",
     after: ["Wall of Bones"],
-    ready: () => !have($item`11-leaf clover`),
+    ready: () => !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () => have($item`metallic A`) || have($item`WA`) || have($item`Wand of Nagamar`),
     do: $location`The Penultimate Fantasy Airship`,
     outfit: { modifier: "item" },
@@ -293,7 +294,7 @@ const wand: Task[] = [
   {
     name: "Wand N",
     after: ["Wall of Bones"],
-    ready: () => !have($item`11-leaf clover`),
+    ready: () => !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () => have($item`lowercase N`) || have($item`ND`) || have($item`Wand of Nagamar`),
     do: $location`The Valley of Rof L'm Fao`,
     outfit: { modifier: "item" },
@@ -303,7 +304,7 @@ const wand: Task[] = [
   {
     name: "Wand D",
     after: ["Wall of Bones"],
-    ready: () => !have($item`11-leaf clover`),
+    ready: () => !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () => have($item`heavy D`) || have($item`ND`) || have($item`Wand of Nagamar`),
     do: $location`The Castle in the Clouds in the Sky (Basement)`,
     outfit: { modifier: "item" },
@@ -313,12 +314,15 @@ const wand: Task[] = [
   {
     name: "Wand Parts",
     after: ["Wall of Bones"],
-    ready: () => have($item`11-leaf clover`),
+    ready: () => have($item`11-leaf clover`) || have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () =>
       have($item`Wand of Nagamar`) ||
       ((have($item`WA`) || (have($item`ruby W`) && have($item`metallic A`))) &&
         (have($item`ND`) || (have($item`lowercase N`) && have($item`heavy D`)))),
-    prepare: () => use($item`11-leaf clover`),
+    prepare: (): void => {
+      if (have($item`11-leaf clover`)) use($item`11-leaf clover`);
+      else useSkill($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`);
+    },
     do: $location`The Castle in the Clouds in the Sky (Basement)`,
     limit: { tries: 1 },
   },
