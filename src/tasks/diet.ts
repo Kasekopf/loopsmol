@@ -33,7 +33,7 @@ export const DietQuest: Quest = {
         useSkill($skill`Cannelloni Cocoon`);
         if (have($item`milk of magnesium`) && !get("_milkOfMagnesiumUsed"))
           use($item`milk of magnesium`);
-        eat(1, $item`Ol' Scratch's salad fork`);
+        if (!args.minor.skipfork) eat(1, $item`Ol' Scratch's salad fork`);
         eat(1, $item`Pizza of Legend`);
       },
       outfit: {
@@ -51,7 +51,7 @@ export const DietQuest: Quest = {
         if (have($item`astral six-pack`)) use($item`astral six-pack`);
         restoreMp(20);
         useSkill($skill`Cannelloni Cocoon`);
-        drink(1, $item`Frosty's frosty mug`);
+        if (!args.minor.skipmug) drink(1, $item`Frosty's frosty mug`);
         drink(1, $item`astral pilsner`);
       },
       outfit: {
