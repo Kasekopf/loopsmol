@@ -37,7 +37,7 @@ export const DietQuest: Quest = {
         eat(1, $item`Pizza of Legend`);
       },
       outfit: {
-        equip: $items`nurse's hat, sea salt scrubs, familiar scrapbook`,
+        equip: $items`nurse's hat, sea salt scrubs, familiar scrapbook, LOV Eardigan, LOV Epaulettes, LOV Earrings`,
         modifier: "100 hot res, HP",
       },
       limit: { tries: 1 },

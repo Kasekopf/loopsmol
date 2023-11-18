@@ -8,15 +8,18 @@ export const routing: string[] = [
 
   // Start with the basic leveling tasks
   "Toot/Finish",
-  "Misc/Cloud Talk",
-  "Misc/Daycare",
-  "Misc/Bastille",
 
   // Get basic gear
   "Misc/Goose Exp",
   "Misc/Acquire Firework Hat",
   "Misc/Acquire Birch Battery",
   "Keys/Deck",
+
+  // Level up
+  "Misc/Cloud Talk",
+  "Misc/LOV Tunnel",
+  "Misc/Daycare",
+  "Misc/Bastille",
 
   // Eat as soon as possible
   "Diet/Eat",

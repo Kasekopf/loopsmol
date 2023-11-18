@@ -957,17 +957,11 @@ export const MiscQuest: Quest = {
       do: $location`The Tunnel of L.O.V.E.`,
       choices: { 1222: 1, 1223: 1, 1224: primestatId(), 1225: 1, 1226: 2, 1227: 1, 1228: 3 },
       combat: new CombatStrategy()
-        .macro(() =>
-          new Macro().externalIf(
-            myPrimestat() === $stat`mysticality`,
-            new Macro().skill($skill`Saucestorm`).repeat()
-          )
-        )
+        .macro(() => Macro.externalIf(haveEquipped($item`June cleaver`), Macro.attack().repeat()), $monster`LOV Enforcer`)
+        .macro(Macro.skill($skill`Saucestorm`).repeat(), $monster`LOV Engineer`)
         .killHard(),
       outfit: {
-        modifier: "mainstat, 4exp",
         equip: $items`June cleaver`,
-        familiar: $familiar`Galloping Grill`,
       },
       limit: { tries: 1 },
       freecombat: true,
@@ -997,7 +991,7 @@ export const MiscQuest: Quest = {
         runChoice(2);
       },
       outfit: {
-        equip: $items`familiar scrapbook`,
+        modifier: "exp",
       },
       limit: { tries: 1 },
       freeaction: true,
@@ -1013,7 +1007,7 @@ export const MiscQuest: Quest = {
       limit: { tries: 1 },
       freeaction: true,
       outfit: {
-        equip: $items`familiar scrapbook`,
+        modifier: "exp",
       },
     },
   ],
