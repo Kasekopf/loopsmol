@@ -320,7 +320,7 @@ export const wandererSources: WandererSource[] = [
   },
   {
     name: "Kramco",
-    available: () => have($item`Kramco Sausage-o-Matic™`) && atLevel(5),
+    available: () => have($item`Kramco Sausage-o-Matic™`) && atLevel(2),
     equip: [
       { equip: $items`Kramco Sausage-o-Matic™, Space Trip safety headphones` },
       {
