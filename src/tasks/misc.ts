@@ -1010,6 +1010,23 @@ export const MiscQuest: Quest = {
         modifier: "exp",
       },
     },
+    {
+      name: "Leaflet",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => myLevel() >= 9,
+      completed: () => get("leafletCompleted"),
+      do: (): void => {
+        visitUrl("council.php");
+        cliExecute("leaflet");
+        set("leafletCompleted", true);
+      },
+      freeaction: true,
+      limit: { tries: 1 },
+      outfit: {
+        modifier: "exp",
+      },
+    },
   ],
 };
 
