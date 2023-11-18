@@ -33,7 +33,7 @@ import {
 import { Quest, Task } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
 import { CombatStrategy, killMacro } from "../engine/combat";
-import { fillHp } from "./level13";
+import { fillHp } from "../engine/moods";
 import { globalStateCache } from "../engine/state";
 import { tuneSnapper } from "../lib";
 import { Priorities } from "../engine/priority";

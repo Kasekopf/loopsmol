@@ -4,15 +4,19 @@ import { Task } from "./engine/task";
 export const routing: string[] = [
   // Break pvp stone ASAP
   "Misc/Break Stone",
+  "Pull/All",
 
   // Start with the basic leveling tasks
   "Toot/Finish",
+  "Misc/Cloud Talk",
+  "Misc/Daycare",
+  "Misc/Bastille",
+
   // Get basic gear
   "Misc/Goose Exp",
   "Misc/Acquire Firework Hat",
   "Misc/Acquire Birch Battery",
   "Keys/Deck",
-  "Pull/All",
 
   // Eat as soon as possible
   "Diet/Eat",

@@ -71,7 +71,7 @@ import { Guards, Outfit, OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { Engine, wanderingNCs } from "../engine/engine";
 import { Keys, keyStrategy } from "./keys";
-import { atLevel, haveLoathingIdolMicrophone, underStandard } from "../lib";
+import { atLevel, haveLoathingIdolMicrophone, primestatId, underStandard } from "../lib";
 import { args } from "../args";
 import { coldPlanner, yellowSubmarinePossible } from "../engine/outfit";
 import {
@@ -936,6 +936,85 @@ export const MiscQuest: Quest = {
       },
       combat: new CombatStrategy().kill(),
       limit: { tries: 1 },
+    },
+    {
+      name: "Cloud Talk",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => get("getawayCampsiteUnlocked"),
+      completed: () =>
+        have($effect`That's Just Cloud-Talk, Man`) ||
+        get("_campAwayCloudBuffs", 0) > 0,
+      do: () => visitUrl("place.php?whichplace=campaway&action=campaway_sky"),
+      freeaction: true,
+      limit: { tries: 1 },
+    },
+    {
+      name: "LOV Tunnel",
+      after: [],
+      ready: () => get("loveTunnelAvailable"),
+      completed: () => get("_loveTunnelUsed"),
+      do: $location`The Tunnel of L.O.V.E.`,
+      choices: { 1222: 1, 1223: 1, 1224: primestatId(), 1225: 1, 1226: 2, 1227: 1, 1228: 3 },
+      combat: new CombatStrategy()
+        .macro(() =>
+          new Macro().externalIf(
+            myPrimestat() === $stat`mysticality`,
+            new Macro().skill($skill`Saucestorm`).repeat()
+          )
+        )
+        .killHard(),
+      outfit: {
+        modifier: "mainstat, 4exp",
+        equip: $items`June cleaver`,
+        familiar: $familiar`Galloping Grill`,
+      },
+      limit: { tries: 1 },
+      freecombat: true,
+    },
+    {
+      name: "Daycare",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => get("daycareOpen"),
+      completed: () => get("_daycareGymScavenges") !== 0,
+      do: (): void => {
+        if ((get("daycareOpen") || get("_daycareToday")) && !get("_daycareSpa")) {
+          switch (myPrimestat()) {
+            case $stat`Muscle`:
+              cliExecute("daycare muscle");
+              break;
+            case $stat`Mysticality`:
+              cliExecute("daycare myst");
+              break;
+            case $stat`Moxie`:
+              cliExecute("daycare moxie");
+              break;
+          }
+        }
+        visitUrl("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare");
+        runChoice(3);
+        runChoice(2);
+      },
+      outfit: {
+        equip: $items`familiar scrapbook`,
+      },
+      limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Bastille",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => have($item`Bastille Battalion control rig`),
+      completed: () => get("_bastilleGames") !== 0,
+      do: () =>
+        cliExecute(`bastille ${myPrimestat() === $stat`Mysticality` ? "myst" : myPrimestat()}`),
+      limit: { tries: 1 },
+      freeaction: true,
+      outfit: {
+        equip: $items`familiar scrapbook`,
+      },
     },
   ],
 };

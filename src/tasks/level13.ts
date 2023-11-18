@@ -4,12 +4,8 @@ import {
   haveEquipped,
   itemAmount,
   myBuffedstat,
-  myHp,
   myMaxhp,
-  myMeat,
   myTurncount,
-  restoreHp,
-  retrieveItem,
   runChoice,
   use,
   useSkill,
@@ -34,6 +30,7 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
+import { fillHp } from "../engine/moods";
 
 const Challenges: Task[] = [
   {
@@ -168,6 +165,7 @@ const ChallengeBosses: Task[] = [
     name: "Speed Boss",
     after: ["Speed Challenge"],
     completed: () => get("nsContestants1") === 0,
+    prepare: fillHp,
     do: $location`Fastest Adventurer Contest`,
     combat: new CombatStrategy().killHard(),
     limit: { tries: 5 },
@@ -177,6 +175,7 @@ const ChallengeBosses: Task[] = [
     name: "Stat Boss",
     after: ["Muscle Challenge", "Moxie Challenge", "Mysticality Challenge"],
     completed: () => get("nsContestants2") === 0,
+    prepare: fillHp,
     do: $location`A Crowd of (Stat) Adventurers`,
     combat: new CombatStrategy().killHard(),
     limit: { tries: 10 },
@@ -192,6 +191,7 @@ const ChallengeBosses: Task[] = [
       "Sleaze Challenge",
     ],
     completed: () => get("nsContestants3") === 0,
+    prepare: fillHp,
     do: $location`A Crowd of (Element) Adventurers`,
     combat: new CombatStrategy().killHard(),
     limit: { tries: 10 },
@@ -274,7 +274,8 @@ const wand: Task[] = [
   {
     name: "Wand W",
     after: ["Wall of Bones"],
-    ready: () => !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
+    ready: () =>
+      !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () => have($item`ruby W`) || have($item`WA`) || have($item`Wand of Nagamar`),
     do: $location`Pandamonium Slums`,
     outfit: { modifier: "item" },
@@ -284,7 +285,8 @@ const wand: Task[] = [
   {
     name: "Wand A",
     after: ["Wall of Bones"],
-    ready: () => !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
+    ready: () =>
+      !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () => have($item`metallic A`) || have($item`WA`) || have($item`Wand of Nagamar`),
     do: $location`The Penultimate Fantasy Airship`,
     outfit: { modifier: "item" },
@@ -294,7 +296,8 @@ const wand: Task[] = [
   {
     name: "Wand N",
     after: ["Wall of Bones"],
-    ready: () => !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
+    ready: () =>
+      !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () => have($item`lowercase N`) || have($item`ND`) || have($item`Wand of Nagamar`),
     do: $location`The Valley of Rof L'm Fao`,
     outfit: { modifier: "item" },
@@ -304,7 +307,8 @@ const wand: Task[] = [
   {
     name: "Wand D",
     after: ["Wall of Bones"],
-    ready: () => !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
+    ready: () =>
+      !have($item`11-leaf clover`) && !have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () => have($item`heavy D`) || have($item`ND`) || have($item`Wand of Nagamar`),
     do: $location`The Castle in the Clouds in the Sky (Basement)`,
     outfit: { modifier: "item" },
@@ -314,7 +318,8 @@ const wand: Task[] = [
   {
     name: "Wand Parts",
     after: ["Wall of Bones"],
-    ready: () => have($item`11-leaf clover`) || have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
+    ready: () =>
+      have($item`11-leaf clover`) || have($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`),
     completed: () =>
       have($item`Wand of Nagamar`) ||
       ((have($item`WA`) || (have($item`ruby W`) && have($item`metallic A`))) &&
@@ -555,26 +560,3 @@ export const TowerQuest: Quest = {
     },
   ],
 };
-
-export function fillHp() {
-  if (myHp() < myMaxhp()) {
-    if (!restoreHp(myMaxhp())) {
-      // Backup healing plan in a pinch
-      if (have($item`scroll of drastic healing`)) {
-        use($item`scroll of drastic healing`);
-      } else if (
-        get("_hotTubSoaks") < 5 &&
-        ($effects`Once-Cursed, Twice-Cursed, Thrice-Cursed`.find((e) => have(e)) === undefined ||
-          get("hiddenApartmentProgress") >= 7)
-      ) {
-        visitUrl("clan_viplounge.php?action=hottub");
-      }
-      let tries = 0;
-      while (myHp() < myMaxhp() && myMeat() >= 1000 && tries < 30) {
-        tries++;
-        retrieveItem($item`Doc Galaktik's Homeopathic Elixir`);
-        use($item`Doc Galaktik's Homeopathic Elixir`);
-      }
-    }
-  }
-}

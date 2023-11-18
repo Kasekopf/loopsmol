@@ -5,11 +5,12 @@ import {
   Monster,
   myFamiliar,
   myLevel,
+  myPrimestat,
   Phylum,
   print,
   visitUrl,
 } from "kolmafia";
-import { $familiar, $item, have, Snapper } from "libram";
+import { $familiar, $item, $stat, have, Snapper } from "libram";
 
 export function debug(message: string, color?: string): void {
   if (color) {
@@ -100,4 +101,16 @@ export function getMonsters(where?: Location): Monster[] {
   return Object.entries(appearanceRates(where)) // Get the maximum HP in the location
     .filter((i) => i[1] > 0)
     .map((i) => Monster.get(i[0]));
+}
+
+export function primestatId(): number {
+  switch (myPrimestat()) {
+    case $stat`Muscle`:
+      return 1;
+    case $stat`Mysticality`:
+      return 2;
+    case $stat`Moxie`:
+      return 3;
+  }
+  return 1;
 }

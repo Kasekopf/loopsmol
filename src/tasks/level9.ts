@@ -36,7 +36,7 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
-import { fillHp } from "./level13";
+import { fillHp } from "../engine/moods";
 import { stenchPlanner } from "../engine/outfit";
 
 const ABoo: Task[] = [

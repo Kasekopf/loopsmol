@@ -9,14 +9,19 @@ import {
   Item,
   mpCost,
   myClass,
+  myHp,
+  myMaxhp,
   myMaxmp,
   myMeat,
   myMp,
   numericModifier,
+  restoreHp,
   restoreMp,
+  retrieveItem,
   Slot,
   toSkill,
   toSlot,
+  use,
   visitUrl,
 } from "kolmafia";
 import {
@@ -198,4 +203,27 @@ export function customRestoreMp(target: number) {
     visitUrl("runskillz.php?action=Skillz&whichskill=7420&targetplayer=0&pwd&quantity=1");
   }
   restoreMp(target);
+}
+
+export function fillHp() {
+  if (myHp() < myMaxhp()) {
+    if (!restoreHp(myMaxhp())) {
+      // Backup healing plan in a pinch
+      if (have($item`scroll of drastic healing`)) {
+        use($item`scroll of drastic healing`);
+      } else if (
+        get("_hotTubSoaks") < 5 &&
+        ($effects`Once-Cursed, Twice-Cursed, Thrice-Cursed`.find((e) => have(e)) === undefined ||
+          get("hiddenApartmentProgress") >= 7)
+      ) {
+        visitUrl("clan_viplounge.php?action=hottub");
+      }
+      let tries = 0;
+      while (myHp() < myMaxhp() && myMeat() >= 1000 && tries < 30) {
+        tries++;
+        retrieveItem($item`Doc Galaktik's Homeopathic Elixir`);
+        use($item`Doc Galaktik's Homeopathic Elixir`);
+      }
+    }
+  }
 }

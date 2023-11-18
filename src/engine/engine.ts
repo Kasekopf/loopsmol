@@ -589,7 +589,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         hpAutoRecoveryItems: ensureRecovery("hpAutoRecoveryItems", ["relaxing hot tub"], []),
       });
     }
-    if (myHp() < 50 && myHp() < myMaxhp()) restoreHp(myMaxhp() < 50 ? myMaxhp() : 50);
+    if (myHp() < 100 && myHp() < myMaxhp()) restoreHp(myMaxhp() < 100 ? myMaxhp() : 100);
     if (myMp() < 40 && myMaxmp() >= 40) customRestoreMp(40);
     else if (myMp() < 20) customRestoreMp(20);
   }

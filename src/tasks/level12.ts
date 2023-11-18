@@ -39,6 +39,7 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel, debug } from "../lib";
 import { forceItemPossible, yellowRayPossible } from "../engine/resources";
 import { args } from "../args";
+import { fillHp } from "../engine/moods";
 
 export function flyersDone(): boolean {
   return get("flyeredML") >= 10000;
@@ -193,6 +194,7 @@ const Junkyard: Task[] = [
     completed: () => have($item`molybdenum hammer`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    prepare: fillHp,
     do: $location`Next to that Barrel with Something Burning in it`,
     orbtargets: () => $monsters`batwinged gremlin, batwinged gremlin (tool)`,
     combat: new CombatStrategy()
@@ -217,6 +219,7 @@ const Junkyard: Task[] = [
       have($item`molybdenum crescent wrench`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    prepare: fillHp,
     do: $location`Over Where the Old Tires Are`,
     orbtargets: () => $monsters`erudite gremlin, erudite gremlin (tool)`,
     combat: new CombatStrategy()
@@ -240,6 +243,7 @@ const Junkyard: Task[] = [
     acquire: [{ item: $item`seal tooth` }],
     completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    prepare: fillHp,
     do: $location`Near an Abandoned Refrigerator`,
     orbtargets: () => $monsters`spider gremlin, spider gremlin (tool)`,
     combat: new CombatStrategy()
@@ -264,6 +268,7 @@ const Junkyard: Task[] = [
       have($item`molybdenum screwdriver`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    prepare: fillHp,
     do: $location`Out by that Rusted-Out Car`,
     orbtargets: () => $monsters`vegetable gremlin, vegetable gremlin (tool)`,
     combat: new CombatStrategy()
@@ -623,7 +628,10 @@ export const WarQuest: Quest = {
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
           familiar: args.minor.jellies ? $familiar`Space Jellyfish` : undefined,
         },
-      prepare: dimesForGarters,
+      prepare: () => {
+        dimesForGarters();
+        fillHp();
+      },
       do: (): void => {
         visitUrl("bigisland.php?place=camp&whichcamp=1&confirm7=1");
         visitUrl("bigisland.php?action=bossfight&pwd");

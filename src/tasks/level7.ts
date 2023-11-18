@@ -33,6 +33,7 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel, haveFlorest, haveLoathingIdolMicrophone } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
+import { fillHp } from "../engine/moods";
 
 function tuneCape(): void {
   if (
@@ -118,6 +119,7 @@ const Cranny: Task[] = [
     prepare: () => {
       tuneCape();
       changeMcd(10);
+      fillHp();
     },
     post: () => {
       if (currentMcd() > 0) changeMcd(0);
