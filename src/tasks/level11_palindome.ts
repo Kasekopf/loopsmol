@@ -278,6 +278,7 @@ const Zepplin: Task[] = [
         use($item`11-leaf clover`);
       if (have($item`pocket wish`) && !have($effect`Dirty Pear`))
         cliExecute("genie effect dirty pear");
+      if (have($skill`Bend Hell`) && !get("_bendHellUsed")) ensureEffect($effect`Bendin' Hell`);
     },
     completed: () => get("zeppelinProtestors") >= 80,
     priority: () => (have($effect`Dirty Pear`) ? Priorities.Effect : Priorities.None),
