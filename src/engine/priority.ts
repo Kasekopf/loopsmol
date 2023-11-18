@@ -13,6 +13,7 @@ import { getModifiersFrom } from "./outfit";
 
 export class Priorities {
   static Wanderer: Priority = { score: 20000, reason: "Wanderer" };
+  static CosmicBowlingBall: Priority = { score: 20000, reason: "Cosmic Bowling Ball" };
   static Always: Priority = { score: 10000, reason: "Forced" };
   static GoodForceNC: Priority = { score: 8000, reason: "Forcing NC" };
   static Free: Priority = { score: 1000, reason: "Free action" };
