@@ -200,12 +200,13 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         };
       } else {
         logprint(`Backup ${backup.monster} is ready but no tasks have delay`);
-        return {
-          name: `Backup ${backup.monster}`,
-          completed: () => false,
-          do: $location`Noob Cave`,
-          limit: { tries: backup.limit_tries },
-        };
+        if (backup.monster !== $monster`Eldritch Tentacle`)
+          return {
+            name: `Backup ${backup.monster}`,
+            completed: () => false,
+            do: $location`Noob Cave`,
+            limit: { tries: backup.limit_tries },
+          };
       }
     }
 
