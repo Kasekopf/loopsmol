@@ -63,7 +63,10 @@ export class Prioritization {
     // Prioritize getting a YR
     const yr_needed =
       task.combat?.can("yellowRay") ||
-      (task.combat?.can("forceItems") && !forceItemSources.find((s) => s.available()));
+      (task.combat?.can("forceItems") && !forceItemSources.find((s) => s.available())) ||
+      (task.combat?.can("forceItems") &&
+        task.name.includes("Orchard") &&
+        !have($item`Fourth of May Cosplay Saber`));
     if (yr_needed && yellowRaySources.find((yr) => yr.available())) {
       if (have($effect`Everything Looks Yellow`)) result.priorities.add(Priorities.BadYR);
       else result.priorities.add(Priorities.GoodYR);
