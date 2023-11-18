@@ -889,10 +889,17 @@ export const MiscQuest: Quest = {
       choices: { 1498: 1 },
       combat: new CombatStrategy()
         .macro((): Macro => {
-          return Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`).while_(
+          const result = Macro.while_(
             "hasskill 226",
             Macro.skill($skill`Perpetrate Mild Evil`)
           );
+          // Use all but the last extinguisher uses on polar vortex.
+          const vortex_count = (get("_fireExtinguisherCharge") - 20) / 10;
+          if (vortex_count > 0) {
+            for (let i = 0; i < vortex_count; i++)
+              result.trySkill($skill`Fire Extinguisher: Polar Vortex`);
+          }
+          return result;
         }, $monster`shadow slab`)
         .kill(),
       outfit: () => {
