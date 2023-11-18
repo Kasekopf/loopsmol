@@ -74,11 +74,11 @@ export const args = Args.create(
       }),
       skipfork: Args.flag({
         help: "Skip salad forking; note that this may cause failure due to lack of remaining adventures",
-        default: true,
+        default: false,
       }),
       skipmug: Args.flag({
         help: "Skip frosty mug; note that this may cause failure due to lack of remaining adventures",
-        default: true,
+        default: false,
       }),
     }),
     debug: Args.group("Debug Options", {
