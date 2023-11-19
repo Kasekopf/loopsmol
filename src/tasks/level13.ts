@@ -553,8 +553,10 @@ export const TowerQuest: Quest = {
       after: ["Shadow"],
       completed: () => step("questL13Final") > 11,
       do: $location`The Naughty Sorceress' Chamber`,
-      outfit: { modifier: "muscle" },
-      combat: new CombatStrategy().kill(),
+      outfit: { modifier: "muscle", equip: $items`June cleaver` },
+      combat: new CombatStrategy()
+        .macro(() => Macro.externalIf(haveEquipped($item`June cleaver`), Macro.attack().repeat()))
+        .kill(),
       boss: true,
       limit: { tries: 1 },
     },
