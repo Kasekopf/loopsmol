@@ -200,6 +200,7 @@ const Junkyard: Task[] = [
     combat: new CombatStrategy()
       .macro(
         new Macro()
+          .trySkill($skill`Curse of Weaksauce`)
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
             new Macro().item($item`seal tooth`)
@@ -225,6 +226,7 @@ const Junkyard: Task[] = [
     combat: new CombatStrategy()
       .macro(
         new Macro()
+          .trySkill($skill`Curse of Weaksauce`)
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
             new Macro().item($item`seal tooth`)
@@ -249,6 +251,7 @@ const Junkyard: Task[] = [
     combat: new CombatStrategy()
       .macro(
         new Macro()
+          .trySkill($skill`Curse of Weaksauce`)
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
             new Macro().item($item`seal tooth`)
@@ -274,6 +277,7 @@ const Junkyard: Task[] = [
     combat: new CombatStrategy()
       .macro(
         new Macro()
+          .trySkill($skill`Curse of Weaksauce`)
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
             new Macro().item($item`seal tooth`)
