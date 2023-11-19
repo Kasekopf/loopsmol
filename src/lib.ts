@@ -10,7 +10,7 @@ import {
   print,
   visitUrl,
 } from "kolmafia";
-import { $familiar, $item, $stat, have, Snapper } from "libram";
+import { $familiar, $item, $stat, get, have, Snapper } from "libram";
 
 export function debug(message: string, color?: string): void {
   if (color) {
@@ -113,4 +113,8 @@ export function primestatId(): number {
       return 3;
   }
   return 1;
+}
+
+export function cosmicBowlingBallReady() {
+  return have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0;
 }

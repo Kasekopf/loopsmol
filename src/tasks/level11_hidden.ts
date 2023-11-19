@@ -6,6 +6,7 @@ import {
   Item,
   itemAmount,
   myAscensions,
+  myFamiliar,
   myHash,
   myMeat,
   putCloset,
@@ -32,6 +33,7 @@ import { Quest, Task } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
+import { cosmicBowlingBallReady } from "../lib";
 
 function manualChoice(whichchoice: number, option: number) {
   return visitUrl(`choice.php?whichchoice=${whichchoice}&pwd=${myHash()}&option=${option}`);
@@ -380,6 +382,10 @@ const Bowling: Task[] = [
   {
     name: "Bowling",
     after: ["Open Bowling", "Banish Janitors"],
+    priority: () =>
+      get("camelSpit") === 100 && cosmicBowlingBallReady() && have($skill`Map the Monsters`)
+        ? Priorities.CosmicBowlingBall
+        : Priorities.None,
     ready: () =>
       myMeat() >= 500 &&
       (get("hiddenBowlingAlleyProgress") +
@@ -415,8 +421,8 @@ const Bowling: Task[] = [
       .killHard($monster`ancient protector spirit (The Hidden Bowling Alley)`)
       .killItem($monster`pygmy bowler`)
       .macro(() => {
-        if (have($familiar`Melodramedary`) && get("camelSpit") === 100)
-          return Macro.trySkill($skill`%fn, spit on them!`);
+        if (myFamiliar() === $familiar`Melodramedary` && get("camelSpit") === 100)
+          return Macro.trySkill($skill`%fn, spit on them!`).tryItem($item`cosmic bowling ball`);
         return Macro.tryItem($item`Spooky VHS Tape`).trySkill(
           $skill`Emit Matter Duplicating Drones`
         );
@@ -441,6 +447,11 @@ const Bowling: Task[] = [
         closetAmount($item`bowling ball`) +
         (get("spookyVHSTapeMonster") === $monster`pygmy bowler` ? 1 : 0) >=
       6,
+    map_the_monster: () => {
+      if (have($familiar`Melodramedary`) && get("camelSpit") === 100 && cosmicBowlingBallReady())
+        return $monster`pygmy bowler`;
+      return $monster`none`;
+    },
     choices: { 788: 1 },
     limit: { soft: 25 },
   },
