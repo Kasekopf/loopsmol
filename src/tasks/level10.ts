@@ -89,8 +89,8 @@ export const GiantQuest: Quest = {
         .macro(
           () =>
             have($item`Mohawk wig`) ||
-              !have($skill`Emotionally Chipped`) ||
-              get("_feelEnvyUsed") >= 3
+            !have($skill`Emotionally Chipped`) ||
+            get("_feelEnvyUsed") >= 3
               ? new Macro()
               : Macro.skill($skill`Feel Envy`),
           $monster`Burly Sidekick`
@@ -118,8 +118,8 @@ export const GiantQuest: Quest = {
         .macro(
           () =>
             have($item`Mohawk wig`) ||
-              !have($skill`Emotionally Chipped`) ||
-              get("_feelEnvyUsed") >= 3
+            !have($skill`Emotionally Chipped`) ||
+            get("_feelEnvyUsed") >= 3
               ? new Macro()
               : Macro.skill($skill`Feel Envy`),
           $monster`Burly Sidekick`
@@ -193,7 +193,14 @@ export const GiantQuest: Quest = {
       orbtargets: () => [],
       combat: new CombatStrategy().killHard($monster`Burning Snake of Fire`),
       choices: () => {
-        return { 675: 4, 676: 4, 677: 1, 678: 1, 679: 1, 1431: haveEquipped($item`Mohawk wig`) ? 4 : 1 }
+        return {
+          675: 4,
+          676: 4,
+          677: 1,
+          678: 1,
+          679: 1,
+          1431: haveEquipped($item`Mohawk wig`) ? 4 : 1,
+        };
       },
       limit: { soft: 20 },
     },

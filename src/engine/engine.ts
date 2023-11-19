@@ -162,12 +162,10 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     }
 
     // First, check for any heavily prioritized tasks
-    const priority = available_tasks.find(
-      (task) => {
-        const priority = task.priority?.();
-        return priority === Priorities.LastCopyableMonster || priority === Priorities.Free;
-      }
-    );
+    const priority = available_tasks.find((task) => {
+      const priority = task.priority?.();
+      return priority === Priorities.LastCopyableMonster || priority === Priorities.Free;
+    });
     if (priority !== undefined) {
       return {
         ...priority,
