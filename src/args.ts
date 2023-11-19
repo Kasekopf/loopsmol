@@ -80,6 +80,10 @@ export const args = Args.create(
         help: "Skip frosty mug; note that this may cause failure due to lack of remaining adventures",
         default: false,
       }),
+      skipmilk: Args.flag({
+        help: "Skip milk of magnesium",
+        default: true,
+      }),
     }),
     debug: Args.group("Debug Options", {
       actions: Args.number({
