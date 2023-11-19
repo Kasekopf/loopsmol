@@ -1,11 +1,14 @@
 import {
+  adv1,
   autosell,
   canAdventure,
+  choiceFollowsFight,
   descToItem,
   equippedItem,
   getWorkshed,
   haveEffect,
   haveEquipped,
+  inMultiFight,
   Location,
   logprint,
   myAdventures,
@@ -22,10 +25,12 @@ import {
   print,
   printHtml,
   restoreHp,
+  runCombat,
   Slot,
   totalTurnsPlayed,
   toUrl,
   use,
+  useSkill,
   visitUrl,
 } from "kolmafia";
 import { Task } from "./task";
@@ -650,7 +655,25 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     const beaten_turns = haveEffect($effect`Beaten Up`);
     const start_advs = myAdventures();
 
-    super.do(task);
+    // Copy grimoire Engine.do in order to add Map the Monsters
+    const result = typeof task.do === "function" ? task.do() : task.do;
+    if (result instanceof Location) {
+      if (task.map_the_monster && undelay(task.map_the_monster) !== $monster`none`) {
+        useSkill($skill`Map the Monsters`);
+        if (get("mappingMonsters")) {
+          visitUrl(toUrl(result));
+          runChoice(1, `heyscriptswhatsupwinkwink=${undelay(task.map_the_monster).id}`);
+        } else {
+          adv1(result, -1, "");
+        }
+      } else {
+        adv1(result, -1, "");
+      }
+    }
+    runCombat();
+    while (inMultiFight()) runCombat();
+    if (choiceFollowsFight()) runChoice(-1);
+
     if (myAdventures() !== start_advs) getExtros();
 
     // Crash if we unexpectedly lost the fight

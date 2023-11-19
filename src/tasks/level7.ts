@@ -207,6 +207,11 @@ const Niche: Task[] = [
       if (get("rwbMonsterCount") === 0) return [$monster`dirty old lihc`];
       else return undefined;
     },
+    map_the_monster: () => {
+      if (get("rwbMonsterCount") === 0 && have($familiar`Patriotic Eagle`))
+        return $monster`dirty old lihc`;
+      else return $monster`none`;
+    },
     limit: { turns: 37 },
   },
   {

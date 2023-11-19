@@ -29,6 +29,7 @@ export type Task = {
   boss?: boolean;
   ncforce?: boolean | (() => boolean);
   ignore_banishes?: () => boolean;
+  map_the_monster?: Monster | (() => Monster); // Try and map to the given monster, if possible
 } & BaseTask<CombatActions>;
 
 export type Priority = {
