@@ -1,4 +1,4 @@
-import { cliExecute, containsText, itemAmount, use, visitUrl } from "kolmafia";
+import { cliExecute, containsText, haveEquipped, itemAmount, use, visitUrl } from "kolmafia";
 import {
   $effect,
   $familiar,
@@ -89,8 +89,8 @@ export const GiantQuest: Quest = {
         .macro(
           () =>
             have($item`Mohawk wig`) ||
-            !have($skill`Emotionally Chipped`) ||
-            get("_feelEnvyUsed") >= 3
+              !have($skill`Emotionally Chipped`) ||
+              get("_feelEnvyUsed") >= 3
               ? new Macro()
               : Macro.skill($skill`Feel Envy`),
           $monster`Burly Sidekick`
@@ -118,8 +118,8 @@ export const GiantQuest: Quest = {
         .macro(
           () =>
             have($item`Mohawk wig`) ||
-            !have($skill`Emotionally Chipped`) ||
-            get("_feelEnvyUsed") >= 3
+              !have($skill`Emotionally Chipped`) ||
+              get("_feelEnvyUsed") >= 3
               ? new Macro()
               : Macro.skill($skill`Feel Envy`),
           $monster`Burly Sidekick`
@@ -192,7 +192,9 @@ export const GiantQuest: Quest = {
       outfit: { equip: $items`Mohawk wig`, modifier: "-combat" },
       orbtargets: () => [],
       combat: new CombatStrategy().killHard($monster`Burning Snake of Fire`),
-      choices: { 675: 4, 676: 4, 677: 1, 678: 1, 679: 1, 1431: 4 },
+      choices: () => {
+        return { 675: 4, 676: 4, 677: 1, 678: 1, 679: 1, 1431: haveEquipped($item`Mohawk wig`) ? 4 : 1 }
+      },
       limit: { soft: 20 },
     },
     {
