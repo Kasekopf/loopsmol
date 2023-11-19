@@ -18948,14 +18948,14 @@ function checkRequirements() {
     if (missing_optional > 0) (0,external_kolmafia_namespaceObject.print)("You are also missing ".concat(missing_optional, " optional things."));
   } else {
     if (missing_optional > 0) {
-      (0,external_kolmafia_namespaceObject.print)("You are missing ".concat(missing_optional, " optional things. This script should work, but it could do better."));
+      (0,external_kolmafia_namespaceObject.print)("You are missing ".concat(missing_optional, " optional things. This script may work, but it could do better."));
     } else {
       (0,external_kolmafia_namespaceObject.print)("You have everything! You are the shiniest star. This script should work great.");
     }
   }
 }
 ;// CONCATENATED MODULE: ./src/_git_commit.ts
-var lastCommitHash = "608e866";
+var lastCommitHash = "6283487";
 ;// CONCATENATED MODULE: ./src/main.ts
 var main_templateObject, main_templateObject2;
 function main_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = main_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
