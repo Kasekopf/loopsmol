@@ -140,7 +140,7 @@ export class Prioritization {
       task.combat?.can("killHard") ||
       task.combat?.can("killItem") ||
       task.combat?.can("killFree");
-    const location_blacklist = [$location`The Shore, Inc. Travel Agency`];
+    const location_blacklist = [$location`The Shore, Inc. Travel Agency`, $location`The Hidden Temple`];
     const locaiton_in_blacklist =
       task.do instanceof Location && location_blacklist.includes(task.do);
     if (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0) {
