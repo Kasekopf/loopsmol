@@ -8,6 +8,7 @@ import {
   myMaxhp,
   myTurncount,
   restoreHp,
+  restoreMp,
   sell,
   use,
   visitUrl,
@@ -25,6 +26,7 @@ import {
   $skill,
   $stat,
   AutumnAton,
+  clamp,
   ensureEffect,
   get,
   have,
@@ -190,6 +192,10 @@ const Junkyard: Task[] = [
   {
     name: "Junkyard Hammer",
     after: ["Junkyard Start"],
+    prepare: (): void => {
+      restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+      restoreMp(50);
+    },
     completed: () => have($item`molybdenum hammer`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
@@ -200,7 +206,9 @@ const Junkyard: Task[] = [
         new Macro()
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
-            new Macro().item($item`seal tooth`)
+            new Macro().trySkill($skill`Micrometeorite`)
+              .trySkill($skill`Curse of Weaksauce`)
+              .item($item`seal tooth`)
           )
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`batwinged gremlin (tool)`
@@ -213,6 +221,10 @@ const Junkyard: Task[] = [
   {
     name: "Junkyard Wrench",
     after: ["Junkyard Start"],
+    prepare: (): void => {
+      restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+      restoreMp(50);
+    },
     completed: () =>
       have($item`molybdenum crescent wrench`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
@@ -224,7 +236,9 @@ const Junkyard: Task[] = [
         new Macro()
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
-            new Macro().item($item`seal tooth`)
+            new Macro().trySkill($skill`Micrometeorite`)
+              .trySkill($skill`Curse of Weaksauce`)
+              .item($item`seal tooth`)
           )
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`erudite gremlin (tool)`
@@ -238,6 +252,10 @@ const Junkyard: Task[] = [
     name: "Junkyard Pliers",
     after: ["Junkyard Start"],
     acquire: [{ item: $item`seal tooth` }],
+    prepare: (): void => {
+      restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+      restoreMp(50);
+    },
     completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: $location`Near an Abandoned Refrigerator`,
@@ -247,7 +265,9 @@ const Junkyard: Task[] = [
         new Macro()
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
-            new Macro().item($item`seal tooth`)
+            new Macro().trySkill($skill`Micrometeorite`)
+              .trySkill($skill`Curse of Weaksauce`)
+              .item($item`seal tooth`)
           )
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`spider gremlin (tool)`
@@ -260,6 +280,10 @@ const Junkyard: Task[] = [
   {
     name: "Junkyard Screwdriver",
     after: ["Junkyard Start"],
+    prepare: (): void => {
+      restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+      restoreMp(50);
+    },
     completed: () =>
       have($item`molybdenum screwdriver`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
@@ -271,7 +295,9 @@ const Junkyard: Task[] = [
         new Macro()
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
-            new Macro().item($item`seal tooth`)
+            new Macro().trySkill($skill`Micrometeorite`)
+              .trySkill($skill`Curse of Weaksauce`)
+              .item($item`seal tooth`)
           )
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`vegetable gremlin (tool)`
