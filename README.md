@@ -16,7 +16,7 @@ git checkout https://github.com/Kasekopf/loopsmol release
 
 ### Usage
 
-1. ~~In aftercore, run `loopsmol sim` to verify that the script is installed, and to confirm that you meet the requirements (see below for more details).~~ sim is not yet configured for this script.
+1. In aftercore, run `loopsmol sim` to verify that the script is installed, and to confirm that you meet the requirements (see below for more details). Unlike `loopgyou`, there is no easy list of requirements to make the script run. A full standard set (2021-2023) and all perms is certainly enough. Not all helpful perms are listed, especially passives.
 2. **Make a Pizza of Legend**.
 3. Ascend into a Shrunken Adventurer Softcore run. Seal Clubber is the most tested class. Astral mask or astral belt are both useful, but neither is required. Prefer candles for your eurdora. Workshed will be set to `model train set` by default at the start of the run, but this can be changed with the `workshed` argument.
 4. Run `loopsmol` and watch it go! If you are more hesitant, you can run `loopsmol actions 10` to only do 10 things and stop.
@@ -81,6 +81,131 @@ Debug Options:
   settings - Show the parsed value for all arguments and exit.
   ignorekeys - Ignore the check that all keys can be obtained. Typically for hardcore, if you plan to get your own keys [default: false] [setting: loopsmol_ignorekeys]
   halt NUMBER - Halt when you have this number of adventures remaining or fewer [default: 0] [setting: loopsmol_halt]
+```
+
+### Will this script work for me?
+
+Run `loopsmol sim` to see "Is the script intended to work unmodified on my character?". A sample output is below, but it may be slightly out of date.
+
+```
+> loopsmol sim
+
+Checking your character... Legend: ✓ Have / X Missing & Required / X Missing & Optional
+Skills (Required)
+✓ Cannelloni Cocoon - Healing
+✓ Pizza Lover - Adv gain, +exp
+✓ Saucestorm - Combat
+
+Expensive Pulls (Required)
+✓ Pizza of Legend - Pull
+
+Skills (Optional/Recommended)
+✓ Amphibian Sympathy - Fam weight
+✓ Batter Up! - Banishes
+✓ Bend Hell - +sleaze dmg
+✓ Carlweather's Cantata of Confrontation - +combat
+✓ Cletus's Canticle of Celerity - +init
+✓ Curse of Weaksauce - Combat
+✓ Disco Leer - +meat
+✓ Drescher's Annoying Noise - ML
+✓ Empathy of the Newt - Fam weight
+✓ Fat Leon's Phat Loot Lyric - +item
+✓ Ire of the Orca - Fury
+✓ Leash of Linguini - Fam weight
+✓ Lock Picking - Key
+✓ Musk of the Moose - +combat
+✓ Pride of the Puffin - ML
+✓ Singer's Faithful Ocelot - +item
+✓ Smooth Movement - -combat
+✓ Snokebomb - Banishes
+✓ Song of Slowness - +init
+✓ Springy Fusilli - +init
+✓ Suspicious Gaze - +init
+✓ Tao of the Terrapin - QoL, Pixel Key
+✓ The Polka of Plenty - +meat
+✓ The Sonata of Sneakiness - -combat
+✓ Torso Awareness - Shirts
+✓ Ur-Kel's Aria of Annoyance - ML
+✓ Walberg's Dim Bulb - +init
+
+Expensive Pulls (Optional)
+✓ Buddy Bjorn - Pull
+✓ carnivorous potted plant - Pull
+✓ deck of lewd playing cards - Pull
+✓ Greatest American Pants OR navel ring of navel gazing - Runaway IoTM
+✓ lucky gold ring - Farming currency; see the argument "lgr"
+✓ mafia thumb ring - Pull
+✓ old patched suit-pants - Pull
+
+IoTMs
+✓ 2002 Mr. Store Catalog - +item, +init, wanderers
+✓ august scepter - Protestors, Nuns
+✓ autumn-aton - Lobsterfrogman
+✓ baby camelCalf - Desert progress
+✓ backup camera - ML, init
+✓ Bastille Battalion control rig - +exp
+✓ Boxing Daycare - +exp
+✓ Cargo Cultist Shorts - Mountain man
+✓ Chateau Mantegna - Free rests, +exp
+✓ Cincho de Mayo - -combat forces
+✓ Clan VIP Lounge key - YRs, +combat
+✓ closed-circuit pay phone - Shadow bricks, +meat
+✓ Cold medicine cabinet - Get Extrovermectin for profit
+✓ Cold medicine cabinet - Meat, MP, Ore, Orc bridge parts, and res
+✓ combat lover's locket - Reminiscing
+✓ Comprehensive Cartography - Billiards, Friars, Nook, Castle, War start
+✓ Cosmic bowling ball - Banishes
+✓ cursed magnifying glass - Wanderers
+✓ cursed monkey glove - Banishes
+✓ Dark Jill-of-All-Trades - +meat, +item
+✓ Daylight Shavings Helmet - +meat, +item
+✓ Deck of Every Card - A key for the NS tower, stone wool, ore
+✓ designer sweatpants - Sleaze damage, +init
+✓ Distant Woods Getaway Brochure - +exp
+✓ Emotionally Chipped - Banish, -combat, items
+✓ familiar scrapbook - +exp
+✓ Fourth of May Cosplay Saber - Familiar Weight
+✓ grey gosling - Duplication drones
+✓ industrial fire extinguisher - Harem outfit, Bat hole, stone wool, Crypt, Ultrahydrated, Shadow bricks
+✓ January's Garbage Tote - +item, +meat
+✓ June cleaver - Tavern, +adv
+✓ Jurassic Parka - Meat, ML, -combat forces
+✓ Just the Facts - Desert, Wishes
+✓ Kramco Sausage-o-Matic™ - Wanderers
+✓ Kremlin's Greatest Briefcase - Banishes
+✓ latte lovers member's mug - Banishes
+✓ li'l orphan tot - +item
+✓ Lil' Doctor™ bag - Banish, instakill, +item
+✓ Lovebugs - Crypt, Desert
+✓ LOV Tunnel - +exp
+✓ miniature crystal ball - Monster prediction
+✓ Moping Artistic Goth Kid - Wanderers
+✓ Powerful Glove - Pixels
+✓ protonic accelerator pack - Wanderers
+✓ S.I.T. Course Completion Certificate - Profit, +meat
+✓ shortest-order cook - Kill the Wall of Skin, initial exp
+✓ sinistral homunculus - Carn plant
+✓ sleeping patriotic eagle - Niche, Palindome, Twin Paak
+✓ SongBoom™ BoomBox - Meat and special seasonings
+✓ space planula - Stench jellies for profit; see the argument "jellies"
+✓ Summon Clip Art - Amulet coin
+✓ Unagnimated Gnome - Adv gain
+✓ unbreakable umbrella - -combat modifier, ML
+✓ unwrapped knock-off retro superhero cape - Slay the dead in crypt
+✓ Voting Booth - Wanderers
+
+Miscellany
+✓ hobo monkey - Meat drops
+✓ Permanent pool skill from A Shark's Chum - Haunted billiards room
+✓ woim - Bonus initiative
+
+Combat Lover's Locket Monsters
+✓ Astronomer - Star Key
+✓ Baa'baa'bu'ran - Wool
+✓ Camel's Toe - Star Key
+✓ mountain man - Ore (without trainset)
+
+You have everything! You are the shiniest star. This script should work great.
 ```
 
 ### Manual Installation

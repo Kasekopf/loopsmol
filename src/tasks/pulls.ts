@@ -106,6 +106,7 @@ export const pulls: PullSpec[] = [
   },
   {
     pull: $item`carnivorous potted plant`,
+    optional: true,
   },
   // Survivability pulls
   {
