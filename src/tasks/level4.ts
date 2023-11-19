@@ -78,8 +78,8 @@ export const BatQuest: Quest = {
       completed: () => step("questL04Bat") + itemAmount($item`sonar-in-a-biscuit`) >= 2,
       priority: () =>
         step("questL11Shen") === 999 ||
-        have($item`The Stankara Stone`) ||
-        (myDaycount() === 1 && step("questL11Shen") > 1)
+          have($item`The Stankara Stone`) ||
+          (myDaycount() === 1 && step("questL11Shen") > 1)
           ? Priorities.None
           : Priorities.BadMood,
       prepare: () => {
@@ -155,7 +155,7 @@ export const BatQuest: Quest = {
       after: ["Bat/Use Sonar 3", "Lobsterfrogman Drop"],
       completed: () => step("questL04Bat") >= 4,
       do: $location`The Boss Bat's Lair`,
-      combat: new CombatStrategy().killHard($monster`Boss Bat`).ignoreNoBanish(),
+      combat: new CombatStrategy().killHard($monster`Boss Bat`).ignore(),
       limit: { soft: 10 },
       delay: 6,
     },

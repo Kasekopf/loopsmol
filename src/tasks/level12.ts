@@ -37,7 +37,7 @@ import { Guards, OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel, debug } from "../lib";
-import { forceItemPossible } from "../engine/resources";
+import { forceItemPossible, yellowRayPossible } from "../engine/resources";
 import { args } from "../args";
 import { fillHp } from "../engine/moods";
 
@@ -314,14 +314,14 @@ const Orchard: Task[] = [
       get("sidequestOrchardCompleted") !== "none",
     do: $location`The Hatching Chamber`,
     outfit: () => {
-      if (forceItemPossible())
+      if (yellowRayPossible())
         return {
           familiar: args.minor.jellies ? $familiar`Space Jellyfish` : undefined,
         };
       else return { modifier: "item" };
     },
     combat: new CombatStrategy()
-      .forceItems($monster`larval filthworm`)
+      .yellowRay($monster`larval filthworm`)
       .macro(Macro.trySkill($skill`Extract Jelly`)),
     limit: { soft: 10 },
   },
@@ -337,7 +337,7 @@ const Orchard: Task[] = [
       get("sidequestOrchardCompleted") !== "none",
     do: $location`The Feeding Chamber`,
     outfit: () => {
-      if (forceItemPossible())
+      if (yellowRayPossible())
         return {
           familiar: args.minor.jellies ? $familiar`Space Jellyfish` : undefined,
         };
@@ -348,7 +348,7 @@ const Orchard: Task[] = [
       else return { modifier: "item" };
     },
     combat: new CombatStrategy()
-      .forceItems($monster`filthworm drone`)
+      .yellowRay($monster`filthworm drone`)
       .macro(
         Macro.trySkill($skill`Extract Jelly`).trySkill($skill`Fire Extinguisher: Polar Vortex`)
       ),
@@ -366,7 +366,7 @@ const Orchard: Task[] = [
     do: $location`The Royal Guard Chamber`,
     effects: $effects`Filthworm Drone Stench`,
     outfit: () => {
-      if (forceItemPossible())
+      if (yellowRayPossible())
         return {
           familiar: args.minor.jellies ? $familiar`Space Jellyfish` : undefined,
         };
@@ -377,7 +377,7 @@ const Orchard: Task[] = [
       else return { modifier: "item" };
     },
     combat: new CombatStrategy()
-      .forceItems($monster`filthworm royal guard`)
+      .yellowRay($monster`filthworm royal guard`)
       .macro(
         Macro.trySkill($skill`Extract Jelly`).trySkill($skill`Fire Extinguisher: Polar Vortex`)
       ),
