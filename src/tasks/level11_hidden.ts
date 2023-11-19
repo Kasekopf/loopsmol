@@ -384,7 +384,7 @@ const Bowling: Task[] = [
     after: ["Open Bowling", "Banish Janitors"],
     priority: () =>
       get("camelSpit") === 100 && cosmicBowlingBallReady() && have($skill`Map the Monsters`)
-        ? Priorities.CosmicBowlingBall
+        ? Priorities.BestCosmicBowlingBall
         : Priorities.None,
     ready: () =>
       myMeat() >= 500 &&
