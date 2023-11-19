@@ -131,7 +131,10 @@ export class Prioritization {
 
     // Prefer tasks where the cosmic bowling ball is useful
     const ball_useful =
-      task.combat === undefined || task.combat.can("ignore") || task.combat.can("banish");
+      task.combat === undefined ||
+      task.combat.can("ignore") ||
+      task.combat.can("banish") ||
+      task.combat.getDefaultAction() === undefined;
     const ball_may_not_be_useful = task.combat?.can("kill") || task.combat?.can("killHard");
     if (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0) {
       if (!task.freeaction && ball_useful && !ball_may_not_be_useful) {
