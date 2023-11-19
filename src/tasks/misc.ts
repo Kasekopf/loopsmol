@@ -651,7 +651,12 @@ export const MiscQuest: Quest = {
         }
         if (!upgrades.includes("rightarm1")) {
           // Mid outdoor locations
-          zones.push($location`The Smut Orc Logging Camp`, $location`The Goatlet`);
+          zones.push(
+            $location`The Smut Orc Logging Camp`,
+            $location`The Goatlet`,
+            $location`Vanya's Castle`,
+            $location`The Dark Elbow of the Woods`
+          );
         }
 
         // Valuble quest locations
@@ -669,7 +674,12 @@ export const MiscQuest: Quest = {
         }
 
         // Mid underground locations for autumn dollar
-        zones.push($location`The Defiled Nook`, $location`Cobb's Knob Menagerie, Level 3`);
+        zones.push(
+          $location`The Defiled Nook`,
+          $location`Cobb's Knob Menagerie, Level 3`,
+          $location`The Deep Machine Tunnels`,
+          $location`The Daily Dungeon`
+        );
 
         zones.push($location`The Sleazy Back Alley`); // always send it somewhere
         const result = AutumnAton.sendTo(zones);
@@ -1042,7 +1052,7 @@ export const MiscQuest: Quest = {
       do: () => cliExecute("horsery dark"),
       limit: { tries: 1 },
       freeaction: true,
-    }
+    },
   ],
 };
 
