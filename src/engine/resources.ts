@@ -215,7 +215,7 @@ export const wandererSources: WandererSource[] = [
   {
     name: "VHS Tape",
     available: () => Counter.get("Spooky VHS Tape Monster") <= 0,
-    equip: [],
+    equip: [{}],
     monsters: () => [get("spookyVHSTapeMonster") ?? $monster`none`],
     chance: () => 1,
     possible: () => Counter.get("Spooky VHS Tape Monster") <= 0,
