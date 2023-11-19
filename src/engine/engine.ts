@@ -235,27 +235,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       }
     }
 
-    // If bowling ball is up, use it in a useful location
-    if (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0) {
-      const possible_locations = available_tasks.filter(
-        (task) => this.hasDelay(task) && (task.combat === undefined || !task.combat.can("kill"))
-      );
-      if (possible_locations.length > 0) {
-        if (args.debug.verbose) {
-          printHtml(`Cosmic bowling ball is available to place in a delay zone. Available zones:`);
-          for (const task of possible_locations) {
-            printHtml(`${task.name}`);
-          }
-        }
-        return {
-          ...possible_locations[0],
-          active_priority: Prioritization.fixed(Priorities.CosmicBowlingBall),
-        };
-      } else {
-        logprint(`Cosmic bowling ball is ready but no tasks have delay`);
-      }
-    }
-
     // Finally, choose from all available tasks
     const task_priorities = available_tasks.map((task) => {
       return { ...task, active_priority: Prioritization.from(task) };

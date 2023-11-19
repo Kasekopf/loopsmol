@@ -54,7 +54,7 @@ export const TavernQuest: Quest = {
           };
         return { modifier: "ML, +combat", equip: $items`old patched suit-pants` };
       },
-      combat: new CombatStrategy().killHard($monster`drunken rat king`).ignoreNoBanish(),
+      combat: new CombatStrategy().killHard($monster`drunken rat king`).ignore(),
       choices: () => {
         return {
           509: 1,

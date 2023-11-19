@@ -13,7 +13,6 @@ import { getModifiersFrom } from "./outfit";
 
 export class Priorities {
   static Wanderer: Priority = { score: 20000, reason: "Wanderer" };
-  static CosmicBowlingBall: Priority = { score: 20000, reason: "Cosmic Bowling Ball" };
   static Always: Priority = { score: 10000, reason: "Forced" };
   static GoodForceNC: Priority = { score: 8000, reason: "Forcing NC" };
   static Free: Priority = { score: 1000, reason: "Free action" };
@@ -22,6 +21,7 @@ export class Priorities {
   static LastCopyableMonster: Priority = { score: 100, reason: "Copy last monster" };
   static Effect: Priority = { score: 20, reason: "Useful effect" };
   static GoodOrb: Priority = { score: 15, reason: "Target orb monster" };
+  static CosmicBowlingBall: Priority = { score: 11, reason: "Use cosmic bowling ball" };
   static GoodYR: Priority = { score: 10, reason: "Yellow ray" };
   static GoodAutumnaton: Priority = { score: 4, reason: "Setup Autumnaton" };
   static MinorEffect: Priority = { score: 2, reason: "Useful minor effect" };
@@ -127,6 +127,16 @@ export class Prioritization {
       get("ghostLocation") === task.do
     )
       result.priorities.add(Priorities.BadProtonic);
+
+    // Prefer tasks where the cosmic bowling ball is useful
+    const ball_useful =
+      task.combat === undefined || task.combat.can("ignore") || task.combat.can("banish");
+    const ball_may_not_be_useful = task.combat?.can("kill") || task.combat?.can("killHard");
+    if (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0) {
+      if (!task.freeaction && ball_useful && !ball_may_not_be_useful) {
+        result.priorities.add(Priorities.CosmicBowlingBall);
+      }
+    }
 
     return result;
   }
