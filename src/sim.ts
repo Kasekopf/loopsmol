@@ -513,7 +513,7 @@ export function checkRequirements(): void {
   } else {
     if (missing_optional > 0) {
       print(
-        `You are missing ${missing_optional} optional things. This script should work, but it could do better.`
+        `You are missing ${missing_optional} optional things. This script may work, but it could do better.`
       );
     } else {
       print(`You have everything! You are the shiniest star. This script should work great.`);
