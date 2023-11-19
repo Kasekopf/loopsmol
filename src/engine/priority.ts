@@ -135,11 +135,22 @@ export class Prioritization {
       task.combat.can("ignore") ||
       task.combat.can("banish") ||
       task.combat.getDefaultAction() === undefined;
-    const ball_may_not_be_useful = task.combat?.can("kill") || task.combat?.can("killHard");
+    const ball_may_not_be_useful =
+      task.combat?.can("kill") ||
+      task.combat?.can("killHard") ||
+      task.combat?.can("killItem") ||
+      task.combat?.can("killFree");
     const location_blacklist = [$location`The Shore, Inc. Travel Agency`];
-    const locaiton_in_blacklist = (task.do instanceof Location) && location_blacklist.includes(task.do);
+    const locaiton_in_blacklist =
+      task.do instanceof Location && location_blacklist.includes(task.do);
     if (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0) {
-      if (!task.freeaction && ball_useful && !ball_may_not_be_useful && !locaiton_in_blacklist) {
+      if (
+        !task.freeaction &&
+        ball_useful &&
+        !ball_may_not_be_useful &&
+        !locaiton_in_blacklist &&
+        task.do instanceof Location
+      ) {
         result.priorities.add(Priorities.CosmicBowlingBall);
       }
     }
