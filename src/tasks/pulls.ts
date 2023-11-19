@@ -38,6 +38,7 @@ type PullSpec = {
   duplicate?: boolean;
   post?: () => void;
   description?: string;
+  price?: number;
 } & ({ pull: Item } | { pull: Item[] | (() => Item | Item[] | undefined); name: string });
 
 export const pulls: PullSpec[] = [
@@ -59,6 +60,7 @@ export const pulls: PullSpec[] = [
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;
     },
+    price: 200000,
   },
   {
     pull: $item`Frosty's frosty mug`,
@@ -68,6 +70,7 @@ export const pulls: PullSpec[] = [
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;
     },
+    price: 200000
   },
   {
     pull: $item`milk of magnesium`,
@@ -235,6 +238,7 @@ class Pull {
   useful: () => boolean | undefined;
   post: () => void;
   description?: string;
+  price?: number;
 
   constructor(spec: PullSpec) {
     if ("name" in spec) {
@@ -260,6 +264,7 @@ class Pull {
     this.duplicate = spec.duplicate ?? false;
     this.optional = spec.optional ?? false;
     this.useful = spec.useful ?? (() => true);
+    this.price = spec.price;
     this.post =
       spec.post ??
       (() => {
@@ -293,7 +298,7 @@ class Pull {
     for (const item of this.items()) {
       if (item === undefined) throw `Unable to pull ${this.name}; the desired item is undefined`;
       if (!isUnrestricted(item) && underStandard()) continue;
-      if (storageAmount(item) > 0 || buyUsingStorage(1, item, 100000)) {
+      if (storageAmount(item) > 0 || buyUsingStorage(1, item, this.price ?? 100000)) {
         cliExecute(`pull ${item.name}`);
         set("_loopsmol_pulls_used", get("_loopsmol_pulls_used", 0) + 1);
         return;
