@@ -103,8 +103,13 @@ const Copperhead: Task[] = [
     after: ["Copperhead Start", "Bat/Use Sonar 1"],
     ready: () => shenItem($item`The Stankara Stone`),
     priority: () => {
-      if (
+      const jar_needed =
         !have($item`killing jar`) &&
+        !have($familiar`Melodramedary`) &&
+        (get("gnasirProgress") & 4) === 0 &&
+        get("desertExploration") < 100;
+      if (
+        jar_needed &&
         get("lastEncounter") === "banshee librarian" &&
         have($skill`Emotionally Chipped`) &&
         get("_feelEnvyUsed") < 3 &&
