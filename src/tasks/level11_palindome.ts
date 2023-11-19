@@ -120,7 +120,12 @@ const Copperhead: Task[] = [
     do: $location`The Batrat and Ratbat Burrow`,
     combat: new CombatStrategy()
       .macro(() => {
-        if (!have($item`killing jar`) && get("lastEncounter") === "banshee librarian") {
+        const jar_needed =
+          !have($item`killing jar`) &&
+          !have($familiar`Melodramedary`) &&
+          (get("gnasirProgress") & 4) === 0 &&
+          get("desertExploration") < 100;
+        if (jar_needed && get("lastEncounter") === "banshee librarian") {
           return Macro.trySkill($skill`Feel Nostalgic`)
             .trySkill($skill`Feel Envy`)
             .step(killMacro());

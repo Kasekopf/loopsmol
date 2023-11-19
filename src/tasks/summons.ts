@@ -116,10 +116,11 @@ const summonTargets: SummonTarget[] = [
   {
     target: $monster`Camel's Toe`,
     after: [],
-    priority: () =>
-      have($familiar`Melodramedary`) && get("camelSpit") < 100
-        ? Priorities.BadCamel
-        : Priorities.None,
+    priority: () => {
+      if (!have($familiar`Melodramedary`)) return Priorities.None;
+      if (get("camelSpit") < 100) return Priorities.BadCamel;
+      return Priorities.GoodCamel;
+    },
     completed: () =>
       get("lastCopyableMonster") === $monster`Camel's Toe` ||
       (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||

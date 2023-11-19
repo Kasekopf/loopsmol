@@ -24,6 +24,7 @@ export class Priorities {
   static CosmicBowlingBall: Priority = { score: 11, reason: "Use cosmic bowling ball" };
   static GoodYR: Priority = { score: 10, reason: "Yellow ray" };
   static GoodAutumnaton: Priority = { score: 4, reason: "Setup Autumnaton" };
+  static GoodCamel: Priority = { score: 3, reason: "Melodramedary is ready" };
   static MinorEffect: Priority = { score: 2, reason: "Useful minor effect" };
   static GoodBanish3: Priority = { score: 0.7, reason: "3+ banishes committed" };
   static GoodBanish2: Priority = { score: 0.6, reason: "2 banishes committed" };
@@ -140,12 +141,16 @@ export class Prioritization {
       task.combat?.can("killHard") ||
       task.combat?.can("killItem") ||
       task.combat?.can("killFree");
-    const location_blacklist = [$location`The Shore, Inc. Travel Agency`, $location`The Hidden Temple`];
+    const location_blacklist = [
+      $location`The Shore, Inc. Travel Agency`,
+      $location`The Hidden Temple`,
+    ];
     const locaiton_in_blacklist =
       task.do instanceof Location && location_blacklist.includes(task.do);
     if (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0) {
       if (
         !task.freeaction &&
+        !task.freecombat &&
         ball_useful &&
         !ball_may_not_be_useful &&
         !locaiton_in_blacklist &&
