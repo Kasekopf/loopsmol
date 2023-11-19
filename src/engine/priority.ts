@@ -144,7 +144,9 @@ export class Prioritization {
       task.combat?.can("kill") ||
       task.combat?.can("killHard") ||
       task.combat?.can("killItem") ||
-      task.combat?.can("killFree");
+      task.combat?.can("killFree") ||
+      task.combat?.can("forceItems") ||
+      task.combat?.can("yellowRay");
     const location_blacklist = [
       $location`The Shore, Inc. Travel Agency`,
       $location`The Hidden Temple`,
