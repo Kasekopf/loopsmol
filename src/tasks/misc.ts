@@ -1033,6 +1033,16 @@ export const MiscQuest: Quest = {
         modifier: "exp",
       },
     },
+    {
+      name: "Horsery",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => get("horseryAvailable"),
+      completed: () => get("_horsery") === "dark horse",
+      do: () => cliExecute("horsery dark"),
+      limit: { tries: 1 },
+      freeaction: true,
+    }
   ],
 };
 
