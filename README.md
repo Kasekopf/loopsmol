@@ -16,8 +16,8 @@ git checkout https://github.com/Kasekopf/loopsmol release
 
 ### Usage
 
-1. In aftercore, run `loopsmol sim` to verify that the script is installed, and to confirm that you meet the requirements (see below for more details).
-2. _Make a Pizza of Legend_.
+1. ~~In aftercore, run `loopsmol sim` to verify that the script is installed, and to confirm that you meet the requirements (see below for more details).~~ sim is not yet configured for this script.
+2. **Make a Pizza of Legend**.
 3. Ascend into a Shrunken Adventurer Softcore run. Seal Clubber is the most tested class. Astral mask or astral belt are both useful, but neither is required. Prefer candles for your eurdora. Workshed will be set to `model train set` by default at the start of the run, but this can be changed with the `workshed` argument.
 4. Run `loopsmol` and watch it go! If you are more hesitant, you can run `loopsmol actions 10` to only do 10 things and stop.
 
