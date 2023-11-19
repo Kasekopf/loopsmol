@@ -66,6 +66,10 @@ export const routing: string[] = [
   "Summon/Astronomer",
   "Summon/Camel's Toe",
   "Hidden City/Open City",
+  "Hidden City/Open Bowling",
+  "Hidden City/Open Office",
+  "Hidden City/Open Hospital",
+  "Hidden City/Open Apartment",
   "Manor/Bedroom",
   "Manor/Gallery Delay",
   "Manor/Bathroom Delay",
@@ -97,10 +101,6 @@ export const routing: string[] = [
   "Crypt/Alcove",
 
   // Hidden City
-  "Hidden City/Open Office",
-  "Hidden City/Open Hospital",
-  "Hidden City/Open Apartment",
-  "Hidden City/Open Bowling",
   "Hidden City/Office Files", // Banish janitors under delay
   "Hidden City/Apartment",
   "Hidden City/Hospital",
