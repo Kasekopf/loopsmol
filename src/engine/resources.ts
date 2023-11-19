@@ -15,8 +15,11 @@ import {
   myClass,
   myFamiliar,
   myFury,
+  myMaxmp,
   myMeat,
+  myMp,
   myTurncount,
+  restoreMp,
   retrieveItem,
   Skill,
   toInt,
@@ -117,6 +120,9 @@ const banishSources: BanishSource[] = [
   {
     name: "Snokebomb",
     available: () => get("_snokebombUsed") < 3 && have($skill`Snokebomb`),
+    prepare: () => {
+      if (myMp() < 50 && myMaxmp() >= 50) restoreMp(50 - myMp());
+    },
     do: $skill`Snokebomb`,
   },
   {
