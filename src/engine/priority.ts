@@ -34,6 +34,7 @@ export class Priorities {
   static BadAutumnaton: Priority = { score: -2, reason: "Autumnaton in use here" };
   static BadTrain: Priority = { score: -3, reason: "Use Trainset" };
   static BadOrb: Priority = { score: -4, reason: "Avoid orb monster" };
+  static BadCamel: Priority = { score: -5, reason: "Waiting for Melodramedary" };
   static BadHoliday: Priority = { score: -10 };
   static BadYR: Priority = { score: -16, reason: "Too early for yellow ray" };
   static BadSweat: Priority = { score: -20, reason: "Not enough sweat" };

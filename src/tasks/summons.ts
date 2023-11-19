@@ -15,7 +15,17 @@ import {
   visitUrl,
   wait,
 } from "kolmafia";
-import { $item, $items, $monster, CombatLoversLocket, get, have } from "libram";
+import {
+  $familiar,
+  $item,
+  $items,
+  $monster,
+  $skill,
+  CombatLoversLocket,
+  get,
+  have,
+  Macro,
+} from "libram";
 import { CombatStrategy } from "../engine/combat";
 import { debug, underStandard } from "../lib";
 import { args } from "../args";
@@ -23,6 +33,7 @@ import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 import { yellowRayPossible } from "../engine/resources";
 import { trainSetAvailable } from "./misc";
+import { Priorities } from "../engine/priority";
 
 type SummonTarget = Omit<Task, "do" | "name" | "limit"> & {
   target: Monster;
@@ -105,13 +116,20 @@ const summonTargets: SummonTarget[] = [
   {
     target: $monster`Camel's Toe`,
     after: [],
+    priority: () =>
+      have($familiar`Melodramedary`) && get("camelSpit") < 100
+        ? Priorities.BadCamel
+        : Priorities.None,
     completed: () =>
       get("lastCopyableMonster") === $monster`Camel's Toe` ||
       (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
       have($item`Richard's star key`) ||
       get("nsTowerDoorKeysUsed").includes("Richard's star key"),
-    outfit: { modifier: "item" },
-    combat: new CombatStrategy().killItem(),
+    outfit: () => {
+      if (get("camelSpit") === 100) return { modifier: "item", familiar: $familiar`Melodramedary` };
+      return { modifier: "item" };
+    },
+    combat: new CombatStrategy().macro(Macro.trySkill($skill`%fn, spit on them!`)).killItem(),
   },
   {
     target: $monster`Baa'baa'bu'ran`,
