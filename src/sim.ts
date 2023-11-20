@@ -233,7 +233,7 @@ function buildIotmList(): Requirement[] {
       why: "Shadow bricks, +meat",
     },
     {
-      thing: $item`cursed monkey glove`,
+      thing: $item`cursed monkey's paw`,
       why: "Banishes",
     },
     {
