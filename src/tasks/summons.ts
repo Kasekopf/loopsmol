@@ -41,6 +41,7 @@ type SummonTarget = Omit<Task, "do" | "name" | "limit"> & {
 const summonTargets: SummonTarget[] = [
   {
     target: $monster`War Frat 151st Infantryman`,
+    priority: () => Priorities.Start,
     completed: () =>
       have($item`beer helmet`) &&
       have($item`distressed denim pants`) &&

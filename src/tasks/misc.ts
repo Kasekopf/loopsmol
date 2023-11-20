@@ -968,6 +968,7 @@ export const MiscQuest: Quest = {
     {
       name: "LOV Tunnel",
       after: [],
+      priority: () => Priorities.Start,
       ready: () => get("loveTunnelAvailable"),
       completed: () => get("_loveTunnelUsed"),
       do: $location`The Tunnel of L.O.V.E.`,
@@ -988,7 +989,7 @@ export const MiscQuest: Quest = {
     {
       name: "Daycare",
       after: [],
-      priority: () => Priorities.Free,
+      priority: () => Priorities.Start,
       ready: () => get("daycareOpen"),
       completed: () => get("_daycareGymScavenges") !== 0,
       do: (): void => {
@@ -1018,7 +1019,7 @@ export const MiscQuest: Quest = {
     {
       name: "Bastille",
       after: [],
-      priority: () => Priorities.Free,
+      priority: () => Priorities.Start,
       ready: () => have($item`Bastille Battalion control rig`),
       completed: () => get("_bastilleGames") !== 0,
       do: () =>

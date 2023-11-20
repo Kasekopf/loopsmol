@@ -17,6 +17,7 @@ export const routing: string[] = [
 
   // Level up
   "Misc/Cloud Talk",
+  "Summon/War Frat 151st Infantryman", // Summon before leaving level 1
   "Misc/LOV Tunnel",
   "Misc/Daycare",
   "Misc/Bastille",
@@ -27,7 +28,6 @@ export const routing: string[] = [
   "Diet/Numberology",
 
   // Get infinite loop
-  "Summon/War Frat 151st Infantryman",
   "Summon/Mountain Man",
 
   // Start quests when able
