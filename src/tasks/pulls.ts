@@ -181,9 +181,11 @@ export const pulls: PullSpec[] = [
   {
     pull: $item`book of matches`,
     useful: () =>
-      (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats", -1) >= 0) &&
-      have($skill`Map the Monsters`) &&
-      have($familiar`Melodramedary`),
+      !(
+        (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats", -1) >= 0) &&
+        have($skill`Map the Monsters`) &&
+        have($familiar`Melodramedary`)
+      ),
   },
   { pull: $item`blackberry galoshes`, useful: () => step("questL11Black") < 2 },
   { pull: $item`Buddy Bjorn`, useful: () => yellowSubmarinePossible(true), optional: true },
