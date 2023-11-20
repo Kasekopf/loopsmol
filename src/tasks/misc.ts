@@ -906,6 +906,7 @@ export const MiscQuest: Quest = {
             for (let i = 0; i < vortex_count; i++)
               result.trySkill($skill`Fire Extinguisher: Polar Vortex`);
           }
+          result.while_("hasskill 7448", Macro.skill($skill`Douse Foe`));
           return result;
         }, $monster`shadow slab`)
         .kill(),
@@ -922,6 +923,8 @@ export const MiscQuest: Quest = {
           result.equip?.push($item`industrial fire extinguisher`);
         else if (DaylightShavings.nextBuff() === $effect`Friendly Chops`)
           result.equip?.push($item`Daylight Shavings Helmet`);
+        if (have($item`Flash Liquidizer Ultra Dousing Accessory`) && get("_douseFoeUses") < 3)
+          result.equip?.push($item`Flash Liquidizer Ultra Dousing Accessory`);
         return result;
       },
       boss: true,

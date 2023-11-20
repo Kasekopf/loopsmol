@@ -235,6 +235,9 @@ export const pulls: PullSpec[] = [
     pull: $item`ninja crampons`,
     useful: () => step("questL08Trapper") < 3 && step("questL11Shen") > 3,
   },
+  {
+    pull: $item`Flash Liquidizer Ultra Dousing Accessory`,
+  },
 ];
 
 class Pull {
