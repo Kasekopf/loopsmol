@@ -877,6 +877,7 @@ export const MiscQuest: Quest = {
         }
       },
       limit: { tries: 1 },
+      freeaction: true,
     },
     {
       name: "Shadow Rift",
