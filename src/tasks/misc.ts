@@ -1095,6 +1095,15 @@ export const MiscQuest: Quest = {
       limit: { tries: 1 },
       freeaction: true,
     },
+    {
+      name: "Wish",
+      priority: () => Priorities.Free,
+      after: [],
+      completed: () => get("_genieWishesUsed") >= 3 || !have($item`genie bottle`),
+      do: () => cliExecute(`genie wish for more wishes`),
+      limit: { tries: 3 },
+      freeaction: true,
+    },
   ],
 };
 

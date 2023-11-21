@@ -133,10 +133,7 @@ const Manor2: Task[] = [
       step("questM21Dance") >= 2,
     do: $location`The Haunted Bathroom`,
     choices: { 881: 1, 105: 1, 892: 1 },
-    combat: new CombatStrategy()
-      .killHard($monster`cosmetics wraith`)
-      .kill($monster`toilet papergeist`)
-      .banish($monsters`claw-foot bathtub, malevolent hair clog`),
+    combat: new CombatStrategy().killHard($monster`cosmetics wraith`),
     limit: { turns: 5 },
     delay: 5,
     // No need to search for cosmetics wraith
@@ -156,8 +153,6 @@ const Manor2: Task[] = [
     },
     combat: new CombatStrategy()
       .startingMacro(Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`))
-      .kill($monster`toilet papergeist`)
-      .banish($monsters`claw-foot bathtub, malevolent hair clog`)
       .killHard($monster`cosmetics wraith`),
     limit: { soft: 15 },
     // No need to search for cosmetics wraith
