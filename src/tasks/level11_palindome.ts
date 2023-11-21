@@ -2,6 +2,7 @@ import {
   canEquip,
   cliExecute,
   create,
+  haveEquipped,
   Item,
   itemAmount,
   myDaycount,
@@ -197,7 +198,7 @@ const Copperhead: Task[] = [
         677: step("questL10Garbage") >= 10 ? 2 : 1,
         678: step("questL10Garbage") >= 10 ? 3 : 1,
         679: 1,
-        1431: 4,
+        1431: haveEquipped($item`Mohawk wig`) ? 4 : 1,
       };
     },
     orbtargets: () => [],
