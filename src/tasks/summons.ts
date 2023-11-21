@@ -177,12 +177,19 @@ const summonSources: SummonSource[] = [
     summon: () => use($item`white page`),
   },
   {
+    name: "Combat Locket",
+    available: () =>
+      CombatLoversLocket.have() ? CombatLoversLocket.reminiscesLeft() - args.minor.savelocket : 0,
+    canFight: (mon: Monster) => CombatLoversLocket.availableLocketMonsters().includes(mon),
+    summon: (mon: Monster) => CombatLoversLocket.reminisce(mon),
+  },
+  {
     name: "Fax",
     available: () =>
       args.minor.fax &&
-      !underStandard() &&
-      !get("_photocopyUsed") &&
-      have($item`Clan VIP Lounge key`)
+        !underStandard() &&
+        !get("_photocopyUsed") &&
+        have($item`Clan VIP Lounge key`)
         ? 1
         : 0,
     canFight: (mon: Monster) => canFaxbot(mon),
@@ -195,18 +202,10 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${
-          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },
-  },
-  {
-    name: "Combat Locket",
-    available: () =>
-      CombatLoversLocket.have() ? CombatLoversLocket.reminiscesLeft() - args.minor.savelocket : 0,
-    canFight: (mon: Monster) => CombatLoversLocket.availableLocketMonsters().includes(mon),
-    summon: (mon: Monster) => CombatLoversLocket.reminisce(mon),
   },
   {
     name: "Wish",
