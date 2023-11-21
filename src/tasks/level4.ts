@@ -49,6 +49,7 @@ export const BatQuest: Quest = {
       },
       outfit: (): Outfit => {
         if (
+          !have($skill`Comprehensive Cartography`) &&
           have($item`industrial fire extinguisher`) &&
           get("_fireExtinguisherCharge") >= 20 &&
           !get("fireExtinguisherBatHoleUsed")
@@ -58,6 +59,7 @@ export const BatQuest: Quest = {
           });
         else return stenchPlanner.outfitFor(1, { modifier: "item" });
       },
+      choices: { 1427: 1 },
       combat: new CombatStrategy()
         .macro(new Macro().trySkill($skill`Fire Extinguisher: Zone Specific`))
         .kill($monster`screambat`)
@@ -78,8 +80,8 @@ export const BatQuest: Quest = {
       completed: () => step("questL04Bat") + itemAmount($item`sonar-in-a-biscuit`) >= 2,
       priority: () =>
         step("questL11Shen") === 999 ||
-        have($item`The Stankara Stone`) ||
-        (myDaycount() === 1 && step("questL11Shen") > 1)
+          have($item`The Stankara Stone`) ||
+          (myDaycount() === 1 && step("questL11Shen") > 1)
           ? Priorities.None
           : Priorities.BadMood,
       prepare: () => {
