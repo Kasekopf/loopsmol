@@ -117,12 +117,12 @@ export const routing: string[] = [
   "Tavern/Finish",
 
   // Setup for +meat/+item set
-  "War/Open Nuns",
   "Digital/Vanya",
   "Digital/Megalo",
   "Hidden City/Office Boss", // Get Eagle dude banish
   "Macguffin/Upper Chamber",
   "Orc Chasm/Start Peaks",
+  "War/Open Nuns",
 
   // Bulk +meat/+item tasks
   "Misc/Shadow Rift",

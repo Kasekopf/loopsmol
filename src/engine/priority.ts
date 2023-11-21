@@ -3,7 +3,16 @@
  */
 
 import { getCounter, Location, Monster } from "kolmafia";
-import { $effect, $item, $location, get, getTodaysHolidayWanderers, have, undelay } from "libram";
+import {
+  $effect,
+  $item,
+  $location,
+  $skill,
+  get,
+  getTodaysHolidayWanderers,
+  have,
+  undelay,
+} from "libram";
 import { CombatStrategy } from "./combat";
 import { moodCompatible } from "./moods";
 import { Priority, Task } from "./task";
@@ -72,7 +81,11 @@ export class Prioritization {
       task.combat?.can("yellowRay") ||
       (task.combat?.can("forceItems") && !forceItemSources.find((s) => s.available()));
     if (yr_needed && yellowRaySources.find((yr) => yr.available())) {
-      if (have($effect`Everything Looks Yellow`)) result.priorities.add(Priorities.BadYR);
+      if (
+        have($effect`Everything Looks Yellow`) &&
+        (!have($skill`Emotionally Chipped`) || get("_feelEnvyUsed") === 3)
+      )
+        result.priorities.add(Priorities.BadYR);
       else result.priorities.add(Priorities.GoodYR);
     }
 

@@ -343,7 +343,14 @@ const Orchard: Task[] = [
     },
     combat: new CombatStrategy()
       .yellowRay($monster`larval filthworm`)
-      .macro(Macro.trySkill($skill`Extract Jelly`)),
+      .startingMacro(Macro.trySkill($skill`Extract Jelly`))
+      .macro(() =>
+        Macro.externalIf(
+          have($skill`Emotionally Chipped`) && get("_feelEnvyUsed") < 3,
+          Macro.trySkill($skill`Feel Envy`),
+          Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
+        )
+      ),
     limit: { soft: 10 },
   },
   {
@@ -370,8 +377,13 @@ const Orchard: Task[] = [
     },
     combat: new CombatStrategy()
       .yellowRay($monster`filthworm drone`)
-      .macro(
-        Macro.trySkill($skill`Extract Jelly`).trySkill($skill`Fire Extinguisher: Polar Vortex`)
+      .startingMacro(Macro.trySkill($skill`Extract Jelly`))
+      .macro(() =>
+        Macro.externalIf(
+          have($skill`Emotionally Chipped`) && get("_feelEnvyUsed") < 3,
+          Macro.trySkill($skill`Feel Envy`),
+          Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
+        )
       ),
     effects: $effects`Filthworm Larva Stench`,
     limit: { soft: 10 },
@@ -399,8 +411,13 @@ const Orchard: Task[] = [
     },
     combat: new CombatStrategy()
       .yellowRay($monster`filthworm royal guard`)
-      .macro(
-        Macro.trySkill($skill`Extract Jelly`).trySkill($skill`Fire Extinguisher: Polar Vortex`)
+      .startingMacro(Macro.trySkill($skill`Extract Jelly`))
+      .macro(() =>
+        Macro.externalIf(
+          have($skill`Emotionally Chipped`) && get("_feelEnvyUsed") < 3,
+          Macro.trySkill($skill`Feel Envy`),
+          Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
+        )
       ),
     limit: { soft: 10 },
   },
