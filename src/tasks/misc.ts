@@ -515,6 +515,7 @@ export const MiscQuest: Quest = {
         hermit($item`11-leaf clover`, 3);
         set("_loopsmol_clovers", "true");
       },
+      outfit: { equip: $items`designer sweatpants` },
       freeaction: true,
       limit: { tries: 1 },
     },
@@ -1068,6 +1069,7 @@ export const MiscQuest: Quest = {
       ready: () => myMeat() >= 1000,
       completed: () => have($item`stolen accordion`),
       do: () => retrieveItem($item`stolen accordion`),
+      outfit: { equip: $items`designer sweatpants` },
       limit: { tries: 1 },
       freeaction: true,
     },
@@ -1078,6 +1080,7 @@ export const MiscQuest: Quest = {
       ready: () => myMeat() >= 1000,
       completed: () => have($item`turtle totem`),
       do: () => retrieveItem($item`turtle totem`),
+      outfit: { equip: $items`designer sweatpants` },
       limit: { tries: 1 },
       freeaction: true,
     },
@@ -1088,6 +1091,7 @@ export const MiscQuest: Quest = {
       ready: () => myMeat() >= 1000,
       completed: () => have($item`saucepan`),
       do: () => retrieveItem($item`saucepan`),
+      outfit: { equip: $items`designer sweatpants` },
       limit: { tries: 1 },
       freeaction: true,
     },
