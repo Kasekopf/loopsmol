@@ -105,13 +105,23 @@ export function moodCompatible(modifier: string | undefined): boolean {
   return true;
 }
 
+function haveEquipmentToCast(effect: Effect): boolean {
+  // Check that we have the class equipment to get this skill
+  const skill = toSkill(effect);
+  if (skill !== undefined && !have(skill)) return true;
+  if (skill.class === $class`Turtle Tamer`) return have($item`turtle totem`);
+  if (skill.class === $class`Sauceror`) return have($item`saucepan`);
+  if (skill.class === $class`Accordion Thief`) return have($item`stolen accordion`);
+  return true;
+}
+
 export function applyEffects(modifier: string): void {
   const relevantEffects = getRelevantEffects();
 
   const useful_effects = [];
   for (const key in relevantEffects) {
     if (modifier.includes(key)) {
-      useful_effects.push(...relevantEffects[key]);
+      useful_effects.push(...relevantEffects[key].filter((e) => haveEquipmentToCast(e)));
     }
   }
 

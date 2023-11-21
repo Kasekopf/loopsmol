@@ -10,8 +10,8 @@ export const routing: string[] = [
   "Toot/Finish",
 
   // Get basic gear
+  "Misc/Workshed",
   "Misc/Goose Exp",
-  "Misc/Acquire Firework Hat",
   "Misc/Acquire Birch Battery",
   "Keys/Deck",
 

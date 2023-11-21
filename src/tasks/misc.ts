@@ -81,14 +81,16 @@ import {
   TrainsetPiece,
 } from "./trainrealm";
 
+const meatBuffer = 500;
+
 export const MiscQuest: Quest = {
   name: "Misc",
   tasks: [
     {
       name: "Unlock Beach",
-      after: [],
+      after: ["Sewer Accordion", "Sewer Saucepan", "Sewer Totem"],
       priority: () => Priorities.Free,
-      ready: () => myMeat() >= (knollAvailable() ? 538 : 5000),
+      ready: () => myMeat() >= meatBuffer + (knollAvailable() ? 538 : 5000),
       completed: () => have($item`bitchin' meatcar`) || have($item`Desert Bus pass`),
       do: () => {
         if (knollAvailable()) cliExecute("acquire 1 bitchin' meatcar");
@@ -100,9 +102,9 @@ export const MiscQuest: Quest = {
     },
     {
       name: "Island Scrip",
-      after: ["Unlock Beach"],
+      after: ["Unlock Beach", "Acquire Red Rocket"],
       ready: () =>
-        (myMeat() >= 6000 || (step("questL11Black") >= 4 && myMeat() >= 500)) &&
+        (myMeat() >= 6000 || (step("questL11Black") >= 4 && myMeat() >= meatBuffer + 500)) &&
         myAdventures() >= 20 &&
         !yellowSubmarinePossible(),
       completed: () =>
@@ -119,7 +121,8 @@ export const MiscQuest: Quest = {
     {
       name: "Unlock Island",
       after: ["Island Scrip"],
-      ready: () => (myMeat() >= 400 || have($item`dingy planks`)) && !yellowSubmarinePossible(),
+      ready: () =>
+        (myMeat() >= meatBuffer + 400 || have($item`dingy planks`)) && !yellowSubmarinePossible(),
       completed: () =>
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
@@ -438,9 +441,9 @@ export const MiscQuest: Quest = {
     },
     {
       name: "Acquire Firework Hat",
-      after: [],
+      after: ["Acquire Red Rocket"],
       priority: () => Priorities.Free,
-      ready: () => myMeat() >= 1000, // Increased so we don't go down to 0
+      ready: () => myMeat() >= meatBuffer + 500,
       completed: () =>
         have($item`sombrero-mounted sparkler`) ||
         get("_fireworksShopHatBought") ||
@@ -455,9 +458,9 @@ export const MiscQuest: Quest = {
     },
     {
       name: "Acquire Rocket Boots",
-      after: [],
+      after: ["Acquire Red Rocket"],
       priority: () => Priorities.Free,
-      ready: () => myMeat() >= 1500, // Increased so we don't go down to 0
+      ready: () => myMeat() >= meatBuffer + 1000,
       completed: () =>
         have($item`rocket boots`) ||
         get("_fireworksShopEquipmentBought") ||
@@ -472,9 +475,9 @@ export const MiscQuest: Quest = {
     },
     {
       name: "Acquire Red Rocket",
-      after: [],
+      after: ["Sewer Accordion", "Sewer Totem", "Sewer Saucepan"],
       priority: () => Priorities.Free,
-      ready: () => myMeat() >= 1500, // Increased so we don't go down to 0
+      ready: () => myMeat() >= meatBuffer + 250,
       completed: () =>
         have($item`red rocket`) ||
         !have($item`Clan VIP Lounge key`) ||
@@ -505,8 +508,8 @@ export const MiscQuest: Quest = {
     },
     {
       name: "Hermit Clover",
-      after: ["Hidden City/Open Temple"],
-      ready: () => myMeat() >= 1000,
+      after: ["Hidden City/Open Temple", "Acquire Red Rocket"],
+      ready: () => myMeat() >= meatBuffer + 1000,
       completed: () => get("_loopsmol_clovers") === "true",
       do: () => {
         hermit($item`11-leaf clover`, 3);
@@ -592,9 +595,9 @@ export const MiscQuest: Quest = {
     },
     {
       name: "Bugbear Outfit",
-      after: [],
+      after: ["Acquire Red Rocket"],
       priority: () => Priorities.Free,
-      ready: () => myMeat() >= 140,
+      ready: () => myMeat() >= meatBuffer + 140,
       completed: () =>
         (!have($item`Asdon Martin keyfob`) && !AsdonMartin.installed()) ||
         !knollAvailable() ||
@@ -1054,6 +1057,36 @@ export const MiscQuest: Quest = {
       ready: () => get("horseryAvailable"),
       completed: () => get("_horsery") === "dark horse",
       do: () => cliExecute("horsery dark"),
+      limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Sewer Accordion",
+      after: [],
+      priority: () => Priorities.Free,
+      ready: () => myMeat() >= 1000,
+      completed: () => have($item`stolen accordion`),
+      do: () => retrieveItem($item`stolen accordion`),
+      limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Sewer Totem",
+      after: ["Sewer Accordion"],
+      priority: () => Priorities.Free,
+      ready: () => myMeat() >= 1000,
+      completed: () => have($item`turtle totem`),
+      do: () => retrieveItem($item`turtle totem`),
+      limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Sewer Saucepan",
+      after: ["Sewer Accordion", "Sewer Totem"],
+      priority: () => Priorities.Free,
+      ready: () => myMeat() >= 1000,
+      completed: () => have($item`saucepan`),
+      do: () => retrieveItem($item`saucepan`),
       limit: { tries: 1 },
       freeaction: true,
     },

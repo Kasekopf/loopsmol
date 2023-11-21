@@ -37,9 +37,6 @@ const Diary: Task[] = [
     name: "Forest",
     after: ["Start"],
     completed: () => step("questL11Black") >= 2,
-    prepare: () => {
-      if (have($item`MayDay™ supply package`)) use($item`MayDay™ supply package`);
-    },
     do: $location`The Black Forest`,
     post: () => {
       if (have($effect`Really Quite Poisoned`)) uneffect($effect`Really Quite Poisoned`);
