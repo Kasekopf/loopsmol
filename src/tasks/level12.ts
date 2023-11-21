@@ -26,7 +26,6 @@ import {
   $skill,
   $stat,
   AutumnAton,
-  clamp,
   ensureEffect,
   get,
   have,
@@ -194,24 +193,22 @@ const Junkyard: Task[] = [
     name: "Junkyard Hammer",
     after: ["Junkyard Start"],
     prepare: (): void => {
-      restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+      fillHp();
       restoreMp(50);
     },
     completed: () => have($item`molybdenum hammer`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
-    prepare: fillHp,
     do: $location`Next to that Barrel with Something Burning in it`,
     orbtargets: () => $monsters`batwinged gremlin, batwinged gremlin (tool)`,
     combat: new CombatStrategy()
       .macro(
         new Macro()
           .trySkill($skill`Curse of Weaksauce`)
+          .trySkill($skill`Micrometeorite`)
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
-            new Macro().trySkill($skill`Micrometeorite`)
-              .trySkill($skill`Curse of Weaksauce`)
-              .item($item`seal tooth`)
+            new Macro().item($item`seal tooth`)
           )
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`batwinged gremlin (tool)`
@@ -225,25 +222,23 @@ const Junkyard: Task[] = [
     name: "Junkyard Wrench",
     after: ["Junkyard Start"],
     prepare: (): void => {
-      restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+      fillHp();
       restoreMp(50);
     },
     completed: () =>
       have($item`molybdenum crescent wrench`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
-    prepare: fillHp,
     do: $location`Over Where the Old Tires Are`,
     orbtargets: () => $monsters`erudite gremlin, erudite gremlin (tool)`,
     combat: new CombatStrategy()
       .macro(
         new Macro()
           .trySkill($skill`Curse of Weaksauce`)
+          .trySkill($skill`Micrometeorite`)
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
-            new Macro().trySkill($skill`Micrometeorite`)
-              .trySkill($skill`Curse of Weaksauce`)
-              .item($item`seal tooth`)
+            new Macro().item($item`seal tooth`)
           )
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`erudite gremlin (tool)`
@@ -258,23 +253,21 @@ const Junkyard: Task[] = [
     after: ["Junkyard Start"],
     acquire: [{ item: $item`seal tooth` }],
     prepare: (): void => {
-      restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+      fillHp();
       restoreMp(50);
     },
     completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
-    prepare: fillHp,
     do: $location`Near an Abandoned Refrigerator`,
     orbtargets: () => $monsters`spider gremlin, spider gremlin (tool)`,
     combat: new CombatStrategy()
       .macro(
         new Macro()
           .trySkill($skill`Curse of Weaksauce`)
+          .trySkill($skill`Micrometeorite`)
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
-            new Macro().trySkill($skill`Micrometeorite`)
-              .trySkill($skill`Curse of Weaksauce`)
-              .item($item`seal tooth`)
+            new Macro().item($item`seal tooth`)
           )
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`spider gremlin (tool)`
@@ -288,25 +281,23 @@ const Junkyard: Task[] = [
     name: "Junkyard Screwdriver",
     after: ["Junkyard Start"],
     prepare: (): void => {
-      restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+      fillHp();
       restoreMp(50);
     },
     completed: () =>
       have($item`molybdenum screwdriver`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
-    prepare: fillHp,
     do: $location`Out by that Rusted-Out Car`,
     orbtargets: () => $monsters`vegetable gremlin, vegetable gremlin (tool)`,
     combat: new CombatStrategy()
       .macro(
         new Macro()
           .trySkill($skill`Curse of Weaksauce`)
+          .trySkill($skill`Micrometeorite`)
           .while_(
             "!match whips out && !times 28 && !hpbelow 30",
-            new Macro().trySkill($skill`Micrometeorite`)
-              .trySkill($skill`Curse of Weaksauce`)
-              .item($item`seal tooth`)
+            new Macro().item($item`seal tooth`)
           )
           .if_("match whips out", new Macro().item(`molybdenum magnet`)),
         $monster`vegetable gremlin (tool)`
