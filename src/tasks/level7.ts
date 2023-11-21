@@ -138,6 +138,7 @@ const Cranny: Task[] = [
         ),
         modifier: "-combat, ML",
         modes: { umbrella: "cocoon" },
+        familiar: $familiar`Left-Hand Man`,
       };
     },
     choices: { 523: 4 },
