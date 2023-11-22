@@ -38,6 +38,7 @@ import {
 import {
   $coinmaster,
   $effect,
+  $effects,
   $familiar,
   $item,
   $items,
@@ -81,6 +82,7 @@ import {
   TrainsetPiece,
 } from "./trainrealm";
 import { ROUTE_WAIT_TO_NCFORCE } from "../route";
+import { fillHp } from "../engine/moods";
 
 const meatBuffer = 500;
 
@@ -1135,6 +1137,55 @@ export const MiscQuest: Quest = {
       do: () => useSkill($skill`Prevent Scurvy and Sobriety`),
       freeaction: true,
       limit: { tries: 1 },
+    },
+    {
+      name: "Snojo",
+      after: [],
+      ready: () =>
+        get("snojoAvailable") &&
+        have($familiar`Frumious Bandersnatch`) &&
+        have($item`Greatest American Pants`) &&
+        have($skill`Flavour of Magic`) &&
+        have($skill`Cannelloni Cannon`),
+      priority: () => Priorities.Start,
+      prepare: (): void => {
+        if (get("snojoSetting") === null) {
+          visitUrl("place.php?whichplace=snojo&action=snojo_controller");
+          runChoice(primestatId());
+        }
+        if (equippedAmount($item`Greatest American Pants`) > 0 && get("_gapBuffs") < 5) {
+          ensureEffect($effect`Super Skill`); // after GAP are equipped
+        }
+        cliExecute("uneffect ode to booze");
+        fillHp();
+      },
+      completed: () => get("_snojoFreeFights") >= 10 || myLevel() >= 13,
+      do: $location`The X-32-F Combat Training Snowman`,
+      post: (): void => {
+        if (get("_snojoFreeFights") === 10) cliExecute("hottub"); // Clean -stat effects
+      },
+      combat: new CombatStrategy()
+        .macro(
+          new Macro()
+            .trySkill($skill`Curse of Weaksauce`)
+            .trySkill($skill`Stuffed Mortar Shell`)
+            .while_(
+              "!pastround 27 && !hpbelow 100 && !mpbelow 8",
+              new Macro().skill($skill`Cannelloni Cannon`)
+            )
+            .trySkill($skill`Saucegeyser`)
+            .attack()
+            .repeat()
+        )
+        .killHard(),
+      outfit: {
+        familiar: $familiar`Frumious Bandersnatch`,
+        equip: $items`Greatest American Pants, familiar scrapbook, June cleaver, sea salt scrubs`,
+        modifier: "mainstat, 4exp, HP",
+      },
+      effects: $effects`Spirit of Peppermint`,
+      limit: { tries: 10 },
+      freecombat: true,
     },
   ],
 };

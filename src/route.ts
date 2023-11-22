@@ -23,6 +23,7 @@ export const routing: string[] = [
   "Misc/LOV Tunnel",
   "Misc/Daycare",
   "Misc/Bastille",
+  "Misc/Snojo",
 
   // Eat as soon as possible
   "Diet/Eat",
