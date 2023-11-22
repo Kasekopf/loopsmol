@@ -164,7 +164,13 @@ export class Prioritization {
       $location`The Shore, Inc. Travel Agency`,
       $location`The Hidden Temple`,
     ];
-    const location_whitelist = [$location`The Haunted Bathroom`];
+    const location_whitelist = [
+      $location`The Haunted Bathroom`,
+      $location`The Penultimate Fantasy Airship`,
+      $location`The Castle in the Clouds in the Sky (Top Floor)`,
+      $location`Lair of the Ninja Snowmen`,
+      $location`The Batrat and Ratbat Burrow`,
+    ];
     const location_in_blacklist =
       task.do instanceof Location && location_blacklist.includes(task.do);
     const location_in_whitelist =
