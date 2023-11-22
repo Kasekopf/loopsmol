@@ -347,7 +347,9 @@ const Orchard: Task[] = [
       .startingMacro(Macro.trySkill($skill`Extract Jelly`))
       .macro(() =>
         Macro.externalIf(
-          have($skill`Emotionally Chipped`) && get("_feelEnvyUsed") < 3,
+          have($skill`Emotionally Chipped`) &&
+            get("_feelEnvyUsed") < 3 &&
+            have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
@@ -381,7 +383,9 @@ const Orchard: Task[] = [
       .startingMacro(Macro.trySkill($skill`Extract Jelly`))
       .macro(() =>
         Macro.externalIf(
-          have($skill`Emotionally Chipped`) && get("_feelEnvyUsed") < 3,
+          have($skill`Emotionally Chipped`) &&
+            get("_feelEnvyUsed") < 3 &&
+            have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
@@ -415,7 +419,9 @@ const Orchard: Task[] = [
       .startingMacro(Macro.trySkill($skill`Extract Jelly`))
       .macro(() =>
         Macro.externalIf(
-          have($skill`Emotionally Chipped`) && get("_feelEnvyUsed") < 3,
+          have($skill`Emotionally Chipped`) &&
+            get("_feelEnvyUsed") < 3 &&
+            have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
