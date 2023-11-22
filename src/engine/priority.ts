@@ -164,16 +164,19 @@ export class Prioritization {
       $location`The Shore, Inc. Travel Agency`,
       $location`The Hidden Temple`,
     ];
-    const locaiton_in_blacklist =
+    const location_whitelist = [$location`The Haunted Bathroom`];
+    const location_in_blacklist =
       task.do instanceof Location && location_blacklist.includes(task.do);
+    const location_in_whitelist =
+      task.do instanceof Location && location_whitelist.includes(task.do);
     if (have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0) {
       if (
-        !task.freeaction &&
-        !task.freecombat &&
-        ball_useful &&
-        !ball_may_not_be_useful &&
-        !locaiton_in_blacklist &&
-        task.do instanceof Location
+        location_in_whitelist ||
+        (!task.freeaction &&
+          !task.freecombat &&
+          ball_useful &&
+          !ball_may_not_be_useful &&
+          !location_in_blacklist)
       ) {
         result.priorities.add(Priorities.CosmicBowlingBall);
       }
