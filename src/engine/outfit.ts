@@ -102,7 +102,7 @@ export function equipInitial(outfit: Outfit): void {
   }
 }
 
-export function equipCharging(outfit: Outfit): void {
+export function equipCharging(outfit: Outfit, mightKillSomething: boolean): void {
   if (outfit.skipDefaults) return;
 
   const modifier = getModifiersFrom(outfit);
@@ -124,8 +124,8 @@ export function equipCharging(outfit: Outfit): void {
 
   const need_bowling_balls =
     get("hiddenBowlingAlleyProgress") +
-      itemAmount($item`bowling ball`) +
-      closetAmount($item`bowling ball`) <
+    itemAmount($item`bowling ball`) +
+    closetAmount($item`bowling ball`) <
     5;
   const need_star_key =
     (itemAmount($item`star`) < 8 || itemAmount($item`line`) < 7) &&
@@ -148,11 +148,16 @@ export function equipCharging(outfit: Outfit): void {
     outfit.equip($familiar`Patriotic Eagle`);
   }
 
-  if (familiarWeight($familiar`Grey Goose`) < 6) {
+  if (familiarWeight($familiar`Grey Goose`) < 6 && mightKillSomething) {
     outfit.equip($familiar`Grey Goose`);
   }
 
-  if (!have($item`grimstone mask`) && !have($effect`Hare-Brained`) && get("nsContestants2") <= -1) {
+  if (
+    !have($item`grimstone mask`) &&
+    !have($effect`Hare-Brained`) &&
+    get("nsContestants2") <= -1 &&
+    mightKillSomething
+  ) {
     outfit.equip($familiar`Grimstone Golem`);
   }
 }

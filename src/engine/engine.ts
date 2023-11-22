@@ -485,8 +485,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       }
     }
 
-    equipCharging(outfit);
-
     if (
       wanderers.length === 0 &&
       this.hasDelay(task) &&
@@ -494,6 +492,17 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       !task.backup
     )
       wanderers.push(...equipUntilCapped(outfit, wandererSources));
+
+    const mightKillSomething =
+      task.wanderer !== undefined ||
+      task.combat?.can("kill") ||
+      task.combat?.can("killHard") ||
+      task.combat?.can("killItem") ||
+      task.combat?.can("killFree") ||
+      task.combat?.can("forceItems") ||
+      task.combat?.can("yellowRay") ||
+      (!resources.has("ignore") && !resources.has("banish"));
+    equipCharging(outfit, mightKillSomething ?? false);
 
     if (get("noncombatForcerActive")) {
       // Avoid some things that might override the NC and break the tracking

@@ -163,6 +163,7 @@ export class Prioritization {
     const location_blacklist = [
       $location`The Shore, Inc. Travel Agency`,
       $location`The Hidden Temple`,
+      $location`The Oasis`,
     ];
     const location_whitelist = [
       $location`The Haunted Bathroom`,
