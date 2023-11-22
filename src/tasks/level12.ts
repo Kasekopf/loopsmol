@@ -6,6 +6,7 @@ import {
   myBasestat,
   myHp,
   myMaxhp,
+  myMp,
   myTurncount,
   restoreHp,
   restoreMp,
@@ -662,9 +663,21 @@ export const WarQuest: Quest = {
         }
         return result;
       },
+      prepare: () => {
+        if (oopsAllGropsReady() && myMp() < 30) restoreMp(30 - myMp());
+      },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
-      combat: new CombatStrategy().kill().macro(Macro.trySkill($skill`Extract Jelly`)),
+      combat: new CombatStrategy()
+        .kill()
+        .macro(Macro.trySkill($skill`Extract Jelly`))
+        .macro(() => {
+          if (oopsAllGropsReady())
+            return Macro.trySkill($skill`%fn, Release the Patriotic Screech!`).trySkill(
+              $skill`Gallapagosian Mating Call`
+            );
+          return new Macro();
+        }, $monster`Green Ops Soldier`),
       map_the_monster: () => {
         if (oopsAllGropsReady()) return $monster`Green Ops Soldier`;
         return $monster`none`;
