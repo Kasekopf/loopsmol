@@ -85,7 +85,6 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
   // If we have an effect to override the 1 attribute cap,
   // +%stat effects may be worthwhile
   if (
-    have($effect`Hare-Brained`) ||
     have($effect`Feeling Insignificant`) ||
     have($effect`Drenched in Lava`) ||
     have($effect`Snowballed`)

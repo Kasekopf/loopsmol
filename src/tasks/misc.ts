@@ -1109,16 +1109,6 @@ export const MiscQuest: Quest = {
       freeaction: true,
     },
     {
-      name: "Hare-Brained",
-      priority: () => Priorities.Free,
-      after: ["Tower/Start"],
-      completed: () => !have($item`grimstone mask`) || have($effect`Hare-Brained`),
-      do: () => use($item`grimstone mask`),
-      choices: { 829: 5 },
-      freeaction: true,
-      limit: { tries: 1 },
-    },
-    {
       name: "Saucecrafting",
       priority: () => Priorities.Free,
       after: [],
