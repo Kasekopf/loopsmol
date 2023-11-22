@@ -193,9 +193,24 @@ export function applyEffects(modifier: string): void {
     }
   }
 
+  ensureWithMPSwaps(useful_effects);
+
+  // Use asdon martin
+  if (getWorkshed() === $item`Asdon Martin keyfob` && asdonFualable(37)) {
+    // if (modifier.includes("-combat")) AsdonMartin.drive(AsdonMartin.Driving.Stealthily);
+    // else if (modifier.includes("+combat")) AsdonMartin.drive(AsdonMartin.Driving.Obnoxiously);
+    // else if (modifier.includes("init")) AsdonMartin.drive(AsdonMartin.Driving.Quickly);
+    if (modifier.includes("meat") || modifier.includes("item")) {
+      if (!have($effect`Driving Observantly`)) asdonFillTo(50); // done manually to use all-purpose flower
+      AsdonMartin.drive(AsdonMartin.Driving.Observantly);
+    }
+  }
+}
+
+export function ensureWithMPSwaps(effects: Effect[]) {
   // Apply all relevant effects
   const hotswapped: [Slot, Item][] = []; //
-  for (const effect of useful_effects) {
+  for (const effect of effects) {
     if (have(effect)) continue;
     const skill = toSkill(effect);
     if (skill !== $skill`none` && !have(skill)) continue; // skip
@@ -212,17 +227,6 @@ export function applyEffects(modifier: string): void {
   // If we hotswapped equipment, restore our old equipment (in-reverse, to work well if we moved equipment around)
   hotswapped.reverse();
   for (const [slot, item] of hotswapped) equip(item, slot);
-
-  // Use asdon martin
-  if (getWorkshed() === $item`Asdon Martin keyfob` && asdonFualable(37)) {
-    // if (modifier.includes("-combat")) AsdonMartin.drive(AsdonMartin.Driving.Stealthily);
-    // else if (modifier.includes("+combat")) AsdonMartin.drive(AsdonMartin.Driving.Obnoxiously);
-    // else if (modifier.includes("init")) AsdonMartin.drive(AsdonMartin.Driving.Quickly);
-    if (modifier.includes("meat") || modifier.includes("item")) {
-      if (!have($effect`Driving Observantly`)) asdonFillTo(50); // done manually to use all-purpose flower
-      AsdonMartin.drive(AsdonMartin.Driving.Observantly);
-    }
-  }
 }
 
 export function swapEquipmentForMp(mpgoal: number): [Slot, Item][] {

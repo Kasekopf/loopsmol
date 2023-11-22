@@ -9,6 +9,7 @@ import {
   Item,
   itemAmount,
   mallPrice,
+  myClass,
   myTurncount,
   numericModifier,
   pullsRemaining,
@@ -19,7 +20,9 @@ import {
   visitUrl,
 } from "kolmafia";
 import {
+  $class,
   $effect,
+  $effects,
   $familiar,
   $item,
   $items,
@@ -43,6 +46,7 @@ import { Priorities } from "../engine/priority";
 import { args } from "../args";
 import { trainSetAvailable } from "./misc";
 import { atLevel, haveFlorest, underStandard } from "../lib";
+import { ensureWithMPSwaps } from "../engine/moods";
 
 export enum Keys {
   Deck = "Deck",
@@ -385,6 +389,11 @@ export const DigitalQuest: Quest = {
       after: ["Open"],
       completed: () => getScore() >= 10000,
       prepare: () => {
+        if (numericModifier("Initiative") < 600 && have($skill`Silent Hunter`)) {
+          if (myClass() === $class`Seal Clubber`) ensureWithMPSwaps($effects`Silent Hunting`);
+          else ensureWithMPSwaps($effects`Nearly Silent Hunting`);
+        }
+
         if (
           have($item`designer sweatpants`) &&
           get("sweat", 0) >= 80 &&
