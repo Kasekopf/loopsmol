@@ -24,6 +24,7 @@ import {
   $location,
   $monster,
   $monsters,
+  $skill,
   AutumnAton,
   ensureEffect,
   get,
@@ -52,7 +53,9 @@ const ABoo: Task[] = [
   {
     name: "ABoo Clues",
     after: ["ABoo Start"],
-    completed: () => itemAmount($item`A-Boo clue`) * 30 >= get("booPeakProgress"),
+    completed: () =>
+      itemAmount($item`A-Boo clue`) * 30 >= get("booPeakProgress") &&
+      !(have($skill`Comprehensive Cartography`) && $location`A-Boo Peak`.turnsSpent === 0),
     do: $location`A-Boo Peak`,
     outfit: { modifier: "item", equip: $items`Space Trip safety headphones, HOA regulation book` },
     combat: new CombatStrategy()
@@ -67,7 +70,9 @@ const ABoo: Task[] = [
   {
     name: "ABoo Horror",
     after: ["ABoo Start"],
-    ready: () => have($item`A-Boo clue`),
+    ready: () =>
+      have($item`A-Boo clue`) ||
+      (have($skill`Comprehensive Cartography`) && $location`A-Boo Peak`.turnsSpent === 0),
     completed: () => get("booPeakProgress") === 0,
     prepare: () => {
       if (have($item`pec oil`)) ensureEffect($effect`Oiled-Up`);
@@ -80,7 +85,7 @@ const ABoo: Task[] = [
       modifier: "20 spooky res, 20 cold res, HP",
       familiar: $familiar`Exotic Parrot`,
     },
-    choices: { 611: 1 },
+    choices: { 611: 1, 1430: 1 },
     limit: { tries: 5 },
     freeaction: true,
     expectbeatenup: true,
