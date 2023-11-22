@@ -166,7 +166,6 @@ export class Prioritization {
     ];
     const location_whitelist = [
       $location`The Haunted Bathroom`,
-      $location`The Penultimate Fantasy Airship`,
       $location`The Castle in the Clouds in the Sky (Top Floor)`,
       $location`Lair of the Ninja Snowmen`,
       $location`The Batrat and Ratbat Burrow`,

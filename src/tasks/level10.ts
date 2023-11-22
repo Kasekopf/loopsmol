@@ -12,7 +12,7 @@ import {
   have,
   Macro,
 } from "libram";
-import { CombatStrategy } from "../engine/combat";
+import { CombatStrategy, killMacro } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Quest } from "../engine/task";
 import { step } from "grimoire-kolmafia";
@@ -101,10 +101,9 @@ export const GiantQuest: Quest = {
             !have($skill`Emotionally Chipped`) ||
             get("_feelEnvyUsed") >= 3
               ? new Macro()
-              : Macro.skill($skill`Feel Envy`),
+              : Macro.skill($skill`Feel Envy`).step(killMacro()),
           $monster`Burly Sidekick`
         )
-        .killItem($monster`Burly Sidekick`)
         .forceItems($monster`Quiet Healer`),
     },
     {
@@ -123,17 +122,13 @@ export const GiantQuest: Quest = {
       limit: { soft: 50 },
       delay: () =>
         have($item`Plastic Wrap Immateria`) ? 25 : have($item`Gauze Immateria`) ? 20 : 15, // After that, just look for noncombats
-      combat: new CombatStrategy()
-        .macro(
-          () =>
-            have($item`Mohawk wig`) ||
-            !have($skill`Emotionally Chipped`) ||
-            get("_feelEnvyUsed") >= 3
-              ? new Macro()
-              : Macro.skill($skill`Feel Envy`),
-          $monster`Burly Sidekick`
-        )
-        .killItem($monsters`Quiet Healer, Burly Sidekick`),
+      combat: new CombatStrategy().macro(
+        () =>
+          have($item`Mohawk wig`) || !have($skill`Emotionally Chipped`) || get("_feelEnvyUsed") >= 3
+            ? new Macro()
+            : Macro.skill($skill`Feel Envy`).step(killMacro()),
+        $monster`Burly Sidekick`
+      ),
     },
     {
       name: "Basement Search",
