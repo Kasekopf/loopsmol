@@ -14,6 +14,7 @@ import {
   pullsRemaining,
   runChoice,
   storageAmount,
+  totalTurnsPlayed,
   useSkill,
   visitUrl,
 } from "kolmafia";
@@ -41,7 +42,7 @@ import { step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { args } from "../args";
 import { trainSetAvailable } from "./misc";
-import { haveFlorest, underStandard } from "../lib";
+import { atLevel, haveFlorest, underStandard } from "../lib";
 
 export enum Keys {
   Deck = "Deck",
@@ -395,10 +396,26 @@ export const DigitalQuest: Quest = {
       },
       ready: () => get("8BitColor", "black") === "black" || get("8BitColor", "black") === "",
       do: $location`Vanya's Castle`,
-      outfit: {
-        modifier: "init",
-        equip: $items`continuum transfunctioner, backup camera, rocket boots`,
-        modes: { backupcamera: "init" },
+      outfit: () => {
+        // Hack to make accessory room for the I Voted sticker when it is up
+        if (
+          have($item`backup camera`) &&
+          have($item`"I Voted!" sticker`) &&
+          totalTurnsPlayed() % 11 === 1 &&
+          get("lastVoteMonsterTurn") < totalTurnsPlayed() &&
+          get("_voteFreeFights") < 3 &&
+          atLevel(5)
+        )
+          return {
+            modifier: "init",
+            equip: $items`continuum transfunctioner, backup camera`,
+            modes: { backupcamera: "init" },
+          };
+        return {
+          modifier: "init",
+          equip: $items`continuum transfunctioner, backup camera, rocket boots`,
+          modes: { backupcamera: "init" },
+        };
       },
       combat: new CombatStrategy().kill(),
       limit: { soft: 16 },
