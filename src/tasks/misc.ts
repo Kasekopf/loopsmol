@@ -762,7 +762,7 @@ export const MiscQuest: Quest = {
       do: () => {
         setTrainsetConfiguration(getDesiredTrainsetConfig());
       },
-      limit: { tries: 3 },
+      limit: { tries: 20, unready: true },
       freeaction: true,
     },
     {
