@@ -651,14 +651,24 @@ export const WarQuest: Quest = {
         { item: $item`bejeweled pledge pin` },
       ],
       completed: () => get("hippiesDefeated") >= 1000,
-      outfit: () =>
-        <OutfitSpec>{
+      outfit: () => {
+        const result = <OutfitSpec>{
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
-          familiar: args.minor.jellies ? $familiar`Space Jellyfish` : undefined,
-        },
+        };
+        if (oopsAllGropsReady()) {
+          result.familiar = $familiar`Patriotic Eagle`;
+        } else if (args.minor.jellies) {
+          result.familiar = $familiar`Space Jellyfish`;
+        }
+        return result;
+      },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
       combat: new CombatStrategy().kill().macro(Macro.trySkill($skill`Extract Jelly`)),
+      map_the_monster: () => {
+        if (oopsAllGropsReady()) return $monster`Green Ops Soldier`;
+        return $monster`none`;
+      },
       limit: { tries: 30 },
     },
     {
@@ -684,6 +694,18 @@ export const WarQuest: Quest = {
     },
   ],
 };
+
+function oopsAllGropsReady(): boolean {
+  return (
+    get("hippiesDefeated") >= 400 &&
+    have($familiar`Patriotic Eagle`) &&
+    get("screechCombats") === 0 &&
+    !get("banishedPhyla").includes("hippy") &&
+    have($skill`Gallapagosian Mating Call`) &&
+    have($skill`Map the Monsters`) &&
+    get("_monstersMapped") < 3
+  );
+}
 
 export function councilSafe(): boolean {
   // Check if it is safe to visit the council without making the war outfit worse

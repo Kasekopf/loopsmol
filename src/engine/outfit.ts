@@ -144,7 +144,7 @@ export function equipCharging(outfit: Outfit): void {
     outfit.equip($familiar`Gelatinous Cubeling`);
   }
 
-  if (get("screechCombats") > 0 && !get("banishedPhyla").includes("dude")) {
+  if (get("screechCombats") > 0 && !get("banishedPhyla").includes("hippy")) {
     outfit.equip($familiar`Patriotic Eagle`);
   }
 
