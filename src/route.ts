@@ -27,9 +27,6 @@ export const routing: string[] = [
   "Diet/Drink",
   "Diet/Numberology",
 
-  // Get infinite loop
-  "Summon/Mountain Man",
-
   // Start quests when able
   "Knob/Start",
   "McLargeHuge/Trapper Request",
@@ -53,23 +50,27 @@ export const routing: string[] = [
   "Hidden City/Forest Sapling", // Last to sell bar skins
   "Manor/Billiards",
   "Friar/Finish",
-  "Hidden City/Open Temple",
-  "Summon/Baa'baa'bu'ran",
 
-  // Attempt to Envy into the batcave
-  "Palindome/Copperhead",
-  "Bat/Use Sonar 1",
-  "Manor/Library",
-
-  // Setup additional -combats
+  // Open delay
   "Manor/Start Floor2",
+  "Palindome/Copperhead",
+
+  // Do summons when ready
+  "Summon/Mountain Man",
+  "Summon/Astrologer Of Shub-Jigguwatt",
   "Summon/Astronomer",
   "Summon/Camel's Toe",
+  "Summon/Baa'baa'bu'ran",
+
+  // Start Hidden city
+  "Hidden City/Open Temple",
   "Hidden City/Open City",
   "Hidden City/Open Bowling",
   "Hidden City/Open Office",
   "Hidden City/Open Hospital",
   "Hidden City/Open Apartment",
+
+  // Setup additional -combats
   "Manor/Bedroom",
   "Palindome/Bat Snake",
   "Giant/Grow Beanstalk",
