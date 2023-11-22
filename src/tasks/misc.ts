@@ -915,7 +915,7 @@ export const MiscQuest: Quest = {
             for (let i = 0; i < vortex_count; i++)
               result.trySkill($skill`Fire Extinguisher: Polar Vortex`);
           }
-          result.while_("hasskill 7448 && !pastround 27", Macro.skill($skill`Douse Foe`));
+          result.while_("hasskill 7448 && !pastround 25", Macro.skill($skill`Douse Foe`));
           return result;
         }, $monster`shadow slab`)
         .kill(),
