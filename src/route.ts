@@ -71,8 +71,6 @@ export const routing: string[] = [
   "Hidden City/Open Hospital",
   "Hidden City/Open Apartment",
   "Manor/Bedroom",
-  "Manor/Gallery Delay",
-  "Manor/Bathroom Delay",
   "Palindome/Bat Snake",
   "Giant/Grow Beanstalk",
   "Bat/Use Sonar 3", // Reveal more delay
@@ -86,7 +84,6 @@ export const routing: string[] = [
 
   // Second -combat group
   "Hidden City/Banish Janitors",
-  "Manor/Finish Floor2",
   "Mosquito/Finish",
   "Crypt/Cranny",
   "Giant/Basement Finish",
@@ -106,11 +103,11 @@ export const routing: string[] = [
   "Hidden City/Hospital",
   "Hidden City/Bowling",
 
+  "Manor/Boss",
   "McLargeHuge/Finish", // Get Eagle beast banish
   "Giant/Finish",
   "Palindome/Talisman",
   "Palindome/Palindome Dudes", // Use Eagle beast banish
-  "Manor/Boss",
   "Crypt/Niche",
   "War/Junkyard End",
 
