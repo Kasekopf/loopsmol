@@ -290,7 +290,6 @@ const Twin: Task[] = [
       "Twin Stench Search",
       "Twin Item Search",
       "Twin Oil Search",
-      "Twin Init Search",
     ],
     ready: () => have($item`rusty hedge trimmers`),
     completed: () => !!(get("twinPeakProgress") & 8),
