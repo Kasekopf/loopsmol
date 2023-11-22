@@ -80,6 +80,7 @@ import {
   setTrainsetConfiguration,
   TrainsetPiece,
 } from "./trainrealm";
+import { ROUTE_WAIT_TO_NCFORCE } from "../route";
 
 const meatBuffer = 500;
 
@@ -810,6 +811,7 @@ export const MiscQuest: Quest = {
         !have($item`Cincho de Mayo`) ||
         (get("timesRested") >= totalFreeRests() && CinchoDeMayo.currentCinch() < 60),
       ready: () =>
+        myTurncount() >= ROUTE_WAIT_TO_NCFORCE &&
         have($item`Cincho de Mayo`) &&
         CinchoDeMayo.currentCinch() >= 60 &&
         !get("noncombatForcerActive"),
@@ -825,7 +827,7 @@ export const MiscQuest: Quest = {
       completed: () =>
         !have($item`Cincho de Mayo`) ||
         get("timesRested") >= totalFreeRests() ||
-        get("timesRested") >= 6,
+        get("timesRested") >= 17,
       do: () => {
         if (myMp() === myMaxmp() && myHp() === myMaxhp()) {
           // We cannot rest with full HP and MP, so burn 1 MP with a starting skill.
