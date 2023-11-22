@@ -31,6 +31,7 @@ import { atLevel } from "../lib";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 import { fillHp } from "../engine/moods";
+import { Priorities } from "../engine/priority";
 
 const Challenges: Task[] = [
   {
@@ -49,6 +50,7 @@ const Challenges: Task[] = [
   {
     name: "Moxie Challenge",
     after: ["Start"],
+    priority: () => (have($effect`Hare-Brained`) ? Priorities.MinorEffect : Priorities.None),
     ready: () => get("nsChallenge1") === $stat`Moxie`,
     completed: () => get("nsContestants2") > -1,
     do: (): void => {
@@ -63,6 +65,7 @@ const Challenges: Task[] = [
   {
     name: "Muscle Challenge",
     after: ["Start"],
+    priority: () => (have($effect`Hare-Brained`) ? Priorities.MinorEffect : Priorities.None),
     ready: () => get("nsChallenge1") === $stat`Muscle`,
     completed: () => get("nsContestants2") > -1,
     do: (): void => {
@@ -77,6 +80,7 @@ const Challenges: Task[] = [
   {
     name: "Mysticality Challenge",
     after: ["Start"],
+    priority: () => (have($effect`Hare-Brained`) ? Priorities.MinorEffect : Priorities.None),
     ready: () => get("nsChallenge1") === $stat`Mysticality`,
     completed: () => get("nsContestants2") > -1,
     do: (): void => {

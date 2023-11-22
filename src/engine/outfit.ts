@@ -151,6 +151,10 @@ export function equipCharging(outfit: Outfit): void {
   if (familiarWeight($familiar`Grey Goose`) < 6) {
     outfit.equip($familiar`Grey Goose`);
   }
+
+  if (!have($item`grimstone mask`) && !have($effect`Hare-Brained`) && get("nsContestants2") <= -1) {
+    outfit.equip($familiar`Grimstone Golem`);
+  }
 }
 
 export function equipDefaults(outfit: Outfit): void {
