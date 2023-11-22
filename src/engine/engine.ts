@@ -669,15 +669,12 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     // Copy grimoire Engine.do in order to add Map the Monsters
     const result = typeof task.do === "function" ? task.do() : task.do;
     if (result instanceof Location) {
-      if (
-        task.map_the_monster &&
-        undelay(task.map_the_monster) !== $monster`none` &&
-        get("_monstersMapped") < 3
-      ) {
+      const monster_to_map = undelay(task.map_the_monster) ?? $monster`none`;
+      if (task.map_the_monster && monster_to_map !== $monster`none` && get("_monstersMapped") < 3) {
         useSkill($skill`Map the Monsters`);
         if (get("mappingMonsters")) {
           visitUrl(toUrl(result));
-          runChoice(1, `heyscriptswhatsupwinkwink=${undelay(task.map_the_monster).id}`);
+          runChoice(1, `heyscriptswhatsupwinkwink=${monster_to_map.id}`);
         } else {
           adv1(result, -1, "");
         }

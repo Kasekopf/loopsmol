@@ -124,8 +124,8 @@ export function equipCharging(outfit: Outfit, mightKillSomething: boolean): void
 
   const need_bowling_balls =
     get("hiddenBowlingAlleyProgress") +
-    itemAmount($item`bowling ball`) +
-    closetAmount($item`bowling ball`) <
+      itemAmount($item`bowling ball`) +
+      closetAmount($item`bowling ball`) <
     5;
   const need_star_key =
     (itemAmount($item`star`) < 8 || itemAmount($item`line`) < 7) &&
