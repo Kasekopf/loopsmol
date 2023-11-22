@@ -106,8 +106,32 @@ const summonTargets: SummonTarget[] = [
     combat: new CombatStrategy().yellowRay(),
   },
   {
+    target: $monster`Astrologer of Shub-Jigguwatt`,
+    after: [],
+    completed: () =>
+      have($item`star chart`) ||
+      have($item`Richard's star key`) ||
+      get("nsTowerDoorKeysUsed").includes("Richard's star key") ||
+      !have($item`Cargo Cultist Shorts`) ||
+      get("_cargoPocketEmptied"),
+    outfit: { equip: $items`June cleaver` },
+    combat: new CombatStrategy()
+      .macro(Macro.trySkill($skill`Micrometeorite`).trySkill($skill`Curse of Weaksauce`))
+      .kill(),
+  },
+  {
+    target: $monster`Astronomer`,
+    after: ["Astrologer Of Shub-Jigguwatt"],
+    completed: () =>
+      have($item`star chart`) ||
+      have($item`Richard's star key`) ||
+      get("nsTowerDoorKeysUsed").includes("Richard's star key"),
+    combat: new CombatStrategy().kill(),
+  },
+  {
     target: $monster`Astronomer`,
     after: [],
+    ready: () => !have($item`Cargo Cultist Shorts`) || get("_cargoPocketEmptied"),
     completed: () =>
       have($item`star chart`) ||
       have($item`Richard's star key`) ||
@@ -167,13 +191,21 @@ const summonSources: SummonSource[] = [
   {
     name: "Cargo Shorts",
     available: () => (have($item`Cargo Cultist Shorts`) && !get("_cargoPocketEmptied") ? 1 : 0),
-    canFight: (mon: Monster) => mon === $monster`mountain man`, // Only use for mountain man
-    summon: () => cliExecute("cargo 565"),
+    canFight: (mon: Monster) =>
+      mon === $monster`mountain man` || mon === $monster`Astrologer of Shub-Jigguwatt`,
+    summon: (mon: Monster) => {
+      if (mon === $monster`mountain man`) {
+        cliExecute("cargo 565");
+      } else if (mon === $monster`Astrologer of Shub-Jigguwatt`) {
+        cliExecute("cargo 533");
+        use($item`greasy desk bell`);
+      }
+    },
   },
   {
     name: "White Page",
     available: () => (have($item`white page`) ? 1 : 0),
-    canFight: (mon: Monster) => mon === $monster`white lion`, // Only use for mountain man
+    canFight: (mon: Monster) => mon === $monster`white lion`,
     summon: () => use($item`white page`),
   },
   {
@@ -187,9 +219,9 @@ const summonSources: SummonSource[] = [
     name: "Fax",
     available: () =>
       args.minor.fax &&
-        !underStandard() &&
-        !get("_photocopyUsed") &&
-        have($item`Clan VIP Lounge key`)
+      !underStandard() &&
+      !get("_photocopyUsed") &&
+      have($item`Clan VIP Lounge key`)
         ? 1
         : 0,
     canFight: (mon: Monster) => canFaxbot(mon),
@@ -202,7 +234,8 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${
+          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },
