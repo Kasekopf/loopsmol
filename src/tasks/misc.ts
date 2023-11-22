@@ -1114,6 +1114,26 @@ export const MiscQuest: Quest = {
       freeaction: true,
       limit: { tries: 1 },
     },
+    {
+      name: "Saucecrafting",
+      priority: () => Priorities.Free,
+      after: [],
+      ready: () => have($skill`Advanced Saucecrafting`) && myMp() >= 10,
+      completed: () => get("reagentSummons") > 0,
+      do: () => useSkill($skill`Advanced Saucecrafting`),
+      freeaction: true,
+      limit: { tries: 1 },
+    },
+    {
+      name: "Prevent Scurvy and Sobriety",
+      priority: () => Priorities.Free,
+      after: [],
+      ready: () => have($skill`Prevent Scurvy and Sobriety`) && myMp() >= 50,
+      completed: () => get("_preventScurvy"),
+      do: () => useSkill($skill`Prevent Scurvy and Sobriety`),
+      freeaction: true,
+      limit: { tries: 1 },
+    },
   ],
 };
 

@@ -7,6 +7,7 @@ import {
   getInventory,
   getWorkshed,
   Item,
+  itemAmount,
   mpCost,
   myClass,
   myHp,
@@ -14,7 +15,9 @@ import {
   myMaxmp,
   myMeat,
   myMp,
+  myPrimestat,
   numericModifier,
+  print,
   restoreHp,
   restoreMp,
   retrieveItem,
@@ -31,8 +34,10 @@ import {
   $item,
   $skill,
   $slot,
+  $stat,
   AsdonMartin,
   ensureEffect,
+  freeCrafts,
   get,
   getActiveSongs,
   getSongLimit,
@@ -54,12 +59,12 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
     ML: $effects`Ur-Kel's Aria of Annoyance, Pride of the Puffin, Drescher's Annoying Noise`,
     item: $effects`Fat Leon's Phat Loot Lyric, Singer's Faithful Ocelot`,
     meat: $effects`Polka of Plenty, Disco Leer`,
-    mainstat: $effects`Big, Tomato Power, Trivia Master, Gr8ness, Carol of the Hells, Carol of the Thrills`,
-    muscle: $effects`Go Get 'Em\, Tiger!, Phorcefullness, Incredibly Hulking`,
-    mysticality: $effects`Glittering Eyelashes, Mystically Oiled, On the Shoulders of Giants`,
-    moxie: $effects`Butt-Rock Hair, Superhuman Sarcasm, Cock of the Walk`,
+    muscle: $effects`Go Get 'Em\, Tiger!, Big, Stevedave's Shanty of Superiority`,
+    mysticality: $effects`Glittering Eyelashes, Big, Stevedave's Shanty of Superiority`,
+    moxie: $effects`Butt-Rock Hair, Big, Stevedave's Shanty of Superiority`,
     " combat": [] as Effect[],
   };
+  const all_attributes = [] as Effect[];
 
   if (
     have($item`Clan VIP Lounge key`) &&
@@ -77,7 +82,47 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
   if (myClass() !== $class`Pastamancer`) {
     result["init"].push($effect`Whispering Strands`);
   }
+
+  // If we have an effect to override the 1 attribute cap,
+  // +%stat effects may be worthwhile
+  if (
+    have($effect`Hare-Brained`) ||
+    have($effect`Feeling Insignificant`) ||
+    have($effect`Drenched in Lava`) ||
+    have($effect`Snowballed`)
+  ) {
+    // Add sauce potions
+    const saucePotionsAvailable = Math.min(
+      itemAmount($item`scrumptious reagent`),
+      freeCrafts("food")
+    );
+    if (myPrimestat() === $stat`Muscle` && have($item`lime`) && saucePotionsAvailable >= 1) {
+      result["mysticality"].push($effect`Stabilizing Oiliness`);
+      result["moxie"].push($effect`Stabilizing Oiliness`);
+    }
+    if (saucePotionsAvailable >= 2) {
+      result["muscle"].push($effect`Phorcefullness`);
+      result["mysticality"].push($effect`Mystically Oiled`);
+      result["moxie"].push($effect`Superhuman Sarcasm`);
+    }
+    if (saucePotionsAvailable >= 3) {
+      all_attributes.push($effect`Tomato Power`);
+    }
+
+    // Other +attribute effects
+    if (!get("_ballpit")) all_attributes.push($effect`Having a Ball!`);
+    if (!get("_lyleFavored")) all_attributes.push($effect`Favored by Lyle`);
+    if (!get("telescopeLookedHigh")) all_attributes.push($effect`Starry-Eyed`);
+    if (get("spacegateAlways") && get("spacegateVaccine2") && !get("_spacegateVaccine"))
+      all_attributes.push($effect`Broad-Spectrum Vaccine`);
+    if (have($item`protonic accelerator pack`) && !get("_streamsCrossed"))
+      all_attributes.push($effect`Total Protonic Reversal`);
+  }
+
   result[" combat"] = result["+combat"];
+  result["muscle"].push(...all_attributes);
+  result["mysticality"].push(...all_attributes);
+  result["moxie"].push(...all_attributes);
   return result;
 }
 
@@ -108,7 +153,7 @@ export function moodCompatible(modifier: string | undefined): boolean {
 function haveEquipmentToCast(effect: Effect): boolean {
   // Check that we have the class equipment to get this skill
   const skill = toSkill(effect);
-  if (skill !== undefined && !have(skill)) return true;
+  if (skill === $skill`none`) return true;
   if (skill.class === $class`Turtle Tamer`) return have($item`turtle totem`);
   if (skill.class === $class`Sauceror`) return have($item`saucepan`);
   if (skill.class === $class`Accordion Thief`) return have($item`stolen accordion`);
@@ -120,9 +165,15 @@ export function applyEffects(modifier: string): void {
 
   const useful_effects = [];
   for (const key in relevantEffects) {
+    print(`${key} ?? ${modifier}`);
     if (modifier.includes(key)) {
+      print("  MATCH");
       useful_effects.push(...relevantEffects[key].filter((e) => haveEquipmentToCast(e)));
     }
+  }
+
+  for (const eff of useful_effects) {
+    print(`${eff.name}`);
   }
 
   // Remove wrong combat effects
@@ -147,7 +198,7 @@ export function applyEffects(modifier: string): void {
   for (const effect of useful_effects) {
     if (have(effect)) continue;
     const skill = toSkill(effect);
-    if (skill !== undefined && !have(skill)) continue; // skip
+    if (skill !== $skill`none` && !have(skill)) continue; // skip
 
     // If we don't have the MP for this effect, hotswap some equipment
     const mpcost = mpCost(skill);
