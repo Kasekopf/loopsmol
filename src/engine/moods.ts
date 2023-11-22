@@ -17,7 +17,6 @@ import {
   myMp,
   myPrimestat,
   numericModifier,
-  print,
   restoreHp,
   restoreMp,
   retrieveItem,
@@ -165,15 +164,9 @@ export function applyEffects(modifier: string): void {
 
   const useful_effects = [];
   for (const key in relevantEffects) {
-    print(`${key} ?? ${modifier}`);
     if (modifier.includes(key)) {
-      print("  MATCH");
       useful_effects.push(...relevantEffects[key].filter((e) => haveEquipmentToCast(e)));
     }
-  }
-
-  for (const eff of useful_effects) {
-    print(`${eff.name}`);
   }
 
   // Remove wrong combat effects
