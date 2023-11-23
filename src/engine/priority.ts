@@ -81,12 +81,10 @@ export class Prioritization {
       task.combat?.can("yellowRay") ||
       (task.combat?.can("forceItems") && !forceItemSources.find((s) => s.available()));
     if (yr_needed && yellowRaySources.find((yr) => yr.available())) {
-      if (
-        have($effect`Everything Looks Yellow`) &&
-        (!have($skill`Emotionally Chipped`) || get("_feelEnvyUsed") === 3)
-      )
-        result.priorities.add(Priorities.BadYR);
-      else result.priorities.add(Priorities.GoodYR);
+      if (have($effect`Everything Looks Yellow`)) {
+        if (!have($skill`Emotionally Chipped`) || get("_feelEnvyUsed") === 3)
+          result.priorities.add(Priorities.BadYR);
+      } else result.priorities.add(Priorities.GoodYR);
     }
 
     // Dodge useless monsters with the orb

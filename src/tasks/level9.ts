@@ -58,8 +58,7 @@ const ABoo: Task[] = [
       !(have($skill`Comprehensive Cartography`) && $location`A-Boo Peak`.turnsSpent === 0),
     do: $location`A-Boo Peak`,
     outfit: { modifier: "item", equip: $items`Space Trip safety headphones, HOA regulation book` },
-    combat: new CombatStrategy()
-      .killItem(),
+    combat: new CombatStrategy().killItem(),
     orbtargets: () => [],
     choices: { 611: 1, 1430: 1 },
     limit: { soft: 15 },
