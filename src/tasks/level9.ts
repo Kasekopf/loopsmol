@@ -59,9 +59,6 @@ const ABoo: Task[] = [
     do: $location`A-Boo Peak`,
     outfit: { modifier: "item", equip: $items`Space Trip safety headphones, HOA regulation book` },
     combat: new CombatStrategy()
-      .macro(
-        () => (numericModifier("Monster Level") < -45 ? new Macro() : new Macro().attack().repeat()) // Attack the ghost directly if ML is too high
-      )
       .killItem(),
     orbtargets: () => [],
     choices: { 611: 1, 1430: 1 },
