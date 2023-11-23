@@ -1,4 +1,4 @@
-import { CombatStrategy } from "../engine/combat";
+import { CombatStrategy, killMacro } from "../engine/combat";
 import {
   adv1,
   buy,
@@ -17,7 +17,9 @@ import {
   myAdventures,
   myAscensions,
   myBasestat,
+  myClass,
   myFullness,
+  myFury,
   myHp,
   myLevel,
   myMaxhp,
@@ -36,6 +38,7 @@ import {
   visitUrl,
 } from "kolmafia";
 import {
+  $class,
   $coinmaster,
   $effect,
   $effects,
@@ -396,6 +399,14 @@ export const MiscQuest: Quest = {
             .skill($skill`Shoot Ghost`)
             .skill($skill`Trap Ghost`);
         }
+        if (myClass() === $class`Seal Clubber` && myFury() >= 3 && have($skill`Club Foot`)) {
+          return new Macro()
+            .skill($skill`Club Foot`)
+            .skill($skill`Shoot Ghost`)
+            .skill($skill`Shoot Ghost`)
+            .skill($skill`Shoot Ghost`)
+            .skill($skill`Trap Ghost`);
+        }
 
         if (haveEquipped($item`designer sweatpants`) && get("sweat") >= 5) {
           return new Macro()
@@ -412,7 +423,7 @@ export const MiscQuest: Quest = {
           get("ghostLocation") === $location`The Overgrown Lot` ||
           equippedAmount($item`protonic accelerator pack`) === 0
         )
-          return new Macro().attack().repeat();
+          return killMacro();
         else
           return new Macro()
             .skill($skill`Shoot Ghost`)
