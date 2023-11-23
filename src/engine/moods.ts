@@ -75,9 +75,6 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
   if (have($skill`Emotionally Chipped`) && get("_feelLonelyUsed") < 3)
     result["-combat"].push($effect`Feeling Lonely`);
 
-  if (have($item`designer sweatpants`) && get("sweat") >= 15) {
-    result["init"].push($effect`Slippery and Speedy`);
-  }
   if (myClass() !== $class`Pastamancer`) {
     result["init"].push($effect`Whispering Strands`);
   }

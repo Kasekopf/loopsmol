@@ -396,7 +396,7 @@ export const DigitalQuest: Quest = {
 
         if (
           have($item`designer sweatpants`) &&
-          get("sweat", 0) >= 80 &&
+          get("sweat", 0) >= 90 &&
           numericModifier("Initiative") < 600
         ) {
           // Use visit URL to avoid needing to equip the pants

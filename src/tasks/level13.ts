@@ -4,14 +4,17 @@ import {
   haveEquipped,
   itemAmount,
   myBuffedstat,
+  myClass,
   myMaxhp,
   myTurncount,
+  numericModifier,
   runChoice,
   use,
   useSkill,
   visitUrl,
 } from "kolmafia";
 import {
+  $class,
   $effect,
   $effects,
   $familiar,
@@ -30,13 +33,28 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
-import { fillHp } from "../engine/moods";
+import { ensureWithMPSwaps, fillHp } from "../engine/moods";
 
 const Challenges: Task[] = [
   {
     name: "Speed Challenge",
     after: ["Start"],
     completed: () => get("nsContestants1") > -1,
+    prepare: () => {
+      if (numericModifier("Initiative") < 400 && have($skill`Silent Hunter`)) {
+        if (myClass() === $class`Seal Clubber`) ensureWithMPSwaps($effects`Silent Hunting`);
+        else ensureWithMPSwaps($effects`Nearly Silent Hunting`);
+      }
+
+      if (
+        have($item`designer sweatpants`) &&
+        get("sweat", 0) >= 90 &&
+        numericModifier("Initiative") < 400
+      ) {
+        // Use visit URL to avoid needing to equip the pants
+        visitUrl("runskillz.php?action=Skillz&whichskill=7419&targetplayer=0&pwd&quantity=1");
+      }
+    },
     do: (): void => {
       visitUrl("place.php?whichplace=nstower&action=ns_01_contestbooth");
       runChoice(1);

@@ -5,12 +5,16 @@ import {
   currentMcd,
   Item,
   myBasestat,
+  myClass,
   myTurncount,
+  numericModifier,
   toUrl,
   visitUrl,
 } from "kolmafia";
 import {
+  $class,
   $effect,
+  $effects,
   $familiar,
   $item,
   $items,
@@ -33,7 +37,7 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel, haveFlorest, haveLoathingIdolMicrophone } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
-import { fillHp } from "../engine/moods";
+import { ensureWithMPSwaps, fillHp } from "../engine/moods";
 
 function tuneCape(): void {
   if (
@@ -64,6 +68,20 @@ const Alcove: Task[] = [
       if (have($item`old bronzer`)) ensureEffect($effect`Sepia Tan`);
       if (have($item`ant agonist`)) ensureEffect($effect`All Fired Up`);
       if (have($item`Angry Farmer candy`)) ensureEffect($effect`Sugar Rush`);
+
+      if (numericModifier("Initiative") < 850 && have($skill`Silent Hunter`)) {
+        if (myClass() === $class`Seal Clubber`) ensureWithMPSwaps($effects`Silent Hunting`);
+        else ensureWithMPSwaps($effects`Nearly Silent Hunting`);
+      }
+
+      if (
+        have($item`designer sweatpants`) &&
+        get("sweat", 0) >= 90 &&
+        numericModifier("Initiative") < 850
+      ) {
+        // Use visit URL to avoid needing to equip the pants
+        visitUrl("runskillz.php?action=Skillz&whichskill=7419&targetplayer=0&pwd&quantity=1");
+      }
     },
     ready: () => myBasestat($stat`Muscle`) >= 62,
     completed: () => get("cyrptAlcoveEvilness") <= 13,
