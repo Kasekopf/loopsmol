@@ -7461,7 +7461,9 @@ var banishSources = [{
   name: "Batter Up",
   available: () => lib_have($skill(resources_templateObject23 || (resources_templateObject23 = resources_taggedTemplateLiteral(["Batter Up!"])))) && (0,external_kolmafia_namespaceObject.myClass)() === $class(resources_templateObject24 || (resources_templateObject24 = resources_taggedTemplateLiteral(["Seal Clubber"]))) && (0,external_kolmafia_namespaceObject.myFury)() >= 5,
   do: $skill(resources_templateObject25 || (resources_templateObject25 = resources_taggedTemplateLiteral(["Batter Up!"]))),
-  equip: template_string_$item(resources_templateObject26 || (resources_templateObject26 = resources_taggedTemplateLiteral(["seal-clubbing club"])))
+  equip: {
+    weapon: template_string_$item(resources_templateObject26 || (resources_templateObject26 = resources_taggedTemplateLiteral(["seal-clubbing club"])))
+  }
 }];
 var BanishState = /*#__PURE__*/function () {
   function BanishState() {
@@ -15200,7 +15202,8 @@ var ABoo = [{
 }, {
   name: "ABoo Clues",
   after: ["ABoo Start"],
-  completed: () => (0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(level9_templateObject3 || (level9_templateObject3 = level9_taggedTemplateLiteral(["A-Boo clue"])))) * 30 >= property_get("booPeakProgress") && !(lib_have($skill(level9_templateObject4 || (level9_templateObject4 = level9_taggedTemplateLiteral(["Comprehensive Cartography"])))) && $location(level9_templateObject5 || (level9_templateObject5 = level9_taggedTemplateLiteral(["A-Boo Peak"]))).turnsSpent === 0),
+  ready: () => !(lib_have($skill(level9_templateObject3 || (level9_templateObject3 = level9_taggedTemplateLiteral(["Comprehensive Cartography"])))) && $location(level9_templateObject4 || (level9_templateObject4 = level9_taggedTemplateLiteral(["A-Boo Peak"]))).turnsSpent === 0),
+  completed: () => (0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(level9_templateObject5 || (level9_templateObject5 = level9_taggedTemplateLiteral(["A-Boo clue"])))) * 30 >= property_get("booPeakProgress"),
   do: $location(level9_templateObject6 || (level9_templateObject6 = level9_taggedTemplateLiteral(["A-Boo Peak"]))),
   outfit: {
     modifier: "item",
@@ -19231,7 +19234,7 @@ function checkRequirements() {
   }
 }
 ;// CONCATENATED MODULE: ./src/_git_commit.ts
-var lastCommitHash = "b22b32b";
+var lastCommitHash = "0ac9c2f";
 ;// CONCATENATED MODULE: ./src/main.ts
 var main_templateObject, main_templateObject2;
 function main_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = main_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
