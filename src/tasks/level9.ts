@@ -53,9 +53,9 @@ const ABoo: Task[] = [
   {
     name: "ABoo Clues",
     after: ["ABoo Start"],
-    completed: () =>
-      itemAmount($item`A-Boo clue`) * 30 >= get("booPeakProgress") &&
+    ready: () =>
       !(have($skill`Comprehensive Cartography`) && $location`A-Boo Peak`.turnsSpent === 0),
+    completed: () => itemAmount($item`A-Boo clue`) * 30 >= get("booPeakProgress"),
     do: $location`A-Boo Peak`,
     outfit: { modifier: "item", equip: $items`Space Trip safety headphones, HOA regulation book` },
     combat: new CombatStrategy().killItem(),
