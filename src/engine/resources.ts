@@ -149,7 +149,7 @@ const banishSources: BanishSource[] = [
     available: () =>
       have($skill`Batter Up!`) && myClass() === $class`Seal Clubber` && myFury() >= 5,
     do: $skill`Batter Up!`,
-    equip: $item`seal-clubbing club`,
+    equip: { weapon: $item`seal-clubbing club` },
   },
 ];
 
