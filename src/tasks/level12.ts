@@ -500,7 +500,13 @@ const Nuns: Task[] = [
     },
     freecombat: true, // Do not equip cmg or carn plant
     combat: new CombatStrategy()
-      .macro(new Macro().trySkill($skill`Bowl Straight Up`).trySkill($skill`Sing Along`))
+      .macro(
+        new Macro()
+          .trySkill($skill`Micrometeorite`)
+          .trySkill($skill`Curse of Weaksauce`)
+          .trySkill($skill`Bowl Straight Up`)
+          .trySkill($skill`Sing Along`)
+      )
       .kill(),
     limit: { soft: 30 },
     boss: true,
