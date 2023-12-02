@@ -1,5 +1,4 @@
 import {
-  appearanceRates,
   buy,
   cliExecute,
   Familiar,
@@ -9,7 +8,6 @@ import {
   haveEquipped,
   Item,
   itemAmount,
-  Location,
   Monster,
   myAscensions,
   myClass,
@@ -33,14 +31,11 @@ import {
   $familiar,
   $item,
   $items,
-  $location,
   $monster,
-  $monsters,
   $skill,
   AsdonMartin,
   Counter,
   get,
-  getBanishedMonsters,
   getKramcoWandererChance,
   have,
   Macro,
@@ -53,10 +48,11 @@ import {
   OutfitSpec,
   step,
 } from "grimoire-kolmafia";
-import { atLevel, underStandard } from "../lib";
+import { atLevel } from "../lib";
 import { Task } from "./task";
 import { args } from "../args";
 import { killMacro } from "./combat";
+import { BanishState } from "./state";
 
 export interface Resource {
   name: string;
@@ -153,61 +149,19 @@ const banishSources: BanishSource[] = [
   },
 ];
 
-export class BanishState {
-  already_banished: Map<Monster, Item | Skill>;
-
-  constructor() {
-    const banished = getBanishedMonsters();
-    if (underStandard()) banished.delete($item`ice house`);
-    this.already_banished = new Map(Array.from(banished, (entry) => [entry[1], entry[0]]));
-  }
-
-  // Return true if some of the monsters in the task are banished
-  numPartiallyBanished(task: Task): number {
-    const targets: Monster[] = [];
-    targets.push(...(task.combat?.where("banish") ?? []));
-    targets.push(...(task.combat?.where("ignoreSoftBanish") ?? []));
-    if (
-      (task.combat?.getDefaultAction() === "banish" ||
-        task.combat?.getDefaultAction() === "ignoreSoftBanish") &&
-      task.do instanceof Location
-    ) {
-      for (const monster of monstersAt(task.do)) {
-        const strat = task.combat?.currentStrategy(monster);
-        if (strat === "banish" || strat === "ignoreSoftBanish") {
-          targets.push(monster);
-        }
-      }
+// Return a list of all banishes not allocated to some available task
+export function unusedBanishes(banishState: BanishState, tasks: Task[]): BanishSource[] {
+  const used_banishes = new Set<Item | Skill>();
+  for (const task of tasks) {
+    if (task.combat === undefined) continue;
+    if (task.ignore_banishes?.()) continue;
+    for (const monster of task.combat.where("banish")) {
+      const banished_with = banishState.already_banished.get(monster);
+      if (banished_with !== undefined) used_banishes.add(banished_with);
     }
-    return targets.filter(
-      (monster) =>
-        this.already_banished.has(monster) &&
-        this.already_banished.get(monster) !== $item`ice house`
-    ).length;
   }
 
-  // Return true if all requested monsters in the task are banished
-  isFullyBanished(task: Task): boolean {
-    return (
-      task.combat?.where("banish")?.find((monster) => !this.already_banished.has(monster)) ===
-      undefined
-    );
-  }
-
-  // Return a list of all banishes not allocated to some available task
-  unusedBanishes(tasks: Task[]): BanishSource[] {
-    const used_banishes = new Set<Item | Skill>();
-    for (const task of tasks) {
-      if (task.combat === undefined) continue;
-      if (task.ignore_banishes?.()) continue;
-      for (const monster of task.combat.where("banish")) {
-        const banished_with = this.already_banished.get(monster);
-        if (banished_with !== undefined) used_banishes.add(banished_with);
-      }
-    }
-
-    return banishSources.filter((banish) => banish.available() && !used_banishes.has(banish.do));
-  }
+  return banishSources.filter((banish) => banish.available() && !used_banishes.has(banish.do));
 }
 
 export interface WandererSource extends Resource {
@@ -624,17 +578,6 @@ export const forceNCSources: ForceNCSorce[] = [
 
 export function forceNCPossible(): boolean {
   return forceNCSources.find((s) => s.available()) !== undefined;
-}
-
-function monstersAt(location: Location): Monster[] {
-  if (location === $location`The VERY Unquiet Garves`) {
-    // Workaround
-    return $monsters`basic lihc, party skelteon, corpulent zobmie, grave rober zmobie, senile lihc, slick lihc, gluttonous ghuol, gaunt ghuol`;
-  }
-  const result = Object.entries(appearanceRates(location))
-    .filter((i) => i[1] !== -2) // Avoid impossible monsters
-    .map((i) => Monster.get(i[0]));
-  return result;
 }
 
 export type BackupTarget = {

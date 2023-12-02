@@ -10,7 +10,7 @@ import {
   print,
   visitUrl,
 } from "kolmafia";
-import { $familiar, $item, $stat, get, have, Snapper } from "libram";
+import { $familiar, $item, $location, $monsters, $stat, get, have, Snapper } from "libram";
 
 export function debug(message: string, color?: string): void {
   if (color) {
@@ -117,4 +117,15 @@ export function primestatId(): number {
 
 export function cosmicBowlingBallReady() {
   return have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0;
+}
+
+export function monstersAt(location: Location): Monster[] {
+  if (location === $location`The VERY Unquiet Garves`) {
+    // Workaround
+    return $monsters`basic lihc, party skelteon, corpulent zobmie, grave rober zmobie, senile lihc, slick lihc, gluttonous ghuol, gaunt ghuol`;
+  }
+  const result = Object.entries(appearanceRates(location))
+    .filter((i) => i[1] !== -2) // Avoid impossible monsters
+    .map((i) => Monster.get(i[0]));
+  return result;
 }

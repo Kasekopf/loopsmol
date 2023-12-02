@@ -81,6 +81,7 @@ import {
   refillLatte,
   runawaySources,
   shouldFinishLatte,
+  unusedBanishes,
   WandererSource,
   wandererSources,
   yellowRaySources,
@@ -390,7 +391,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       const banish_state = globalStateCache.banishes();
       if (combat.can("banish") && !banish_state.isFullyBanished(task)) {
         const available_tasks = this.tasks.filter((task) => this.available(task));
-        const banishSources = banish_state.unusedBanishes(available_tasks);
+        const banishSources = unusedBanishes(banish_state, available_tasks);
         resources.provide("banish", equipFirst(outfit, banishSources));
         debug(
           `Banish targets: ${combat
