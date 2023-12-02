@@ -63,6 +63,30 @@ export class BanishState {
     );
   }
 
+  // Return true if some of the monsters in the task are banished
+  numPartiallyBanished(task: Task): number {
+    const targets: Monster[] = [];
+    targets.push(...(task.combat?.where("banish") ?? []));
+    targets.push(...(task.combat?.where("ignoreSoftBanish") ?? []));
+    if (
+      (task.combat?.getDefaultAction() === "banish" ||
+        task.combat?.getDefaultAction() === "ignoreSoftBanish") &&
+      task.do instanceof Location
+    ) {
+      for (const monster of monstersAt(task.do)) {
+        const strat = task.combat?.currentStrategy(monster);
+        if (strat === "banish" || strat === "ignoreSoftBanish") {
+          targets.push(monster);
+        }
+      }
+    }
+    return targets.filter(
+      (monster) =>
+        this.already_banished.has(monster) &&
+        this.already_banished.get(monster) !== $item`ice house`
+    ).length;
+  }
+
   // Return true if all requested monsters in the task are banished
   isFullyBanished(task: Task): boolean {
     return (
