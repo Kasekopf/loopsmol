@@ -34,6 +34,7 @@ import { step } from "grimoire-kolmafia";
 import { yellowRayPossible } from "../engine/resources";
 import { trainSetAvailable } from "./misc";
 import { Priorities } from "../engine/priority";
+import { fillHp } from "../engine/moods";
 
 type SummonTarget = Omit<Task, "do" | "name" | "limit"> & {
   target: Monster;
@@ -114,6 +115,9 @@ const summonTargets: SummonTarget[] = [
       get("nsTowerDoorKeysUsed").includes("Richard's star key") ||
       !have($item`Cargo Cultist Shorts`) ||
       get("_cargoPocketEmptied"),
+    prepare: () => {
+      fillHp();
+    },
     outfit: { equip: $items`June cleaver` },
     combat: new CombatStrategy()
       .macro(Macro.trySkill($skill`Micrometeorite`).trySkill($skill`Curse of Weaksauce`))

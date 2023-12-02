@@ -473,6 +473,7 @@ const Nuns: Task[] = [
         cliExecute("genie effect sinuses for miles");
       }
       if (have($item`savings bond`)) ensureEffect($effect`Earning Interest`);
+      fillHp();
     },
     do: $location`The Themthar Hills`,
     post: () => {
