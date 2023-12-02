@@ -8,6 +8,7 @@ import {
   haveEquipped,
   Item,
   itemAmount,
+  Location,
   Monster,
   myAscensions,
   myClass,
@@ -33,6 +34,7 @@ import {
   $familiars,
   $item,
   $items,
+  $location,
   $monster,
   $skill,
   AsdonMartin,
@@ -329,7 +331,7 @@ export const runawayValue =
     ? 0.8 * get("valueOfAdventure")
     : get("valueOfAdventure");
 
-export function getRunawaySources() {
+export function getRunawaySources(location?: Location) {
   const runawayFamiliarPlan = planRunawayFamiliar();
 
   return [
@@ -377,8 +379,9 @@ export function getRunawaySources() {
     {
       name: "Asdon Martin",
       available: (): boolean => {
-        // From libram
         if (!asdonFualable(50)) return false;
+        // The boss bat minions are not banishable, which breaks the tracking
+        if (location === $location`The Boss Bat's Lair`) return false;
         const banishes = get("banishedMonsters").split(":");
         const bumperIndex = banishes
           .map((string) => string.toLowerCase())

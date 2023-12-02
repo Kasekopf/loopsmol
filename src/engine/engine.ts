@@ -425,7 +425,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
 
       // Set up a runaway if there are combats we do not care about
       if (!outfit.skipDefaults) {
-        const runawaySources = getRunawaySources();
+        const runawaySources = getRunawaySources(task.do instanceof Location ? task.do : undefined);
         let runaway = undefined;
         if (combat.can("ignore") || combat.can("ignoreSoftBanish")) {
           runaway = equipFirst(outfit, runawaySources);
