@@ -196,11 +196,11 @@ export function applyEffects(modifier: string): void {
   }
 }
 
-export function ensureWithMPSwaps(effects: Effect[]) {
+export function ensureWithMPSwaps(effects: Effect[], quantity?: number) {
   // Apply all relevant effects
   const hotswapped: [Slot, Item][] = []; //
   for (const effect of effects) {
-    if (have(effect)) continue;
+    if (have(effect, quantity)) continue;
     const skill = toSkill(effect);
     if (skill !== $skill`none` && !have(skill)) continue; // skip
 

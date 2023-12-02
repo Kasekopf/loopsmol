@@ -28,7 +28,9 @@ import {
 import {
   $class,
   $effect,
+  $effects,
   $familiar,
+  $familiars,
   $item,
   $items,
   $monster,
@@ -53,6 +55,7 @@ import { Task } from "./task";
 import { args } from "../args";
 import { killMacro } from "./combat";
 import { BanishState } from "./state";
+import { ensureWithMPSwaps } from "./moods";
 
 export interface Resource {
   name: string;
@@ -326,68 +329,117 @@ export const runawayValue =
     ? 0.8 * get("valueOfAdventure")
     : get("valueOfAdventure");
 
-export const runawaySources: RunawaySource[] = [
-  {
-    name: "Latte (Refill)",
-    available: () =>
-      (!get("_latteBanishUsed") || get("_latteRefillsUsed") < 2) && // Save one refill for aftercore
-      have($item`latte lovers member's mug`) &&
-      shouldFinishLatte(),
-    prepare: refillLatte,
-    do: new Macro().skill($skill`Throw Latte on Opponent`),
-    chance: () => 1,
-    equip: $item`latte lovers member's mug`,
-    banishes: true,
-  },
-  {
-    name: "Bowl Curveball",
-    available: () =>
-      have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0,
-    do: new Macro().skill($skill`Bowl a Curveball`),
-    chance: () => 1,
-    banishes: true,
-  },
-  {
-    name: "Asdon Martin",
-    available: (): boolean => {
-      // From libram
-      if (!asdonFualable(50)) return false;
-      const banishes = get("banishedMonsters").split(":");
-      const bumperIndex = banishes
-        .map((string) => string.toLowerCase())
-        .indexOf("spring-loaded front bumper");
-      if (bumperIndex === -1) return true;
-      return myTurncount() - parseInt(banishes[bumperIndex + 1]) > 30;
+export function getRunawaySources() {
+  const runawayFamiliarPlan = planRunawayFamiliar();
+
+  return [
+    {
+      name: "Latte (Refill)",
+      available: () =>
+        (!get("_latteBanishUsed") || get("_latteRefillsUsed") < 2) && // Save one refill for aftercore
+        have($item`latte lovers member's mug`) &&
+        shouldFinishLatte(),
+      prepare: refillLatte,
+      do: new Macro().skill($skill`Throw Latte on Opponent`),
+      chance: () => 1,
+      equip: $item`latte lovers member's mug`,
+      banishes: true,
     },
-    prepare: () => asdonFillTo(50),
-    do: new Macro().skill($skill`Asdon Martin: Spring-Loaded Front Bumper`),
-    chance: () => 1,
-    banishes: true,
-  },
-  {
-    name: "GAP",
-    available: () => have($item`Greatest American Pants`),
-    equip: $item`Greatest American Pants`,
-    do: new Macro().runaway(),
-    chance: () => (get("_navelRunaways") < 3 ? 1 : 0.2),
-    banishes: false,
-  },
-  {
-    name: "Navel Ring",
-    available: () => have($item`navel ring of navel gazing`),
-    equip: $item`navel ring of navel gazing`,
-    do: new Macro().runaway(),
-    chance: () => (get("_navelRunaways") < 3 ? 1 : 0.2),
-    banishes: false,
-  },
-  {
-    name: "Peppermint Parasol",
-    available: () => have($item`peppermint parasol`),
-    do: new Macro().item($item`peppermint parasol`),
-    chance: () => (get("_navelRunaways") < 3 ? 1 : 0.2),
-    banishes: false,
-  },
-];
+    {
+      name: "Bowl Curveball",
+      available: () =>
+        have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0,
+      do: new Macro().skill($skill`Bowl a Curveball`),
+      chance: () => 1,
+      banishes: true,
+    },
+    {
+      name: "Bandersnatch",
+      available: () =>
+        runawayFamiliarPlan.available &&
+        runawayFamiliarPlan.outfit.familiar === $familiar`Frumious Bandersnatch`,
+      prepare: () => ensureWithMPSwaps($effects`Ode to Booze`, 5),
+      equip: runawayFamiliarPlan.outfit,
+      do: new Macro().runaway(),
+      chance: () => 1,
+      banishes: false,
+    },
+    {
+      name: "Stomping Boots",
+      available: () =>
+        runawayFamiliarPlan.available &&
+        runawayFamiliarPlan.outfit.familiar === $familiar`Pair of Stomping Boots`,
+      equip: runawayFamiliarPlan.outfit,
+      do: new Macro().runaway(),
+      chance: () => 1,
+      banishes: false,
+    },
+    {
+      name: "Asdon Martin",
+      available: (): boolean => {
+        // From libram
+        if (!asdonFualable(50)) return false;
+        const banishes = get("banishedMonsters").split(":");
+        const bumperIndex = banishes
+          .map((string) => string.toLowerCase())
+          .indexOf("spring-loaded front bumper");
+        if (bumperIndex === -1) return true;
+        return myTurncount() - parseInt(banishes[bumperIndex + 1]) > 30;
+      },
+      prepare: () => asdonFillTo(50),
+      do: new Macro().skill($skill`Asdon Martin: Spring-Loaded Front Bumper`),
+      chance: () => 1,
+      banishes: true,
+    },
+    {
+      name: "GAP",
+      available: () => have($item`Greatest American Pants`),
+      equip: $item`Greatest American Pants`,
+      do: new Macro().runaway(),
+      chance: () => (get("_navelRunaways") < 3 ? 1 : 0.2),
+      banishes: false,
+    },
+    {
+      name: "Navel Ring",
+      available: () => have($item`navel ring of navel gazing`),
+      equip: $item`navel ring of navel gazing`,
+      do: new Macro().runaway(),
+      chance: () => (get("_navelRunaways") < 3 ? 1 : 0.2),
+      banishes: false,
+    },
+    {
+      name: "Peppermint Parasol",
+      available: () => have($item`peppermint parasol`),
+      do: new Macro().item($item`peppermint parasol`),
+      chance: () => (get("_navelRunaways") < 3 ? 1 : 0.2),
+      banishes: false,
+    },
+  ];
+}
+
+interface RunawayFamiliarSpec {
+  available: boolean;
+  outfit: OutfitSpec;
+}
+
+function planRunawayFamiliar(): RunawayFamiliarSpec {
+  const chosenFamiliar = $familiars`Frumious Bandersnatch, Pair of Stomping Boots`.find((f) =>
+    have(f)
+  );
+  if (chosenFamiliar) {
+    const goalWeight = 5 * (1 + get("_banderRunaways"));
+    const attainableWeight = familiarWeight(chosenFamiliar);
+
+    return {
+      outfit: { familiar: chosenFamiliar },
+      available: attainableWeight >= goalWeight,
+    };
+  }
+  return {
+    available: false,
+    outfit: {},
+  };
+}
 
 export interface FreekillSource extends CombatResource {
   do: Item | Skill;

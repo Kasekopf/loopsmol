@@ -78,8 +78,8 @@ import {
   forceNCPossible,
   forceNCSources,
   freekillSources,
+  getRunawaySources,
   refillLatte,
-  runawaySources,
   shouldFinishLatte,
   unusedBanishes,
   WandererSource,
@@ -425,6 +425,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
 
       // Set up a runaway if there are combats we do not care about
       if (!outfit.skipDefaults) {
+        const runawaySources = getRunawaySources();
         let runaway = undefined;
         if (combat.can("ignore") || combat.can("ignoreSoftBanish")) {
           runaway = equipFirst(outfit, runawaySources);
