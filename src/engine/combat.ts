@@ -1,5 +1,5 @@
-import { Location, Monster } from "kolmafia";
-import { $skill, Macro } from "libram";
+import { haveEquipped, Location, Monster } from "kolmafia";
+import { $item, $skill, Macro } from "libram";
 import { ActionDefaults, CombatStrategy as BaseCombatStrategy } from "grimoire-kolmafia";
 
 const myActions = [
@@ -65,6 +65,9 @@ export class MyActionDefaults implements ActionDefaults<CombatActions> {
 }
 
 export function killMacro(): Macro {
+  if (haveEquipped($item`June cleaver`)) {
+    return new Macro().attack().repeat();
+  }
   return new Macro()
     .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
     .attack()

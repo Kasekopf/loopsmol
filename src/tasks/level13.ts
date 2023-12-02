@@ -479,12 +479,12 @@ export const TowerQuest: Quest = {
           return {
             modifier: "meat",
             familiar: $familiar`Trick-or-Treating Tot`,
-            equip: $items`li'l pirate costume`,
+            equip: $items`li'l pirate costume, June cleaver`,
           };
         }
         return {
           modifier: "meat",
-          equip: $items`amulet coin`, // Use amulet coin (if we have) to avoid using orb
+          equip: $items`amulet coin, June cleaver`, // Use amulet coin (if we have) to avoid using orb
         };
       },
       combat: new CombatStrategy().killHard(),
