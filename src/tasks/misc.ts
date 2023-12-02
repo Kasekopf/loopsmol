@@ -1188,6 +1188,15 @@ export const MiscQuest: Quest = {
       limit: { tries: 10 },
       freecombat: true,
     },
+    {
+      name: "Cowboy Boots",
+      priority: () => Priorities.Free,
+      after: [],
+      completed: () => have($item`your cowboy boots`) || !get("telegraphOfficeAvailable"),
+      do: () => visitUrl("whichplace=town_right&action=townright_ltt"),
+      limit: { tries: 1 },
+      freeaction: true,
+    },
   ],
 };
 
