@@ -193,6 +193,19 @@ const summonSources: SummonSource[] = [
     summon: () => cliExecute("numberology 51"),
   },
   {
+    name: "White Page",
+    available: () => (have($item`white page`) ? 1 : 0),
+    canFight: (mon: Monster) => mon === $monster`white lion`,
+    summon: () => use($item`white page`),
+  },
+  {
+    name: "Combat Locket",
+    available: () =>
+      CombatLoversLocket.have() ? CombatLoversLocket.reminiscesLeft() - args.minor.savelocket : 0,
+    canFight: (mon: Monster) => CombatLoversLocket.availableLocketMonsters().includes(mon),
+    summon: (mon: Monster) => CombatLoversLocket.reminisce(mon),
+  },
+  {
     name: "Cargo Shorts",
     available: () => (have($item`Cargo Cultist Shorts`) && !get("_cargoPocketEmptied") ? 1 : 0),
     canFight: (mon: Monster) =>
@@ -207,25 +220,12 @@ const summonSources: SummonSource[] = [
     },
   },
   {
-    name: "White Page",
-    available: () => (have($item`white page`) ? 1 : 0),
-    canFight: (mon: Monster) => mon === $monster`white lion`,
-    summon: () => use($item`white page`),
-  },
-  {
-    name: "Combat Locket",
-    available: () =>
-      CombatLoversLocket.have() ? CombatLoversLocket.reminiscesLeft() - args.minor.savelocket : 0,
-    canFight: (mon: Monster) => CombatLoversLocket.availableLocketMonsters().includes(mon),
-    summon: (mon: Monster) => CombatLoversLocket.reminisce(mon),
-  },
-  {
     name: "Fax",
     available: () =>
       args.minor.fax &&
-      !underStandard() &&
-      !get("_photocopyUsed") &&
-      have($item`Clan VIP Lounge key`)
+        !underStandard() &&
+        !get("_photocopyUsed") &&
+        have($item`Clan VIP Lounge key`)
         ? 1
         : 0,
     canFight: (mon: Monster) => canFaxbot(mon),
@@ -238,8 +238,7 @@ const summonSources: SummonSource[] = [
         if (checkFax(mon)) break;
       }
       if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${
-          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
+        throw `Failed to acquire photocopied ${mon.name}.${!isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
         }`;
       use($item`photocopied monster`);
     },
