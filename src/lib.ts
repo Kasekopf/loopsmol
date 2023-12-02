@@ -98,6 +98,10 @@ export function haveLoathingIdolMicrophone(): boolean {
 
 export function getMonsters(where?: Location): Monster[] {
   if (where === undefined) return [];
+  if (where === $location`The VERY Unquiet Garves`) {
+    // Workaround
+    return $monsters`basic lihc, party skelteon, corpulent zobmie, grave rober zmobie, senile lihc, slick lihc, gluttonous ghuol, gaunt ghuol`;
+  }
   return Object.entries(appearanceRates(where)) // Get the maximum HP in the location
     .filter((i) => i[1] > 0)
     .map((i) => Monster.get(i[0]));
@@ -117,15 +121,4 @@ export function primestatId(): number {
 
 export function cosmicBowlingBallReady() {
   return have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0;
-}
-
-export function monstersAt(location: Location): Monster[] {
-  if (location === $location`The VERY Unquiet Garves`) {
-    // Workaround
-    return $monsters`basic lihc, party skelteon, corpulent zobmie, grave rober zmobie, senile lihc, slick lihc, gluttonous ghuol, gaunt ghuol`;
-  }
-  const result = Object.entries(appearanceRates(location))
-    .filter((i) => i[1] !== -2) // Avoid impossible monsters
-    .map((i) => Monster.get(i[0]));
-  return result;
 }

@@ -2,7 +2,7 @@ import { Item, Location, Monster, print, Skill, toLocation, toMonster, visitUrl 
 import { $item, get, getBanishedMonsters } from "libram";
 import { args } from "../args";
 import { Task } from "./task";
-import { monstersAt, underStandard } from "../lib";
+import { getMonsters, underStandard } from "../lib";
 
 class GameState {
   private _banishes?: BanishState;
@@ -47,7 +47,7 @@ export class BanishState {
         task.combat?.getDefaultAction() === "ignoreSoftBanish") &&
       task.do instanceof Location
     ) {
-      for (const monster of monstersAt(task.do)) {
+      for (const monster of getMonsters(task.do)) {
         const strat = task.combat?.currentStrategy(monster);
         if (strat === "banish" || strat === "ignoreSoftBanish") {
           targets.push(monster);
@@ -73,7 +73,7 @@ export class BanishState {
         task.combat?.getDefaultAction() === "ignoreSoftBanish") &&
       task.do instanceof Location
     ) {
-      for (const monster of monstersAt(task.do)) {
+      for (const monster of getMonsters(task.do)) {
         const strat = task.combat?.currentStrategy(monster);
         if (strat === "banish" || strat === "ignoreSoftBanish") {
           targets.push(monster);
