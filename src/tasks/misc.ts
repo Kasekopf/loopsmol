@@ -1193,7 +1193,7 @@ export const MiscQuest: Quest = {
       priority: () => Priorities.Free,
       after: [],
       completed: () => have($item`your cowboy boots`) || !get("telegraphOfficeAvailable"),
-      do: () => visitUrl("whichplace=town_right&action=townright_ltt"),
+      do: () => visitUrl("place.php?whichplace=town_right&action=townright_ltt"),
       limit: { tries: 1 },
       freeaction: true,
     },
