@@ -126,6 +126,7 @@ const heroKeys: KeyTask[] = [
       if (itemAmount($item`daily dungeon malware`) < get("_loopsmol_malware_amount", 0))
         set("_dailyDungeonMalwareUsed", true);
       uneffect($effect`Apathy`);
+      cliExecute("refresh inv");
     },
     outfit: { equip: $items`ring of Detect Boring Doors`, modifier: "init" }, // Avoid apathy
     combat: new CombatStrategy().macro(new Macro().item($item`daily dungeon malware`)).kill(),
