@@ -165,7 +165,7 @@ export const pulls: PullSpec[] = [
     },
   },
   {
-    pull: $items`Greatest American Pants, navel ring of navel gazing`,
+    pull: $items`Greatest American Pants, navel ring of navel gazing, peppermint parasol`,
     optional: true,
     name: "Runaway IoTM",
   },

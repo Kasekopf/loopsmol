@@ -412,7 +412,7 @@ export function getRunawaySources(location?: Location) {
     },
     {
       name: "Peppermint Parasol",
-      available: () => have($item`peppermint parasol`),
+      available: () => have($item`peppermint parasol`) && get("_navelRunaways") < 9,
       do: new Macro().item($item`peppermint parasol`),
       chance: () => (get("_navelRunaways") < 3 ? 1 : 0.2),
       banishes: false,

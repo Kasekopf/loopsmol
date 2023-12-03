@@ -441,7 +441,9 @@ function buildPullList(optional: boolean): Requirement[] {
 
     // For cheap items, we will just buy it during the run
     const big_items = items.filter((item) => mallPrice(item) === 0 || mallPrice(item) > 200000);
-    if (big_items.length < items.length) continue;
+    // Ignore item lists where the IOTM is just a sub for a cheaper item,
+    // except still highlight GAP/navel ring.
+    if (big_items.length < items.length && pull.name !== "Runaway IoTM") continue;
     if (pull.optional !== optional) continue;
     result.push({ thing: big_items, why: pull.description ?? "Pull" });
   }
