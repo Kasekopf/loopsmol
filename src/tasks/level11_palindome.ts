@@ -291,9 +291,19 @@ const Zepplin: Task[] = [
       .killItem($monster`Blue Oyster cultist`)
       .killItem($monster`lynyrd skinner`)
       .kill(),
-    choices: { 856: 1, 857: 1, 858: 1, 866: 2, 1432: 1 },
+    choices: () => {
+      return {
+        856: 1,
+        // eslint-disable-next-line libram/verify-constants
+        857: haveEquipped($item`candy cane sword cane`) ? 2 : 1,
+        858: 1,
+        866: 2,
+        1432: 1,
+      };
+    },
     outfit: () => {
-      const sleazeitems = $items`deck of lewd playing cards`;
+      // eslint-disable-next-line libram/verify-constants
+      const sleazeitems = $items`deck of lewd playing cards, candy cane sword cane`;
       if (have($item`designer sweatpants`)) sleazeitems.push($item`designer sweatpants`);
       else if (have($item`transparent pants`)) sleazeitems.push($item`transparent pants`);
 

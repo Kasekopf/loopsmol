@@ -2,6 +2,7 @@ import {
   cliExecute,
   effectModifier,
   equippedAmount,
+  haveEquipped,
   itemAmount,
   myBasestat,
   myHp,
@@ -592,15 +593,26 @@ export const WarQuest: Quest = {
         // Restore a bit more HP than usual
         if (myHp() < 80 && myHp() < myMaxhp()) restoreHp(myMaxhp() < 80 ? myMaxhp() : 80);
       },
-      outfit: () =>
-        <OutfitSpec>{
+      outfit: () => {
+        const result = <OutfitSpec>{
+          // eslint-disable-next-line libram/verify-constants
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
           familiar: args.minor.jellies ? $familiar`Space Jellyfish` : undefined,
           modifier: "-combat",
-        },
+        };
+        if (!have($skill`Comprehensive Cartography`))
+          // eslint-disable-next-line libram/verify-constants
+          result.equip?.push($item`candy cane sword cane`);
+        return result;
+      },
       combat: new CombatStrategy().macro(Macro.trySkill($skill`Extract Jelly`)),
       do: $location`Wartime Hippy Camp (Frat Disguise)`,
-      choices: { 139: 3, 140: 3, 141: 3, 142: 3, 143: 3, 144: 3, 145: 1, 146: 3, 1433: 3 },
+      choices: () => {
+        // eslint-disable-next-line libram/verify-constants
+        if (haveEquipped($item`candy cane sword cane`))
+          return { 139: 4, 140: 4, 141: 3, 142: 3, 143: 3, 144: 3, 145: 1, 146: 3, 1433: 3 };
+        else return { 139: 3, 140: 3, 141: 3, 142: 3, 143: 3, 144: 3, 145: 1, 146: 3, 1433: 3 };
+      },
       limit: { soft: 20 },
     },
     ...Flyers,
