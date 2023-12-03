@@ -66,19 +66,10 @@ const Copperhead: Task[] = [
         ensureEffect($effect`Crappily Disguised as a Waiter`);
     },
     do: $location`The Copperhead Club`,
-    combat: new CombatStrategy().killItem([
-      $monster`Copperhead Club bartender`,
-      $monster`ninja dressed as a waiter`,
-      $monster`waiter dressed as a ninja`,
-    ]),
+    combat: new CombatStrategy().kill($monster`Mob Penguin Capo`),
     orbtargets: () => {
-      const targets = [
-        $monster`Copperhead Club bartender`,
-        $monster`ninja dressed as a waiter`,
-        $monster`waiter dressed as a ninja`,
-      ];
-      if (have($familiar`Robortender`)) targets.push($monster`Mob Penguin Capo`);
-      return targets;
+      if (have($familiar`Robortender`)) return [$monster`Mob Penguin Capo`];
+      return [];
     },
     outfit: (): OutfitSpec => {
       if (have($familiar`Robortender`)) {
