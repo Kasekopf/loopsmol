@@ -152,11 +152,12 @@ const Cranny: Task[] = [
           $item`antique machete`,
           $item`gravy boat`,
           $item`old patched suit-pants`,
-          $item`unbreakable umbrella`
+          $item`unbreakable umbrella`,
+          $item`barrel lid`,
+          $item`carnivorous potted plant`
         ),
         modifier: "-combat, ML",
         modes: { umbrella: "cocoon" },
-        familiar: $familiar`Left-Hand Man`,
       };
     },
     choices: { 523: 4 },

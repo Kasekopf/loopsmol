@@ -1197,6 +1197,19 @@ export const MiscQuest: Quest = {
       limit: { tries: 1 },
       freeaction: true,
     },
+    {
+      name: "Barrel Lid",
+      priority: () => Priorities.Free,
+      after: [],
+      completed: () => get("_barrelPrayer") || !get("barrelShrineUnlocked"),
+      do: () => {
+        visitUrl("da.php?barrelshrine=1");
+        runChoice(-1);
+      },
+      choices: { 1100: 1 },
+      limit: { tries: 1 },
+      freeaction: true,
+    },
   ],
 };
 
