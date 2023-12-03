@@ -89,6 +89,10 @@ export const args = Args.create(
         help: "Skip milk of magnesium",
         default: true,
       }),
+      delevel: Args.flag({
+        help: "Delevel to level 13 with hot dogs before fighting the NS",
+        default: false,
+      }),
     }),
     debug: Args.group("Debug Options", {
       actions: Args.number({
