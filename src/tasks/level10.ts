@@ -40,6 +40,7 @@ export const GiantQuest: Quest = {
       do: $location`The Beanbat Chamber`,
       outfit: {
         modifier: "item",
+        equip: $items`miniature crystal ball`,
         avoid: $items`broken champagne bottle`,
       },
       map_the_monster: () => {
