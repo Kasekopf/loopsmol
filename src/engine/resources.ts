@@ -18,6 +18,7 @@ import {
   myMeat,
   myMp,
   myTurncount,
+  numericModifier,
   restoreMp,
   retrieveItem,
   Skill,
@@ -40,15 +41,18 @@ import {
   AsdonMartin,
   Counter,
   get,
+  getActiveEffects,
   getKramcoWandererChance,
   have,
   Macro,
+  Modes,
   set,
   SourceTerminal,
 } from "libram";
 import {
   CombatResource as BaseCombatResource,
   DelayedMacro,
+  Outfit,
   OutfitSpec,
   step,
 } from "grimoire-kolmafia";
@@ -425,16 +429,55 @@ interface RunawayFamiliarSpec {
   outfit: OutfitSpec;
 }
 
+type FamweightOption = {
+  thing: Item;
+  modes?: Partial<Modes>;
+};
+
+const famweightOptions: FamweightOption[] = [
+  // Fam equip
+  { thing: $item`amulet coin` },
+  { thing: $item`astral pet sweater` },
+  { thing: $item`tiny stillsuit` },
+  // Hats
+  { thing: $item`Daylight Shavings Helmet` },
+  // Hands
+  { thing: $item`Fourth of May Cosplay Saber` },
+  { thing: $item`iFlail` },
+  { thing: $item`familiar scrapbook` },
+  // Accessories
+  { thing: $item`Brutal brogues` },
+  { thing: $item`hewn moon-rune spoon` },
+  { thing: $item`Beach Comb` },
+];
+
 function planRunawayFamiliar(): RunawayFamiliarSpec {
   const chosenFamiliar = $familiars`Frumious Bandersnatch, Pair of Stomping Boots`.find((f) =>
     have(f)
   );
   if (chosenFamiliar) {
     const goalWeight = 5 * (1 + get("_banderRunaways"));
-    const attainableWeight = familiarWeight(chosenFamiliar);
+    let attainableWeight = familiarWeight(chosenFamiliar);
+
+    // Include passive skills
+    if (have($skill`Crimbo Training: Concierge`)) attainableWeight += 5;
+    if (have($skill`Amphibian Sympathy`)) attainableWeight += 1;
+
+    // Include active effects
+    for (const effect of getActiveEffects())
+      attainableWeight += numericModifier(effect, "Familiar Weight");
+
+    // Include as much equipment as needed
+    const outfit = new Outfit();
+    outfit.equip(chosenFamiliar);
+    for (const option of famweightOptions) {
+      if (attainableWeight >= goalWeight) break;
+      if (outfit.equip(option.thing))
+        attainableWeight += numericModifier(option.thing, "Familiar Weight");
+    }
 
     return {
-      outfit: { familiar: chosenFamiliar },
+      outfit: outfit.spec(),
       available: attainableWeight >= goalWeight,
     };
   }
