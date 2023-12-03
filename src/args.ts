@@ -1,6 +1,6 @@
 import { Args } from "grimoire-kolmafia";
 import { Item } from "kolmafia";
-import { $item } from "libram";
+import { $familiar, $item } from "libram";
 
 const worksheds = [
   [$item`none`, "Do nothing"],
@@ -71,6 +71,11 @@ export const args = Args.create(
       voterbooth: Args.flag({
         help: "Attempt to use the voter booth if we have access.",
         default: true,
+      }),
+      stillsuit: Args.familiar({
+        help: "Equip the stillsuit to this familiar during the run",
+        setting: "stillsuitFamiliar",
+        default: $familiar`Gelatinous Cubeling`,
       }),
       skipfork: Args.flag({
         help: "Skip salad forking; note that this may cause failure due to lack of remaining adventures",

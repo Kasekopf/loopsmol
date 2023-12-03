@@ -631,6 +631,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         1475: get("_juneCleaverSkips", 0) < 5 ? 4 : 1,
       });
     }
+    this.propertyManager.set({ stillsuitFamiliar: args.minor.stillsuit.name });
   }
 
   setCombat(
