@@ -1,10 +1,13 @@
 import {
   adv1,
   autosell,
+  availableAmount,
   canAdventure,
   choiceFollowsFight,
   descToItem,
+  equip,
   equippedItem,
+  familiarEquippedEquipment,
   getWorkshed,
   haveEffect,
   haveEquipped,
@@ -613,6 +616,17 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     if (myHp() < 100 && myHp() < myMaxhp()) restoreHp(myMaxhp() < 100 ? myMaxhp() : 100);
     if (myMp() < 40 && myMaxmp() >= 40) customRestoreMp(40);
     else if (myMp() < 20) customRestoreMp(20);
+
+    // Equip stillsuit
+    if (
+      have(args.minor.stillsuit) &&
+      (itemAmount($item`tiny stillsuit`) > 0 ||
+        (availableAmount($item`tiny stillsuit`) > 0 &&
+          !haveEquipped($item`tiny stillsuit`) &&
+          familiarEquippedEquipment(args.minor.stillsuit) !== $item`tiny stillsuit`))
+    ) {
+      equip(args.minor.stillsuit, $item`tiny stillsuit`);
+    }
   }
 
   setChoices(task: ActiveTask, manager: PropertiesManager): void {
@@ -631,7 +645,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         1475: get("_juneCleaverSkips", 0) < 5 ? 4 : 1,
       });
     }
-    this.propertyManager.set({ stillsuitFamiliar: args.minor.stillsuit.name });
+    this.propertyManager.set({ stillsuitFamiliar: args.minor.stillsuit });
   }
 
   setCombat(
