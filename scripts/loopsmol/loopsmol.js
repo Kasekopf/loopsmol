@@ -7927,7 +7927,7 @@ var backupTargets = [{
   limit_tries: 11
 }];
 ;// CONCATENATED MODULE: ./src/engine/moods.ts
-var moods_templateObject, moods_templateObject2, moods_templateObject3, moods_templateObject4, moods_templateObject5, moods_templateObject6, moods_templateObject7, moods_templateObject8, moods_templateObject9, moods_templateObject10, moods_templateObject11, moods_templateObject12, moods_templateObject13, moods_templateObject14, moods_templateObject15, moods_templateObject16, moods_templateObject17, moods_templateObject18, moods_templateObject19, moods_templateObject20, moods_templateObject21, moods_templateObject22, moods_templateObject23, moods_templateObject24, moods_templateObject25, moods_templateObject26, moods_templateObject27, moods_templateObject28, moods_templateObject29, moods_templateObject30, moods_templateObject31, moods_templateObject32, moods_templateObject33, moods_templateObject34, moods_templateObject35, moods_templateObject36, moods_templateObject37, moods_templateObject38, moods_templateObject39, moods_templateObject40, moods_templateObject41, moods_templateObject42, moods_templateObject43, moods_templateObject44, moods_templateObject45, moods_templateObject46, moods_templateObject47, moods_templateObject48, moods_templateObject49, moods_templateObject50, moods_templateObject51, moods_templateObject52, moods_templateObject53, moods_templateObject54, moods_templateObject55, moods_templateObject56, moods_templateObject57, moods_templateObject58, moods_templateObject59, moods_templateObject60, moods_templateObject61, moods_templateObject62, moods_templateObject63, moods_templateObject64, moods_templateObject65, moods_templateObject66;
+var moods_templateObject, moods_templateObject2, moods_templateObject3, moods_templateObject4, moods_templateObject5, moods_templateObject6, moods_templateObject7, moods_templateObject8, moods_templateObject9, moods_templateObject10, moods_templateObject11, moods_templateObject12, moods_templateObject13, moods_templateObject14, moods_templateObject15, moods_templateObject16, moods_templateObject17, moods_templateObject18, moods_templateObject19, moods_templateObject20, moods_templateObject21, moods_templateObject22, moods_templateObject23, moods_templateObject24, moods_templateObject25, moods_templateObject26, moods_templateObject27, moods_templateObject28, moods_templateObject29, moods_templateObject30, moods_templateObject31, moods_templateObject32, moods_templateObject33, moods_templateObject34, moods_templateObject35, moods_templateObject36, moods_templateObject37, moods_templateObject38, moods_templateObject39, moods_templateObject40, moods_templateObject41, moods_templateObject42, moods_templateObject43, moods_templateObject44, moods_templateObject45, moods_templateObject46, moods_templateObject47, moods_templateObject48, moods_templateObject49, moods_templateObject50, moods_templateObject51, moods_templateObject52, moods_templateObject53, moods_templateObject54, moods_templateObject55, moods_templateObject56, moods_templateObject57, moods_templateObject58, moods_templateObject59, moods_templateObject60, moods_templateObject61, moods_templateObject62, moods_templateObject63, moods_templateObject64, moods_templateObject65;
 function moods_slicedToArray(arr, i) { return moods_arrayWithHoles(arr) || moods_iterableToArrayLimit(arr, i) || moods_unsupportedIterableToArray(arr, i) || moods_nonIterableRest(); }
 function moods_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function moods_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
@@ -7986,11 +7986,10 @@ function getRelevantEffects() {
     }
 
     // Other +attribute effects
-    if (!property_get("_ballpit")) all_attributes.push(template_string_$effect(moods_templateObject31 || (moods_templateObject31 = moods_taggedTemplateLiteral(["Having a Ball!"]))));
-    if (!property_get("_lyleFavored")) all_attributes.push(template_string_$effect(moods_templateObject32 || (moods_templateObject32 = moods_taggedTemplateLiteral(["Favored by Lyle"]))));
-    if (!property_get("telescopeLookedHigh")) all_attributes.push(template_string_$effect(moods_templateObject33 || (moods_templateObject33 = moods_taggedTemplateLiteral(["Starry-Eyed"]))));
-    if (property_get("spacegateAlways") && property_get("spacegateVaccine2") && !property_get("_spacegateVaccine")) all_attributes.push(template_string_$effect(moods_templateObject34 || (moods_templateObject34 = moods_taggedTemplateLiteral(["Broad-Spectrum Vaccine"]))));
-    if (lib_have(template_string_$item(moods_templateObject35 || (moods_templateObject35 = moods_taggedTemplateLiteral(["protonic accelerator pack"])))) && !property_get("_streamsCrossed")) all_attributes.push(template_string_$effect(moods_templateObject36 || (moods_templateObject36 = moods_taggedTemplateLiteral(["Total Protonic Reversal"]))));
+    if (!property_get("_lyleFavored")) all_attributes.push(template_string_$effect(moods_templateObject31 || (moods_templateObject31 = moods_taggedTemplateLiteral(["Favored by Lyle"]))));
+    if (!property_get("telescopeLookedHigh")) all_attributes.push(template_string_$effect(moods_templateObject32 || (moods_templateObject32 = moods_taggedTemplateLiteral(["Starry-Eyed"]))));
+    if (property_get("spacegateAlways") && property_get("spacegateVaccine2") && !property_get("_spacegateVaccine")) all_attributes.push(template_string_$effect(moods_templateObject33 || (moods_templateObject33 = moods_taggedTemplateLiteral(["Broad-Spectrum Vaccine"]))));
+    if (lib_have(template_string_$item(moods_templateObject34 || (moods_templateObject34 = moods_taggedTemplateLiteral(["protonic accelerator pack"])))) && !property_get("_streamsCrossed")) all_attributes.push(template_string_$effect(moods_templateObject35 || (moods_templateObject35 = moods_taggedTemplateLiteral(["Total Protonic Reversal"]))));
   }
   result[" combat"] = result["+combat"];
   (_result$muscle = result["muscle"]).push.apply(_result$muscle, all_attributes);
@@ -8004,7 +8003,7 @@ function shrug(effects) {
   try {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var effect = _step.value;
-      if (lib_have(effect) && lib_have(template_string_$item(moods_templateObject37 || (moods_templateObject37 = moods_taggedTemplateLiteral(["soft green echo eyedrop antidote"]))))) uneffect(effect);
+      if (lib_have(effect) && lib_have(template_string_$item(moods_templateObject36 || (moods_templateObject36 = moods_taggedTemplateLiteral(["soft green echo eyedrop antidote"]))))) uneffect(effect);
     }
   } catch (err) {
     _iterator.e(err);
@@ -8017,20 +8016,20 @@ function moodCompatible(modifier) {
   // while under -combat effects, and vice-versa.
   if (modifier === undefined) return true;
   if (modifier.includes("+combat") || modifier.includes(" combat")) {
-    return !lib_have(template_string_$effect(moods_templateObject38 || (moods_templateObject38 = moods_taggedTemplateLiteral(["Smooth Movements"])))) && !lib_have(template_string_$effect(moods_templateObject39 || (moods_templateObject39 = moods_taggedTemplateLiteral(["The Sonata of Sneakiness"]))));
+    return !lib_have(template_string_$effect(moods_templateObject37 || (moods_templateObject37 = moods_taggedTemplateLiteral(["Smooth Movements"])))) && !lib_have(template_string_$effect(moods_templateObject38 || (moods_templateObject38 = moods_taggedTemplateLiteral(["The Sonata of Sneakiness"]))));
   }
   if (modifier.includes("-combat")) {
-    return !lib_have(template_string_$effect(moods_templateObject40 || (moods_templateObject40 = moods_taggedTemplateLiteral(["Musk of the Moose"])))) && !lib_have(template_string_$effect(moods_templateObject41 || (moods_templateObject41 = moods_taggedTemplateLiteral(["Carlweather's Cantata of Confrontation"])))) && !lib_have(template_string_$effect(moods_templateObject42 || (moods_templateObject42 = moods_taggedTemplateLiteral(["Romantically Roused"])))) && !lib_have(template_string_$effect(moods_templateObject43 || (moods_templateObject43 = moods_taggedTemplateLiteral(["Fresh Breath"]))));
+    return !lib_have(template_string_$effect(moods_templateObject39 || (moods_templateObject39 = moods_taggedTemplateLiteral(["Musk of the Moose"])))) && !lib_have(template_string_$effect(moods_templateObject40 || (moods_templateObject40 = moods_taggedTemplateLiteral(["Carlweather's Cantata of Confrontation"])))) && !lib_have(template_string_$effect(moods_templateObject41 || (moods_templateObject41 = moods_taggedTemplateLiteral(["Romantically Roused"])))) && !lib_have(template_string_$effect(moods_templateObject42 || (moods_templateObject42 = moods_taggedTemplateLiteral(["Fresh Breath"]))));
   }
   return true;
 }
 function haveEquipmentToCast(effect) {
   // Check that we have the class equipment to get this skill
   var skill = (0,external_kolmafia_namespaceObject.toSkill)(effect);
-  if (skill === $skill(moods_templateObject44 || (moods_templateObject44 = moods_taggedTemplateLiteral(["none"])))) return true;
-  if (skill.class === $class(moods_templateObject45 || (moods_templateObject45 = moods_taggedTemplateLiteral(["Turtle Tamer"])))) return lib_have(template_string_$item(moods_templateObject46 || (moods_templateObject46 = moods_taggedTemplateLiteral(["turtle totem"]))));
-  if (skill.class === $class(moods_templateObject47 || (moods_templateObject47 = moods_taggedTemplateLiteral(["Sauceror"])))) return lib_have(template_string_$item(moods_templateObject48 || (moods_templateObject48 = moods_taggedTemplateLiteral(["saucepan"]))));
-  if (skill.class === $class(moods_templateObject49 || (moods_templateObject49 = moods_taggedTemplateLiteral(["Accordion Thief"])))) return lib_have(template_string_$item(moods_templateObject50 || (moods_templateObject50 = moods_taggedTemplateLiteral(["stolen accordion"]))));
+  if (skill === $skill(moods_templateObject43 || (moods_templateObject43 = moods_taggedTemplateLiteral(["none"])))) return true;
+  if (skill.class === $class(moods_templateObject44 || (moods_templateObject44 = moods_taggedTemplateLiteral(["Turtle Tamer"])))) return lib_have(template_string_$item(moods_templateObject45 || (moods_templateObject45 = moods_taggedTemplateLiteral(["turtle totem"]))));
+  if (skill.class === $class(moods_templateObject46 || (moods_templateObject46 = moods_taggedTemplateLiteral(["Sauceror"])))) return lib_have(template_string_$item(moods_templateObject47 || (moods_templateObject47 = moods_taggedTemplateLiteral(["saucepan"]))));
+  if (skill.class === $class(moods_templateObject48 || (moods_templateObject48 = moods_taggedTemplateLiteral(["Accordion Thief"])))) return lib_have(template_string_$item(moods_templateObject49 || (moods_templateObject49 = moods_taggedTemplateLiteral(["stolen accordion"]))));
   return true;
 }
 function applyEffects(modifier, other_effects) {
@@ -8058,12 +8057,12 @@ function applyEffects(modifier, other_effects) {
   ensureWithMPSwaps(useful_effects);
 
   // Use asdon martin
-  if ((0,external_kolmafia_namespaceObject.getWorkshed)() === template_string_$item(moods_templateObject51 || (moods_templateObject51 = moods_taggedTemplateLiteral(["Asdon Martin keyfob"]))) && asdonFualable(37)) {
+  if ((0,external_kolmafia_namespaceObject.getWorkshed)() === template_string_$item(moods_templateObject50 || (moods_templateObject50 = moods_taggedTemplateLiteral(["Asdon Martin keyfob"]))) && asdonFualable(37)) {
     // if (modifier.includes("-combat")) AsdonMartin.drive(AsdonMartin.Driving.Stealthily);
     // else if (modifier.includes("+combat")) AsdonMartin.drive(AsdonMartin.Driving.Obnoxiously);
     // else if (modifier.includes("init")) AsdonMartin.drive(AsdonMartin.Driving.Quickly);
     if (modifier.includes("meat") || modifier.includes("item")) {
-      if (!lib_have(template_string_$effect(moods_templateObject52 || (moods_templateObject52 = moods_taggedTemplateLiteral(["Driving Observantly"]))))) asdonFillTo(50); // done manually to use all-purpose flower
+      if (!lib_have(template_string_$effect(moods_templateObject51 || (moods_templateObject51 = moods_taggedTemplateLiteral(["Driving Observantly"]))))) asdonFillTo(50); // done manually to use all-purpose flower
       drive(Driving.Observantly);
     }
   }
@@ -8076,9 +8075,9 @@ function ensureWithMPSwaps(effects) {
   try {
     for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
       var effect = _step2.value;
-      if (lib_have(effect, effect === template_string_$effect(moods_templateObject53 || (moods_templateObject53 = moods_taggedTemplateLiteral(["Ode to Booze"]))) ? 5 : 1)) continue;
+      if (lib_have(effect, effect === template_string_$effect(moods_templateObject52 || (moods_templateObject52 = moods_taggedTemplateLiteral(["Ode to Booze"]))) ? 5 : 1)) continue;
       var skill = (0,external_kolmafia_namespaceObject.toSkill)(effect);
-      if (skill !== $skill(moods_templateObject54 || (moods_templateObject54 = moods_taggedTemplateLiteral(["none"]))) && !lib_have(skill)) continue; // skip
+      if (skill !== $skill(moods_templateObject53 || (moods_templateObject53 = moods_taggedTemplateLiteral(["none"]))) && !lib_have(skill)) continue; // skip
 
       // If we don't have the MP for this effect, hotswap some equipment
       var mpcost = (0,external_kolmafia_namespaceObject.mpCost)(skill);
@@ -8112,13 +8111,13 @@ function swapEquipmentForMp(mpgoal) {
     var _loop = function _loop() {
         var slot = _step3.value;
         if (mpgoal <= (0,external_kolmafia_namespaceObject.myMaxmp)()) return 0; // break
-        if (slot === $slot(moods_templateObject55 || (moods_templateObject55 = moods_taggedTemplateLiteral(["weapon"]))) || slot === $slot(moods_templateObject56 || (moods_templateObject56 = moods_taggedTemplateLiteral(["off-hand"])))) return 1; // continue
+        if (slot === $slot(moods_templateObject54 || (moods_templateObject54 = moods_taggedTemplateLiteral(["weapon"]))) || slot === $slot(moods_templateObject55 || (moods_templateObject55 = moods_taggedTemplateLiteral(["off-hand"])))) return 1; // continue
         // skip weapon handedness (for now)
         var item = (0,external_kolmafia_namespaceObject.equippedItem)(slot);
-        if (item === template_string_$item(moods_templateObject57 || (moods_templateObject57 = moods_taggedTemplateLiteral(["none"])))) return 1; // continue
+        if (item === template_string_$item(moods_templateObject56 || (moods_templateObject56 = moods_taggedTemplateLiteral(["none"])))) return 1; // continue
 
         // Find an item in the same slot that gives more max MP
-        var canonical_slot = slot === $slot(moods_templateObject58 || (moods_templateObject58 = moods_taggedTemplateLiteral(["acc3"]))) ? $slot(moods_templateObject59 || (moods_templateObject59 = moods_taggedTemplateLiteral(["acc1"]))) : slot === $slot(moods_templateObject60 || (moods_templateObject60 = moods_taggedTemplateLiteral(["acc2"]))) ? $slot(moods_templateObject61 || (moods_templateObject61 = moods_taggedTemplateLiteral(["acc1"]))) : slot;
+        var canonical_slot = slot === $slot(moods_templateObject57 || (moods_templateObject57 = moods_taggedTemplateLiteral(["acc3"]))) ? $slot(moods_templateObject58 || (moods_templateObject58 = moods_taggedTemplateLiteral(["acc1"]))) : slot === $slot(moods_templateObject59 || (moods_templateObject59 = moods_taggedTemplateLiteral(["acc2"]))) ? $slot(moods_templateObject60 || (moods_templateObject60 = moods_taggedTemplateLiteral(["acc1"]))) : slot;
         var slot_options = inventory_options.filter(it => (0,external_kolmafia_namespaceObject.equippedAmount)(it) === 0 && (0,external_kolmafia_namespaceObject.toSlot)(it) === canonical_slot && (0,external_kolmafia_namespaceObject.numericModifier)(it, "Maximum HP") >= (0,external_kolmafia_namespaceObject.numericModifier)(item, "Maximum HP") && (0,external_kolmafia_namespaceObject.numericModifier)(it, "Maximum MP") > (0,external_kolmafia_namespaceObject.numericModifier)(item, "Maximum MP")).sort((a, b) => (0,external_kolmafia_namespaceObject.numericModifier)(b, "Maximum MP") - (0,external_kolmafia_namespaceObject.numericModifier)(a, "Maximum MP"));
 
         // If there is such an item, equip it
@@ -8151,16 +8150,16 @@ function fillHp() {
   if ((0,external_kolmafia_namespaceObject.myHp)() < (0,external_kolmafia_namespaceObject.myMaxhp)()) {
     if (!(0,external_kolmafia_namespaceObject.restoreHp)((0,external_kolmafia_namespaceObject.myMaxhp)())) {
       // Backup healing plan in a pinch
-      if (lib_have(template_string_$item(moods_templateObject62 || (moods_templateObject62 = moods_taggedTemplateLiteral(["scroll of drastic healing"]))))) {
-        (0,external_kolmafia_namespaceObject.use)(template_string_$item(moods_templateObject63 || (moods_templateObject63 = moods_taggedTemplateLiteral(["scroll of drastic healing"]))));
-      } else if (property_get("_hotTubSoaks") < 5 && ($effects(moods_templateObject64 || (moods_templateObject64 = moods_taggedTemplateLiteral(["Once-Cursed, Twice-Cursed, Thrice-Cursed"]))).find(e => lib_have(e)) === undefined || property_get("hiddenApartmentProgress") >= 7)) {
+      if (lib_have(template_string_$item(moods_templateObject61 || (moods_templateObject61 = moods_taggedTemplateLiteral(["scroll of drastic healing"]))))) {
+        (0,external_kolmafia_namespaceObject.use)(template_string_$item(moods_templateObject62 || (moods_templateObject62 = moods_taggedTemplateLiteral(["scroll of drastic healing"]))));
+      } else if (property_get("_hotTubSoaks") < 5 && ($effects(moods_templateObject63 || (moods_templateObject63 = moods_taggedTemplateLiteral(["Once-Cursed, Twice-Cursed, Thrice-Cursed"]))).find(e => lib_have(e)) === undefined || property_get("hiddenApartmentProgress") >= 7)) {
         (0,external_kolmafia_namespaceObject.visitUrl)("clan_viplounge.php?action=hottub");
       }
       var tries = 0;
       while ((0,external_kolmafia_namespaceObject.myHp)() < (0,external_kolmafia_namespaceObject.myMaxhp)() && (0,external_kolmafia_namespaceObject.myMeat)() >= 1000 && tries < 30) {
         tries++;
-        (0,external_kolmafia_namespaceObject.retrieveItem)(template_string_$item(moods_templateObject65 || (moods_templateObject65 = moods_taggedTemplateLiteral(["Doc Galaktik's Homeopathic Elixir"]))));
-        (0,external_kolmafia_namespaceObject.use)(template_string_$item(moods_templateObject66 || (moods_templateObject66 = moods_taggedTemplateLiteral(["Doc Galaktik's Homeopathic Elixir"]))));
+        (0,external_kolmafia_namespaceObject.retrieveItem)(template_string_$item(moods_templateObject64 || (moods_templateObject64 = moods_taggedTemplateLiteral(["Doc Galaktik's Homeopathic Elixir"]))));
+        (0,external_kolmafia_namespaceObject.use)(template_string_$item(moods_templateObject65 || (moods_templateObject65 = moods_taggedTemplateLiteral(["Doc Galaktik's Homeopathic Elixir"]))));
       }
     }
   }
@@ -19461,7 +19460,7 @@ function checkRequirements() {
   }
 }
 ;// CONCATENATED MODULE: ./src/_git_commit.ts
-var lastCommitHash = "a14ce72";
+var lastCommitHash = "2fc3fc5";
 ;// CONCATENATED MODULE: ./src/main.ts
 var main_templateObject, main_templateObject2;
 function main_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = main_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
