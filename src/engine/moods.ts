@@ -155,10 +155,10 @@ function haveEquipmentToCast(effect: Effect): boolean {
   return true;
 }
 
-export function applyEffects(modifier: string): void {
+export function applyEffects(modifier: string, other_effects: Effect[]): void {
   const relevantEffects = getRelevantEffects();
 
-  const useful_effects = [];
+  const useful_effects = [...other_effects];
   for (const key in relevantEffects) {
     if (modifier.includes(key)) {
       useful_effects.push(...relevantEffects[key].filter((e) => haveEquipmentToCast(e)));
@@ -196,11 +196,11 @@ export function applyEffects(modifier: string): void {
   }
 }
 
-export function ensureWithMPSwaps(effects: Effect[], quantity?: number) {
+export function ensureWithMPSwaps(effects: Effect[]) {
   // Apply all relevant effects
   const hotswapped: [Slot, Item][] = []; //
   for (const effect of effects) {
-    if (have(effect, quantity)) continue;
+    if (have(effect, effect === $effect`Ode to Booze` ? 5 : 1)) continue;
     const skill = toSkill(effect);
     if (skill !== $skill`none` && !have(skill)) continue; // skip
 

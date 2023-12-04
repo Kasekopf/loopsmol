@@ -1,6 +1,7 @@
 import {
   buy,
   cliExecute,
+  Effect,
   Familiar,
   familiarWeight,
   getFuel,
@@ -30,7 +31,6 @@ import {
 import {
   $class,
   $effect,
-  $effects,
   $familiar,
   $familiars,
   $item,
@@ -61,13 +61,13 @@ import { Task } from "./task";
 import { args } from "../args";
 import { killMacro } from "./combat";
 import { BanishState } from "./state";
-import { ensureWithMPSwaps } from "./moods";
 
 export interface Resource {
   name: string;
   available: () => boolean;
   prepare?: () => void;
   equip?: Item | Familiar | OutfitSpec | OutfitSpec[];
+  effect?: Effect;
   chance?: () => number;
 }
 
@@ -364,10 +364,10 @@ export function getRunawaySources(location?: Location) {
       available: () =>
         runawayFamiliarPlan.available &&
         runawayFamiliarPlan.outfit.familiar === $familiar`Frumious Bandersnatch`,
-      prepare: () => ensureWithMPSwaps($effects`Ode to Booze`, 5),
       equip: runawayFamiliarPlan.outfit,
       do: new Macro().runaway(),
       chance: () => 1,
+      effect: $effect`Ode to Booze`,
       banishes: false,
     },
     {
@@ -472,8 +472,9 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
     outfit.equip(chosenFamiliar);
     for (const option of famweightOptions) {
       if (attainableWeight >= goalWeight) break;
-      if (outfit.equip(option.thing))
+      if (outfit.equip(option.thing)) {
         attainableWeight += numericModifier(option.thing, "Familiar Weight");
+      }
     }
 
     return {

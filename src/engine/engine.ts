@@ -5,6 +5,7 @@ import {
   canAdventure,
   choiceFollowsFight,
   descToItem,
+  Effect,
   equip,
   equippedItem,
   familiarEquippedEquipment,
@@ -119,6 +120,7 @@ type ActiveTask = Task & {
   wanderer?: WandererSource;
   backup?: BackupTarget;
   active_priority?: Prioritization;
+  other_effects?: Effect[];
 };
 
 type ScoredTask = {
@@ -432,20 +434,22 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         let runaway = undefined;
         if (combat.can("ignore") || combat.can("ignoreSoftBanish")) {
           runaway = equipFirst(outfit, runawaySources);
+          if (runaway?.effect) task.other_effects = [...(task.other_effects ?? []), runaway.effect];
           resources.provide("ignore", runaway);
           resources.provide("ignoreSoftBanish", runaway);
         }
         if (combat.can("ignoreNoBanish") && myLevel() >= 11) {
           if (runaway !== undefined && !runaway.banishes)
             resources.provide("ignoreNoBanish", runaway);
-          else
-            resources.provide(
-              "ignoreNoBanish",
-              equipFirst(
-                outfit,
-                runawaySources.filter((source) => !source.banishes)
-              )
+          else {
+            runaway = equipFirst(
+              outfit,
+              runawaySources.filter((source) => !source.banishes)
             );
+            resources.provide("ignoreNoBanish", runaway);
+            if (runaway?.effect)
+              task.other_effects = [...(task.other_effects ?? []), runaway.effect];
+          }
         }
       }
 
@@ -583,7 +587,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
   }
 
   dress(task: ActiveTask, outfit: Outfit): void {
-    applyEffects(outfit.modifier.join(","));
+    applyEffects(outfit.modifier.join(","), task.other_effects ?? []);
     cacheDress(outfit);
     fixFoldables(outfit);
 
