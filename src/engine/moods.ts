@@ -171,8 +171,7 @@ export function applyEffects(modifier: string, other_effects: Effect[]): void {
   if (modifier.includes("-combat")) shrug(relevantEffects["+combat"]);
 
   // Make room for songs
-  const songs = useful_effects.filter(isSong);
-  if (songs.length > getSongLimit()) throw "Too many AT songs.";
+  const songs = useful_effects.filter(isSong).slice(0, getSongLimit());
   if (songs.length > 0) {
     const extra_songs = getActiveSongs().filter((e) => !songs.includes(e));
     while (songs.length + extra_songs.length > getSongLimit()) {
