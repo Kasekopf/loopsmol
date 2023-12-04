@@ -105,7 +105,6 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
     }
 
     // Other +attribute effects
-    if (!get("_ballpit")) all_attributes.push($effect`Having a Ball!`);
     if (!get("_lyleFavored")) all_attributes.push($effect`Favored by Lyle`);
     if (!get("telescopeLookedHigh")) all_attributes.push($effect`Starry-Eyed`);
     if (get("spacegateAlways") && get("spacegateVaccine2") && !get("_spacegateVaccine"))
