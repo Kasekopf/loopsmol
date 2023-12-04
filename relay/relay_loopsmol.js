@@ -6322,12 +6322,12 @@ function lastEncounterWasWanderingNC() {
 // EXTERNAL MODULE: ./node_modules/mafia-shared-relay/dist/index.js
 var dist = __webpack_require__(139);
 ;// CONCATENATED MODULE: ./src/args.ts
-var args_templateObject, args_templateObject2, args_templateObject3, args_templateObject4, args_templateObject5, args_templateObject6;
+var args_templateObject, args_templateObject2, args_templateObject3, args_templateObject4, args_templateObject5, args_templateObject6, args_templateObject7;
 function args_taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 var worksheds = [[template_string_$item(args_templateObject || (args_templateObject = args_taggedTemplateLiteral(["none"]))), "Do nothing"], [template_string_$item(args_templateObject2 || (args_templateObject2 = args_taggedTemplateLiteral(["model train set"]))), "Swap to model train set"], [template_string_$item(args_templateObject3 || (args_templateObject3 = args_taggedTemplateLiteral(["cold medicine cabinet"]))), "Swap to cold medicine cabinet"], [template_string_$item(args_templateObject4 || (args_templateObject4 = args_taggedTemplateLiteral(["Asdon Martin keyfob"]))), "Swap to asdon martin keyfob"]];
-var args = Args.create("loopsmol", 'This is a script to complete Shrunken Adventurer Softcore runs. Run "loopsmol sim" without quotes to check if this script will work for you.\n\nYou must ascend manually into a Shrunken Adventurer Softcore run before running the script. Seal Clubber under a Vole sign is recommended for now. Astral mask or astral belt are both useful, but neither is required.\n\nThe arguments accepted by the script are listed below. Note that you can combine multiple options; for example "loopsmol pulls=18 tune=blender" will save 2 pulls and switch moon sign to Blender during the run. Most options also have an associated setting to set an option permanently; for example "set loopsmol_pulls=18" will cause the script to always save 2 pulls (unless overriden by using the pulls option at runtime).', {
+var args = Args.create("loopsmol", 'This is a script to complete Shrunken Adventurer Softcore runs. Run "loopsmol sim" without quotes to check if this script will work for you.\n\nYou must ascend manually into a Shrunken Adventurer Softcore run before running the script. Seal Clubber under a Vole sign is recommended for now. Astral mask or astral belt are both useful, but neither is required.\n\nThe arguments accepted by the script are listed below. Note that you can combine multiple options; for example "loopsmol pulls=18 fax=false" will save 2 pulls and avoid using a faxbot. Most options also have an associated setting to set an option permanently; for example "set loopsmol_pulls=18" will cause the script to always save 2 pulls (unless overriden by using the pulls option at runtime).', {
   sim: Args.flag({
     help: "Check if you have the requirements to run this script.",
     setting: ""
@@ -6393,6 +6393,11 @@ var args = Args.create("loopsmol", 'This is a script to complete Shrunken Advent
       help: "Attempt to use the voter booth if we have access.",
       default: true
     }),
+    stillsuit: Args.familiar({
+      help: "Equip the stillsuit to this familiar during the run",
+      setting: "stillsuitFamiliar",
+      default: template_string_$familiar(args_templateObject7 || (args_templateObject7 = args_taggedTemplateLiteral(["Gelatinous Cubeling"])))
+    }),
     skipfork: Args.flag({
       help: "Skip salad forking; note that this may cause failure due to lack of remaining adventures",
       default: false
@@ -6404,6 +6409,10 @@ var args = Args.create("loopsmol", 'This is a script to complete Shrunken Advent
     skipmilk: Args.flag({
       help: "Skip milk of magnesium",
       default: true
+    }),
+    delevel: Args.flag({
+      help: "Delevel to level 13 with hot dogs before fighting the NS",
+      default: false
     })
   }),
   debug: Args.group("Debug Options", {
