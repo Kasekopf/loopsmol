@@ -162,7 +162,16 @@ const Cranny: Task[] = [
     },
     choices: { 523: 4 },
     combat: new CombatStrategy()
-      .macro(slay_macro)
+      .macro(() => {
+        const macro = slay_macro;
+        if (have($skill`Garbage Nova`))
+          macro.while_("!mpbelow 50", Macro.skill($skill`Garbage Nova`));
+        if (have($skill`Splattersmash`))
+          macro.while_("!mpbelow 25", Macro.skill($skill`Splattersmash`));
+        if (have($skill`Saucegeyser`))
+          macro.while_("!mpbelow 24", Macro.skill($skill`Saucegeyser`));
+        return slay_macro;
+      })
       .kill(
         $monsters`swarm of ghuol whelps, big swarm of ghuol whelps, giant swarm of ghuol whelps, huge ghuol`
       ),
