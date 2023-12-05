@@ -14,6 +14,7 @@ import {
   $item,
   $monster,
   $skill,
+  AutumnAton,
   CampAway,
   CombatLoversLocket,
   get,
@@ -214,7 +215,7 @@ function buildIotmList(): Requirement[] {
       why: "Meat, ML, -combat forces",
     },
     {
-      thing: $item`autumn-aton`,
+      thing: new Hardcoded(AutumnAton.have(), "autumn-aton"),
       why: "Lobsterfrogman",
     },
     {
