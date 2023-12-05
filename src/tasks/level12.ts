@@ -145,7 +145,14 @@ const Lighthouse: Task[] = [
     choices: { 1387: 2 },
     limit: {
       tries: 20,
-      guard: Guards.after(() => !AutumnAton.have() || $location`Sonofa Beach`.turnsSpent > 0),
+      guard: Guards.create(
+        () => itemAmount($item`figurine of a sleek seal`),
+        (sleek) =>
+          !AutumnAton.have() ||
+          $location`Sonofa Beach`.turnsSpent > 0 ||
+          ($location`Sonofa Beach`.turnsSpent === 0 &&
+            itemAmount($item`figurine of a sleek seal`) === sleek + 3)
+      ),
     },
   },
   {
