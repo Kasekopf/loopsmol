@@ -6,6 +6,7 @@ import {
   myBuffedstat,
   myClass,
   myMaxhp,
+  myMaxmp,
   myTurncount,
   numericModifier,
   runChoice,
@@ -33,7 +34,7 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
-import { ensureWithMPSwaps, fillHp } from "../engine/moods";
+import { customRestoreMp, ensureWithMPSwaps, fillHp } from "../engine/moods";
 
 const Challenges: Task[] = [
   {
@@ -495,25 +496,34 @@ export const TowerQuest: Quest = {
       name: "Wall of Bones",
       after: ["Wall of Meat", "Giant/Ground Knife"],
       completed: () => step("questL13Final") > 8,
+      acquire: [{ item: $item`meteorb`, optional: true }],
       prepare: () => {
         if (have($item`electric boning knife`)) return;
         if (haveEquipped($item`Great Wolf's rocket launcher`)) {
           if (myBuffedstat($stat`moxie`) < 1000) ensureEffect($effect`Cock of the Walk`);
           if (myBuffedstat($stat`moxie`) < 1000) ensureEffect($effect`Superhuman Sarcasm`);
           if (myBuffedstat($stat`moxie`) < 1000) ensureEffect($effect`Gr8ness`);
-          fillHp();
         } else if (have($item`Drunkula's bell`)) {
           if (myBuffedstat($stat`mysticality`) < 2700)
             ensureEffect($effect`On the Shoulders of Giants`);
           if (myBuffedstat($stat`mysticality`) < 2700) ensureEffect($effect`Mystically Oiled`);
           if (myBuffedstat($stat`mysticality`) < 2700) ensureEffect($effect`Gr8ness`);
         }
+        fillHp();
+        customRestoreMp(Math.min(200, myMaxmp()));
       },
       do: $location`Tower Level 3`,
       outfit: () => {
+        if (have($item`electric boning knife`)) return {};
         if (have($item`Great Wolf's rocket launcher`))
           return { equip: $items`Great Wolf's rocket launcher`, modifier: "moxie" };
         if (have($item`Drunkula's bell`)) return { modifier: "myst" };
+        if (have($skill`Garbage Nova`))
+          return {
+            modifier: "spell dmg, myst",
+            equip: $items`meteorb, unwrapped knock-off retro superhero cape`,
+            modes: { retrocape: ["heck", "kill"] },
+          };
         return {};
       },
       combat: new CombatStrategy().macro(() => {
@@ -521,6 +531,7 @@ export const TowerQuest: Quest = {
         if (haveEquipped($item`Great Wolf's rocket launcher`))
           return Macro.skill($skill`Fire Rocket`);
         if (have($item`Drunkula's bell`)) return Macro.item($item`Drunkula's bell`);
+        if (have($skill`Garbage Nova`)) return Macro.skill($skill`Garbage Nova`).repeat();
         throw `Unable to find way to kill Wall of Bones`;
       }),
       boss: true,
