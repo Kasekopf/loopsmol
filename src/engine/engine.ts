@@ -618,7 +618,8 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       });
     }
     if (myHp() < 100 && myHp() < myMaxhp()) restoreHp(myMaxhp() < 100 ? myMaxhp() : 100);
-    if (myMp() < 40 && myMaxmp() >= 40) customRestoreMp(40);
+    if (myMp() < 50 && myMaxmp() >= 50) customRestoreMp(50);
+    else if (myMp() < 40 && myMaxmp() >= 40) customRestoreMp(40);
     else if (myMp() < 20) customRestoreMp(20);
 
     // Equip stillsuit

@@ -20,7 +20,6 @@ import {
   myMp,
   myTurncount,
   numericModifier,
-  restoreMp,
   retrieveItem,
   Skill,
   toInt,
@@ -61,6 +60,7 @@ import { Task } from "./task";
 import { args } from "../args";
 import { killMacro } from "./combat";
 import { BanishState } from "./state";
+import { customRestoreMp } from "./moods";
 
 export interface Resource {
   name: string;
@@ -126,9 +126,10 @@ const banishSources: BanishSource[] = [
     name: "Snokebomb",
     available: () => get("_snokebombUsed") < 3 && have($skill`Snokebomb`),
     prepare: () => {
-      if (myMp() < 50 && myMaxmp() >= 50) restoreMp(50 - myMp());
+      if (myMp() < 50 && myMaxmp() >= 50) customRestoreMp(50);
     },
     do: $skill`Snokebomb`,
+    equip: $item`nurse's hat`, // for MP
   },
   {
     name: "KGB dart",
