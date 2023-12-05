@@ -496,7 +496,9 @@ export const TowerQuest: Quest = {
       name: "Wall of Bones",
       after: ["Wall of Meat", "Giant/Ground Knife"],
       completed: () => step("questL13Final") > 8,
-      acquire: [{ item: $item`meteorb`, optional: true }],
+      acquire: [
+        { item: $item`meteorb`, optional: true, useful: () => have($item`metal meteoroid`) },
+      ],
       prepare: () => {
         if (have($item`electric boning knife`)) return;
         if (haveEquipped($item`Great Wolf's rocket launcher`)) {
