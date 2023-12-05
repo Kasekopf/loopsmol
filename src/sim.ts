@@ -428,6 +428,10 @@ function buildRecommendedSkillsList(): (Requirement & { thing: Skill })[] {
       thing: $skill`Disco Leer`,
       why: "+meat",
     },
+    {
+      thing: $skill`Garbage Nova`,
+      why: "Wall of bones",
+    },
   ];
 }
 
