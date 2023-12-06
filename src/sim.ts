@@ -221,7 +221,7 @@ function buildIotmList(): Requirement[] {
     {
       thing: new Hardcoded(
         have($item`model train set`) || getWorkshed() === $item`model train set`,
-        "Cold medicine cabinet"
+        "Model train set"
       ),
       why: "Meat, MP, Ore, Orc bridge parts, and res",
     },
