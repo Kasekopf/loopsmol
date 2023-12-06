@@ -452,7 +452,12 @@ const Bowling: Task[] = [
         (get("spookyVHSTapeMonster") === $monster`pygmy bowler` ? 1 : 0) >=
       6,
     map_the_monster: () => {
-      if (have($familiar`Melodramedary`) && get("camelSpit") === 100 && cosmicBowlingBallReady())
+      if (
+        itemAmount($item`bowling ball`) === 0 &&
+        have($familiar`Melodramedary`) &&
+        get("camelSpit") === 100 &&
+        cosmicBowlingBallReady()
+      )
         return $monster`pygmy bowler`;
       return $monster`none`;
     },
