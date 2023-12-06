@@ -807,7 +807,7 @@ function autosellJunk(): void {
   if (have($item`MayDay™ supply package`)) use($item`MayDay™ supply package`);
 
   // Sell junk items
-  const junk = $items`hamethyst, baconstone, meat stack, dense meat stack, facsimile dictionary, space blanket, 1\,970 carat gold, black snake skin, demon skin, hellion cube, adder bladder, weremoose spit, Knob Goblin firecracker, wussiness potion, diamond-studded cane, Knob Goblin tongs, Knob Goblin scimitar, eggbeater, red-hot sausage fork, Knob Goblin pants, awful poetry journal, black pixel, pile of dusty animal bones, 1952 Mickey Mantle card, liquid ice`;
+  const junk = $items`hamethyst, baconstone, meat stack, dense meat stack, facsimile dictionary, space blanket, 1\,970 carat gold, black snake skin, demon skin, hellion cube, adder bladder, weremoose spit, Knob Goblin firecracker, wussiness potion, diamond-studded cane, Knob Goblin tongs, Knob Goblin scimitar, eggbeater, red-hot sausage fork, Knob Goblin pants, awful poetry journal, black pixel, pile of dusty animal bones, 1952 Mickey Mantle card, liquid ice, fat stacks of cash`;
   for (const item of junk) {
     if (have(item)) autosell(item, itemAmount(item));
   }
@@ -822,6 +822,13 @@ function autosellJunk(): void {
   const wallets = $items`ancient vinyl coin purse, black pension check, old leather wallet, Gathered Meat-Clip, old coin purse`;
   for (const item of wallets) {
     if (have(item)) use(item, itemAmount(item));
+  }
+
+  // Sell a few other items if we have to
+  const lastresorts = $items`keg shield, perforated battle paddle, bottle opener belt buckle, beer bomb, Kokomo Resort Pass, giant pinky ring, Eye Agate, Azurite, Lapis Lazuli`;
+  for (const item of lastresorts) {
+    if (myMeat() >= 1000) return;
+    if (have(item)) autosell(item, itemAmount(item));
   }
 }
 
