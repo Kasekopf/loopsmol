@@ -433,6 +433,14 @@ function buildRecommendedSkillsList(): (Requirement & { thing: Skill })[] {
       thing: $skill`Garbage Nova`,
       why: "Wall of bones",
     },
+    {
+      thing: $skill`Gingerbread Mob Hit`,
+      why: "Free kill",
+    },
+    {
+      thing: $skill`Shattering Punch`,
+      why: "Free kills",
+    },
   ];
 }
 

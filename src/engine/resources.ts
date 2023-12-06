@@ -501,6 +501,16 @@ export const freekillSources: FreekillSource[] = [
     equip: $item`Lil' Doctor™ bag`,
   },
   {
+    name: "Gingerbread Mob Hit",
+    available: () => have($skill`Gingerbread Mob Hit`) && !get("_gingerbreadMobHitUsed"),
+    do: $skill`Gingerbread Mob Hit`,
+  },
+  {
+    name: "Shattering Punch",
+    available: () => have($skill`Shattering Punch`) && get("_shatteringPunchUsed") < 3,
+    do: $skill`Shattering Punch`,
+  },
+  {
     name: "Replica bat-oomerang",
     available: () => have($item`replica bat-oomerang`) && get("_usedReplicaBatoomerang") < 3,
     do: $item`replica bat-oomerang`,
