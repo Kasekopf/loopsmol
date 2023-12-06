@@ -88,7 +88,7 @@ import {
 import { ROUTE_WAIT_TO_NCFORCE } from "../route";
 import { fillHp } from "../engine/moods";
 
-const meatBuffer = 500;
+const meatBuffer = 1000;
 
 export const MiscQuest: Quest = {
   name: "Misc",
