@@ -441,6 +441,14 @@ function buildRecommendedSkillsList(): (Requirement & { thing: Skill })[] {
       thing: $skill`Shattering Punch`,
       why: "Free kills",
     },
+    {
+      thing: $skill`Blood Bubble`,
+      why: "QoL",
+    },
+    {
+      thing: $skill`Blood Bond`,
+      why: "Fam weight",
+    },
   ];
 }
 

@@ -9,6 +9,7 @@ import {
   gamedayToInt,
   getCampground,
   getWorkshed,
+  haveEffect,
   haveEquipped,
   hermit,
   hippyStoneBroken,
@@ -1220,6 +1221,40 @@ export const MiscQuest: Quest = {
       do: () => cliExecute("eat basic hot dog"),
       freeaction: true,
       limit: { tries: 15 },
+    },
+    {
+      name: "Blood Bubble",
+      after: [],
+      ready: () => myMeat() >= meatBuffer + 500,
+      completed: () =>
+        !have($skill`Blood Bubble`) ||
+        step("questL13Final") > 10 ||
+        haveEffect($effect`Blood Bubble`) + myTurncount() >= 300,
+      do: () => {
+        useSkill($skill`Blood Bubble`, Math.floor((myHp() - 1) / 30));
+        fillHp();
+        useSkill($skill`Blood Bubble`, Math.floor((myHp() - 1) / 30));
+      },
+      outfit: { modifier: "HP" },
+      freeaction: true,
+      limit: { tries: 10 },
+    },
+    {
+      name: "Blood Bond",
+      after: [],
+      ready: () => myMeat() >= meatBuffer + 500,
+      completed: () =>
+        !have($skill`Blood Bond`) ||
+        step("questL13Final") > 10 ||
+        haveEffect($effect`Blood Bond`) + myTurncount() >= 300,
+      do: () => {
+        useSkill($skill`Blood Bond`, Math.floor((myHp() - 1) / 30));
+        fillHp();
+        useSkill($skill`Blood Bond`, Math.floor((myHp() - 1) / 30));
+      },
+      outfit: { modifier: "HP" },
+      freeaction: true,
+      limit: { tries: 10 },
     },
   ],
 };
