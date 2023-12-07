@@ -372,6 +372,7 @@ export const DigitalQuest: Quest = {
         runChoice(1);
         runChoice(1);
       },
+      choices: { 664: 1 },
       limit: { tries: 1 },
       freeaction: true,
     },
