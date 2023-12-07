@@ -199,6 +199,9 @@ export function ensureWithMPSwaps(effects: Effect[]) {
   const hotswapped: [Slot, Item][] = []; //
   for (const effect of effects) {
     if (have(effect, effect === $effect`Ode to Booze` ? 5 : 1)) continue;
+    if (!have(effect) && effect === $effect`Mystically Oiled`) {
+      retrieveItem($item`ointment of the occult`);
+    }
     const skill = toSkill(effect);
     if (skill !== $skill`none` && !have(skill)) continue; // skip
 
