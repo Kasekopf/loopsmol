@@ -9,7 +9,6 @@ import {
   gamedayToInt,
   getCampground,
   getWorkshed,
-  haveEffect,
   haveEquipped,
   hermit,
   hippyStoneBroken,
@@ -1228,9 +1227,7 @@ export const MiscQuest: Quest = {
       after: [],
       ready: () => myMeat() >= meatBuffer + 500,
       completed: () =>
-        !have($skill`Blood Bubble`) ||
-        step("questL13Final") > 10 ||
-        haveEffect($effect`Blood Bubble`) + myTurncount() >= 300,
+        !have($skill`Blood Bubble`) || step("questL13Final") > 10 || have($effect`Blood Bubble`),
       do: () => {
         useSkill($skill`Blood Bubble`, Math.floor((myHp() - 1) / 30));
         fillHp();
@@ -1245,9 +1242,7 @@ export const MiscQuest: Quest = {
       after: [],
       ready: () => myMeat() >= meatBuffer + 500,
       completed: () =>
-        !have($skill`Blood Bond`) ||
-        step("questL13Final") > 10 ||
-        haveEffect($effect`Blood Bond`) + myTurncount() >= 300,
+        !have($skill`Blood Bond`) || step("questL13Final") > 10 || have($effect`Blood Bond`),
       do: () => {
         useSkill($skill`Blood Bond`, Math.floor((myHp() - 1) / 30));
         fillHp();
