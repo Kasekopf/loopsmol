@@ -61,6 +61,7 @@ import { args } from "../args";
 import { killMacro } from "./combat";
 import { BanishState } from "./state";
 import { customRestoreMp } from "./moods";
+import { oresNeeded } from "../tasks/level8";
 
 export interface Resource {
   name: string;
@@ -705,6 +706,12 @@ export const backupTargets: BackupTarget[] = [
       get("nsTowerDoorKeysUsed").includes("Richard's star key"),
     outfit: { modifier: "item" },
     limit_tries: 3,
+  },
+  {
+    monster: $monster`mountain man`,
+    completed: () => oresNeeded() === 0,
+    outfit: { modifier: "item" },
+    limit_tries: 2,
   },
   {
     monster: $monster`Eldritch Tentacle`,

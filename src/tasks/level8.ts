@@ -50,17 +50,19 @@ export const McLargeHugeQuest: Quest = {
     {
       name: "Clover Ore",
       after: ["Trapper Request", "Pull/Ore", "Misc/Hermit Clover"],
-      ready: () => have($item`11-leaf clover`),
+      ready: () =>
+        have($item`11-leaf clover`) &&
+        summonStrategy.getSourceFor($monster`mountain man`) === undefined &&
+        oresNeeded() > 0,
       prepare: () => {
         if (!have($effect`Lucky!`)) use($item`11-leaf clover`);
       },
       completed: () =>
-        itemAmount($item`asbestos ore`) >= 3 ||
-        itemAmount($item`chrome ore`) >= 3 ||
-        itemAmount($item`linoleum ore`) >= 3 ||
         step("questL08Trapper") >= 2 ||
-        summonStrategy.getSourceFor($monster`mountain man`) !== undefined ||
-        trainSetAvailable(),
+        (get("trapperOre") !== "" && itemAmount(Item.get(get("trapperOre"))) >= 3) ||
+        (itemAmount($item`asbestos ore`) >= 3 &&
+          itemAmount($item`chrome ore`) >= 3 &&
+          itemAmount($item`linoleum ore`) >= 3),
       do: $location`Itznotyerzitz Mine`,
       limit: { tries: 2 },
     },
@@ -179,3 +181,32 @@ export const McLargeHugeQuest: Quest = {
     },
   ],
 };
+
+// Get the number of ores needed from non-trainset places
+export function oresNeeded(): number {
+  if (step("questL08Trapper") >= 2) return 0;
+  if (trainSetAvailable()) return 0;
+  let ore_needed = 3;
+  ore_needed -= Math.min(
+    itemAmount($item`asbestos ore`),
+    itemAmount($item`chrome ore`),
+    itemAmount($item`linoleum ore`)
+  );
+  if (have($item`Deck of Every Card`) && get("_deckCardsDrawn") === 0) ore_needed--;
+  const pulled = new Set<Item>(
+    get("_roninStoragePulls")
+      .split(",")
+      .map((id) => parseInt(id))
+      .filter((id) => id > 0)
+      .map((id) => Item.get(id))
+  );
+  if (
+    !pulled.has($item`asbestos ore`) &&
+    !pulled.has($item`chrome ore`) &&
+    !pulled.has($item`linoleum ore`)
+  )
+    ore_needed--;
+
+  if (get("spookyVHSTapeMonster") === $monster`mountain man`) ore_needed -= 2;
+  return Math.max(ore_needed, 0);
+}

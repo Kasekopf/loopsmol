@@ -2,13 +2,10 @@ import {
   canFaxbot,
   chatPrivate,
   cliExecute,
-  equippedAmount,
   isOnline,
-  Item,
   itemAmount,
   Monster,
   myMeat,
-  myTurncount,
   reverseNumberology,
   runCombat,
   use,
@@ -16,6 +13,7 @@ import {
   wait,
 } from "kolmafia";
 import {
+  $effect,
   $familiar,
   $item,
   $items,
@@ -32,12 +30,13 @@ import { args } from "../args";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 import { yellowRayPossible } from "../engine/resources";
-import { trainSetAvailable } from "./misc";
 import { Priorities } from "../engine/priority";
 import { fillHp } from "../engine/moods";
+import { oresNeeded } from "./level8";
 
 type SummonTarget = Omit<Task, "do" | "name" | "limit"> & {
   target: Monster;
+  tries?: number;
 };
 const summonTargets: SummonTarget[] = [
   {
@@ -58,39 +57,8 @@ const summonTargets: SummonTarget[] = [
     target: $monster`mountain man`,
     after: [],
     ready: () => myMeat() >= 1000,
-    completed: () => {
-      if (step("questL08Trapper") >= 2) return true;
-      if (!have($item`Clan VIP Lounge key`)) return true; // For now, do not do without yellow rocket
-      if (trainSetAvailable()) return true;
-      let ore_needed = 3;
-      if (have($item`Deck of Every Card`) && get("_deckCardsDrawn") === 0) ore_needed--;
-      const pulled = new Set<Item>(
-        get("_roninStoragePulls")
-          .split(",")
-          .map((id) => parseInt(id))
-          .filter((id) => id > 0)
-          .map((id) => Item.get(id))
-      );
-      if (
-        !pulled.has($item`asbestos ore`) &&
-        !pulled.has($item`chrome ore`) &&
-        !pulled.has($item`linoleum ore`)
-      )
-        ore_needed--;
-      return (
-        itemAmount($item`asbestos ore`) >= ore_needed ||
-        itemAmount($item`chrome ore`) >= ore_needed ||
-        itemAmount($item`linoleum ore`) >= ore_needed
-      );
-    },
-    prepare: () => {
-      if (
-        (myTurncount() < 5 && !have($item`yellow rocket`)) ||
-        equippedAmount($item`Jurassic Parka`) < 0
-      ) {
-        throw "Unable to actually YR the mountain man";
-      }
-    },
+    completed: () => oresNeeded() === 0,
+    priority: () => (have($effect`Everything Looks Yellow`) ? Priorities.BadYR : Priorities.None),
     outfit: () => {
       if (yellowRayPossible())
         return {
@@ -104,7 +72,16 @@ const summonTargets: SummonTarget[] = [
           modifier: "item",
         };
     },
-    combat: new CombatStrategy().yellowRay(),
+    combat: new CombatStrategy().yellowRay().macro(() => {
+      const result = new Macro();
+      if (have($effect`Everything Looks Yellow`)) {
+        if (!have($item`Spooky VHS Tape`)) result.trySkill($skill`Feel Envy`);
+        if (!have($skill`Feel Envy`) || get("_feelEnvyUsed"))
+          result.tryItem($item`Spooky VHS Tape`);
+      }
+      return result;
+    }),
+    tries: 3,
   },
   {
     target: $monster`Astrologer of Shub-Jigguwatt`,
@@ -208,12 +185,9 @@ const summonSources: SummonSource[] = [
   {
     name: "Cargo Shorts",
     available: () => (have($item`Cargo Cultist Shorts`) && !get("_cargoPocketEmptied") ? 1 : 0),
-    canFight: (mon: Monster) =>
-      mon === $monster`mountain man` || mon === $monster`Astrologer of Shub-Jigguwatt`,
+    canFight: (mon: Monster) => mon === $monster`Astrologer of Shub-Jigguwatt`,
     summon: (mon: Monster) => {
-      if (mon === $monster`mountain man`) {
-        cliExecute("cargo 565");
-      } else if (mon === $monster`Astrologer of Shub-Jigguwatt`) {
+      if (mon === $monster`Astrologer of Shub-Jigguwatt`) {
         cliExecute("cargo 533");
         use($item`greasy desk bell`);
       }
@@ -316,7 +290,7 @@ export const SummonQuest: Quest = {
         } else throw `Unable to find summon source for ${task.target.name}`;
         runCombat();
       },
-      limit: { tries: 1 },
+      limit: { tries: task.tries ?? 1 },
     };
   }),
 };
