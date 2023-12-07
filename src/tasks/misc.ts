@@ -1225,6 +1225,7 @@ export const MiscQuest: Quest = {
     {
       name: "Blood Bubble",
       after: [],
+      priority: () => Priorities.Free,
       ready: () => myMeat() >= meatBuffer + 500,
       completed: () =>
         !have($skill`Blood Bubble`) || step("questL13Final") > 10 || have($effect`Blood Bubble`),
@@ -1240,6 +1241,7 @@ export const MiscQuest: Quest = {
     {
       name: "Blood Bond",
       after: [],
+      priority: () => Priorities.Free,
       ready: () => myMeat() >= meatBuffer + 500,
       completed: () =>
         !have($skill`Blood Bond`) || step("questL13Final") > 10 || have($effect`Blood Bond`),
