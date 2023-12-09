@@ -122,6 +122,10 @@ export const pulls: PullSpec[] = [
     pull: $item`sea salt scrubs`,
     useful: () => have($skill`Torso Awareness`),
   },
+  {
+    pull: $item`hopping socks`, // +max MP item
+    useful: () => !have($skill`Torso Awareness`),
+  },
   // General pulls
   {
     pull: $item`lucky gold ring`,

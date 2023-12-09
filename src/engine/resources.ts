@@ -130,7 +130,11 @@ const banishSources: BanishSource[] = [
       if (myMp() < 50 && myMaxmp() >= 50) customRestoreMp(50);
     },
     do: $skill`Snokebomb`,
-    equip: $item`sea salt scrubs`, // for MP
+    equip: [
+      // for MP
+      { equip: $items`sea salt scrubs` },
+      { equip: $items`hopping socks` },
+    ],
   },
   {
     name: "KGB dart",
