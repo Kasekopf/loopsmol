@@ -34,6 +34,7 @@ import { OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
 import { cosmicBowlingBallReady } from "../lib";
+import { fillHp } from "../engine/moods";
 
 function manualChoice(whichchoice: number, option: number) {
   return visitUrl(`choice.php?whichchoice=${whichchoice}&pwd=${myHash()}&option=${option}`);
@@ -419,6 +420,7 @@ const Bowling: Task[] = [
         if (closetAmount($item`bowling ball`) > 0)
           takeCloset($item`bowling ball`, closetAmount($item`bowling ball`));
       }
+      if (myFamiliar() === $familiar`Melodramedary` && get("camelSpit") === 100) fillHp();
     },
     do: $location`The Hidden Bowling Alley`,
     combat: new CombatStrategy()
@@ -435,6 +437,7 @@ const Bowling: Task[] = [
       .banish($monster`pygmy orderlies`),
     outfit: () => {
       const result: OutfitSpec = {
+        equip: $items`nurse's hat`,
         modifier: "item",
         avoid: $items`broken champagne bottle`,
       };
