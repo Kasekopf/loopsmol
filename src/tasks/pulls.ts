@@ -44,9 +44,15 @@ type PullSpec = {
 export const pulls: PullSpec[] = [
   // Food
   {
-    pull: $item`Pizza of Legend`,
+    name: "Cookbookbat Food of Legend",
+    pull: () => {
+      const result: Item[] = [];
+      if (!get("calzoneOfLegendEaten")) result.push($item`Calzone of Legend`);
+      if (!get("pizzaOfLegendEaten")) result.push($item`Pizza of Legend`);
+      if (!get("deepDishOfLegendEaten")) result.push($item`Deep Dish of Legend`);
+      return result;
+    },
     useful: () => {
-      if (get("pizzaOfLegendEaten")) return false;
       if (myFullness() >= 1) return false;
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;
