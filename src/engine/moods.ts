@@ -106,7 +106,8 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
 
     // Other +attribute effects
     if (!get("_lyleFavored")) all_attributes.push($effect`Favored by Lyle`);
-    if (!get("telescopeLookedHigh")) all_attributes.push($effect`Starry-Eyed`);
+    if (get("telescopeUpgrades") > 0 && !get("telescopeLookedHigh"))
+      all_attributes.push($effect`Starry-Eyed`);
     if (get("spacegateAlways") && get("spacegateVaccine2") && !get("_spacegateVaccine"))
       all_attributes.push($effect`Broad-Spectrum Vaccine`);
     if (have($item`protonic accelerator pack`) && !get("_streamsCrossed"))
