@@ -596,8 +596,20 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     return outfit;
   }
 
+  /**
+   * Acquire all effects for the task.
+   * @param _task The current executing task.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  acquireEffects(task: ActiveTask): void {
+    // Do nothing; effects will be added in dress instead
+  }
+
   dress(task: ActiveTask, outfit: Outfit): void {
-    applyEffects(outfit.modifier.join(","), task.other_effects ?? []);
+    const effects: Effect[] = undelay(task.effects) ?? [];
+    const other_effects = task.other_effects ?? [];
+    applyEffects(outfit.modifier.join(","), [...effects, ...other_effects]);
+
     cacheDress(outfit);
     fixFoldables(outfit);
 
