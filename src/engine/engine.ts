@@ -317,7 +317,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     combat: CombatStrategy<CombatActions>,
     resources: CombatResources<CombatActions>
   ): void {
-    equipInitial(outfit);
     const wanderers = task.wanderer ? [task.wanderer] : [];
     for (const wanderer of wanderers) {
       if (!equipFirst(outfit, [wanderer]))
@@ -338,6 +337,9 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       // Prepare only as requested by the task
       return;
     }
+
+    // Equip initial equipment
+    equipInitial(outfit);
 
     // Prepare combat macro
     if (combat.getDefaultAction() === undefined) combat.action("ignore");
