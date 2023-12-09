@@ -329,7 +329,9 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       if (task.backup.outfit && !outfit.equip(undelay(task.backup.outfit)))
         throw `Cannot match equip for backup ${task.backup.monster} on ${task.name}`;
       outfit.equip({ avoid: $items`carnivorous potted plant` });
-      combat.startingMacro(Macro.trySkill($skill`Back-Up to your Last Enemy`));
+      combat.startingMacro(
+        Macro.ifNot("monstername Boss Bat", Macro.trySkill($skill`Back-Up to your Last Enemy`))
+      );
       combat.action("kill");
     }
 
