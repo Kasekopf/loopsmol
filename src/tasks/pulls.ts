@@ -124,7 +124,7 @@ export const pulls: PullSpec[] = [
   },
   {
     pull: $item`hopping socks`, // +max MP item
-    useful: () => !have($skill`Torso Awareness`),
+    useful: () => !have($skill`Torso Awareness`) && !have($item`SpinMaster™ lathe`),
   },
   // General pulls
   {
