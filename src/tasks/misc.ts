@@ -55,6 +55,7 @@ import {
   AsdonMartin,
   AugustScepter,
   AutumnAton,
+  BurningLeaves,
   byClass,
   byStat,
   CinchoDeMayo,
@@ -1269,6 +1270,17 @@ export const MiscQuest: Quest = {
         else CursedMonkeyPaw.wishFor($effect`Feeling Insignificant`);
       },
       limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Leaf Resin",
+      priority: () => Priorities.Free,
+      ready: () =>
+        BurningLeaves.have() && BurningLeaves.numberOfLeaves() >= 50 && !have($effect`Resined`),
+      completed: () => step("questL12War") === 999, // Stop near the end of the run
+      acquire: [{ item: $item`distilled resin` }],
+      do: () => use($item`distilled resin`),
+      limit: { tries: 5, unready: true },
       freeaction: true,
     },
   ],
