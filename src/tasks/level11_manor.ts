@@ -4,12 +4,14 @@ import {
   currentMcd,
   myDaycount,
   myInebriety,
+  myLevel,
   numericModifier,
   use,
   visitUrl,
 } from "kolmafia";
 import {
   $effect,
+  $effects,
   $familiar,
   $item,
   $items,
@@ -20,11 +22,12 @@ import {
   $skill,
   ensureEffect,
   get,
+  getActiveEffects,
   have,
   Macro,
 } from "libram";
 import { Quest, Task } from "../engine/task";
-import { OutfitSpec, step } from "grimoire-kolmafia";
+import { Modes, OutfitSpec, step } from "grimoire-kolmafia";
 import { CombatStrategy, killMacro } from "../engine/combat";
 import { Priorities } from "../engine/priority";
 import { tuneSnapper } from "../lib";
@@ -338,20 +341,48 @@ const ManorBasement: Task[] = [
     },
     do: $location`The Haunted Boiler Room`,
     outfit: (): OutfitSpec => {
-      if (have($item`old patched suit-pants`) && have($item`backup camera`))
-        return {
-          modifier: "ML",
-          equip: $items`unstable fulminate, old patched suit-pants, backup camera`,
-          avoid: $items`Jurassic Parka`,
-          modes: { backupcamera: "ml" },
-          familiar: $familiar`Red-Nosed Snapper`,
-        };
-      return {
-        modifier: "ML",
-        equip: $items`unstable fulminate, old patched suit-pants`,
+      const result = {
+        equip: [$item`unstable fulminate`],
+        modes: <Modes>{},
         familiar: $familiar`Red-Nosed Snapper`,
       };
+      let ml_needed = 81 - 10; // -10 from MCD
+
+      // Include effects
+      for (const effect of getActiveEffects())
+        ml_needed -= numericModifier(effect, "Monster Level");
+      if (have($skill`Ur-Kel's Aria of Annoyance`) && !have($effect`Ur-Kel's Aria of Annoyance`))
+        ml_needed -= Math.min(2 * myLevel(), 60);
+      if (have($skill`Pride of the Puffin`) && !have($effect`Pride of the Puffin`)) ml_needed -= 10;
+      if (have($skill`Drescher's Annoying Noise`) && !have($effect`Drescher's Annoying Noise`))
+        ml_needed -= 10;
+
+      // Include some equipment
+      if (ml_needed > 0 && have($item`Jurassic Parka`) && have($skill`Torso Awareness`)) {
+        result.equip.push($item`Jurassic Parka`);
+        result.modes.parka = "spikolodon";
+        ml_needed -= Math.min(3 * myLevel(), 33);
+      }
+      if (ml_needed > 0 && have($item`old patched suit-pants`)) {
+        result.equip.push($item`old patched suit-pants`);
+        ml_needed -= 40;
+      }
+      if (ml_needed > 0 && have($item`backup camera`)) {
+        result.equip.push($item`backup camera`);
+        result.modes.backupcamera = "ml";
+        ml_needed -= Math.min(3 * myLevel(), 50);
+      }
+
+      if (ml_needed > 0) {
+        return {
+          ...result,
+          modifier: "ML",
+        };
+      } else {
+        return result;
+      }
     },
+    effects: $effects`Ur-Kel's Aria of Annoyance, Pride of the Puffin, Drescher's Annoying Noise`,
     choices: { 902: 2 },
     combat: new CombatStrategy()
       .kill($monster`monstrous boiler`)
