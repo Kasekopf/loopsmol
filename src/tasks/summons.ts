@@ -56,7 +56,12 @@ const summonTargets: SummonTarget[] = [
   {
     target: $monster`mountain man`,
     after: [],
-    ready: () => myMeat() >= 1000,
+    ready: () =>
+      myMeat() >= 1000 &&
+      // YR the War frat first
+      have($item`beer helmet`) &&
+      have($item`distressed denim pants`) &&
+      have($item`bejeweled pledge pin`),
     completed: () => oresNeeded() === 0,
     priority: () => (have($effect`Everything Looks Yellow`) ? Priorities.BadYR : Priorities.None),
     outfit: () => {
