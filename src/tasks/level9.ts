@@ -5,6 +5,7 @@ import {
   getWorkshed,
   Item,
   itemAmount,
+  myAscensions,
   myHp,
   myMaxhp,
   myMaxmp,
@@ -51,10 +52,32 @@ const ABoo: Task[] = [
     limit: { tries: 1 },
   },
   {
-    name: "ABoo Clues",
+    name: "ABoo Carto",
     after: ["ABoo Start"],
-    ready: () =>
-      !(have($skill`Comprehensive Cartography`) && $location`A-Boo Peak`.turnsSpent === 0),
+    completed: () =>
+      !have($skill`Comprehensive Cartography`) ||
+      $location`A-Boo Peak`.turnsSpent > 0 ||
+      get("lastCartographyBooPeak") === myAscensions(),
+    prepare: () => {
+      if (have($item`pec oil`)) ensureEffect($effect`Oiled-Up`);
+      use($item`A-Boo clue`);
+      fillHp();
+    },
+    do: $location`A-Boo Peak`,
+    effects: $effects`Red Door Syndrome`,
+    outfit: {
+      modifier: "20 spooky res, 20 cold res, HP",
+      familiar: $familiar`Exotic Parrot`,
+    },
+    choices: { 611: 1, 1430: 1 },
+    combat: new CombatStrategy().killItem(),
+    limit: { tries: 1 },
+    freeaction: true,
+    expectbeatenup: true,
+  },
+  {
+    name: "ABoo Clues",
+    after: ["ABoo Start", "ABoo Carto"],
     completed: () => itemAmount($item`A-Boo clue`) * 30 >= get("booPeakProgress"),
     do: $location`A-Boo Peak`,
     outfit: { modifier: "item", equip: $items`Space Trip safety headphones, HOA regulation book` },
@@ -65,10 +88,8 @@ const ABoo: Task[] = [
   },
   {
     name: "ABoo Horror",
-    after: ["ABoo Start"],
-    ready: () =>
-      have($item`A-Boo clue`) ||
-      (have($skill`Comprehensive Cartography`) && $location`A-Boo Peak`.turnsSpent === 0),
+    after: ["ABoo Start", "ABoo Carto"],
+    ready: () => have($item`A-Boo clue`),
     completed: () => get("booPeakProgress") === 0,
     prepare: () => {
       if (have($item`pec oil`)) ensureEffect($effect`Oiled-Up`);

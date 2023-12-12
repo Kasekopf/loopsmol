@@ -123,6 +123,7 @@ export const routing: string[] = [
   "Hidden City/Office Boss", // Get Eagle dude banish
   "Macguffin/Upper Chamber",
   "Orc Chasm/Start Peaks",
+  "Orc Chasm/ABoo Carto",
   "War/Open Nuns",
 
   // Bulk +meat/+item tasks
