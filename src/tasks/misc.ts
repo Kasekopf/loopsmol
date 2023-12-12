@@ -124,7 +124,15 @@ export const MiscQuest: Quest = {
         have($item`skeletal skiff`) ||
         have($item`yellow submarine`),
       do: $location`The Shore, Inc. Travel Agency`,
-      choices: { 793: 1 },
+      outfit: () => {
+        if (get("candyCaneSwordShore", false)) return { equip: $items`candy cane sword cane` };
+        else return {};
+      },
+      choices: () => {
+        const swordReady =
+          haveEquipped($item`candy cane sword cane`) && get("candyCaneSwordShore", false);
+        return { 793: swordReady ? 5 : 1 };
+      },
       limit: { tries: 5 },
     },
     {

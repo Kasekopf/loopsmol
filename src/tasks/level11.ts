@@ -2,6 +2,7 @@ import {
   availableAmount,
   buy,
   cliExecute,
+  haveEquipped,
   itemAmount,
   myMeat,
   runChoice,
@@ -117,7 +118,15 @@ const Desert: Task[] = [
     ready: () => myMeat() >= 6000 || (step("questL11Black") >= 4 && myMeat() >= 500),
     completed: () => have($item`Shore Inc. Ship Trip Scrip`) || have($item`UV-resistant compass`),
     do: $location`The Shore, Inc. Travel Agency`,
-    choices: { 793: 1 },
+    outfit: () => {
+      if (get("candyCaneSwordShore", false)) return { equip: $items`candy cane sword cane` };
+      else return {};
+    },
+    choices: () => {
+      const swordReady =
+        haveEquipped($item`candy cane sword cane`) && get("candyCaneSwordShore", false);
+      return { 793: swordReady ? 5 : 1 };
+    },
     limit: { tries: 1 },
     freeaction: true,
   },
