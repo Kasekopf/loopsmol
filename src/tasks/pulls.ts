@@ -66,7 +66,7 @@ export const pulls: PullSpec[] = [
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;
     },
-    price: 200000,
+    price: 300000,
   },
   {
     pull: $item`Frosty's frosty mug`,
