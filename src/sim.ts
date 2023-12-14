@@ -261,6 +261,10 @@ function buildIotmList(): Requirement[] {
       thing: $familiar`Jill-of-All-Trades`,
       why: "+meat, +item",
     },
+    {
+      thing: $item`candy cane sword cane`,
+      why: "NS key, protestors, black forest, war start, bowling, shore",
+    },
   ];
 }
 
@@ -282,6 +286,10 @@ function buildLocketList(): Requirement[] {
       thing: $monster`mountain man`,
       why: "Ore (without trainset)",
     },
+    {
+      thing: $monster`War Frat 151st Infantryman`,
+      why: "Outfit (without numberology)",
+    },
   ];
 }
 
@@ -290,6 +298,10 @@ function buildMiscList(): Requirement[] {
     {
       thing: $familiar`Oily Woim`,
       why: "Bonus initiative",
+    },
+    {
+      thing: $familiar`Gelatinous Cubeling`,
+      why: "Daily dungeon",
     },
     {
       thing: $familiar`Hobo Monkey`,
