@@ -406,7 +406,7 @@ const Bowling: Task[] = [
         buy($item`Bowl of Scorpions`);
       }
       // Backload the bowling balls due to banish timers
-      if (bowlingBallsGathered()) {
+      if (!bowlingBallsGathered()) {
         if (have($item`bowling ball`))
           putCloset($item`bowling ball`, itemAmount($item`bowling ball`));
       } else {
