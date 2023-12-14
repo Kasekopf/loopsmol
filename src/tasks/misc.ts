@@ -982,7 +982,7 @@ export const MiscQuest: Quest = {
         visitUrl("place.php?whichplace=forestvillage&action=fv_scientist", false);
         runChoice(1);
       },
-      combat: new CombatStrategy().kill(),
+      combat: new CombatStrategy().killHard(),
       limit: { tries: 1 },
     },
     {

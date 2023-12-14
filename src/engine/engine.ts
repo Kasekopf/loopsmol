@@ -332,7 +332,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       combat.startingMacro(
         Macro.if_("!monsterid 49", Macro.trySkill($skill`Back-Up to your Last Enemy`))
       );
-      combat.action("kill");
+      combat.action("killHard");
     }
 
     if (undelay(task.freeaction)) {
