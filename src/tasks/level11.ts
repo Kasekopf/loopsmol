@@ -47,6 +47,8 @@ const Diary: Task[] = [
       if (have($item`latte lovers member's mug`) && !get("latteUnlocks").includes("cajun")) {
         equip.push($item`latte lovers member's mug`);
       }
+      if (have($item`candy cane sword cane`) && !get("candyCaneSwordBlackForest", false))
+        equip.push($item`candy cane sword cane`);
 
       if (have($item`reassembled blackbird`)) {
         return {

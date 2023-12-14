@@ -128,7 +128,7 @@ const heroKeys: KeyTask[] = [
       uneffect($effect`Apathy`);
       cliExecute("refresh inv");
     },
-    outfit: { equip: $items`ring of Detect Boring Doors`, modifier: "init" }, // Avoid apathy
+    outfit: { equip: $items`ring of Detect Boring Doors, candy cane sword cane`, modifier: "init" }, // Avoid apathy
     combat: new CombatStrategy().macro(new Macro().item($item`daily dungeon malware`)).kill(),
     choices: () => {
       return {
@@ -166,7 +166,7 @@ const heroKeys: KeyTask[] = [
     post: () => {
       uneffect($effect`Apathy`);
     },
-    outfit: { equip: $items`ring of Detect Boring Doors`, modifier: "init" }, // Avoid apathy
+    outfit: { equip: $items`ring of Detect Boring Doors, candy cane sword cane`, modifier: "init" }, // Avoid apathy
     combat: new CombatStrategy().kill(),
     choices: () => {
       return {

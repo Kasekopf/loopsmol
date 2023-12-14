@@ -24,7 +24,6 @@ import {
   $monster,
   $monsters,
   $skill,
-  Counter,
   get,
   have,
   Macro,
@@ -214,7 +213,11 @@ const Apartment: Task[] = [
       else return [$monster`pygmy shaman`];
     },
     post: makeCompleteFile,
-    outfit: { equip: $items`miniature crystal ball` },
+    outfit: () => {
+      if (have($effect`Twice-Cursed`) && $location`The Hidden Apartment Building`.turnsSpent === 8)
+        return { equip: $items`candy cane sword cane, miniature crystal ball` };
+      return { equip: $items`miniature crystal ball` };
+    },
     choices: { 780: 1 },
     limit: { soft: 9 },
   },
@@ -393,12 +396,7 @@ const Bowling: Task[] = [
         : Priorities.None,
     ready: () =>
       myMeat() >= 500 &&
-      (get("hiddenBowlingAlleyProgress") +
-        itemAmount($item`bowling ball`) +
-        closetAmount($item`bowling ball`) <
-        5 ||
-        Counter.get("Spooky VHS Tape Monster") === 0 ||
-        get("spookyVHSTapeMonster") !== $monster`pygmy bowler`),
+      (!bowlingBallsGathered() || get("spookyVHSTapeMonster") !== $monster`pygmy bowler`),
     acquire: [{ item: $item`Bowl of Scorpions`, optional: true }],
     completed: () => get("hiddenBowlingAlleyProgress") >= 7,
     prepare: () => {
@@ -408,12 +406,7 @@ const Bowling: Task[] = [
         buy($item`Bowl of Scorpions`);
       }
       // Backload the bowling balls due to banish timers
-      if (
-        get("hiddenBowlingAlleyProgress") +
-          itemAmount($item`bowling ball`) +
-          closetAmount($item`bowling ball`) <
-        6
-      ) {
+      if (bowlingBallsGathered()) {
         if (have($item`bowling ball`))
           putCloset($item`bowling ball`, itemAmount($item`bowling ball`));
       } else {
@@ -446,14 +439,13 @@ const Bowling: Task[] = [
       } else if (have($familiar`Grey Goose`) && familiarWeight($familiar`Grey Goose`) >= 6) {
         result.familiar = $familiar`Grey Goose`;
       }
+
+      if (bowlingBallsGathered() && !get("candyCaneSwordBowlingAlley", false)) {
+        result.equip?.push($item`candy cane sword cane`);
+      }
       return result;
     },
-    ignore_banishes: () =>
-      get("hiddenBowlingAlleyProgress") +
-        itemAmount($item`bowling ball`) +
-        closetAmount($item`bowling ball`) +
-        (get("spookyVHSTapeMonster") === $monster`pygmy bowler` ? 1 : 0) >=
-      6,
+    ignore_banishes: () => bowlingBallsGathered(),
     map_the_monster: () => {
       if (
         itemAmount($item`bowling ball`) === 0 &&
@@ -477,6 +469,17 @@ const Bowling: Task[] = [
     freeaction: true,
   },
 ];
+
+function bowlingBallsGathered(): boolean {
+  let balls = 0;
+  balls += itemAmount($item`bowling ball`);
+  balls += closetAmount($item`bowling ball`);
+  if (get("spookyVHSTapeMonster") === $monster`pygmy bowler`) balls += 1;
+  if (have($item`candy cane sword cane`) && !get("candyCaneSwordBowlingAlley", false)) balls += 1;
+
+  const timesBowled = get("hiddenBowlingAlleyProgress") - 1;
+  return timesBowled + balls >= 5;
+}
 
 export const HiddenQuest: Quest = {
   name: "Hidden City",
