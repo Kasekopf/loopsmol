@@ -33,6 +33,7 @@ import {
   $item,
   $skill,
   $slot,
+  $slots,
   $stat,
   AsdonMartin,
   ensureEffect,
@@ -225,11 +226,11 @@ export function swapEquipmentForMp(mpgoal: number): [Slot, Item][] {
   const inventory_options = Object.entries(getInventory())
     .map((v) => Item.get(v[0]))
     .filter((item) => numericModifier(item, "Maximum MP") > 0 && canEquip(item));
-  for (const slot of Slot.all()) {
+  for (const slot of $slots`shirt, acc1, acc2, acc3, pants, back, hat`) {
     if (mpgoal <= myMaxmp()) break;
     if (slot === $slot`weapon` || slot === $slot`off-hand`) continue; // skip weapon handedness (for now)
+    if (slot === $slot`shirt` && !have($skill`Torso Awareness`)) continue;
     const item = equippedItem(slot);
-    if (item === $item`none`) continue;
 
     // Find an item in the same slot that gives more max MP
     const canonical_slot =
