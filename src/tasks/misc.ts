@@ -684,7 +684,9 @@ export const MiscQuest: Quest = {
             $location`The Smut Orc Logging Camp`,
             $location`The Goatlet`,
             $location`Vanya's Castle`,
-            $location`The Dark Elbow of the Woods`
+            $location`The Dark Elbow of the Woods`,
+            $location`The Dark Neck of the Woods`,
+            $location`The Dark Heart of the Woods`,
           );
         }
 
