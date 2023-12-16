@@ -294,14 +294,14 @@ const Zepplin: Task[] = [
     choices: () => {
       return {
         856: 1,
-        857: 1,
+        857: haveEquipped($item`candy cane sword cane`) ? 2 : 1,
         858: 1,
         866: 2,
         1432: 1,
       };
     },
     outfit: () => {
-      const sleazeitems = $items`deck of lewd playing cards`;
+      const sleazeitems = $items`candy cane sword cane, deck of lewd playing cards`;
       if (have($item`designer sweatpants`)) sleazeitems.push($item`designer sweatpants`);
       else if (have($item`transparent pants`)) sleazeitems.push($item`transparent pants`);
 
