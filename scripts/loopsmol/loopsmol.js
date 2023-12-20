@@ -13587,6 +13587,7 @@ var McLargeHugeQuest = {
     prepare: () => {
       fillHp();
     },
+    ready: () => !property_get("noncombatForcerActive"),
     do: template_string_$location(level8_templateObject23 || (level8_templateObject23 = level8_taggedTemplateLiteral(["Lair of the Ninja Snowmen"]))),
     outfit: () => {
       var spec = {
@@ -14465,7 +14466,7 @@ function fillHp() {
   }
 }
 ;// CONCATENATED MODULE: ./src/engine/priority.ts
-var priority_templateObject, priority_templateObject2, priority_templateObject3, priority_templateObject4, priority_templateObject5, priority_templateObject6, priority_templateObject7, priority_templateObject8, priority_templateObject9, priority_templateObject10, priority_templateObject11, priority_templateObject12, priority_templateObject13;
+var priority_templateObject, priority_templateObject2, priority_templateObject3, priority_templateObject4, priority_templateObject5, priority_templateObject6, priority_templateObject7, priority_templateObject8, priority_templateObject9, priority_templateObject10, priority_templateObject11, priority_templateObject12, priority_templateObject13, priority_templateObject14;
 function priority_taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 function priority_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = priority_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function priority_toConsumableArray(arr) { return priority_arrayWithoutHoles(arr) || priority_iterableToArray(arr) || priority_unsupportedIterableToArray(arr) || priority_nonIterableSpread(); }
@@ -14761,11 +14762,11 @@ var Prioritization = /*#__PURE__*/function () {
       // Prefer tasks where the cosmic bowling ball is useful
       var ball_useful = task.combat === undefined || task.combat.can("ignore") || task.combat.can("banish") || task.combat.getDefaultAction() === undefined;
       var ball_may_not_be_useful = ((_task$combat3 = task.combat) === null || _task$combat3 === void 0 ? void 0 : _task$combat3.can("kill")) || ((_task$combat4 = task.combat) === null || _task$combat4 === void 0 ? void 0 : _task$combat4.can("killHard")) || ((_task$combat5 = task.combat) === null || _task$combat5 === void 0 ? void 0 : _task$combat5.can("killItem")) || ((_task$combat6 = task.combat) === null || _task$combat6 === void 0 ? void 0 : _task$combat6.can("killFree")) || ((_task$combat7 = task.combat) === null || _task$combat7 === void 0 ? void 0 : _task$combat7.can("forceItems")) || ((_task$combat8 = task.combat) === null || _task$combat8 === void 0 ? void 0 : _task$combat8.can("yellowRay"));
-      var location_blacklist = [template_string_$location(priority_templateObject6 || (priority_templateObject6 = priority_taggedTemplateLiteral(["The Shore, Inc. Travel Agency"]))), template_string_$location(priority_templateObject7 || (priority_templateObject7 = priority_taggedTemplateLiteral(["The Hidden Temple"]))), template_string_$location(priority_templateObject8 || (priority_templateObject8 = priority_taggedTemplateLiteral(["The Oasis"])))];
-      var location_whitelist = [template_string_$location(priority_templateObject9 || (priority_templateObject9 = priority_taggedTemplateLiteral(["The Haunted Bathroom"]))), template_string_$location(priority_templateObject10 || (priority_templateObject10 = priority_taggedTemplateLiteral(["The Castle in the Clouds in the Sky (Top Floor)"]))), template_string_$location(priority_templateObject11 || (priority_templateObject11 = priority_taggedTemplateLiteral(["Lair of the Ninja Snowmen"]))), template_string_$location(priority_templateObject12 || (priority_templateObject12 = priority_taggedTemplateLiteral(["The Batrat and Ratbat Burrow"])))];
+      var location_blacklist = [template_string_$location(priority_templateObject6 || (priority_templateObject6 = priority_taggedTemplateLiteral(["The Shore, Inc. Travel Agency"]))), template_string_$location(priority_templateObject7 || (priority_templateObject7 = priority_taggedTemplateLiteral(["The Hidden Temple"]))), template_string_$location(priority_templateObject8 || (priority_templateObject8 = priority_taggedTemplateLiteral(["The Oasis"]))), template_string_$location(priority_templateObject9 || (priority_templateObject9 = priority_taggedTemplateLiteral(["Lair of the Ninja Snowmen"])))];
+      var location_whitelist = [template_string_$location(priority_templateObject10 || (priority_templateObject10 = priority_taggedTemplateLiteral(["The Haunted Bathroom"]))), template_string_$location(priority_templateObject11 || (priority_templateObject11 = priority_taggedTemplateLiteral(["The Castle in the Clouds in the Sky (Top Floor)"]))), template_string_$location(priority_templateObject12 || (priority_templateObject12 = priority_taggedTemplateLiteral(["Lair of the Ninja Snowmen"]))), template_string_$location(priority_templateObject13 || (priority_templateObject13 = priority_taggedTemplateLiteral(["The Batrat and Ratbat Burrow"])))];
       var location_in_blacklist = task.do instanceof external_kolmafia_namespaceObject.Location && location_blacklist.includes(task.do);
       var location_in_whitelist = task.do instanceof external_kolmafia_namespaceObject.Location && location_whitelist.includes(task.do);
-      if (lib_have(template_string_$item(priority_templateObject13 || (priority_templateObject13 = priority_taggedTemplateLiteral(["cosmic bowling ball"])))) || property_get("cosmicBowlingBallReturnCombats") === 0) {
+      if (lib_have(template_string_$item(priority_templateObject14 || (priority_templateObject14 = priority_taggedTemplateLiteral(["cosmic bowling ball"])))) || property_get("cosmicBowlingBallReturnCombats") === 0) {
         if (location_in_whitelist || !task.freeaction && !task.freecombat && ball_useful && !ball_may_not_be_useful && !location_in_blacklist) {
           result.priorities.add(Priorities.CosmicBowlingBall);
         }
@@ -17501,7 +17502,7 @@ var Copperhead = [{
 }, {
   name: "Cold Snake",
   after: ["Copperhead Start", "McLargeHuge/Trapper Return"],
-  ready: () => shenItem(template_string_$item(level11_palindome_templateObject27 || (level11_palindome_templateObject27 = level11_palindome_taggedTemplateLiteral(["The First Pizza"])))),
+  ready: () => shenItem(template_string_$item(level11_palindome_templateObject27 || (level11_palindome_templateObject27 = level11_palindome_taggedTemplateLiteral(["The First Pizza"])))) && !property_get("noncombatForcerActive"),
   completed: () => step("questL11Shen") === 999 || lib_have(template_string_$item(level11_palindome_templateObject28 || (level11_palindome_templateObject28 = level11_palindome_taggedTemplateLiteral(["The First Pizza"])))) || (0,external_kolmafia_namespaceObject.myDaycount)() === 1 && step("questL11Shen") > 3,
   prepare: () => {
     (0,external_kolmafia_namespaceObject.restoreHp)((0,external_kolmafia_namespaceObject.myMaxhp)());
@@ -19961,7 +19962,7 @@ function checkRequirements() {
   }
 }
 ;// CONCATENATED MODULE: ./src/_git_commit.ts
-var lastCommitHash = "630d420";
+var lastCommitHash = "8aa488e";
 ;// CONCATENATED MODULE: ./src/main.ts
 var main_templateObject, main_templateObject2;
 function main_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = main_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
