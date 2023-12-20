@@ -109,6 +109,7 @@ export const McLargeHugeQuest: Quest = {
       prepare: () => {
         fillHp();
       },
+      ready: () => !get("noncombatForcerActive"),
       do: $location`Lair of the Ninja Snowmen`,
       outfit: () => {
         const spec: OutfitSpec = {

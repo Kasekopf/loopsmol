@@ -162,6 +162,7 @@ export class Prioritization {
       $location`The Shore, Inc. Travel Agency`,
       $location`The Hidden Temple`,
       $location`The Oasis`,
+      $location`Lair of the Ninja Snowmen`,
     ];
     const location_whitelist = [
       $location`The Haunted Bathroom`,
