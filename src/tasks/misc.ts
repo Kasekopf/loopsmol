@@ -131,7 +131,15 @@ export const MiscQuest: Quest = {
       choices: () => {
         const swordReady =
           haveEquipped($item`candy cane sword cane`) && get("candyCaneSwordShore", false);
-        return { 793: swordReady ? 5 : 1 };
+        return {
+          793: swordReady
+            ? 5
+            : byStat({
+                Muscle: 1,
+                Mysticality: 2,
+                Moxie: 3,
+              }),
+        };
       },
       limit: { tries: 5 },
     },
