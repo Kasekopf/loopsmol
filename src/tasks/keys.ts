@@ -101,12 +101,6 @@ const heroKeys: KeyTask[] = [
       ((!inHardcore() && (pullsRemaining() > 0 || myTurncount() >= 1000)) ||
         have($item`daily dungeon malware`)) &&
       (!have($item`Deck of Every Card`) || !have($skill`Lock Picking`)),
-    acquire: [
-      { item: $item`daily dungeon malware` },
-      { item: $item`Pick-O-Matic lockpicks`, optional: true },
-      { item: $item`eleven-foot pole`, optional: true },
-      { item: $item`ring of Detect Boring Doors`, optional: true },
-    ],
     ready: () =>
       step("questL13Final") !== -1 ||
       (have($item`Pick-O-Matic lockpicks`) &&
@@ -128,7 +122,7 @@ const heroKeys: KeyTask[] = [
       uneffect($effect`Apathy`);
       cliExecute("refresh inv");
     },
-    outfit: { equip: $items`ring of Detect Boring Doors, candy cane sword cane`, modifier: "init" }, // Avoid apathy
+    outfit: { equip: $items`ring of Detect Boring Doors, candy cane sword cane` },
     combat: new CombatStrategy().macro(new Macro().item($item`daily dungeon malware`)).kill(),
     choices: () => {
       return {
@@ -144,11 +138,6 @@ const heroKeys: KeyTask[] = [
   {
     which: Keys.Dungeon,
     possible: () => !get("dailyDungeonDone"),
-    acquire: [
-      { item: $item`Pick-O-Matic lockpicks`, optional: true },
-      { item: $item`eleven-foot pole`, optional: true },
-      { item: $item`ring of Detect Boring Doors`, optional: true },
-    ],
     ready: () =>
       step("questL13Final") !== -1 ||
       (have($item`Pick-O-Matic lockpicks`) &&
@@ -166,7 +155,7 @@ const heroKeys: KeyTask[] = [
     post: () => {
       uneffect($effect`Apathy`);
     },
-    outfit: { equip: $items`ring of Detect Boring Doors, candy cane sword cane`, modifier: "init" }, // Avoid apathy
+    outfit: { equip: $items`ring of Detect Boring Doors, candy cane sword cane` },
     combat: new CombatStrategy().kill(),
     choices: () => {
       return {
