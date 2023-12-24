@@ -19,6 +19,7 @@ import {
   $monster,
   $monsters,
   $skill,
+  byStat,
   DaylightShavings,
   ensureEffect,
   get,
@@ -127,7 +128,12 @@ const Desert: Task[] = [
     choices: () => {
       const swordReady =
         haveEquipped($item`candy cane sword cane`) && get("candyCaneSwordShore", false);
-      return { 793: swordReady ? 5 : 1 };
+      const statChoice = byStat({
+        Muscle: 1,
+        Mysticality: 2,
+        Moxie: 3,
+      });
+      return { 793: swordReady ? 5 : statChoice };
     },
     limit: { tries: 1 },
     freeaction: true,
@@ -313,10 +319,12 @@ const Pyramid: Task[] = [
     do: $location`The Middle Chamber`,
     limit: { soft: 30 },
     combat: new CombatStrategy()
-      .macro(
-        Macro.tryItem($item`tangle of rat tails`).trySkill($skill`Otoscope`),
-        $monster`tomb rat`
-      )
+      .macro(() => {
+        const result = Macro.tryItem($item`tangle of rat tails`).trySkill($skill`Otoscope`);
+        if (have($skill`Saucegeyser`))
+          return result.while_("!mpbelow 24", Macro.skill($skill`Saucegeyser`));
+        return result;
+      }, $monster`tomb rat`)
       .killItem([$monster`tomb rat`, $monster`tomb rat king`])
       .banish([$monster`tomb asp`, $monster`tomb servant`]),
     outfit: () => {

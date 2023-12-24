@@ -1,5 +1,5 @@
 import { getProperty, numericModifier, runChoice, runCombat, visitUrl } from "kolmafia";
-import { $item, $items, $monster, have } from "libram";
+import { $item, $items, $monster, $skill, have, Macro } from "libram";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Priorities } from "../engine/priority";
@@ -57,7 +57,14 @@ export const TavernQuest: Quest = {
           };
         return { modifier: "ML, +combat", equip: $items`old patched suit-pants` };
       },
-      combat: new CombatStrategy().killHard($monster`drunken rat king`).ignore(),
+      combat: new CombatStrategy()
+        .macro(() => {
+          if (have($skill`Saucegeyser`))
+            return Macro.while_("!mpbelow 24", Macro.skill($skill`Saucegeyser`));
+          else return new Macro();
+        })
+        .killHard($monster`drunken rat king`)
+        .ignore(),
       choices: () => {
         return {
           509: 1,
