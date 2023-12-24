@@ -250,6 +250,24 @@ export const pulls: PullSpec[] = [
   {
     pull: $item`Flash Liquidizer Ultra Dousing Accessory`,
   },
+  {
+    pull: $item`Shore Inc. Ship Trip Scrip`,
+    useful: () => {
+      let scripNeeded = 4;
+      scripNeeded -= itemAmount($item`Shore Inc. Ship Trip Scrip`);
+      if (
+        have($item`dinghy plans`) ||
+        have($item`dingy dinghy`) ||
+        have($item`junk junk`) ||
+        have($item`skeletal skiff`) ||
+        have($item`yellow submarine`)
+      )
+        scripNeeded -= 3;
+      if (have($item`UV-resistant compass`)) scripNeeded -= 1;
+      return scripNeeded > 0;
+    },
+    optional: true,
+  },
 ];
 
 class Pull {
