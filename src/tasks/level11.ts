@@ -121,7 +121,7 @@ const Desert: Task[] = [
     completed: () => have($item`Shore Inc. Ship Trip Scrip`) || have($item`UV-resistant compass`),
     do: $location`The Shore, Inc. Travel Agency`,
     outfit: () => {
-      if (get("candyCaneSwordShore", false)) return { equip: $items`candy cane sword cane` };
+      if (!get("candyCaneSwordShore", false)) return { equip: $items`candy cane sword cane` };
       else return {};
     },
     choices: () => {
