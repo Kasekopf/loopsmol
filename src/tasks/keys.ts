@@ -98,7 +98,7 @@ const heroKeys: KeyTask[] = [
     possible: () =>
       !get("dailyDungeonDone") &&
       have($item`candy cane sword cane`) &&
-      get("_lastDailyDungeonRoom") < 5 &&
+      get("_lastDailyDungeonRoom") < 10 &&
       !get("candyCaneSwordDailyDungeon", false),
     ready: () =>
       step("questL13Final") !== -1 ||
@@ -196,7 +196,13 @@ function dailyDungeonTask(): Omit<Task, "completed" | "name" | "after"> {
       cliExecute("refresh inv");
     },
     outfit: { equip: $items`ring of Detect Boring Doors, candy cane sword cane` },
-    combat: new CombatStrategy().macro(new Macro().item($item`daily dungeon malware`)).kill(),
+    combat: new CombatStrategy()
+      .macro(() => {
+        if (!get("_dailyDungeonMalwareUsed") && have($item`daily dungeon malware`))
+          return Macro.item($item`daily dungeon malware`);
+        return new Macro();
+      })
+      .kill(),
     choices: () => {
       return {
         689: 1,
