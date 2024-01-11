@@ -4,6 +4,7 @@ import {
   cliExecute,
   haveEquipped,
   itemAmount,
+  myMaxmp,
   myMeat,
   runChoice,
   use,
@@ -33,6 +34,7 @@ import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel, debug, haveLoathingIdolMicrophone } from "../lib";
 import { councilSafe } from "./level12";
+import { customRestoreMp } from "../engine/moods";
 
 const Diary: Task[] = [
   {
@@ -309,6 +311,9 @@ const Pyramid: Task[] = [
       if (haveLoathingIdolMicrophone()) {
         ensureEffect($effect`Spitting Rhymes`);
       }
+      if (have($item`tangle of rat tails`) && myMaxmp() >= 80) {
+        customRestoreMp(80); // Weaksauce + 3x saucegeyser
+      }
     },
     completed: () => {
       if (get("pyramidBombUsed")) return true;
@@ -320,7 +325,9 @@ const Pyramid: Task[] = [
     limit: { soft: 30 },
     combat: new CombatStrategy()
       .macro(() => {
-        const result = Macro.tryItem($item`tangle of rat tails`).trySkill($skill`Otoscope`);
+        const result = Macro.tryItem($item`tangle of rat tails`)
+          .trySkill($skill`Otoscope`)
+          .trySkill($skill`Curse of Weaksauce`);
         if (have($skill`Saucegeyser`))
           return result.while_("!mpbelow 24", Macro.skill($skill`Saucegeyser`));
         return result;
