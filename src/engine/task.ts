@@ -19,7 +19,7 @@ export type Task = {
   freeaction?: boolean | (() => boolean);
   freecombat?: boolean;
   limit: Limit;
-  expectbeatenup?: boolean;
+  expectbeatenup?: boolean | (() => boolean);
 
   // The monsters to search for with orb.
   // In addition, absorb targets are always searched with the orb.

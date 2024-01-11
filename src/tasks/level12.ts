@@ -142,6 +142,7 @@ const Lighthouse: Task[] = [
       })
       .kill($monster`lobsterfrogman`),
     orbtargets: () => undefined,
+    expectbeatenup: () => get("lastEncounter") === "Zerg Rush",
     choices: { 1387: 2 },
     limit: {
       tries: 20,
@@ -171,6 +172,7 @@ const Lighthouse: Task[] = [
     outfit: { modifier: "+combat" },
     combat: new CombatStrategy().kill($monster`lobsterfrogman`),
     orbtargets: () => undefined,
+    expectbeatenup: () => get("lastEncounter") === "Zerg Rush",
     limit: { soft: 40 },
   },
   {
