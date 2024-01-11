@@ -1467,7 +1467,7 @@ export function haveOre() {
 }
 
 function willWorkshedSwap() {
-  return false;  // Cold medicine cabinet does not currently finish
+  return false; // Cold medicine cabinet does not currently finish
 }
 
 export function trainSetAvailable() {
