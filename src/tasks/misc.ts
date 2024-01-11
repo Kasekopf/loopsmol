@@ -1467,11 +1467,7 @@ export function haveOre() {
 }
 
 function willWorkshedSwap() {
-  return (
-    args.major.swapworkshed &&
-    getWorkshed() === $item`cold medicine cabinet` &&
-    !get("_workshedItemUsed")
-  );
+  return false;  // Cold medicine cabinet does not currently finish
 }
 
 export function trainSetAvailable() {
