@@ -68,6 +68,10 @@ export const args = Args.create(
         help: "Number of spikolodon spikes to save (max 5).",
         default: 0,
       }),
+      savebackups: Args.number({
+        help: "Number of Backup Camera charges to save (max 11).",
+        default: 0,
+      }),
       voterbooth: Args.flag({
         help: "Attempt to use the voter booth if we have access.",
         default: true,

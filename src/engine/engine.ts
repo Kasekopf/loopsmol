@@ -194,7 +194,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     const backup = backupTargets.find(
       (target) => !target.completed() && target.monster === get("lastCopyableMonster")
     );
-    if (backup && have($item`backup camera`)) {
+    if (backup && have($item`backup camera`) && get("_backUpUses", 0) < args.savebackups) {
       const backup_outfit = undelay(backup.outfit) ?? {};
       if ("equip" in backup_outfit) backup_outfit.equip?.push($item`backup camera`);
       else backup_outfit.equip = [$item`backup camera`];
