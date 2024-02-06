@@ -119,17 +119,16 @@ const Diary: Task[] = [
 const Desert: Task[] = [
   {
     name: "Scrip",
-    after: ["Misc/Unlock Beach"],
+    after: ["Misc/Unlock Beach", "Misc/Unlock Island"],
     ready: () => myMeat() >= 6000 || (step("questL11Black") >= 4 && myMeat() >= 500),
     completed: () => have($item`Shore Inc. Ship Trip Scrip`) || have($item`UV-resistant compass`),
     do: $location`The Shore, Inc. Travel Agency`,
     outfit: () => {
-      if (!get("candyCaneSwordShore", false)) return { equip: $items`candy cane sword cane` };
+      if (!get("candyCaneSwordShore")) return { equip: $items`candy cane sword cane` };
       else return {};
     },
     choices: () => {
-      const swordReady =
-        haveEquipped($item`candy cane sword cane`) && get("candyCaneSwordShore", false);
+      const swordReady = haveEquipped($item`candy cane sword cane`) && !get("candyCaneSwordShore");
       const statChoice = byStat({
         Muscle: 1,
         Mysticality: 2,
