@@ -418,6 +418,7 @@ class PullStrategy {
       const options = this.pulls[i].items();
       if (options.includes(item)) {
         this.pulls[i].pull();
+        this.update();
         return true;
       }
     }
