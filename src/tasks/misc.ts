@@ -1165,7 +1165,8 @@ export const MiscQuest: Quest = {
         have($familiar`Frumious Bandersnatch`) &&
         have($item`Greatest American Pants`) &&
         have($skill`Flavour of Magic`) &&
-        have($skill`Cannelloni Cannon`),
+        have($skill`Cannelloni Cannon`) &&
+        have($skill`Saucegeyser`),
       priority: () => Priorities.Start,
       prepare: (): void => {
         if (get("snojoSetting") === null) {
@@ -1192,7 +1193,7 @@ export const MiscQuest: Quest = {
               "!pastround 27 && !hpbelow 100 && !mpbelow 8",
               new Macro().skill($skill`Cannelloni Cannon`)
             )
-            .trySkill($skill`Saucegeyser`)
+            .while_("!mpbelow 24", new Macro().skill($skill`Saucegeyser`))
             .attack()
             .repeat()
         )
