@@ -5,7 +5,6 @@ import {
   myAdventures,
   myFullness,
   myInebriety,
-  restoreMp,
   reverseNumberology,
   use,
   useSkill,
@@ -15,6 +14,7 @@ import { Priorities } from "../engine/priority";
 import { Quest } from "../engine/task";
 import { atLevel } from "../lib";
 import { args } from "../args";
+import { customRestoreMp } from "../engine/moods";
 
 export const DietQuest: Quest = {
   name: "Diet",
@@ -30,7 +30,7 @@ export const DietQuest: Quest = {
         have($effect`Ready to Eat`),
       completed: () => myFullness() > 0,
       do: () => {
-        restoreMp(20);
+        customRestoreMp(20);
         useSkill($skill`Cannelloni Cocoon`);
         if (have($item`milk of magnesium`) && !get("_milkOfMagnesiumUsed"))
           use($item`milk of magnesium`);
@@ -56,7 +56,7 @@ export const DietQuest: Quest = {
         myInebriety() === 1 || (!have($item`astral pilsner`) && !have($item`astral six-pack`)),
       do: () => {
         if (have($item`astral six-pack`)) use($item`astral six-pack`);
-        restoreMp(20);
+        customRestoreMp(20);
         useSkill($skill`Cannelloni Cocoon`);
         if (!args.minor.skipmug) drink(1, $item`Frosty's frosty mug`);
         drink(1, $item`astral pilsner`);
@@ -76,7 +76,7 @@ export const DietQuest: Quest = {
         get("_universeCalculated") >= get("skillLevel144") || get("_universeCalculated") >= 3,
       ready: () => myAdventures() > 0 && Object.keys(reverseNumberology()).includes("69"),
       do: (): void => {
-        restoreMp(1);
+        customRestoreMp(1);
         cliExecute("numberology 69");
       },
       limit: { tries: 5 },

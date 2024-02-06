@@ -10,7 +10,6 @@ import {
   myMp,
   myTurncount,
   restoreHp,
-  restoreMp,
   sell,
   use,
   visitUrl,
@@ -42,7 +41,7 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel, debug } from "../lib";
 import { forceItemPossible, yellowRayPossible } from "../engine/resources";
 import { args } from "../args";
-import { fillHp } from "../engine/moods";
+import { customRestoreMp, fillHp } from "../engine/moods";
 
 export function flyersDone(): boolean {
   return get("flyeredML") >= 10000;
@@ -205,7 +204,7 @@ const Junkyard: Task[] = [
     after: ["Junkyard Start"],
     prepare: (): void => {
       fillHp();
-      restoreMp(50);
+      customRestoreMp(50);
     },
     completed: () => have($item`molybdenum hammer`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
@@ -234,7 +233,7 @@ const Junkyard: Task[] = [
     after: ["Junkyard Start"],
     prepare: (): void => {
       fillHp();
-      restoreMp(50);
+      customRestoreMp(50);
     },
     completed: () =>
       have($item`molybdenum crescent wrench`) || get("sidequestJunkyardCompleted") !== "none",
@@ -265,7 +264,7 @@ const Junkyard: Task[] = [
     acquire: [{ item: $item`seal tooth` }],
     prepare: (): void => {
       fillHp();
-      restoreMp(50);
+      customRestoreMp(50);
     },
     completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
@@ -293,7 +292,7 @@ const Junkyard: Task[] = [
     after: ["Junkyard Start"],
     prepare: (): void => {
       fillHp();
-      restoreMp(50);
+      customRestoreMp(50);
     },
     completed: () =>
       have($item`molybdenum screwdriver`) || get("sidequestJunkyardCompleted") !== "none",
@@ -698,7 +697,7 @@ export const WarQuest: Quest = {
         return result;
       },
       prepare: () => {
-        if (oopsAllGropsReady() && myMp() < 30) restoreMp(30 - myMp());
+        if (oopsAllGropsReady() && myMp() < 30) customRestoreMp(30 - myMp());
       },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,

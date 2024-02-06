@@ -12,7 +12,6 @@ import {
   myMeat,
   myMp,
   numericModifier,
-  restoreMp,
   use,
   visitUrl,
 } from "kolmafia";
@@ -38,7 +37,7 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
-import { fillHp } from "../engine/moods";
+import { customRestoreMp, fillHp } from "../engine/moods";
 import { stenchPlanner } from "../engine/outfit";
 
 const ABoo: Task[] = [
@@ -122,8 +121,8 @@ const Oil: Task[] = [
     after: ["Start Peaks"],
     completed: () => get("oilPeakProgress") === 0,
     prepare: () => {
-      if (myMp() < 80 && myMaxmp() >= 80) restoreMp(80 - myMp());
-      if (myHp() < 100 && myMaxhp() >= 100) restoreMp(100 - myMp());
+      if (myMp() < 80 && myMaxmp() >= 80) customRestoreMp(80 - myMp());
+      if (myHp() < 100 && myMaxhp() >= 100) customRestoreMp(100 - myMp());
       if (numericModifier("Monster Level") < 100) changeMcd(10);
     },
     post: () => {

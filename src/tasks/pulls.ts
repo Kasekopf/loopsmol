@@ -350,7 +350,8 @@ class Pull {
 enum PullState {
   PULLED,
   READY,
-  MAYBE,
+  MAYBE_UNSURE, // Not sure if the item is needed.
+  MAYBE_IFROOM, // Not sure if there is room in the plan.
   UNNEEDED,
 }
 
@@ -360,7 +361,7 @@ class PullStrategy {
 
   constructor(pulls: PullSpec[]) {
     this.pulls = pulls.map((pull) => new Pull(pull));
-    this.enabled = pulls.map(() => PullState.MAYBE);
+    this.enabled = pulls.map(() => PullState.MAYBE_UNSURE);
   }
 
   public update(): void {
@@ -386,11 +387,11 @@ class PullStrategy {
           this.enabled[i] = PullState.UNNEEDED;
           continue;
         case true:
-          this.enabled[i] = count > 0 ? PullState.READY : PullState.MAYBE; // Only pull if there is room in the plan
+          this.enabled[i] = count > 0 ? PullState.READY : PullState.MAYBE_IFROOM;
           count--;
           continue;
         case undefined:
-          this.enabled[i] = PullState.MAYBE;
+          this.enabled[i] = PullState.MAYBE_UNSURE;
           count--;
           continue;
       }
@@ -399,6 +400,28 @@ class PullStrategy {
 
   public pullsUsed(): number {
     return get("_roninStoragePulls").split(",").length;
+  }
+
+  /**
+   * Attempt to pull the provided item without distrupting the plan.
+   *
+   * This will only work if the item is listed as a possible pull in the list,
+   * but its ready() method is returning undefined, so it is MAYBE_UNSURE in
+   * the current pull strategy.
+   *
+   * @param item The item to check.
+   * @returns True if the item was pulled.
+   */
+  public pullIfReady(item: Item): boolean {
+    for (let i = 0; i < this.pulls.length; i++) {
+      if (this.enabled[i] !== PullState.MAYBE_UNSURE) continue;
+      const options = this.pulls[i].items();
+      if (options.includes(item)) {
+        this.pulls[i].pull();
+        return true;
+      }
+    }
+    return false;
   }
 }
 
