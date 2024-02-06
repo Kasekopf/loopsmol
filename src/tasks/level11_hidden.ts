@@ -145,6 +145,7 @@ const Temple: Task[] = [
       cliExecute("dvorak");
       manualChoice(125, 3);
     },
+    outfit: { avoid: $items`June cleaver` },
     effects: $effects`Stone-Faced`,
     limit: { tries: 1 },
   },
