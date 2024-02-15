@@ -366,6 +366,17 @@ export function getRunawaySources(location?: Location) {
       banishes: true,
     },
     {
+      name: "Spring Shoes",
+      // eslint-disable-next-line libram/verify-constants
+      available: () => have($item`spring shoes`) && !have($effect`Everything Looks Green`),
+      // eslint-disable-next-line libram/verify-constants
+      do: new Macro().skill($skill`Spring Away`),
+      chance: () => 1,
+      // eslint-disable-next-line libram/verify-constants
+      equip: $item`spring shoes`,
+      banishes: false,
+    },
+    {
       name: "Bandersnatch",
       available: () =>
         runawayFamiliarPlan.available &&
