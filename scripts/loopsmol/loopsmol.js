@@ -8483,7 +8483,7 @@ var summonSources = [{
   summon: mon => {
     var _find;
     // Default to CheeseFax unless EasyFax is the only faxbot online
-    var faxbot = (_find = ["CheeseFax", "EasyFax"].find(bot => (0,external_kolmafia_namespaceObject.isOnline)(bot))) !== null && _find !== void 0 ? _find : "CheeseFax";
+    var faxbot = (_find = ["OnlyFax", "CheeseFax", "EasyFax"].find(bot => (0,external_kolmafia_namespaceObject.isOnline)(bot))) !== null && _find !== void 0 ? _find : "CheeseFax";
     for (var i = 0; i < 6; i++) {
       if (i % 3 === 0) (0,external_kolmafia_namespaceObject.chatPrivate)(faxbot, mon.name);
       (0,external_kolmafia_namespaceObject.wait)(10 + i);
@@ -20008,7 +20008,7 @@ function checkRequirements() {
   }
 }
 ;// CONCATENATED MODULE: ./src/_git_commit.ts
-var lastCommitHash = "32e77ce";
+var lastCommitHash = "0186157";
 ;// CONCATENATED MODULE: ./src/main.ts
 var main_templateObject, main_templateObject2;
 function main_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = main_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
