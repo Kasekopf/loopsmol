@@ -62,6 +62,7 @@ export const GiantQuest: Quest = {
       after: ["Start", "Get Bean"],
       completed: () => step("questL10Garbage") >= 1,
       do: () => use($item`enchanted bean`),
+      outfit: { equip: $items`spring shoes` },
       limit: { tries: 1 },
       freeaction: true,
     },
@@ -99,8 +100,8 @@ export const GiantQuest: Quest = {
         .macro(
           () =>
             have($item`Mohawk wig`) ||
-            !have($skill`Emotionally Chipped`) ||
-            get("_feelEnvyUsed") >= 3
+              !have($skill`Emotionally Chipped`) ||
+              get("_feelEnvyUsed") >= 3
               ? new Macro()
               : Macro.skill($skill`Feel Envy`).step(killMacro()),
           $monster`Burly Sidekick`
