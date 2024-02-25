@@ -324,7 +324,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     }
 
     // Setup a backup
-    if (task.backup) {
+    if (task.backup && args.minor.backups !== true) {
       if (!outfit.equip($item`backup camera`)) throw `Cannot force backup camera on ${task.name}`;
       if (task.backup.outfit && !outfit.equip(undelay(task.backup.outfit)))
         throw `Cannot match equip for backup ${task.backup.monster} on ${task.name}`;

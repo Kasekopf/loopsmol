@@ -25,6 +25,7 @@ import {
   toInt,
   totalTurnsPlayed,
   use,
+  useFamiliar,
   visitUrl,
 } from "kolmafia";
 import {
@@ -469,10 +470,27 @@ const famweightOptions: FamweightOption[] = [
 ];
 
 function planRunawayFamiliar(): RunawayFamiliarSpec {
-  const chosenFamiliar = $familiars`Frumious Bandersnatch, Pair of Stomping Boots`.find((f) =>
+  const bestFamiliar = $familiars`Frumious Bandersnatch, Pair of Stomping Boots`.find((f) =>
     have(f)
   );
+  const altFamiliar = have($familiar`Comma Chameleon`) &&
+    (get("commaFamiliar", "") === "Frumious Bandersnatch" || get("commaFamiliar", "") === "Pair of Stomping Boots" ||
+      $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`);
+
+  const chosenFamiliar = bestFamiliar !== undefined ? bestFamiliar : altFamiliar === true ? $familiar`Comma Chameleon` : false;
+
   if (chosenFamiliar) {
+
+    const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+      have(f)
+    );
+
+    if (chosenFamiliar === $familiar`Comma Chameleon` && commaItem !== undefined) {
+      useFamiliar($familiar`Comma Chameleon`);
+      visitUrl(
+        `inv_equip.php?which=2&action=equip&whichitem=${toInt(commaItem)}&pwd`
+      );
+    }
     const goalWeight = 5 * (1 + get("_banderRunaways"));
     let attainableWeight = familiarWeight(chosenFamiliar);
 

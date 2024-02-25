@@ -24,6 +24,10 @@ import { trainSetAvailable } from "./misc";
 import { yellowSubmarinePossible } from "../engine/outfit";
 import { underStandard } from "../lib";
 
+const bestCommaPull = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+  storageAmount(f) >= 1
+);
+
 /**
  * optional: If true, only pull this if there is one in storage (i.e., no mall buy).
  * useful: True if we need it, false if we don't, undefined if not sure yet.
@@ -269,6 +273,19 @@ export const pulls: PullSpec[] = [
     optional: true,
   },
 ];
+
+if (bestCommaPull !== undefined) {
+  pulls.push({
+    pull: bestCommaPull,
+    useful: () => {
+      if (bestCommaPull === undefined) return false;
+      if (have($familiar`Frumious Bandersnatch`) || have($familiar`Pair of Stomping Boots`)) return false;
+      if (!have($familiar`Comma Chameleon`)) return false;
+      return true;
+    },
+    optional: true,
+  });
+}
 
 class Pull {
   items: () => (Item | undefined)[];
