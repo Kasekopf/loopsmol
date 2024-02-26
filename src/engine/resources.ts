@@ -474,8 +474,7 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
     have(f)
   );
   const altFamiliar = have($familiar`Comma Chameleon`) &&
-    (get("commaFamiliar", "") === "Frumious Bandersnatch" || get("commaFamiliar", "") === "Pair of Stomping Boots" ||
-      $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`);
+    (get("commaFamiliar", "") === "Frumious Bandersnatch" || get("commaFamiliar", "") === "Pair of Stomping Boots");
 
   const chosenFamiliar = bestFamiliar !== undefined ? bestFamiliar : altFamiliar === true ? $familiar`Comma Chameleon` : false;
 
@@ -736,19 +735,19 @@ export const backupTargets: BackupTarget[] = [
     completed: () =>
       (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
       have($item`Richard's star key`) ||
-      get("nsTowerDoorKeysUsed").includes("Richard's star key"),
+      get("nsTowerDoorKeysUsed").includes("Richard's star key") || args.minor.backups,
     outfit: { modifier: "item" },
     limit_tries: 3,
   },
   {
     monster: $monster`mountain man`,
-    completed: () => oresNeeded() === 0,
+    completed: () => oresNeeded() === 0 || args.minor.backups,
     outfit: { modifier: "item" },
     limit_tries: 2,
   },
   {
     monster: $monster`Eldritch Tentacle`,
-    completed: () => false,
+    completed: () => args.minor.backups,
     limit_tries: 11,
   },
 ];
