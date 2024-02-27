@@ -5,6 +5,7 @@ import {
   Familiar,
   familiarWeight,
   getFuel,
+  getProperty,
   getWorkshed,
   haveEquipped,
   Item,
@@ -399,6 +400,17 @@ export function getRunawaySources(location?: Location) {
       banishes: false,
     },
     {
+      name: "Comma Chameleon",
+      available: () =>
+        runawayFamiliarPlan.available &&
+        runawayFamiliarPlan.outfit.familiar === $familiar`Comma Chameleon`,
+      equip: runawayFamiliarPlan.outfit,
+      do: new Macro().runaway(),
+      chance: () => 1,
+      effect: $effect`Ode to Booze`,
+      banishes: false,
+    },
+    {
       name: "Asdon Martin",
       available: (): boolean => {
         if (!asdonFualable(50)) return false;
@@ -474,7 +486,9 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
     have(f)
   );
   const altFamiliar = have($familiar`Comma Chameleon`) &&
-    (get("commaFamiliar", "") === "Frumious Bandersnatch" || get("commaFamiliar", "") === "Pair of Stomping Boots");
+    (getProperty("commaFamiliar") === "Frumious Bandersnatch" ||
+      getProperty("commaFamiliar") === "Pair of Stomping Boots" ||
+      getProperty("_commaRunDone"));
 
   const chosenFamiliar = bestFamiliar !== undefined ? bestFamiliar : altFamiliar === true ? $familiar`Comma Chameleon` : false;
 

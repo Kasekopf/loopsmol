@@ -13,6 +13,8 @@ import {
   myTurncount,
   pullsRemaining,
   storageAmount,
+  toInt,
+  visitUrl,
 } from "kolmafia";
 import { $familiar, $item, $items, $skill, get, have, set } from "libram";
 import { args } from "../args";
@@ -282,6 +284,13 @@ if (bestCommaPull !== undefined) {
       if (have($familiar`Frumious Bandersnatch`) || have($familiar`Pair of Stomping Boots`)) return false;
       if (!have($familiar`Comma Chameleon`)) return false;
       return true;
+    },
+    post: () => {
+      visitUrl(
+        `inv_equip.php?which=2&action=equip&whichitem=${toInt(bestCommaPull)}&pwd`
+      );
+      visitUrl("charpane.php");
+      cliExecute("set _commaRunDone = true");
     },
     optional: true,
   });
