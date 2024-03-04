@@ -1,6 +1,7 @@
 import {
   buyUsingStorage,
   cliExecute,
+  getProperty,
   inHardcore,
   isUnrestricted,
   Item,
@@ -26,7 +27,7 @@ import { trainSetAvailable } from "./misc";
 import { yellowSubmarinePossible } from "../engine/outfit";
 import { underStandard } from "../lib";
 
-const bestCommaPull = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+const bestCommaPull = getProperty("commaFamiliar") !== "" ? undefined : $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
   storageAmount(f) >= 1
 );
 
