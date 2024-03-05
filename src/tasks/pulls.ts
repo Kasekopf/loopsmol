@@ -27,10 +27,6 @@ import { trainSetAvailable } from "./misc";
 import { yellowSubmarinePossible } from "../engine/outfit";
 import { underStandard } from "../lib";
 
-const bestCommaPull = getProperty("commaFamiliar") !== "" ? undefined : $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
-  storageAmount(f) >= 1
-);
-
 /**
  * optional: If true, only pull this if there is one in storage (i.e., no mall buy).
  * useful: True if we need it, false if we don't, undefined if not sure yet.
@@ -187,6 +183,22 @@ export const pulls: PullSpec[] = [
     name: "Runaway IoTM",
   },
   {
+    pull: $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`,
+    optional: true,
+    name: "Runaway Comma IoTM",
+    post: () => {
+      const bestCommaPull = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+        have(f));
+      if (bestCommaPull !== undefined) {
+        visitUrl(
+          `inv_equip.php?which=2&action=equip&whichitem=${toInt(bestCommaPull)}&pwd`
+        );
+        visitUrl("charpane.php");
+        cliExecute("set _commaRunDone = true");
+      }
+    },
+  },
+  {
     pull: $item`ring of conflict`, // Last chance for -5% combat frequency
     useful: () =>
       !have($item`unbreakable umbrella`) &&
@@ -276,26 +288,6 @@ export const pulls: PullSpec[] = [
     optional: true,
   },
 ];
-
-if (bestCommaPull !== undefined) {
-  pulls.push({
-    pull: bestCommaPull,
-    useful: () => {
-      if (bestCommaPull === undefined) return false;
-      if (have($familiar`Frumious Bandersnatch`) || have($familiar`Pair of Stomping Boots`)) return false;
-      if (!have($familiar`Comma Chameleon`)) return false;
-      return true;
-    },
-    post: () => {
-      visitUrl(
-        `inv_equip.php?which=2&action=equip&whichitem=${toInt(bestCommaPull)}&pwd`
-      );
-      visitUrl("charpane.php");
-      cliExecute("set _commaRunDone = true");
-    },
-    optional: true,
-  });
-}
 
 class Pull {
   items: () => (Item | undefined)[];
