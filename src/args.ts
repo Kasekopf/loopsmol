@@ -56,7 +56,7 @@ export const args = Args.create(
         help: "Always equip the combat lover's locket, in order to get monsters inside quickly.",
         default: false,
       }),
-      backups: Args.flag({
+      skipbackups: Args.flag({
         help: "Don't use any Backup Camera Backups.",
         default: false,
       }),

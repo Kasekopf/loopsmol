@@ -80,6 +80,10 @@ export interface BanishSource extends CombatResource {
   do: Item | Skill;
 }
 
+const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+  have(f)
+);
+
 const banishSources: BanishSource[] = [
   {
     name: "Bowl Curveball",
@@ -282,37 +286,6 @@ export const wandererSources: WandererSource[] = [
     possible: () => myFamiliar() === $familiar`Artistic Goth Kid`,
   },
   {
-    name: "Comma Goth",
-    available: () => have($familiar`Comma Chameleon`) && get("_hipsterAdv") < 7 && getProperty("commaFamiliar") === "Artistic Goth Kid",
-    equip: $familiar`Comma Chameleon`,
-    monsters: [
-      $monster`Black Crayon Beast`,
-      $monster`Black Crayon Beetle`,
-      $monster`Black Crayon Constellation`,
-      $monster`Black Crayon Golem`,
-      $monster`Black Crayon Demon`,
-      $monster`Black Crayon Man`,
-      $monster`Black Crayon Elemental`,
-      $monster`Black Crayon Crimbo Elf`,
-      $monster`Black Crayon Fish`,
-      $monster`Black Crayon Goblin`,
-      $monster`Black Crayon Hippy`,
-      $monster`Black Crayon Hobo`,
-      $monster`Black Crayon Shambling Monstrosity`,
-      $monster`Black Crayon Manloid`,
-      $monster`Black Crayon Mer-kin`,
-      $monster`Black Crayon Frat Orc`,
-      $monster`Black Crayon Penguin`,
-      $monster`Black Crayon Pirate`,
-      $monster`Black Crayon Flower`,
-      $monster`Black Crayon Slime`,
-      $monster`Black Crayon Undead Thing`,
-      $monster`Black Crayon Spiraling Shape`,
-    ],
-    chance: () => [0.5, 0.4, 0.3, 0.2, 0.1, 0.1, 0.1, 0][get("_hipsterAdv")],
-    possible: () => myFamiliar() === $familiar`Comma Chameleon`,
-  },
-  {
     name: "Hipster",
     available: () => have($familiar`Mini-Hipster`) && get("_hipsterAdv") < 7,
     equip: $familiar`Mini-Hipster`,
@@ -325,20 +298,6 @@ export const wandererSources: WandererSource[] = [
     ],
     chance: () => [0.5, 0.4, 0.3, 0.2, 0.1, 0.1, 0.1, 0][get("_hipsterAdv")],
     possible: () => myFamiliar() === $familiar`Mini-Hipster`,
-  },
-  {
-    name: "Comma Hipster",
-    available: () => have($familiar`Comma Chameleon`) && get("_hipsterAdv") < 7 && getProperty("commaFamiliar") === "Mini-Hipster",
-    equip: $familiar`Comma Chameleon`,
-    monsters: [
-      $monster`angry bassist`,
-      $monster`blue-haired girl`,
-      $monster`evil ex-girlfriend`,
-      $monster`peeved roommate`,
-      $monster`random scenester`,
-    ],
-    chance: () => [0.5, 0.4, 0.3, 0.2, 0.1, 0.1, 0.1, 0][get("_hipsterAdv")],
-    possible: () => myFamiliar() === $familiar`Comma Chameleon`,
   },
   {
     name: "Kramco",
@@ -446,6 +405,14 @@ export function getRunawaySources(location?: Location) {
     },
     {
       name: "Comma Chameleon",
+      prepare: (): void => {
+        if (commaItem !== undefined) {
+          useFamiliar($familiar`Comma Chameleon`);
+          visitUrl(
+            `inv_equip.php?which=2&action=equip&whichitem=${toInt(commaItem)}&pwd`
+          );
+        }
+      },
       available: () =>
         runawayFamiliarPlan.available &&
         runawayFamiliarPlan.outfit.familiar === $familiar`Comma Chameleon`,
@@ -539,16 +506,6 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
 
   if (chosenFamiliar) {
 
-    const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
-      have(f)
-    );
-
-    if (chosenFamiliar === $familiar`Comma Chameleon` && commaItem !== undefined) {
-      useFamiliar($familiar`Comma Chameleon`);
-      visitUrl(
-        `inv_equip.php?which=2&action=equip&whichitem=${toInt(commaItem)}&pwd`
-      );
-    }
     const goalWeight = 5 * (1 + get("_banderRunaways"));
     let attainableWeight = familiarWeight(chosenFamiliar);
 
@@ -794,19 +751,19 @@ export const backupTargets: BackupTarget[] = [
     completed: () =>
       (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
       have($item`Richard's star key`) ||
-      get("nsTowerDoorKeysUsed").includes("Richard's star key") || args.minor.backups,
+      get("nsTowerDoorKeysUsed").includes("Richard's star key") || args.minor.skipbackups,
     outfit: { modifier: "item" },
     limit_tries: 3,
   },
   {
     monster: $monster`mountain man`,
-    completed: () => oresNeeded() === 0 || args.minor.backups,
+    completed: () => oresNeeded() === 0 || args.minor.skipbackups,
     outfit: { modifier: "item" },
     limit_tries: 2,
   },
   {
     monster: $monster`Eldritch Tentacle`,
-    completed: () => args.minor.backups,
+    completed: () => args.minor.skipbackups,
     limit_tries: 11,
   },
 ];
