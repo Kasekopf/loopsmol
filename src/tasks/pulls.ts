@@ -1,7 +1,6 @@
 import {
   buyUsingStorage,
   cliExecute,
-  getProperty,
   inHardcore,
   isUnrestricted,
   Item,
