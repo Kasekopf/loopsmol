@@ -557,6 +557,14 @@ export const freekillSources: FreekillSource[] = [
     equip: { equip: $items`Jurassic Parka`, modes: { parka: "dilophosaur" } },
     do: $skill`Spit jurassic acid`,
   },
+  {
+    name: "Everfull Dart Holster",
+    available: () =>
+      have($item`Everfull Dart Holster`) &&
+      !have($effect`Everything Looks Red`),
+    equip: { equip: $items`Everfull Dart Holster` },
+    do: $skill`Darts: Aim for the Bullseye`,
+  },
 ];
 
 /**
