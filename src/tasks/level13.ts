@@ -525,7 +525,7 @@ export const TowerQuest: Quest = {
             modifier: "spell dmg, myst",
             equip: $items`meteorb, unwrapped knock-off retro superhero cape`,
             modes: { retrocape: ["heck", "kill"] },
-            familiar: $familiar`none`, // Familiar actions can cause wall of bones to insta-kill us
+            familiar: $familiar`none`, // Familiar actions can cause wall of bones to heal
           };
         return {};
       },
