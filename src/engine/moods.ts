@@ -21,10 +21,12 @@ import {
   restoreHp,
   restoreMp,
   retrieveItem,
+  Skill,
   Slot,
   toSkill,
   toSlot,
   use,
+  useSkill,
   visitUrl,
 } from "kolmafia";
 import {
@@ -216,6 +218,24 @@ export function ensureWithMPSwaps(effects: Effect[]) {
     }
     if (myMp() < mpcost) customRestoreMp(mpcost);
     ensureEffect(effect);
+  }
+
+  // If we hotswapped equipment, restore our old equipment (in-reverse, to work well if we moved equipment around)
+  hotswapped.reverse();
+  for (const [slot, item] of hotswapped) equip(item, slot);
+}
+
+export function castWithMpSwaps(skills: Skill[]) {
+  // Apply all relevant effects
+  const hotswapped: [Slot, Item][] = []; //
+  for (const skill of skills) {
+    // If we don't have the MP for this skill, hotswap some equipment
+    const mpcost = mpCost(skill);
+    if (mpcost > myMaxmp()) {
+      hotswapped.push(...swapEquipmentForMp(mpcost));
+    }
+    if (myMp() < mpcost) customRestoreMp(mpcost);
+    useSkill(skill);
   }
 
   // If we hotswapped equipment, restore our old equipment (in-reverse, to work well if we moved equipment around)

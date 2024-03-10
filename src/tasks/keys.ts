@@ -16,7 +16,6 @@ import {
   runChoice,
   storageAmount,
   totalTurnsPlayed,
-  useSkill,
   visitUrl,
 } from "kolmafia";
 import {
@@ -46,7 +45,7 @@ import { Priorities } from "../engine/priority";
 import { args } from "../args";
 import { trainSetAvailable } from "./misc";
 import { atLevel, haveFlorest, underStandard } from "../lib";
-import { ensureWithMPSwaps } from "../engine/moods";
+import { castWithMpSwaps, ensureWithMPSwaps } from "../engine/moods";
 
 export enum Keys {
   Deck = "Deck",
@@ -84,7 +83,7 @@ const heroKeys: KeyTask[] = [
     after: [],
     priority: () => Priorities.Free,
     completed: () => !have($skill`Lock Picking`) || get("lockPicked"),
-    do: () => useSkill($skill`Lock Picking`),
+    do: () => castWithMpSwaps([$skill`Lock Picking`]),
     choices: () => {
       return {
         1414: have($item`Boris's key`) ? (have($item`Jarlsberg's key`) ? 3 : 2) : 1,
