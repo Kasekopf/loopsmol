@@ -187,7 +187,7 @@ export function applyEffects(modifier: string, other_effects: Effect[]): void {
   ensureWithMPSwaps(useful_effects);
 
   // Use asdon martin
-  if (getWorkshed() === $item`Asdon Martin keyfob` && asdonFualable(37)) {
+  if (getWorkshed() === $item`Asdon Martin keyfob (on ring)` && asdonFualable(37)) {
     // if (modifier.includes("-combat")) AsdonMartin.drive(AsdonMartin.Driving.Stealthily);
     // else if (modifier.includes("+combat")) AsdonMartin.drive(AsdonMartin.Driving.Obnoxiously);
     // else if (modifier.includes("init")) AsdonMartin.drive(AsdonMartin.Driving.Quickly);
