@@ -18319,7 +18319,7 @@ function beeOption() {
   return 1;
 }
 ;// CONCATENATED MODULE: ./src/tasks/level13.ts
-var level13_templateObject, level13_templateObject2, level13_templateObject3, level13_templateObject4, level13_templateObject5, level13_templateObject6, level13_templateObject7, level13_templateObject8, level13_templateObject9, level13_templateObject10, level13_templateObject11, level13_templateObject12, level13_templateObject13, level13_templateObject14, level13_templateObject15, level13_templateObject16, level13_templateObject17, level13_templateObject18, level13_templateObject19, level13_templateObject20, level13_templateObject21, level13_templateObject22, level13_templateObject23, level13_templateObject24, level13_templateObject25, level13_templateObject26, level13_templateObject27, level13_templateObject28, level13_templateObject29, level13_templateObject30, level13_templateObject31, level13_templateObject32, level13_templateObject33, level13_templateObject34, level13_templateObject35, level13_templateObject36, level13_templateObject37, level13_templateObject38, level13_templateObject39, level13_templateObject40, level13_templateObject41, level13_templateObject42, level13_templateObject43, level13_templateObject44, level13_templateObject45, level13_templateObject46, level13_templateObject47, level13_templateObject48, level13_templateObject49, level13_templateObject50, level13_templateObject51, level13_templateObject52, level13_templateObject53, level13_templateObject54, level13_templateObject55, level13_templateObject56, level13_templateObject57, level13_templateObject58, level13_templateObject59, level13_templateObject60, level13_templateObject61, level13_templateObject62, level13_templateObject63, level13_templateObject64, level13_templateObject65, level13_templateObject66, level13_templateObject67, level13_templateObject68, level13_templateObject69, level13_templateObject70, level13_templateObject71, level13_templateObject72, level13_templateObject73, level13_templateObject74, level13_templateObject75, level13_templateObject76, level13_templateObject77, level13_templateObject78, level13_templateObject79, level13_templateObject80, level13_templateObject81, level13_templateObject82, level13_templateObject83, level13_templateObject84, level13_templateObject85, level13_templateObject86, level13_templateObject87, level13_templateObject88, level13_templateObject89, level13_templateObject90, level13_templateObject91, level13_templateObject92, level13_templateObject93, level13_templateObject94, level13_templateObject95, level13_templateObject96, level13_templateObject97, level13_templateObject98, level13_templateObject99, level13_templateObject100, level13_templateObject101, level13_templateObject102, level13_templateObject103, level13_templateObject104, level13_templateObject105, level13_templateObject106, level13_templateObject107, level13_templateObject108, level13_templateObject109, level13_templateObject110, level13_templateObject111, level13_templateObject112, level13_templateObject113, level13_templateObject114, level13_templateObject115, level13_templateObject116, level13_templateObject117, level13_templateObject118, level13_templateObject119, level13_templateObject120, level13_templateObject121, level13_templateObject122, level13_templateObject123, level13_templateObject124;
+var level13_templateObject, level13_templateObject2, level13_templateObject3, level13_templateObject4, level13_templateObject5, level13_templateObject6, level13_templateObject7, level13_templateObject8, level13_templateObject9, level13_templateObject10, level13_templateObject11, level13_templateObject12, level13_templateObject13, level13_templateObject14, level13_templateObject15, level13_templateObject16, level13_templateObject17, level13_templateObject18, level13_templateObject19, level13_templateObject20, level13_templateObject21, level13_templateObject22, level13_templateObject23, level13_templateObject24, level13_templateObject25, level13_templateObject26, level13_templateObject27, level13_templateObject28, level13_templateObject29, level13_templateObject30, level13_templateObject31, level13_templateObject32, level13_templateObject33, level13_templateObject34, level13_templateObject35, level13_templateObject36, level13_templateObject37, level13_templateObject38, level13_templateObject39, level13_templateObject40, level13_templateObject41, level13_templateObject42, level13_templateObject43, level13_templateObject44, level13_templateObject45, level13_templateObject46, level13_templateObject47, level13_templateObject48, level13_templateObject49, level13_templateObject50, level13_templateObject51, level13_templateObject52, level13_templateObject53, level13_templateObject54, level13_templateObject55, level13_templateObject56, level13_templateObject57, level13_templateObject58, level13_templateObject59, level13_templateObject60, level13_templateObject61, level13_templateObject62, level13_templateObject63, level13_templateObject64, level13_templateObject65, level13_templateObject66, level13_templateObject67, level13_templateObject68, level13_templateObject69, level13_templateObject70, level13_templateObject71, level13_templateObject72, level13_templateObject73, level13_templateObject74, level13_templateObject75, level13_templateObject76, level13_templateObject77, level13_templateObject78, level13_templateObject79, level13_templateObject80, level13_templateObject81, level13_templateObject82, level13_templateObject83, level13_templateObject84, level13_templateObject85, level13_templateObject86, level13_templateObject87, level13_templateObject88, level13_templateObject89, level13_templateObject90, level13_templateObject91, level13_templateObject92, level13_templateObject93, level13_templateObject94, level13_templateObject95, level13_templateObject96, level13_templateObject97, level13_templateObject98, level13_templateObject99, level13_templateObject100, level13_templateObject101, level13_templateObject102, level13_templateObject103, level13_templateObject104, level13_templateObject105, level13_templateObject106, level13_templateObject107, level13_templateObject108, level13_templateObject109, level13_templateObject110, level13_templateObject111, level13_templateObject112, level13_templateObject113, level13_templateObject114, level13_templateObject115, level13_templateObject116, level13_templateObject117, level13_templateObject118, level13_templateObject119, level13_templateObject120, level13_templateObject121, level13_templateObject122;
 function level13_taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
@@ -18845,15 +18845,16 @@ var TowerQuest = {
         modes: {
           retrocape: ["heck", "kill"]
         },
-        familiar: lib_have(template_string_$familiar(level13_templateObject103 || (level13_templateObject103 = level13_taggedTemplateLiteral(["Left-Hand Man"])))) ? template_string_$familiar(level13_templateObject104 || (level13_templateObject104 = level13_taggedTemplateLiteral(["Left-Hand Man"]))) : template_string_$familiar(level13_templateObject105 || (level13_templateObject105 = level13_taggedTemplateLiteral(["none"])))
+        familiar: template_string_$familiar(level13_templateObject103 || (level13_templateObject103 = level13_taggedTemplateLiteral(["none"]))) // Familiar actions can cause wall of bones to heal
       };
+
       return {};
     },
     combat: new combat_CombatStrategy().macro(() => {
-      if (lib_have(template_string_$item(level13_templateObject106 || (level13_templateObject106 = level13_taggedTemplateLiteral(["electric boning knife"]))))) return Macro.item(template_string_$item(level13_templateObject107 || (level13_templateObject107 = level13_taggedTemplateLiteral(["electric boning knife"]))));
-      if ((0,external_kolmafia_namespaceObject.haveEquipped)(template_string_$item(level13_templateObject108 || (level13_templateObject108 = level13_taggedTemplateLiteral(["Great Wolf's rocket launcher"]))))) return Macro.skill($skill(level13_templateObject109 || (level13_templateObject109 = level13_taggedTemplateLiteral(["Fire Rocket"]))));
-      if (lib_have(template_string_$item(level13_templateObject110 || (level13_templateObject110 = level13_taggedTemplateLiteral(["Drunkula's bell"]))))) return Macro.item(template_string_$item(level13_templateObject111 || (level13_templateObject111 = level13_taggedTemplateLiteral(["Drunkula's bell"]))));
-      if (lib_have($skill(level13_templateObject112 || (level13_templateObject112 = level13_taggedTemplateLiteral(["Garbage Nova"]))))) return Macro.skill($skill(level13_templateObject113 || (level13_templateObject113 = level13_taggedTemplateLiteral(["Garbage Nova"])))).repeat();
+      if (lib_have(template_string_$item(level13_templateObject104 || (level13_templateObject104 = level13_taggedTemplateLiteral(["electric boning knife"]))))) return Macro.item(template_string_$item(level13_templateObject105 || (level13_templateObject105 = level13_taggedTemplateLiteral(["electric boning knife"]))));
+      if ((0,external_kolmafia_namespaceObject.haveEquipped)(template_string_$item(level13_templateObject106 || (level13_templateObject106 = level13_taggedTemplateLiteral(["Great Wolf's rocket launcher"]))))) return Macro.skill($skill(level13_templateObject107 || (level13_templateObject107 = level13_taggedTemplateLiteral(["Fire Rocket"]))));
+      if (lib_have(template_string_$item(level13_templateObject108 || (level13_templateObject108 = level13_taggedTemplateLiteral(["Drunkula's bell"]))))) return Macro.item(template_string_$item(level13_templateObject109 || (level13_templateObject109 = level13_taggedTemplateLiteral(["Drunkula's bell"]))));
+      if (lib_have($skill(level13_templateObject110 || (level13_templateObject110 = level13_taggedTemplateLiteral(["Garbage Nova"]))))) return Macro.skill($skill(level13_templateObject111 || (level13_templateObject111 = level13_taggedTemplateLiteral(["Garbage Nova"])))).repeat();
       throw "Unable to find way to kill Wall of Bones";
     }),
     boss: true,
@@ -18864,10 +18865,10 @@ var TowerQuest = {
     name: "Mirror",
     after: ["Wall of Bones", "Wand"],
     acquire: [{
-      item: template_string_$item(level13_templateObject114 || (level13_templateObject114 = level13_taggedTemplateLiteral(["Wand of Nagamar"])))
+      item: template_string_$item(level13_templateObject112 || (level13_templateObject112 = level13_taggedTemplateLiteral(["Wand of Nagamar"])))
     }],
     completed: () => step("questL13Final") > 9,
-    do: template_string_$location(level13_templateObject115 || (level13_templateObject115 = level13_taggedTemplateLiteral(["Tower Level 4"]))),
+    do: template_string_$location(level13_templateObject113 || (level13_templateObject113 = level13_taggedTemplateLiteral(["Tower Level 4"]))),
     choices: {
       1015: 2
     },
@@ -18883,23 +18884,23 @@ var TowerQuest = {
 
       // Buy garters here instead of in acquire,
       // since the amount needed depends on Max HP.
-      var garters_needed = Math.min(20, Math.ceil((100 + (0,external_kolmafia_namespaceObject.myMaxhp)() / 6) / 80)) - (0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(level13_templateObject116 || (level13_templateObject116 = level13_taggedTemplateLiteral(["gauze garter"]))));
+      var garters_needed = Math.min(20, Math.ceil((100 + (0,external_kolmafia_namespaceObject.myMaxhp)() / 6) / 80)) - (0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(level13_templateObject114 || (level13_templateObject114 = level13_taggedTemplateLiteral(["gauze garter"]))));
       if (garters_needed > 0 && (0,external_kolmafia_namespaceObject.myTurncount)() >= 1000) {
-        (0,external_kolmafia_namespaceObject.buy)(template_string_$item(level13_templateObject117 || (level13_templateObject117 = level13_taggedTemplateLiteral(["gauze garter"]))), garters_needed, 500);
+        (0,external_kolmafia_namespaceObject.buy)(template_string_$item(level13_templateObject115 || (level13_templateObject115 = level13_taggedTemplateLiteral(["gauze garter"]))), garters_needed, 500);
       }
     },
     completed: () => step("questL13Final") > 10,
-    do: template_string_$location(level13_templateObject118 || (level13_templateObject118 = level13_taggedTemplateLiteral(["Tower Level 5"]))),
+    do: template_string_$location(level13_templateObject116 || (level13_templateObject116 = level13_taggedTemplateLiteral(["Tower Level 5"]))),
     outfit: () => ({
-      equip: template_string_$items(level13_templateObject119 || (level13_templateObject119 = level13_taggedTemplateLiteral(["unwrapped knock-off retro superhero cape, Jurassic Parka, attorney's badge"]))),
+      equip: template_string_$items(level13_templateObject117 || (level13_templateObject117 = level13_taggedTemplateLiteral(["unwrapped knock-off retro superhero cape, Jurassic Parka, attorney's badge"]))),
       modes: {
         parka: "kachungasaur",
         retrocape: ["heck", "hold"]
       },
       modifier: "HP",
-      avoid: template_string_$items(level13_templateObject120 || (level13_templateObject120 = level13_taggedTemplateLiteral(["extra-wide head candle"])))
+      avoid: template_string_$items(level13_templateObject118 || (level13_templateObject118 = level13_taggedTemplateLiteral(["extra-wide head candle"])))
     }),
-    combat: new combat_CombatStrategy().macro(new Macro().item(template_string_$item(level13_templateObject121 || (level13_templateObject121 = level13_taggedTemplateLiteral(["gauze garter"])))).repeat()),
+    combat: new combat_CombatStrategy().macro(new Macro().item(template_string_$item(level13_templateObject119 || (level13_templateObject119 = level13_taggedTemplateLiteral(["gauze garter"])))).repeat()),
     boss: true,
     limit: {
       tries: 1
@@ -18908,12 +18909,12 @@ var TowerQuest = {
     name: "Naughty Sorceress",
     after: ["Shadow"],
     completed: () => step("questL13Final") > 11,
-    do: template_string_$location(level13_templateObject122 || (level13_templateObject122 = level13_taggedTemplateLiteral(["The Naughty Sorceress' Chamber"]))),
+    do: template_string_$location(level13_templateObject120 || (level13_templateObject120 = level13_taggedTemplateLiteral(["The Naughty Sorceress' Chamber"]))),
     outfit: {
       modifier: "muscle",
-      equip: template_string_$items(level13_templateObject123 || (level13_templateObject123 = level13_taggedTemplateLiteral(["June cleaver"])))
+      equip: template_string_$items(level13_templateObject121 || (level13_templateObject121 = level13_taggedTemplateLiteral(["June cleaver"])))
     },
-    combat: new combat_CombatStrategy().macro(() => Macro.externalIf((0,external_kolmafia_namespaceObject.haveEquipped)(template_string_$item(level13_templateObject124 || (level13_templateObject124 = level13_taggedTemplateLiteral(["June cleaver"])))), Macro.attack().repeat())).kill(),
+    combat: new combat_CombatStrategy().macro(() => Macro.externalIf((0,external_kolmafia_namespaceObject.haveEquipped)(template_string_$item(level13_templateObject122 || (level13_templateObject122 = level13_taggedTemplateLiteral(["June cleaver"])))), Macro.attack().repeat())).kill(),
     boss: true,
     limit: {
       tries: 1
@@ -20011,7 +20012,7 @@ function checkRequirements() {
   }
 }
 ;// CONCATENATED MODULE: ./src/_git_commit.ts
-var lastCommitHash = "5268975";
+var lastCommitHash = "8e6257b";
 ;// CONCATENATED MODULE: ./src/main.ts
 var main_templateObject, main_templateObject2;
 function main_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = main_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
