@@ -76,8 +76,20 @@ export interface Resource {
 
 export type CombatResource = Resource & BaseCombatResource;
 
-export interface BanishSource extends CombatResource {
-  do: Item | Skill;
+export type BanishSource = CombatResource &
+  (
+    | {
+        do: Item | Skill;
+      }
+    | {
+        do: Macro;
+        tracker: Item | Skill;
+      }
+  );
+
+function getTracker(source: BanishSource): Item | Skill {
+  if ("tracker" in source) return source.tracker;
+  return source.do;
 }
 
 const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
@@ -108,6 +120,13 @@ const banishSources: BanishSource[] = [
     },
     prepare: () => asdonFillTo(50),
     do: $skill`Asdon Martin: Spring-Loaded Front Bumper`,
+  },
+  {
+    name: "Spring Shoes Kick Away",
+    available: () => have($item`spring shoes`) && !have($effect`Everything Looks Green`),
+    equip: $item`spring shoes`,
+    do: Macro.skill($skill`Spring Kick`).skill($skill`Spring Away`),
+    tracker: $skill`Spring Kick`,
   },
   {
     name: "Feel Hatred",
@@ -162,6 +181,13 @@ const banishSources: BanishSource[] = [
     do: $skill`Monkey Slap`,
   },
   {
+    name: "Spring Shoes Kick",
+    available: () => have($item`spring shoes`),
+    equip: $item`spring shoes`,
+    do: Macro.skill($skill`Spring Kick`).step(killMacro()),
+    tracker: $skill`Spring Kick`,
+  },
+  {
     name: "Batter Up",
     available: () =>
       have($skill`Batter Up!`) && myClass() === $class`Seal Clubber` && myFury() >= 5,
@@ -182,7 +208,9 @@ export function unusedBanishes(banishState: BanishState, tasks: Task[]): BanishS
     }
   }
 
-  return banishSources.filter((banish) => banish.available() && !used_banishes.has(banish.do));
+  return banishSources.filter(
+    (banish) => banish.available() && !used_banishes.has(getTracker(banish))
+  );
 }
 
 export interface WandererSource extends Resource {
@@ -373,12 +401,9 @@ export function getRunawaySources(location?: Location) {
     },
     {
       name: "Spring Shoes",
-      // eslint-disable-next-line libram/verify-constants
       available: () => have($item`spring shoes`) && !have($effect`Everything Looks Green`),
-      // eslint-disable-next-line libram/verify-constants
       do: new Macro().skill($skill`Spring Away`),
       chance: () => 1,
-      // eslint-disable-next-line libram/verify-constants
       equip: $item`spring shoes`,
       banishes: false,
     },
@@ -596,7 +621,7 @@ export const freekillSources: FreekillSource[] = [
  * Actually fuel the asdon to the required amount.
  */
 export function asdonFillTo(amount: number): boolean {
-  if (getWorkshed() !== $item`Asdon Martin keyfob`) return false;
+  if (getWorkshed() !== $item`Asdon Martin keyfob (on ring)`) return false;
 
   const remaining = amount - getFuel();
   const count = Math.ceil(remaining / 5) + 1; // 5 is minimum adv gain from loaf of soda bread, +1 buffer

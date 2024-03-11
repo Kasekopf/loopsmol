@@ -100,8 +100,8 @@ export const GiantQuest: Quest = {
         .macro(
           () =>
             have($item`Mohawk wig`) ||
-              !have($skill`Emotionally Chipped`) ||
-              get("_feelEnvyUsed") >= 3
+            !have($skill`Emotionally Chipped`) ||
+            get("_feelEnvyUsed") >= 3
               ? new Macro()
               : Macro.skill($skill`Feel Envy`).step(killMacro()),
           $monster`Burly Sidekick`
