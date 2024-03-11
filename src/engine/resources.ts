@@ -80,10 +80,6 @@ export interface BanishSource extends CombatResource {
   do: Item | Skill;
 }
 
-const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
-  have(f)
-);
-
 const banishSources: BanishSource[] = [
   {
     name: "Bowl Curveball",
@@ -406,7 +402,10 @@ export function getRunawaySources(location?: Location) {
     {
       name: "Comma Chameleon",
       prepare: (): void => {
-        if (commaItem !== undefined) {
+        const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+          have(f));
+
+        if (commaItem !== undefined && get("commaFamiliar") === null) {
           useFamiliar($familiar`Comma Chameleon`);
           visitUrl(
             `inv_equip.php?which=2&action=equip&whichitem=${toInt(commaItem)}&pwd`
@@ -415,7 +414,10 @@ export function getRunawaySources(location?: Location) {
       },
       available: () =>
         runawayFamiliarPlan.available &&
-        runawayFamiliarPlan.outfit.familiar === $familiar`Comma Chameleon`,
+        runawayFamiliarPlan.outfit.familiar === $familiar`Comma Chameleon` &&
+        ((get("commaFamiliar") === $familiar`Frumious Bandersnatch` || get("commaFamiliar") === $familiar`Pair of Stomping Boots`) ||
+          $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+            have(f))),
       equip: runawayFamiliarPlan.outfit,
       do: new Macro().runaway(),
       chance: () => 1,
