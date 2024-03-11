@@ -630,7 +630,7 @@ export const MiscQuest: Quest = {
       priority: () => Priorities.Free,
       ready: () => myMeat() >= meatBuffer + 140,
       completed: () =>
-        (!have($item`Asdon Martin keyfob`) && !AsdonMartin.installed()) ||
+        (!have($item`Asdon Martin keyfob (on ring)`) && !AsdonMartin.installed()) ||
         !knollAvailable() ||
         (have($item`bugbear beanie`) && have($item`bugbear bungguard`)) ||
         myAscensions() >= 10,
