@@ -79,12 +79,12 @@ export type CombatResource = Resource & BaseCombatResource;
 export type BanishSource = CombatResource &
   (
     | {
-        do: Item | Skill;
-      }
+      do: Item | Skill;
+    }
     | {
-        do: Macro;
-        tracker: Item | Skill;
-      }
+      do: Macro;
+      tracker: Item | Skill;
+    }
   );
 
 function getTracker(source: BanishSource): Item | Skill {
@@ -371,6 +371,13 @@ export const runawayValue =
     ? 0.8 * get("valueOfAdventure")
     : get("valueOfAdventure");
 
+function commaItemFinder(): Item | undefined {
+  const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+    have(f));
+
+  return commaItem;
+}
+
 export function getRunawaySources(location?: Location) {
   const runawayFamiliarPlan = planRunawayFamiliar();
 
@@ -427,8 +434,7 @@ export function getRunawaySources(location?: Location) {
     {
       name: "Comma Chameleon",
       prepare: (): void => {
-        const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
-          have(f));
+        const commaItem = commaItemFinder();
 
         if (commaItem !== undefined && get("commaFamiliar") === null) {
           useFamiliar($familiar`Comma Chameleon`);
@@ -437,12 +443,15 @@ export function getRunawaySources(location?: Location) {
           );
         }
       },
-      available: () =>
-        runawayFamiliarPlan.available &&
-        runawayFamiliarPlan.outfit.familiar === $familiar`Comma Chameleon` &&
-        ((get("commaFamiliar") === $familiar`Frumious Bandersnatch` || get("commaFamiliar") === $familiar`Pair of Stomping Boots`) ||
-          $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
-            have(f))),
+      available: (): boolean => {
+        const commaItem = commaItemFinder();
+
+        if (runawayFamiliarPlan.available &&
+          runawayFamiliarPlan.outfit.familiar === $familiar`Comma Chameleon` &&
+          ((get("commaFamiliar") === $familiar`Frumious Bandersnatch` || get("commaFamiliar") === $familiar`Pair of Stomping Boots`) ||
+            (commaItem !== undefined && have(commaItem)))) return true;
+        return false;
+      },
       equip: runawayFamiliarPlan.outfit,
       do: new Macro().runaway(),
       chance: () => 1,
