@@ -34,7 +34,7 @@ import {
 import { Quest, Task } from "../engine/task";
 import { OutfitSpec, step } from "grimoire-kolmafia";
 import { CombatStrategy, killMacro } from "../engine/combat";
-import { fillHp } from "../engine/moods";
+import { ensureWithMPSwaps, fillHp } from "../engine/moods";
 import { globalStateCache } from "../engine/state";
 import { tuneSnapper } from "../lib";
 import { Priorities } from "../engine/priority";
@@ -280,7 +280,8 @@ const Zepplin: Task[] = [
         use($item`11-leaf clover`);
       if (have($item`pocket wish`) && !have($effect`Dirty Pear`))
         cliExecute("genie effect dirty pear");
-      if (have($skill`Bend Hell`) && !get("_bendHellUsed")) ensureEffect($effect`Bendin' Hell`);
+      if (have($skill`Bend Hell`) && !get("_bendHellUsed"))
+        ensureWithMPSwaps([$effect`Bendin' Hell`]);
     },
     completed: () => get("zeppelinProtestors") >= 80,
     priority: () => (have($effect`Dirty Pear`) ? Priorities.Effect : Priorities.None),
