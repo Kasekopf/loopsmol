@@ -13,6 +13,8 @@ import {
   myTurncount,
   pullsRemaining,
   storageAmount,
+  toInt,
+  visitUrl,
 } from "kolmafia";
 import { $familiar, $item, $items, $skill, get, have, set } from "libram";
 import { args } from "../args";
@@ -178,6 +180,22 @@ export const pulls: PullSpec[] = [
     pull: $items`Greatest American Pants, navel ring of navel gazing, peppermint parasol`,
     optional: true,
     name: "Runaway IoTM",
+  },
+  {
+    pull: $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`,
+    optional: true,
+    name: "Runaway Comma IoTM",
+    post: () => {
+      const bestCommaPull = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+        have(f));
+      if (bestCommaPull !== undefined) {
+        visitUrl(
+          `inv_equip.php?which=2&action=equip&whichitem=${toInt(bestCommaPull)}&pwd`
+        );
+        visitUrl("charpane.php");
+        cliExecute("set _commaRunDone = true");
+      }
+    },
   },
   {
     pull: $item`ring of conflict`, // Last chance for -5% combat frequency

@@ -5,6 +5,7 @@ import {
   Familiar,
   familiarWeight,
   getFuel,
+  getProperty,
   getWorkshed,
   haveEquipped,
   Item,
@@ -25,6 +26,7 @@ import {
   toInt,
   totalTurnsPlayed,
   use,
+  useFamiliar,
   visitUrl,
 } from "kolmafia";
 import {
@@ -77,12 +79,12 @@ export type CombatResource = Resource & BaseCombatResource;
 export type BanishSource = CombatResource &
   (
     | {
-        do: Item | Skill;
-      }
+      do: Item | Skill;
+    }
     | {
-        do: Macro;
-        tracker: Item | Skill;
-      }
+      do: Macro;
+      tracker: Item | Skill;
+    }
   );
 
 function getTracker(source: BanishSource): Item | Skill {
@@ -369,6 +371,13 @@ export const runawayValue =
     ? 0.8 * get("valueOfAdventure")
     : get("valueOfAdventure");
 
+function commaItemFinder(): Item | undefined {
+  const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
+    have(f));
+
+  return commaItem;
+}
+
 export function getRunawaySources(location?: Location) {
   const runawayFamiliarPlan = planRunawayFamiliar();
 
@@ -420,6 +429,33 @@ export function getRunawaySources(location?: Location) {
       equip: runawayFamiliarPlan.outfit,
       do: new Macro().runaway(),
       chance: () => 1,
+      banishes: false,
+    },
+    {
+      name: "Comma Chameleon",
+      prepare: (): void => {
+        const commaItem = commaItemFinder();
+
+        if (commaItem !== undefined && get("commaFamiliar") === null) {
+          useFamiliar($familiar`Comma Chameleon`);
+          visitUrl(
+            `inv_equip.php?which=2&action=equip&whichitem=${toInt(commaItem)}&pwd`
+          );
+        }
+      },
+      available: (): boolean => {
+        const commaItem = commaItemFinder();
+
+        if (runawayFamiliarPlan.available &&
+          runawayFamiliarPlan.outfit.familiar === $familiar`Comma Chameleon` &&
+          ((get("commaFamiliar") === $familiar`Frumious Bandersnatch` || get("commaFamiliar") === $familiar`Pair of Stomping Boots`) ||
+            (commaItem !== undefined && have(commaItem)))) return true;
+        return false;
+      },
+      equip: runawayFamiliarPlan.outfit,
+      do: new Macro().runaway(),
+      chance: () => 1,
+      effect: $effect`Ode to Booze`,
       banishes: false,
     },
     {
@@ -494,10 +530,18 @@ const famweightOptions: FamweightOption[] = [
 ];
 
 function planRunawayFamiliar(): RunawayFamiliarSpec {
-  const chosenFamiliar = $familiars`Frumious Bandersnatch, Pair of Stomping Boots`.find((f) =>
+  const bestFamiliar = $familiars`Frumious Bandersnatch, Pair of Stomping Boots`.find((f) =>
     have(f)
   );
+  const altFamiliar = have($familiar`Comma Chameleon`) &&
+    (getProperty("commaFamiliar") === "Frumious Bandersnatch" ||
+      getProperty("commaFamiliar") === "Pair of Stomping Boots" ||
+      getProperty("_commaRunDone"));
+
+  const chosenFamiliar = bestFamiliar !== undefined ? bestFamiliar : altFamiliar === true ? $familiar`Comma Chameleon` : false;
+
   if (chosenFamiliar) {
+
     const goalWeight = 5 * (1 + get("_banderRunaways"));
     let attainableWeight = familiarWeight(chosenFamiliar);
 
@@ -581,6 +625,17 @@ export const freekillSources: FreekillSource[] = [
       !have($effect`Everything Looks Yellow`),
     equip: { equip: $items`Jurassic Parka`, modes: { parka: "dilophosaur" } },
     do: $skill`Spit jurassic acid`,
+  },
+  {
+    name: "Everfull Dart Holster",
+    available: () =>
+      // eslint-disable-next-line libram/verify-constants
+      have($item`Everfull Dart Holster`) &&
+      !have($effect`Everything Looks Red`),
+    // eslint-disable-next-line libram/verify-constants
+    equip: $item`Everfull Dart Holster`,
+    // eslint-disable-next-line libram/verify-constants
+    do: $skill`Darts: Aim for the Bullseye`,
   },
 ];
 
@@ -743,19 +798,19 @@ export const backupTargets: BackupTarget[] = [
     completed: () =>
       (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
       have($item`Richard's star key`) ||
-      get("nsTowerDoorKeysUsed").includes("Richard's star key"),
+      get("nsTowerDoorKeysUsed").includes("Richard's star key") || args.minor.skipbackups,
     outfit: { modifier: "item" },
     limit_tries: 3,
   },
   {
     monster: $monster`mountain man`,
-    completed: () => oresNeeded() === 0,
+    completed: () => oresNeeded() === 0 || args.minor.skipbackups,
     outfit: { modifier: "item" },
     limit_tries: 2,
   },
   {
     monster: $monster`Eldritch Tentacle`,
-    completed: () => false,
+    completed: () => args.minor.skipbackups,
     limit_tries: 11,
   },
 ];
