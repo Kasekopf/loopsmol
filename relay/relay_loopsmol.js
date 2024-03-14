@@ -6423,6 +6423,10 @@ var args = Args.create("loopsmol", 'This is a script to complete Shrunken Advent
       help: "Always equip the combat lover's locket, in order to get monsters inside quickly.",
       default: false
     }),
+    skipbackups: Args.flag({
+      help: "Don't use any Backup Camera Backups.",
+      default: false
+    }),
     savelocket: Args.number({
       help: "Number of uses of the combat lover's locket to save.",
       default: 0
