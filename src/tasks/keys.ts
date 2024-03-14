@@ -201,7 +201,7 @@ function dailyDungeonTask(): Omit<Task, "completed" | "name" | "after"> {
           return Macro.item($item`daily dungeon malware`);
         return new Macro();
       })
-      .kill(),
+      .killHard(),
     choices: () => {
       return {
         689: 1,
