@@ -626,17 +626,6 @@ export const freekillSources: FreekillSource[] = [
     equip: { equip: $items`Jurassic Parka`, modes: { parka: "dilophosaur" } },
     do: $skill`Spit jurassic acid`,
   },
-  {
-    name: "Everfull Dart Holster",
-    available: () =>
-      // eslint-disable-next-line libram/verify-constants
-      have($item`Everfull Dart Holster`) &&
-      !have($effect`Everything Looks Red`),
-    // eslint-disable-next-line libram/verify-constants
-    equip: $item`Everfull Dart Holster`,
-    // eslint-disable-next-line libram/verify-constants
-    do: $skill`Darts: Aim for the Bullseye`,
-  },
 ];
 
 /**
