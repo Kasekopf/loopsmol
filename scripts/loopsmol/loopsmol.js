@@ -13712,7 +13712,7 @@ function oresNeeded() {
   return Math.max(ore_needed, 0);
 }
 ;// CONCATENATED MODULE: ./src/engine/resources.ts
-var resources_templateObject, resources_templateObject2, resources_templateObject3, resources_templateObject4, resources_templateObject5, resources_templateObject6, resources_templateObject7, resources_templateObject8, resources_templateObject9, resources_templateObject10, resources_templateObject11, resources_templateObject12, resources_templateObject13, resources_templateObject14, resources_templateObject15, resources_templateObject16, resources_templateObject17, resources_templateObject18, resources_templateObject19, resources_templateObject20, resources_templateObject21, resources_templateObject22, resources_templateObject23, resources_templateObject24, resources_templateObject25, resources_templateObject26, resources_templateObject27, resources_templateObject28, resources_templateObject29, resources_templateObject30, resources_templateObject31, resources_templateObject32, resources_templateObject33, resources_templateObject34, resources_templateObject35, resources_templateObject36, resources_templateObject37, resources_templateObject38, resources_templateObject39, resources_templateObject40, resources_templateObject41, resources_templateObject42, resources_templateObject43, resources_templateObject44, resources_templateObject45, resources_templateObject46, resources_templateObject47, resources_templateObject48, resources_templateObject49, resources_templateObject50, resources_templateObject51, resources_templateObject52, resources_templateObject53, resources_templateObject54, resources_templateObject55, resources_templateObject56, resources_templateObject57, resources_templateObject58, resources_templateObject59, resources_templateObject60, resources_templateObject61, resources_templateObject62, resources_templateObject63, resources_templateObject64, resources_templateObject65, resources_templateObject66, resources_templateObject67, resources_templateObject68, resources_templateObject69, resources_templateObject70, resources_templateObject71, resources_templateObject72, resources_templateObject73, resources_templateObject74, resources_templateObject75, resources_templateObject76, resources_templateObject77, resources_templateObject78, resources_templateObject79, resources_templateObject80, resources_templateObject81, resources_templateObject82, resources_templateObject83, resources_templateObject84, resources_templateObject85, resources_templateObject86, resources_templateObject87, resources_templateObject88, resources_templateObject89, resources_templateObject90, resources_templateObject91, resources_templateObject92, resources_templateObject93, resources_templateObject94, resources_templateObject95, resources_templateObject96, resources_templateObject97, resources_templateObject98, resources_templateObject99, resources_templateObject100, resources_templateObject101, resources_templateObject102, resources_templateObject103, resources_templateObject104, resources_templateObject105, resources_templateObject106, resources_templateObject107, resources_templateObject108, resources_templateObject109, resources_templateObject110, resources_templateObject111, resources_templateObject112, resources_templateObject113, resources_templateObject114, resources_templateObject115, resources_templateObject116, resources_templateObject117, resources_templateObject118, resources_templateObject119, resources_templateObject120, resources_templateObject121, resources_templateObject122, resources_templateObject123, resources_templateObject124, resources_templateObject125, resources_templateObject126, resources_templateObject127, resources_templateObject128, resources_templateObject129, resources_templateObject130, resources_templateObject131, resources_templateObject132, resources_templateObject133, resources_templateObject134, resources_templateObject135, resources_templateObject136, resources_templateObject137, resources_templateObject138, resources_templateObject139, resources_templateObject140, resources_templateObject141, resources_templateObject142, resources_templateObject143, resources_templateObject144, resources_templateObject145, resources_templateObject146, resources_templateObject147, resources_templateObject148, resources_templateObject149, resources_templateObject150, resources_templateObject151, resources_templateObject152, resources_templateObject153, resources_templateObject154, resources_templateObject155, resources_templateObject156, resources_templateObject157, resources_templateObject158, resources_templateObject159, resources_templateObject160, resources_templateObject161, resources_templateObject162, resources_templateObject163, resources_templateObject164, resources_templateObject165, resources_templateObject166, resources_templateObject167, resources_templateObject168, resources_templateObject169, resources_templateObject170, resources_templateObject171, resources_templateObject172, resources_templateObject173, resources_templateObject174, resources_templateObject175, resources_templateObject176, resources_templateObject177, resources_templateObject178, resources_templateObject179, resources_templateObject180, resources_templateObject181, resources_templateObject182, resources_templateObject183, resources_templateObject184, resources_templateObject185, resources_templateObject186, resources_templateObject187, resources_templateObject188, resources_templateObject189, resources_templateObject190, resources_templateObject191, resources_templateObject192, resources_templateObject193, resources_templateObject194, resources_templateObject195, resources_templateObject196, resources_templateObject197, resources_templateObject198, resources_templateObject199, resources_templateObject200, resources_templateObject201, resources_templateObject202, resources_templateObject203, resources_templateObject204, resources_templateObject205, resources_templateObject206, resources_templateObject207, resources_templateObject208, resources_templateObject209;
+var resources_templateObject, resources_templateObject2, resources_templateObject3, resources_templateObject4, resources_templateObject5, resources_templateObject6, resources_templateObject7, resources_templateObject8, resources_templateObject9, resources_templateObject10, resources_templateObject11, resources_templateObject12, resources_templateObject13, resources_templateObject14, resources_templateObject15, resources_templateObject16, resources_templateObject17, resources_templateObject18, resources_templateObject19, resources_templateObject20, resources_templateObject21, resources_templateObject22, resources_templateObject23, resources_templateObject24, resources_templateObject25, resources_templateObject26, resources_templateObject27, resources_templateObject28, resources_templateObject29, resources_templateObject30, resources_templateObject31, resources_templateObject32, resources_templateObject33, resources_templateObject34, resources_templateObject35, resources_templateObject36, resources_templateObject37, resources_templateObject38, resources_templateObject39, resources_templateObject40, resources_templateObject41, resources_templateObject42, resources_templateObject43, resources_templateObject44, resources_templateObject45, resources_templateObject46, resources_templateObject47, resources_templateObject48, resources_templateObject49, resources_templateObject50, resources_templateObject51, resources_templateObject52, resources_templateObject53, resources_templateObject54, resources_templateObject55, resources_templateObject56, resources_templateObject57, resources_templateObject58, resources_templateObject59, resources_templateObject60, resources_templateObject61, resources_templateObject62, resources_templateObject63, resources_templateObject64, resources_templateObject65, resources_templateObject66, resources_templateObject67, resources_templateObject68, resources_templateObject69, resources_templateObject70, resources_templateObject71, resources_templateObject72, resources_templateObject73, resources_templateObject74, resources_templateObject75, resources_templateObject76, resources_templateObject77, resources_templateObject78, resources_templateObject79, resources_templateObject80, resources_templateObject81, resources_templateObject82, resources_templateObject83, resources_templateObject84, resources_templateObject85, resources_templateObject86, resources_templateObject87, resources_templateObject88, resources_templateObject89, resources_templateObject90, resources_templateObject91, resources_templateObject92, resources_templateObject93, resources_templateObject94, resources_templateObject95, resources_templateObject96, resources_templateObject97, resources_templateObject98, resources_templateObject99, resources_templateObject100, resources_templateObject101, resources_templateObject102, resources_templateObject103, resources_templateObject104, resources_templateObject105, resources_templateObject106, resources_templateObject107, resources_templateObject108, resources_templateObject109, resources_templateObject110, resources_templateObject111, resources_templateObject112, resources_templateObject113, resources_templateObject114, resources_templateObject115, resources_templateObject116, resources_templateObject117, resources_templateObject118, resources_templateObject119, resources_templateObject120, resources_templateObject121, resources_templateObject122, resources_templateObject123, resources_templateObject124, resources_templateObject125, resources_templateObject126, resources_templateObject127, resources_templateObject128, resources_templateObject129, resources_templateObject130, resources_templateObject131, resources_templateObject132, resources_templateObject133, resources_templateObject134, resources_templateObject135, resources_templateObject136, resources_templateObject137, resources_templateObject138, resources_templateObject139, resources_templateObject140, resources_templateObject141, resources_templateObject142, resources_templateObject143, resources_templateObject144, resources_templateObject145, resources_templateObject146, resources_templateObject147, resources_templateObject148, resources_templateObject149, resources_templateObject150, resources_templateObject151, resources_templateObject152, resources_templateObject153, resources_templateObject154, resources_templateObject155, resources_templateObject156, resources_templateObject157, resources_templateObject158, resources_templateObject159, resources_templateObject160, resources_templateObject161, resources_templateObject162, resources_templateObject163, resources_templateObject164, resources_templateObject165, resources_templateObject166, resources_templateObject167, resources_templateObject168, resources_templateObject169, resources_templateObject170, resources_templateObject171, resources_templateObject172, resources_templateObject173, resources_templateObject174, resources_templateObject175, resources_templateObject176, resources_templateObject177, resources_templateObject178, resources_templateObject179, resources_templateObject180, resources_templateObject181, resources_templateObject182, resources_templateObject183, resources_templateObject184, resources_templateObject185, resources_templateObject186, resources_templateObject187, resources_templateObject188, resources_templateObject189, resources_templateObject190, resources_templateObject191, resources_templateObject192, resources_templateObject193, resources_templateObject194, resources_templateObject195, resources_templateObject196, resources_templateObject197, resources_templateObject198, resources_templateObject199, resources_templateObject200, resources_templateObject201, resources_templateObject202, resources_templateObject203, resources_templateObject204, resources_templateObject205;
 function resources_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = resources_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function resources_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return resources_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return resources_arrayLikeToArray(o, minLen); }
 function resources_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -14162,35 +14162,26 @@ var freekillSources = [{
     }
   },
   do: $skill(resources_templateObject165 || (resources_templateObject165 = resources_taggedTemplateLiteral(["Spit jurassic acid"])))
-}, {
-  name: "Everfull Dart Holster",
-  available: () =>
-  // eslint-disable-next-line libram/verify-constants
-  lib_have(template_string_$item(resources_templateObject166 || (resources_templateObject166 = resources_taggedTemplateLiteral(["Everfull Dart Holster"])))) && !lib_have(template_string_$effect(resources_templateObject167 || (resources_templateObject167 = resources_taggedTemplateLiteral(["Everything Looks Red"])))),
-  // eslint-disable-next-line libram/verify-constants
-  equip: template_string_$item(resources_templateObject168 || (resources_templateObject168 = resources_taggedTemplateLiteral(["Everfull Dart Holster"]))),
-  // eslint-disable-next-line libram/verify-constants
-  do: $skill(resources_templateObject169 || (resources_templateObject169 = resources_taggedTemplateLiteral(["Darts: Aim for the Bullseye"])))
 }];
 
 /**
  * Actually fuel the asdon to the required amount.
  */
 function asdonFillTo(amount) {
-  if ((0,external_kolmafia_namespaceObject.getWorkshed)() !== template_string_$item(resources_templateObject170 || (resources_templateObject170 = resources_taggedTemplateLiteral(["Asdon Martin keyfob (on ring)"])))) return false;
+  if ((0,external_kolmafia_namespaceObject.getWorkshed)() !== template_string_$item(resources_templateObject166 || (resources_templateObject166 = resources_taggedTemplateLiteral(["Asdon Martin keyfob (on ring)"])))) return false;
   var remaining = amount - (0,external_kolmafia_namespaceObject.getFuel)();
   var count = Math.ceil(remaining / 5) + 1; // 5 is minimum adv gain from loaf of soda bread, +1 buffer
-  if (!lib_have(template_string_$item(resources_templateObject171 || (resources_templateObject171 = resources_taggedTemplateLiteral(["bugbear bungguard"])))) || !lib_have(template_string_$item(resources_templateObject172 || (resources_templateObject172 = resources_taggedTemplateLiteral(["bugbear beanie"]))))) {
+  if (!lib_have(template_string_$item(resources_templateObject167 || (resources_templateObject167 = resources_taggedTemplateLiteral(["bugbear bungguard"])))) || !lib_have(template_string_$item(resources_templateObject168 || (resources_templateObject168 = resources_taggedTemplateLiteral(["bugbear beanie"]))))) {
     // Prepare enough wad of dough from all-purpose flower
     // We must do this ourselves since retrieveItem($item`loaf of soda bread`)
     // in libram will not consider all-purpose flower
-    if ((0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(resources_templateObject173 || (resources_templateObject173 = resources_taggedTemplateLiteral(["wad of dough"])))) < count) {
-      (0,external_kolmafia_namespaceObject.buy)(template_string_$item(resources_templateObject174 || (resources_templateObject174 = resources_taggedTemplateLiteral(["all-purpose flower"]))));
-      (0,external_kolmafia_namespaceObject.use)(template_string_$item(resources_templateObject175 || (resources_templateObject175 = resources_taggedTemplateLiteral(["all-purpose flower"]))));
+    if ((0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(resources_templateObject169 || (resources_templateObject169 = resources_taggedTemplateLiteral(["wad of dough"])))) < count) {
+      (0,external_kolmafia_namespaceObject.buy)(template_string_$item(resources_templateObject170 || (resources_templateObject170 = resources_taggedTemplateLiteral(["all-purpose flower"]))));
+      (0,external_kolmafia_namespaceObject.use)(template_string_$item(resources_templateObject171 || (resources_templateObject171 = resources_taggedTemplateLiteral(["all-purpose flower"]))));
     }
   }
-  (0,external_kolmafia_namespaceObject.retrieveItem)(count, template_string_$item(resources_templateObject176 || (resources_templateObject176 = resources_taggedTemplateLiteral(["loaf of soda bread"]))));
-  (0,external_kolmafia_namespaceObject.visitUrl)("campground.php?action=fuelconvertor&pwd&qty=".concat(count, "&iid=").concat((0,external_kolmafia_namespaceObject.toInt)(template_string_$item(resources_templateObject177 || (resources_templateObject177 = resources_taggedTemplateLiteral(["loaf of soda bread"])))), "&go=Convert%21"));
+  (0,external_kolmafia_namespaceObject.retrieveItem)(count, template_string_$item(resources_templateObject172 || (resources_templateObject172 = resources_taggedTemplateLiteral(["loaf of soda bread"]))));
+  (0,external_kolmafia_namespaceObject.visitUrl)("campground.php?action=fuelconvertor&pwd&qty=".concat(count, "&iid=").concat((0,external_kolmafia_namespaceObject.toInt)(template_string_$item(resources_templateObject173 || (resources_templateObject173 = resources_taggedTemplateLiteral(["loaf of soda bread"])))), "&go=Convert%21"));
   if ((0,external_kolmafia_namespaceObject.getFuel)() < amount) {
     throw new Error("Soda bread did not generate enough fuel");
   }
@@ -14202,16 +14193,16 @@ function asdonFillTo(amount) {
  */
 function asdonFualable(amount) {
   if (!installed()) return false;
-  if (!lib_have(template_string_$item(resources_templateObject178 || (resources_templateObject178 = resources_taggedTemplateLiteral(["forged identification documents"])))) && step("questL11Black") < 4) return false; // Save early
+  if (!lib_have(template_string_$item(resources_templateObject174 || (resources_templateObject174 = resources_taggedTemplateLiteral(["forged identification documents"])))) && step("questL11Black") < 4) return false; // Save early
   if (amount <= (0,external_kolmafia_namespaceObject.getFuel)()) return true;
 
   // Use wad of dough with the bugbear outfit
-  if (lib_have(template_string_$item(resources_templateObject179 || (resources_templateObject179 = resources_taggedTemplateLiteral(["bugbear bungguard"])))) && lib_have(template_string_$item(resources_templateObject180 || (resources_templateObject180 = resources_taggedTemplateLiteral(["bugbear beanie"]))))) {
+  if (lib_have(template_string_$item(resources_templateObject175 || (resources_templateObject175 = resources_taggedTemplateLiteral(["bugbear bungguard"])))) && lib_have(template_string_$item(resources_templateObject176 || (resources_templateObject176 = resources_taggedTemplateLiteral(["bugbear beanie"]))))) {
     return (0,external_kolmafia_namespaceObject.myMeat)() >= (amount - (0,external_kolmafia_namespaceObject.getFuel)()) * 24 + 1000; // Save 1k meat as buffer
   }
 
   // Use all-purpose flower if we have enough ascensions
-  if ((0,external_kolmafia_namespaceObject.myAscensions)() >= 10 && (lib_have(template_string_$item(resources_templateObject181 || (resources_templateObject181 = resources_taggedTemplateLiteral(["bitchin' meatcar"])))) || lib_have(template_string_$item(resources_templateObject182 || (resources_templateObject182 = resources_taggedTemplateLiteral(["Desert Bus pass"])))))) {
+  if ((0,external_kolmafia_namespaceObject.myAscensions)() >= 10 && (lib_have(template_string_$item(resources_templateObject177 || (resources_templateObject177 = resources_taggedTemplateLiteral(["bitchin' meatcar"])))) || lib_have(template_string_$item(resources_templateObject178 || (resources_templateObject178 = resources_taggedTemplateLiteral(["Desert Bus pass"])))))) {
     return (0,external_kolmafia_namespaceObject.myMeat)() >= 3000 + (amount - (0,external_kolmafia_namespaceObject.getFuel)()) * 14; // 2k for all-purpose flower + save 1k meat as buffer + soda water
   }
   return false;
@@ -14221,7 +14212,7 @@ function asdonFualable(amount) {
  * Return true if we have all of our final latte ingredients, but they are not in the latte.
  */
 function shouldFinishLatte() {
-  if (!lib_have(template_string_$item(resources_templateObject183 || (resources_templateObject183 = resources_taggedTemplateLiteral(["latte lovers member's mug"]))))) return false;
+  if (!lib_have(template_string_$item(resources_templateObject179 || (resources_templateObject179 = resources_taggedTemplateLiteral(["latte lovers member's mug"]))))) return false;
   if ((0,external_kolmafia_namespaceObject.myTurncount)() >= 1000) return false;
 
   // Check that we have all the proper ingredients
@@ -14247,78 +14238,78 @@ function refillLatte() {
 }
 var yellowRaySources = [{
   name: "Jurassic Parka",
-  available: () => lib_have($skill(resources_templateObject184 || (resources_templateObject184 = resources_taggedTemplateLiteral(["Torso Awareness"])))) && lib_have(template_string_$item(resources_templateObject185 || (resources_templateObject185 = resources_taggedTemplateLiteral(["Jurassic Parka"])))),
+  available: () => lib_have($skill(resources_templateObject180 || (resources_templateObject180 = resources_taggedTemplateLiteral(["Torso Awareness"])))) && lib_have(template_string_$item(resources_templateObject181 || (resources_templateObject181 = resources_taggedTemplateLiteral(["Jurassic Parka"])))),
   equip: {
-    equip: template_string_$items(resources_templateObject186 || (resources_templateObject186 = resources_taggedTemplateLiteral(["Jurassic Parka"]))),
+    equip: template_string_$items(resources_templateObject182 || (resources_templateObject182 = resources_taggedTemplateLiteral(["Jurassic Parka"]))),
     modes: {
       parka: "dilophosaur"
     }
   },
-  do: $skill(resources_templateObject187 || (resources_templateObject187 = resources_taggedTemplateLiteral(["Spit jurassic acid"])))
+  do: $skill(resources_templateObject183 || (resources_templateObject183 = resources_taggedTemplateLiteral(["Spit jurassic acid"])))
 }, {
   name: "Yellow Rocket",
-  available: () => (0,external_kolmafia_namespaceObject.myMeat)() >= 250 && lib_have(template_string_$item(resources_templateObject188 || (resources_templateObject188 = resources_taggedTemplateLiteral(["Clan VIP Lounge key"])))),
-  prepare: () => (0,external_kolmafia_namespaceObject.retrieveItem)(template_string_$item(resources_templateObject189 || (resources_templateObject189 = resources_taggedTemplateLiteral(["yellow rocket"])))),
-  do: template_string_$item(resources_templateObject190 || (resources_templateObject190 = resources_taggedTemplateLiteral(["yellow rocket"])))
+  available: () => (0,external_kolmafia_namespaceObject.myMeat)() >= 250 && lib_have(template_string_$item(resources_templateObject184 || (resources_templateObject184 = resources_taggedTemplateLiteral(["Clan VIP Lounge key"])))),
+  prepare: () => (0,external_kolmafia_namespaceObject.retrieveItem)(template_string_$item(resources_templateObject185 || (resources_templateObject185 = resources_taggedTemplateLiteral(["yellow rocket"])))),
+  do: template_string_$item(resources_templateObject186 || (resources_templateObject186 = resources_taggedTemplateLiteral(["yellow rocket"])))
 }, {
   name: "Retro Superhero Cape",
-  available: () => lib_have(template_string_$item(resources_templateObject191 || (resources_templateObject191 = resources_taggedTemplateLiteral(["unwrapped knock-off retro superhero cape"])))),
+  available: () => lib_have(template_string_$item(resources_templateObject187 || (resources_templateObject187 = resources_taggedTemplateLiteral(["unwrapped knock-off retro superhero cape"])))),
   equip: {
-    equip: template_string_$items(resources_templateObject192 || (resources_templateObject192 = resources_taggedTemplateLiteral(["unwrapped knock-off retro superhero cape"]))),
+    equip: template_string_$items(resources_templateObject188 || (resources_templateObject188 = resources_taggedTemplateLiteral(["unwrapped knock-off retro superhero cape"]))),
     modes: {
       retrocape: ["heck", "kiss"]
     }
   },
-  do: $skill(resources_templateObject193 || (resources_templateObject193 = resources_taggedTemplateLiteral(["Unleash the Devil's Kiss"])))
+  do: $skill(resources_templateObject189 || (resources_templateObject189 = resources_taggedTemplateLiteral(["Unleash the Devil's Kiss"])))
 }];
 function yellowRayPossible() {
-  if (lib_have(template_string_$effect(resources_templateObject194 || (resources_templateObject194 = resources_taggedTemplateLiteral(["Everything Looks Yellow"]))))) return false;
+  if (lib_have(template_string_$effect(resources_templateObject190 || (resources_templateObject190 = resources_taggedTemplateLiteral(["Everything Looks Yellow"]))))) return false;
   return yellowRaySources.find(s => s.available()) !== undefined;
 }
 var forceItemSources = [{
   name: "Saber",
-  available: () => lib_have(template_string_$item(resources_templateObject195 || (resources_templateObject195 = resources_taggedTemplateLiteral(["Fourth of May Cosplay Saber"])))) && property_get("_saberForceUses") < 5,
+  available: () => lib_have(template_string_$item(resources_templateObject191 || (resources_templateObject191 = resources_taggedTemplateLiteral(["Fourth of May Cosplay Saber"])))) && property_get("_saberForceUses") < 5,
   prepare: () => _set("choiceAdventure1387", 3),
-  equip: template_string_$item(resources_templateObject196 || (resources_templateObject196 = resources_taggedTemplateLiteral(["Fourth of May Cosplay Saber"]))),
-  do: $skill(resources_templateObject197 || (resources_templateObject197 = resources_taggedTemplateLiteral(["Use the Force"])))
+  equip: template_string_$item(resources_templateObject192 || (resources_templateObject192 = resources_taggedTemplateLiteral(["Fourth of May Cosplay Saber"]))),
+  do: $skill(resources_templateObject193 || (resources_templateObject193 = resources_taggedTemplateLiteral(["Use the Force"])))
 }, {
   name: "Envy",
-  available: () => lib_have($skill(resources_templateObject198 || (resources_templateObject198 = resources_taggedTemplateLiteral(["Emotionally Chipped"])))) && property_get("_feelEnvyUsed") < 3,
-  do: Macro.skill($skill(resources_templateObject199 || (resources_templateObject199 = resources_taggedTemplateLiteral(["Feel Envy"])))).step(killMacro())
+  available: () => lib_have($skill(resources_templateObject194 || (resources_templateObject194 = resources_taggedTemplateLiteral(["Emotionally Chipped"])))) && property_get("_feelEnvyUsed") < 3,
+  do: Macro.skill($skill(resources_templateObject195 || (resources_templateObject195 = resources_taggedTemplateLiteral(["Feel Envy"])))).step(killMacro())
 }];
 function forceItemPossible() {
   return yellowRayPossible() || forceItemSources.find(s => s.available()) !== undefined;
 }
 var forceNCSources = [{
   name: "Parka",
-  available: () => lib_have($skill(resources_templateObject200 || (resources_templateObject200 = resources_taggedTemplateLiteral(["Torso Awareness"])))) && lib_have(template_string_$item(resources_templateObject201 || (resources_templateObject201 = resources_taggedTemplateLiteral(["Jurassic Parka"])))) && property_get("_spikolodonSpikeUses") + args.minor.saveparka < 5,
+  available: () => lib_have($skill(resources_templateObject196 || (resources_templateObject196 = resources_taggedTemplateLiteral(["Torso Awareness"])))) && lib_have(template_string_$item(resources_templateObject197 || (resources_templateObject197 = resources_taggedTemplateLiteral(["Jurassic Parka"])))) && property_get("_spikolodonSpikeUses") + args.minor.saveparka < 5,
   equip: {
-    equip: template_string_$items(resources_templateObject202 || (resources_templateObject202 = resources_taggedTemplateLiteral(["Jurassic Parka"]))),
+    equip: template_string_$items(resources_templateObject198 || (resources_templateObject198 = resources_taggedTemplateLiteral(["Jurassic Parka"]))),
     modes: {
       parka: "spikolodon"
     }
   },
-  do: Macro.skill($skill(resources_templateObject203 || (resources_templateObject203 = resources_taggedTemplateLiteral(["Launch spikolodon spikes"]))))
+  do: Macro.skill($skill(resources_templateObject199 || (resources_templateObject199 = resources_taggedTemplateLiteral(["Launch spikolodon spikes"]))))
 }];
 function forceNCPossible() {
   return forceNCSources.find(s => s.available()) !== undefined;
 }
 var backupTargets = [{
-  monster: $monster(resources_templateObject204 || (resources_templateObject204 = resources_taggedTemplateLiteral(["Camel's Toe"]))),
-  completed: () => (0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(resources_templateObject205 || (resources_templateObject205 = resources_taggedTemplateLiteral(["star"])))) >= 8 && (0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(resources_templateObject206 || (resources_templateObject206 = resources_taggedTemplateLiteral(["line"])))) >= 7 || lib_have(template_string_$item(resources_templateObject207 || (resources_templateObject207 = resources_taggedTemplateLiteral(["Richard's star key"])))) || property_get("nsTowerDoorKeysUsed").includes("Richard's star key") || args.minor.skipbackups,
+  monster: $monster(resources_templateObject200 || (resources_templateObject200 = resources_taggedTemplateLiteral(["Camel's Toe"]))),
+  completed: () => (0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(resources_templateObject201 || (resources_templateObject201 = resources_taggedTemplateLiteral(["star"])))) >= 8 && (0,external_kolmafia_namespaceObject.itemAmount)(template_string_$item(resources_templateObject202 || (resources_templateObject202 = resources_taggedTemplateLiteral(["line"])))) >= 7 || lib_have(template_string_$item(resources_templateObject203 || (resources_templateObject203 = resources_taggedTemplateLiteral(["Richard's star key"])))) || property_get("nsTowerDoorKeysUsed").includes("Richard's star key") || args.minor.skipbackups,
   outfit: {
     modifier: "item"
   },
   limit_tries: 3
 }, {
-  monster: $monster(resources_templateObject208 || (resources_templateObject208 = resources_taggedTemplateLiteral(["mountain man"]))),
+  monster: $monster(resources_templateObject204 || (resources_templateObject204 = resources_taggedTemplateLiteral(["mountain man"]))),
   completed: () => oresNeeded() === 0 || args.minor.skipbackups,
   outfit: {
     modifier: "item"
   },
   limit_tries: 2
 }, {
-  monster: $monster(resources_templateObject209 || (resources_templateObject209 = resources_taggedTemplateLiteral(["Eldritch Tentacle"]))),
+  monster: $monster(resources_templateObject205 || (resources_templateObject205 = resources_taggedTemplateLiteral(["Eldritch Tentacle"]))),
   completed: () => args.minor.skipbackups,
   limit_tries: 11
 }];
@@ -20108,7 +20099,7 @@ function checkRequirements() {
   }
 }
 ;// CONCATENATED MODULE: ./src/_git_commit.ts
-var lastCommitHash = "2a42f37";
+var lastCommitHash = "cbd29a9";
 ;// CONCATENATED MODULE: ./src/main.ts
 var main_templateObject, main_templateObject2;
 function main_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = main_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
