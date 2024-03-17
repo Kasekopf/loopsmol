@@ -5,6 +5,7 @@ import {
   myAdventures,
   myFullness,
   myInebriety,
+  mySign,
   reverseNumberology,
   use,
   useSkill,
@@ -81,6 +82,19 @@ export const DietQuest: Quest = {
       },
       limit: { tries: 5 },
       freeaction: true,
+    },
+    {
+      name: "Tune after Diet",
+      after: ["Diet/Eat", "Diet/Drink"],
+      ready: () => mySign() === "Blender" || mySign() === "Opossum",
+      completed: () =>
+        !have($item`hewn moon-rune spoon`) ||
+        args.minor.tune === undefined ||
+        get("moonTuned", false),
+      priority: () => Priorities.Free,
+      freeaction: true,
+      do: () => cliExecute(`spoon ${args.minor.tune}`),
+      limit: { tries: 1 },
     },
   ],
 };

@@ -97,6 +97,9 @@ export const args = Args.create(
         help: "Delevel to level 13 with hot dogs before fighting the NS",
         default: false,
       }),
+      tune: Args.string({
+        help: "Use your hewn moon-rune spoon to retune to this sign after dieting.",
+      }),
     }),
     debug: Args.group("Debug Options", {
       actions: Args.number({
