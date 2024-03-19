@@ -124,8 +124,8 @@ export function equipCharging(outfit: Outfit, mightKillSomething: boolean): void
 
   const need_bowling_balls =
     get("hiddenBowlingAlleyProgress") +
-      itemAmount($item`bowling ball`) +
-      closetAmount($item`bowling ball`) <
+    itemAmount($item`bowling ball`) +
+    closetAmount($item`bowling ball`) <
     5;
   const need_star_key =
     (itemAmount($item`star`) < 8 || itemAmount($item`line`) < 7) &&
@@ -231,6 +231,8 @@ export function equipDefaults(outfit: Outfit): void {
     outfit.equip($item`square sponge pants`);
     outfit.equip($item`Cargo Cultist Shorts`);
     outfit.equip($item`lucky gold ring`);
+    // eslint-disable-next-line libram/verify-constants
+    outfit.equip($item`Everfull Dart Holster`);
 
     if (
       yellowSubmarinePossible() &&
