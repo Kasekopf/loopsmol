@@ -79,12 +79,12 @@ export type CombatResource = Resource & BaseCombatResource;
 export type BanishSource = CombatResource &
   (
     | {
-      do: Item | Skill;
-    }
+        do: Item | Skill;
+      }
     | {
-      do: Macro;
-      tracker: Item | Skill;
-    }
+        do: Macro;
+        tracker: Item | Skill;
+      }
   );
 
 function getTracker(source: BanishSource): Item | Skill {
@@ -372,8 +372,10 @@ export const runawayValue =
     : get("valueOfAdventure");
 
 function commaItemFinder(): Item | undefined {
-  const commaItem = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
-    have(f));
+  const commaItem =
+    $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find(
+      (f) => have(f)
+    );
 
   return commaItem;
 }
@@ -438,18 +440,20 @@ export function getRunawaySources(location?: Location) {
 
         if (commaItem !== undefined && get("commaFamiliar") === null) {
           useFamiliar($familiar`Comma Chameleon`);
-          visitUrl(
-            `inv_equip.php?which=2&action=equip&whichitem=${toInt(commaItem)}&pwd`
-          );
+          visitUrl(`inv_equip.php?which=2&action=equip&whichitem=${toInt(commaItem)}&pwd`);
         }
       },
       available: (): boolean => {
         const commaItem = commaItemFinder();
 
-        if (runawayFamiliarPlan.available &&
+        if (
+          runawayFamiliarPlan.available &&
           runawayFamiliarPlan.outfit.familiar === $familiar`Comma Chameleon` &&
-          ((get("commaFamiliar") === $familiar`Frumious Bandersnatch` || get("commaFamiliar") === $familiar`Pair of Stomping Boots`) ||
-            (commaItem !== undefined && have(commaItem)))) return true;
+          (get("commaFamiliar") === $familiar`Frumious Bandersnatch` ||
+            get("commaFamiliar") === $familiar`Pair of Stomping Boots` ||
+            (commaItem !== undefined && have(commaItem)))
+        )
+          return true;
         return false;
       },
       equip: runawayFamiliarPlan.outfit,
@@ -533,15 +537,20 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
   const bestFamiliar = $familiars`Frumious Bandersnatch, Pair of Stomping Boots`.find((f) =>
     have(f)
   );
-  const altFamiliar = have($familiar`Comma Chameleon`) &&
+  const altFamiliar =
+    have($familiar`Comma Chameleon`) &&
     (getProperty("commaFamiliar") === "Frumious Bandersnatch" ||
       getProperty("commaFamiliar") === "Pair of Stomping Boots" ||
       getProperty("_commaRunDone"));
 
-  const chosenFamiliar = bestFamiliar !== undefined ? bestFamiliar : altFamiliar === true ? $familiar`Comma Chameleon` : false;
+  const chosenFamiliar =
+    bestFamiliar !== undefined
+      ? bestFamiliar
+      : altFamiliar === true
+      ? $familiar`Comma Chameleon`
+      : false;
 
   if (chosenFamiliar) {
-
     const goalWeight = 5 * (1 + get("_banderRunaways"));
     let attainableWeight = familiarWeight(chosenFamiliar);
 
@@ -787,7 +796,8 @@ export const backupTargets: BackupTarget[] = [
     completed: () =>
       (itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||
       have($item`Richard's star key`) ||
-      get("nsTowerDoorKeysUsed").includes("Richard's star key") || args.minor.skipbackups,
+      get("nsTowerDoorKeysUsed").includes("Richard's star key") ||
+      args.minor.skipbackups,
     outfit: { modifier: "item" },
     limit_tries: 3,
   },

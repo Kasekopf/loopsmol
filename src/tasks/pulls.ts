@@ -186,12 +186,12 @@ export const pulls: PullSpec[] = [
     optional: true,
     name: "Runaway Comma IoTM",
     post: () => {
-      const bestCommaPull = $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find((f) =>
-        have(f));
-      if (bestCommaPull !== undefined) {
-        visitUrl(
-          `inv_equip.php?which=2&action=equip&whichitem=${toInt(bestCommaPull)}&pwd`
+      const bestCommaPull =
+        $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find(
+          (f) => have(f)
         );
+      if (bestCommaPull !== undefined) {
+        visitUrl(`inv_equip.php?which=2&action=equip&whichitem=${toInt(bestCommaPull)}&pwd`);
         visitUrl("charpane.php");
         cliExecute("set _commaRunDone = true");
       }

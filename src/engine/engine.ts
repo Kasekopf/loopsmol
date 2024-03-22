@@ -610,7 +610,16 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     const other_effects = task.other_effects ?? [];
     applyEffects(outfit.modifier.join(","), [...effects, ...other_effects]);
 
-    cacheDress(outfit);
+    try {
+      cacheDress(outfit);
+    } catch {
+      // If we fail to dress, this is maybe just a mafia desync.
+      // So refresh our inventory and try again (once).
+      debug("Possible mafia desync detected; refreshing...");
+      cliExecute("refresh all");
+      // Do not try and cache-dress
+      outfit.dress();
+    }
     fixFoldables(outfit);
 
     const equipped = [...new Set(Slot.all().map((slot) => equippedItem(slot)))];
