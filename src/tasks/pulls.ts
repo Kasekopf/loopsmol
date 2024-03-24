@@ -185,6 +185,10 @@ export const pulls: PullSpec[] = [
     pull: $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`,
     optional: true,
     name: "Runaway Comma IoTM",
+    useful: () =>
+      have($familiar`Comma Chameleon`) &&
+      !have($familiar`Frumious Bandersnatch`) &&
+      !have($familiar`Pair of Stomping Boots`),
     post: () => {
       const bestCommaPull =
         $items`aquaviolet jub-jub bird, charpuce jub-jub bird, crimsilion jub-jub bird, stomp box`.find(
