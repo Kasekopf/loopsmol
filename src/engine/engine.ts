@@ -523,7 +523,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       task.combat?.can("forceItems") ||
       task.combat?.can("yellowRay") ||
       (!resources.has("ignore") && !resources.has("banish"));
-    equipCharging(outfit, mightKillSomething ?? false);
+    equipCharging(outfit, mightKillSomething ?? false, task.nofightingfamiliars ?? false);
 
     if (get("noncombatForcerActive")) {
       // Avoid some things that might override the NC and break the tracking
@@ -557,7 +557,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       outfit.equip($item`miniature crystal ball`);
     }
 
-    equipDefaults(outfit);
+    equipDefaults(outfit, task.nofightingfamiliars ?? false);
 
     // Kill wanderers
     for (const wanderer of wanderers) {

@@ -102,7 +102,11 @@ export function equipInitial(outfit: Outfit): void {
   }
 }
 
-export function equipCharging(outfit: Outfit, mightKillSomething: boolean): void {
+export function equipCharging(
+  outfit: Outfit,
+  mightKillSomething: boolean,
+  noFightingFamiliars: boolean
+): void {
   if (outfit.skipDefaults) return;
 
   const modifier = getModifiersFrom(outfit);
@@ -144,7 +148,11 @@ export function equipCharging(outfit: Outfit, mightKillSomething: boolean): void
     outfit.equip($familiar`Gelatinous Cubeling`);
   }
 
-  if (get("screechCombats") > 0 && !get("banishedPhyla").includes("hippy")) {
+  if (
+    get("screechCombats") > 0 &&
+    !get("banishedPhyla").includes("hippy") &&
+    !noFightingFamiliars
+  ) {
     outfit.equip($familiar`Patriotic Eagle`);
   }
 
@@ -153,7 +161,7 @@ export function equipCharging(outfit: Outfit, mightKillSomething: boolean): void
   }
 }
 
-export function equipDefaults(outfit: Outfit): void {
+export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): void {
   if (have($familiar`Temporal Riftlet`)) {
     outfit.equip($familiar`Temporal Riftlet`);
   }
@@ -168,16 +176,17 @@ export function equipDefaults(outfit: Outfit): void {
     outfit.equip($item`dromedary drinking helmet`);
 
   const modifier = getModifiersFrom(outfit);
-  outfit.equip($familiar`Jill-of-All-Trades`);
-  if (
-    outfit.familiar === $familiar`Jill-of-All-Trades` &&
-    (modifier.includes("meat") || modifier.includes("item"))
-  )
-    outfit.equip($item`LED candle`);
+  if (modifier.includes("meat") || modifier.includes("item")) {
+    if (outfit.equip($familiar`Jill-of-All-Trades`)) {
+      outfit.equip($item`LED candle`);
+    }
+  }
 
   if (outfit.skipDefaults) return;
 
   if (modifier.includes("-combat")) outfit.equip($familiar`Disgeist`); // low priority
+  if (!noFightingFamiliars) outfit.equip($familiar`Jill-of-All-Trades`);
+  outfit.equip($familiar`Blood-Faced Volleyball`); // default
 
   outfit.equip($item`mafia thumb ring`);
   if (atLevel(11)) outfit.equip($item`lucky gold ring`);
