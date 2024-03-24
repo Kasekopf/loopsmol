@@ -361,8 +361,8 @@ const Orchard: Task[] = [
       .macro(() =>
         Macro.externalIf(
           have($skill`Emotionally Chipped`) &&
-            get("_feelEnvyUsed") < 3 &&
-            have($effect`Everything Looks Yellow`),
+          get("_feelEnvyUsed") < 3 &&
+          have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
@@ -397,8 +397,8 @@ const Orchard: Task[] = [
       .macro(() =>
         Macro.externalIf(
           have($skill`Emotionally Chipped`) &&
-            get("_feelEnvyUsed") < 3 &&
-            have($effect`Everything Looks Yellow`),
+          get("_feelEnvyUsed") < 3 &&
+          have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
@@ -433,8 +433,8 @@ const Orchard: Task[] = [
       .macro(() =>
         Macro.externalIf(
           have($skill`Emotionally Chipped`) &&
-            get("_feelEnvyUsed") < 3 &&
-            have($effect`Everything Looks Yellow`),
+          get("_feelEnvyUsed") < 3 &&
+          have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
@@ -520,7 +520,7 @@ const Nuns: Task[] = [
           .trySkill($skill`Bowl Straight Up`)
           .trySkill($skill`Sing Along`)
       )
-      .kill(),
+      .killHard(),
     limit: { soft: 30 },
     boss: true,
   },

@@ -160,7 +160,7 @@ const Apartment: Task[] = [
     outfit: {
       equip: $items`antique machete`,
     },
-    combat: new CombatStrategy().kill(),
+    combat: new CombatStrategy().killHard(),
     choices: { 781: 1 },
     limit: { tries: 4 },
     freecombat: true,
@@ -239,7 +239,7 @@ const Office: Task[] = [
     after: ["Get Machete", "Open City"],
     completed: () => get("hiddenOfficeProgress") >= 1,
     do: $location`An Overgrown Shrine (Northeast)`,
-    combat: new CombatStrategy().kill(),
+    combat: new CombatStrategy().killHard(),
     outfit: {
       equip: $items`antique machete`,
     },
@@ -329,7 +329,7 @@ const Hospital: Task[] = [
     after: ["Get Machete", "Open City"],
     completed: () => get("hiddenHospitalProgress") >= 1,
     do: $location`An Overgrown Shrine (Southwest)`,
-    combat: new CombatStrategy().kill(),
+    combat: new CombatStrategy().killHard(),
     outfit: {
       equip: $items`antique machete`,
     },
@@ -379,7 +379,7 @@ const Bowling: Task[] = [
     after: ["Get Machete", "Open City"],
     completed: () => get("hiddenBowlingAlleyProgress") >= 1,
     do: $location`An Overgrown Shrine (Southeast)`,
-    combat: new CombatStrategy().kill(),
+    combat: new CombatStrategy().killHard(),
     outfit: {
       equip: $items`antique machete`,
     },
@@ -519,7 +519,7 @@ export const HiddenQuest: Quest = {
       },
       choices: { 791: 1 },
       combat: new CombatStrategy()
-        .kill($monster`dense liana`)
+        .killHard($monster`dense liana`)
         .killHard($monster`Protector Spectre`),
       limit: { tries: 4 },
       acquire: [{ item: $item`antique machete` }],

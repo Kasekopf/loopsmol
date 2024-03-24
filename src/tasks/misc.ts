@@ -947,7 +947,7 @@ export const MiscQuest: Quest = {
           result.while_("hasskill 7448 && !pastround 25", Macro.skill($skill`Douse Foe`));
           return result;
         }, $monster`shadow slab`)
-        .kill(),
+        .killHard(),
       outfit: () => {
         const result: OutfitSpec = {
           modifier: "item",
