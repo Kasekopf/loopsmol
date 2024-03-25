@@ -208,7 +208,13 @@ const Junkyard: Task[] = [
     },
     completed: () => have($item`molybdenum hammer`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
-    outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    outfit: {
+      equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      familiar: have($familiar`Reagnimated Gnome`) ? $familiar`Reagnimated Gnome`
+        : have($familiar`Cookbookbat`) ? $familiar`Cookbookbat`
+          : have($familiar`Nosy Nose`) ? $familiar`Nosy Nose`
+            : undefined
+    },
     do: $location`Next to that Barrel with Something Burning in it`,
     orbtargets: () => $monsters`batwinged gremlin, batwinged gremlin (tool)`,
     combat: new CombatStrategy()
@@ -238,7 +244,13 @@ const Junkyard: Task[] = [
     completed: () =>
       have($item`molybdenum crescent wrench`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
-    outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    outfit: {
+      equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      familiar: have($familiar`Reagnimated Gnome`) ? $familiar`Reagnimated Gnome`
+        : have($familiar`Cookbookbat`) ? $familiar`Cookbookbat`
+          : have($familiar`Nosy Nose`) ? $familiar`Nosy Nose`
+            : undefined
+    },
     do: $location`Over Where the Old Tires Are`,
     orbtargets: () => $monsters`erudite gremlin, erudite gremlin (tool)`,
     combat: new CombatStrategy()
@@ -267,7 +279,13 @@ const Junkyard: Task[] = [
       customRestoreMp(50);
     },
     completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
-    outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    outfit: {
+      equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      familiar: have($familiar`Reagnimated Gnome`) ? $familiar`Reagnimated Gnome`
+        : have($familiar`Cookbookbat`) ? $familiar`Cookbookbat`
+          : have($familiar`Nosy Nose`) ? $familiar`Nosy Nose`
+            : undefined
+    },
     do: $location`Near an Abandoned Refrigerator`,
     orbtargets: () => $monsters`spider gremlin, spider gremlin (tool)`,
     combat: new CombatStrategy()
@@ -297,7 +315,13 @@ const Junkyard: Task[] = [
     completed: () =>
       have($item`molybdenum screwdriver`) || get("sidequestJunkyardCompleted") !== "none",
     acquire: [{ item: $item`seal tooth` }],
-    outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    outfit: {
+      equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      familiar: have($familiar`Reagnimated Gnome`) ? $familiar`Reagnimated Gnome`
+        : have($familiar`Cookbookbat`) ? $familiar`Cookbookbat`
+          : have($familiar`Nosy Nose`) ? $familiar`Nosy Nose`
+            : undefined
+    },
     do: $location`Out by that Rusted-Out Car`,
     orbtargets: () => $monsters`vegetable gremlin, vegetable gremlin (tool)`,
     combat: new CombatStrategy()
@@ -321,7 +345,13 @@ const Junkyard: Task[] = [
     name: "Junkyard End",
     after: ["Junkyard Hammer", "Junkyard Wrench", "Junkyard Pliers", "Junkyard Screwdriver"],
     completed: () => get("sidequestJunkyardCompleted") !== "none",
-    outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
+    outfit: {
+      equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      familiar: have($familiar`Reagnimated Gnome`) ? $familiar`Reagnimated Gnome`
+        : have($familiar`Cookbookbat`) ? $familiar`Cookbookbat`
+          : have($familiar`Nosy Nose`) ? $familiar`Nosy Nose`
+            : undefined
+    },
     do: (): void => {
       visitUrl("bigisland.php?action=junkman&pwd");
     },
@@ -357,8 +387,8 @@ const Orchard: Task[] = [
       .macro(() =>
         Macro.externalIf(
           have($skill`Emotionally Chipped`) &&
-            get("_feelEnvyUsed") < 3 &&
-            have($effect`Everything Looks Yellow`),
+          get("_feelEnvyUsed") < 3 &&
+          have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
@@ -393,8 +423,8 @@ const Orchard: Task[] = [
       .macro(() =>
         Macro.externalIf(
           have($skill`Emotionally Chipped`) &&
-            get("_feelEnvyUsed") < 3 &&
-            have($effect`Everything Looks Yellow`),
+          get("_feelEnvyUsed") < 3 &&
+          have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
@@ -429,8 +459,8 @@ const Orchard: Task[] = [
       .macro(() =>
         Macro.externalIf(
           have($skill`Emotionally Chipped`) &&
-            get("_feelEnvyUsed") < 3 &&
-            have($effect`Everything Looks Yellow`),
+          get("_feelEnvyUsed") < 3 &&
+          have($effect`Everything Looks Yellow`),
           Macro.trySkill($skill`Feel Envy`),
           Macro.trySkill($skill`Fire Extinguisher: Polar Vortex`)
         )
