@@ -6463,6 +6463,9 @@ var args = Args.create("loopsmol", 'This is a script to complete Shrunken Advent
     delevel: Args.flag({
       help: "Delevel to level 13 with hot dogs before fighting the NS",
       default: false
+    }),
+    tune: Args.string({
+      help: "Use your hewn moon-rune spoon to retune to this sign after dieting."
     })
   }),
   debug: Args.group("Debug Options", {
