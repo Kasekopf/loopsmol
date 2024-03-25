@@ -523,7 +523,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       task.combat?.can("forceItems") ||
       task.combat?.can("yellowRay") ||
       (!resources.has("ignore") && !resources.has("banish"));
-    equipCharging(outfit, mightKillSomething ?? false);
+    equipCharging(outfit, mightKillSomething ?? false, task.nofightingfamiliars ?? false);
 
     if (get("noncombatForcerActive")) {
       // Avoid some things that might override the NC and break the tracking
@@ -557,7 +557,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       outfit.equip($item`miniature crystal ball`);
     }
 
-    equipDefaults(outfit);
+    equipDefaults(outfit, task.nofightingfamiliars ?? false);
 
     // Kill wanderers
     for (const wanderer of wanderers) {
@@ -610,7 +610,16 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     const other_effects = task.other_effects ?? [];
     applyEffects(outfit.modifier.join(","), [...effects, ...other_effects]);
 
-    cacheDress(outfit);
+    try {
+      cacheDress(outfit);
+    } catch {
+      // If we fail to dress, this is maybe just a mafia desync.
+      // So refresh our inventory and try again (once).
+      debug("Possible mafia desync detected; refreshing...");
+      cliExecute("refresh all");
+      // Do not try and cache-dress
+      outfit.dress();
+    }
     fixFoldables(outfit);
 
     const equipped = [...new Set(Slot.all().map((slot) => equippedItem(slot)))];
