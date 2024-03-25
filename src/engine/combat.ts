@@ -1,4 +1,4 @@
-import { haveEquipped, Location, Monster } from "kolmafia";
+import { haveEquipped, Location, Monster, myAdventures } from "kolmafia";
 import { $item, $skill, Macro } from "libram";
 import { ActionDefaults, CombatStrategy as BaseCombatStrategy } from "grimoire-kolmafia";
 
@@ -16,7 +16,7 @@ const myActions = [
   "forceItems", // Force items to drop with a YR or saber
 ] as const;
 export type CombatActions = (typeof myActions)[number];
-export class CombatStrategy extends BaseCombatStrategy.withActions(myActions) {}
+export class CombatStrategy extends BaseCombatStrategy.withActions(myActions) { }
 export class MyActionDefaults implements ActionDefaults<CombatActions> {
   ignore(target?: Monster | Location) {
     return this.kill(target);
@@ -66,8 +66,50 @@ export class MyActionDefaults implements ActionDefaults<CombatActions> {
 
 export function killMacro(): Macro {
   if (haveEquipped($item`June cleaver`)) {
+    // eslint-disable-next-line libram/verify-constants
+    if (haveEquipped($item`Everfull Dart Holster`)) {
+      if (myAdventures() > 50) {
+        return new Macro()
+          // eslint-disable-next-line libram/verify-constants
+          .trySkill($skill`Darts: Aim for the Bullseye`)
+          // eslint-disable-next-line libram/verify-constants
+          .trySkill($skill`Darts: Throw at %part1`)
+          .attack()
+          .repeat();
+      }
+      else {
+        return new Macro()
+          // eslint-disable-next-line libram/verify-constants
+          .trySkill($skill`Darts: Throw at %part1`)
+          .attack()
+          .repeat();
+      }
+    }
     return new Macro().attack().repeat();
   }
+
+  // eslint-disable-next-line libram/verify-constants
+  if (haveEquipped($item`Everfull Dart Holster`)) {
+    if (myAdventures() > 50) {
+      return new Macro()
+        // eslint-disable-next-line libram/verify-constants
+        .trySkill($skill`Darts: Aim for the Bullseye`)
+        // eslint-disable-next-line libram/verify-constants
+        .trySkill($skill`Darts: Throw at %part1`)
+        .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
+        .attack()
+        .repeat();
+    }
+    else {
+      return new Macro()
+        // eslint-disable-next-line libram/verify-constants
+        .trySkill($skill`Darts: Throw at %part1`)
+        .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
+        .attack()
+        .repeat();
+    }
+  }
+
   return new Macro()
     .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
     .attack()

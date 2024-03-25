@@ -395,8 +395,8 @@ const Pyramid: Task[] = [
       cliExecute("refresh all");
     },
     outfit: () => {
-      if (!have($item`Pick-O-Matic lockpicks`)) return { familiar: $familiar`Gelatinous Cubeling` }; // Ensure we get equipment
-      return {};
+      if (!have($item`Pick-O-Matic lockpicks`)) return { familiar: $familiar`Gelatinous Cubeling`, equip: $items`mafia thumb ring, lucky gold ring, spring shoes` }; // Ensure we get equipment
+      return { familiar: $familiar`Cookbookbat`, equip: $items`mafia thumb ring, lucky gold ring, spring shoes` };
     },
     combat: new CombatStrategy().killHard(),
     limit: { tries: 1 },
