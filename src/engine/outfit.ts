@@ -301,12 +301,13 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
   if (outfit.skipDefaults) return;
 
   if (modifier.includes("-combat")) outfit.equip($familiar`Disgeist`); // low priority
-  if (!noFightingFamiliars) outfit.equip($familiar`Jill-of-All-Trades`);
 
   if (args.minor.profitFamiliar) {
     outfit.equip(profitFamiliar());
     if (profitFamiliar() === $familiar`Chest Mimic` && have($item`tiny stillsuit`)) outfit.equip($item`tiny stillsuit`);
   }
+
+  if (!noFightingFamiliars) outfit.equip($familiar`Jill-of-All-Trades`);
 
   outfit.equip($familiar`Blood-Faced Volleyball`); // default
 
