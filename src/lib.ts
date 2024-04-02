@@ -1,6 +1,7 @@
 import { step } from "grimoire-kolmafia";
 import {
   appearanceRates,
+  Item,
   Location,
   Monster,
   myFamiliar,
@@ -11,6 +12,7 @@ import {
   visitUrl,
 } from "kolmafia";
 import { $familiar, $item, $location, $monsters, $stat, get, have, Snapper } from "libram";
+import { makeValue, ValueFunctions } from "garbo-lib";
 
 export function debug(message: string, color?: string): void {
   if (color) {
@@ -121,4 +123,22 @@ export function primestatId(): number {
 
 export function cosmicBowlingBallReady() {
   return have($item`cosmic bowling ball`) || get("cosmicBowlingBallReturnCombats") === 0;
+}
+
+let _valueFunctions: ValueFunctions | undefined = undefined;
+function garboValueFunctions(): ValueFunctions {
+  if (!_valueFunctions) {
+    _valueFunctions = makeValue({
+      itemValues: new Map([[$item`fake hand`, 50000]]),
+    });
+  }
+  return _valueFunctions;
+}
+
+export function garboValue(item: Item, useHistorical = false): number {
+  return garboValueFunctions().value(item, useHistorical);
+}
+
+export function garboAverageValue(...items: Item[]): number {
+  return garboValueFunctions().averageValue(...items);
 }
