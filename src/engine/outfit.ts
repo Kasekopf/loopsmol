@@ -307,7 +307,13 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
     if (profitFamiliar() === $familiar`Chest Mimic` && have($item`tiny stillsuit`)) outfit.equip($item`tiny stillsuit`);
   }
 
-  if (!noFightingFamiliars) outfit.equip($familiar`Jill-of-All-Trades`);
+  if (!noFightingFamiliars) {
+    if (args.minor.profitFamiliar) {
+      outfit.equip(profitFamiliar());
+      if (profitFamiliar() === $familiar`Chest Mimic` && have($item`tiny stillsuit`)) outfit.equip($item`tiny stillsuit`);
+    }
+    else outfit.equip($familiar`Jill-of-All-Trades`);
+  }
 
   outfit.equip($familiar`Blood-Faced Volleyball`); // default
 
