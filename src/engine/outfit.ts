@@ -109,11 +109,6 @@ const standardFamiliars: ValueFamiliar[] = [
       ) / 11, // 9 with blue plate
   },
   {
-    familiar: $familiar`Robortender`,
-    value: () =>
-      garboValue($item`elemental sugarcube`) / 5
-  },
-  {
     familiar: $familiar`Twitching Space Critter`,
 
     // Item is ludicrously overvalued and incredibly low-volume.
