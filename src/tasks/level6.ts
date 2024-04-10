@@ -1,5 +1,5 @@
 import { drink, Item, itemAmount, toInt, visitUrl } from "kolmafia";
-import { $item, $items, $location, $monsters, $skill, get, have } from "libram";
+import { $item, $items, $location, $monsters, $skill, AprilingBandHelmet, get, have } from "libram";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Priorities } from "../engine/priority";
@@ -23,6 +23,9 @@ export const FriarQuest: Quest = {
     {
       name: "Heart",
       after: ["Start"],
+      prepare: () => {
+        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
+      },
       priority: () => {
         if (
           get("noncombatForcerActive") &&
@@ -46,6 +49,9 @@ export const FriarQuest: Quest = {
     {
       name: "Neck",
       after: ["Start"],
+      prepare: () => {
+        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
+      },
       completed: () => have($item`dodecagram`) || step("questL06Friar") === 999,
       do: $location`The Dark Neck of the Woods`,
       outfit: { modifier: "-combat" },
@@ -56,6 +62,9 @@ export const FriarQuest: Quest = {
     {
       name: "Elbow",
       after: ["Start"],
+      prepare: () => {
+        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
+      },
       priority: () => {
         if (
           get("noncombatForcerActive") &&

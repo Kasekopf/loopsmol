@@ -1,5 +1,5 @@
 import { visitUrl } from "kolmafia";
-import { $item, $location, get, have } from "libram";
+import { $item, $location, AprilingBandHelmet, get, have } from "libram";
 import { atLevel } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
@@ -35,6 +35,9 @@ export const MosquitoQuest: Quest = {
     {
       name: "Mosquito",
       after: ["Burn Delay"],
+      prepare: () => {
+        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
+      },
       completed: () => step("questL02Larva") >= 1,
       do: $location`The Spooky Forest`,
       choices: { 502: 2, 505: 1, 334: 1 },

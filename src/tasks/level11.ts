@@ -20,6 +20,7 @@ import {
   $monster,
   $monsters,
   $skill,
+  AprilingBandHelmet,
   byStat,
   DaylightShavings,
   ensureEffect,
@@ -40,6 +41,9 @@ const Diary: Task[] = [
   {
     name: "Forest",
     after: ["Start"],
+    prepare: () => {
+      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Battle Cadence")
+    },
     completed: () => step("questL11Black") >= 2,
     do: $location`The Black Forest`,
     post: () => {
@@ -395,8 +399,8 @@ const Pyramid: Task[] = [
       cliExecute("refresh all");
     },
     outfit: () => {
-      if (!have($item`Pick-O-Matic lockpicks`)) return { familiar: $familiar`Gelatinous Cubeling`, equip: $items`mafia thumb ring, lucky gold ring, spring shoes` }; // Ensure we get equipment
-      return { familiar: $familiar`Cookbookbat`, equip: $items`mafia thumb ring, lucky gold ring, spring shoes` };
+      if (!have($item`Pick-O-Matic lockpicks`)) return { familiar: $familiar`Gelatinous Cubeling` }; // Ensure we get equipment
+      else return {};
     },
     combat: new CombatStrategy().killHard(),
     limit: { tries: 1 },

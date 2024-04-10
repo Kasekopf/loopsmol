@@ -1080,9 +1080,9 @@
   integrity sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==
 
 "@humanwhocodes/object-schema@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.2.tgz#d9fae00a2d5cb40f92cfe64b47ad749fbc38f917"
-  integrity sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.3.tgz#4a2868d75d6d6963e423bcf90b7fd1be343409d3"
+  integrity sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==
 
 "@jridgewell/gen-mapping@^0.3.0", "@jridgewell/gen-mapping@^0.3.2", "@jridgewell/gen-mapping@^0.3.5":
   version "0.3.5"
@@ -2296,9 +2296,9 @@ levn@^0.4.1:
     type-check "~0.4.0"
 
 libram@^0.8.24:
-  version "0.8.24"
-  resolved "https://registry.yarnpkg.com/libram/-/libram-0.8.24.tgz#3624489856b77f2ac4e970bde92aec25fa3d9580"
-  integrity sha512-8UB71ngpjIwV+UzlURVn2qJb8yK2RPefqUFng9lmhTYcumIBZhzvqt6FaQxUA73WENWy4P36RO68APvHf1KW3w==
+  version "0.8.26"
+  resolved "https://registry.yarnpkg.com/libram/-/libram-0.8.26.tgz#5c2b317c24d403f0ce1d4523209224f36feafb80"
+  integrity sha512-yScf3r+WaEr39jhLM10wlM9Kqic7WZEdAW8YcvKX4fBtpm5nxU3QBSSKK3wB047c2KESpZumiRXpnPdEickjbA==
   dependencies:
     html-entities "^2.4.0"
 
