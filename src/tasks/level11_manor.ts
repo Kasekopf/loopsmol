@@ -6,6 +6,7 @@ import {
   myInebriety,
   myLevel,
   numericModifier,
+  restoreMp,
   use,
   visitUrl,
 } from "kolmafia";
@@ -345,6 +346,7 @@ const ManorBasement: Task[] = [
     prepare: () => {
       if (numericModifier("Monster Level") < 81) changeMcd(10);
       tuneSnapper($phylum`constructs`);
+      restoreMp(200);
     },
     post: () => {
       if (currentMcd() > 0) changeMcd(0);
