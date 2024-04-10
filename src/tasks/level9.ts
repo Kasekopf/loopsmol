@@ -25,7 +25,6 @@ import {
   $monster,
   $monsters,
   $skill,
-  AprilingBandHelmet,
   AutumnAton,
   ensureEffect,
   get,
@@ -201,7 +200,6 @@ const Twin: Task[] = [
       if (numericModifier("stench resistance") < 4) ensureEffect($effect`Red Door Syndrome`);
       if (numericModifier("stench resistance") < 4)
         throw `Unable to ensure stench res for Twin Peak`;
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
     },
     do: $location`Twin Peak`,
     choices: { 606: 1, 607: 1 },

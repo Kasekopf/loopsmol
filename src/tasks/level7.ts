@@ -23,7 +23,6 @@ import {
   $monsters,
   $skill,
   $stat,
-  AprilingBandHelmet,
   AutumnAton,
   DaylightShavings,
   ensureEffect,
@@ -83,7 +82,6 @@ const Alcove: Task[] = [
         // Use visit URL to avoid needing to equip the pants
         visitUrl("runskillz.php?action=Skillz&whichskill=7419&targetplayer=0&pwd&quantity=1");
       }
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
     },
     ready: () => myBasestat($stat`Muscle`) >= 62,
     completed: () => get("cyrptAlcoveEvilness") <= 13,
@@ -140,7 +138,6 @@ const Cranny: Task[] = [
       tuneCape();
       changeMcd(10);
       fillHp();
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
     },
     post: () => {
       if (currentMcd() > 0) changeMcd(0);

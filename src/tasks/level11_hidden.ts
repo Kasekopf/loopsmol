@@ -24,7 +24,6 @@ import {
   $monster,
   $monsters,
   $skill,
-  AprilingBandHelmet,
   get,
   have,
   Macro,
@@ -44,9 +43,6 @@ const Temple: Task[] = [
   {
     name: "Forest Coin",
     after: ["Mosquito/Burn Delay"],
-    prepare: () => {
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-    },
     completed: () =>
       have($item`tree-holed coin`) ||
       have($item`Spooky Temple map`) ||
@@ -59,9 +55,6 @@ const Temple: Task[] = [
   {
     name: "Forest Map",
     after: ["Forest Coin"],
-    prepare: () => {
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-    },
     completed: () => have($item`Spooky Temple map`) || step("questM16Temple") === 999,
     do: $location`The Spooky Forest`,
     choices: { 502: 3, 506: 3, 507: 1, 334: 1 },
@@ -71,9 +64,6 @@ const Temple: Task[] = [
   {
     name: "Forest Fertilizer",
     after: ["Mosquito/Burn Delay"],
-    prepare: () => {
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-    },
     completed: () => have($item`Spooky-Gro fertilizer`) || step("questM16Temple") === 999,
     do: $location`The Spooky Forest`,
     choices: { 502: 3, 506: 2, 507: 1, 334: 1 },
@@ -83,9 +73,6 @@ const Temple: Task[] = [
   {
     name: "Forest Sapling",
     after: ["Mosquito/Burn Delay"],
-    prepare: () => {
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-    },
     completed: () => have($item`spooky sapling`) || step("questM16Temple") === 999,
     do: $location`The Spooky Forest`,
     choices: { 502: 1, 503: 3, 504: 3, 334: 1 },
@@ -95,9 +82,6 @@ const Temple: Task[] = [
   {
     name: "Open Temple",
     after: ["Forest Coin", "Forest Map", "Forest Sapling", "Forest Fertilizer"],
-    prepare: () => {
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-    },
     completed: () => step("questM16Temple") === 999,
     do: () => use($item`Spooky Temple map`),
     limit: { tries: 1 },
@@ -117,9 +101,6 @@ const Temple: Task[] = [
         !have($item`industrial fire extinguisher`)
       )
         use($item`11-leaf clover`);
-
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-
     },
     do: $location`The Hidden Temple`,
     outfit: () => {

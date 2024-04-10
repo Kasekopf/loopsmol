@@ -8,7 +8,6 @@ import {
   $monster,
   $monsters,
   $skill,
-  AprilingBandHelmet,
   get,
   have,
   Macro,
@@ -70,9 +69,6 @@ export const GiantQuest: Quest = {
     {
       name: "Airship YR Healer",
       after: ["Grow Beanstalk"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       completed: () => have($item`amulet of extreme plot significance`),
       do: $location`The Penultimate Fantasy Airship`,
       choices: () => {
@@ -115,9 +111,6 @@ export const GiantQuest: Quest = {
     {
       name: "Airship",
       after: ["Airship YR Healer"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       completed: () => have($item`S.O.C.K.`),
       do: $location`The Penultimate Fantasy Airship`,
       choices: () => {
@@ -142,9 +135,6 @@ export const GiantQuest: Quest = {
     {
       name: "Basement Search",
       after: ["Airship"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       completed: () =>
         containsText(
           $location`The Castle in the Clouds in the Sky (Basement)`.noncombatQueue,
@@ -167,9 +157,6 @@ export const GiantQuest: Quest = {
     {
       name: "Basement Finish",
       after: ["Basement Search"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       completed: () => step("questL10Garbage") >= 8,
       do: $location`The Castle in the Clouds in the Sky (Basement)`,
       outfit: { equip: $items`amulet of extreme plot significance` },
@@ -179,9 +166,6 @@ export const GiantQuest: Quest = {
     {
       name: "Ground",
       after: ["Basement Finish"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       completed: () => step("questL10Garbage") >= 9,
       do: $location`The Castle in the Clouds in the Sky (Ground Floor)`,
       choices: { 672: 3, 673: 3, 674: 3, 1026: 2 },
@@ -195,9 +179,6 @@ export const GiantQuest: Quest = {
     {
       name: "Ground Knife",
       after: ["Ground", "Tower/Wall of Meat"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       completed: () =>
         have($item`electric boning knife`) ||
         step("questL13Final") > 8 ||
@@ -213,9 +194,6 @@ export const GiantQuest: Quest = {
     {
       name: "Top Floor",
       after: ["Ground"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       completed: () => step("questL10Garbage") >= 10,
       do: $location`The Castle in the Clouds in the Sky (Top Floor)`,
       outfit: { equip: $items`Mohawk wig`, modifier: "-combat" },
@@ -236,9 +214,6 @@ export const GiantQuest: Quest = {
     {
       name: "Finish",
       after: ["Top Floor"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       priority: () => (councilSafe() ? Priorities.Free : Priorities.BadMood),
       completed: () => step("questL10Garbage") === 999,
       do: () => visitUrl("council.php"),
@@ -248,9 +223,6 @@ export const GiantQuest: Quest = {
     {
       name: "Unlock HITS",
       after: ["Top Floor"],
-      prepare: () => {
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-      },
       completed: () =>
         have($item`steam-powered model rocketship`) ||
         (have($item`star chart`) && itemAmount($item`star`) >= 8 && itemAmount($item`line`) >= 7) ||

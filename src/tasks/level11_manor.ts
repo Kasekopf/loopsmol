@@ -21,7 +21,6 @@ import {
   $monsters,
   $phylum,
   $skill,
-  AprilingBandHelmet,
   ensureEffect,
   get,
   getActiveEffects,
@@ -59,8 +58,6 @@ const Manor1: Task[] = [
     prepare: () => {
       if (have($item`handful of hand chalk`) && have($item`pool cue`))
         ensureEffect($effect`Chalky Hand`);
-
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
 
     },
     ready: () => myInebriety() <= 15 && (myInebriety() === 1 || myDaycount() > 1), // Nonnegative contribution
@@ -304,9 +301,6 @@ const ManorBasement: Task[] = [
   {
     name: "Laundry Room",
     after: ["Learn Recipe"],
-    prepare: () => {
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Celebration Bop")
-    },
     completed: () =>
       have($item`blasting soda`) ||
       have($item`unstable fulminate`) ||
@@ -330,9 +324,6 @@ const ManorBasement: Task[] = [
   {
     name: "Fulminate",
     after: ["Wine Cellar", "Laundry Room"],
-    prepare: () => {
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Celebration Bop")
-    },
     completed: () =>
       have($item`unstable fulminate`) || have($item`wine bomb`) || step("questL11Manor") >= 3,
     do: () => create($item`unstable fulminate`),

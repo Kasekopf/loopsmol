@@ -20,7 +20,6 @@ import {
   $monster,
   $monsters,
   $skill,
-  AprilingBandHelmet,
   byStat,
   DaylightShavings,
   ensureEffect,
@@ -41,9 +40,6 @@ const Diary: Task[] = [
   {
     name: "Forest",
     after: ["Start"],
-    prepare: () => {
-      if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Battle Cadence")
-    },
     completed: () => step("questL11Black") >= 2,
     do: $location`The Black Forest`,
     post: () => {
