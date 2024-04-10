@@ -7,7 +7,6 @@ import {
   myBasestat,
   myHp,
   myMaxhp,
-  myMp,
   myTurncount,
   restoreHp,
   sell,
@@ -723,32 +722,16 @@ export const WarQuest: Quest = {
         const result = <OutfitSpec>{
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
         };
-        if (oopsAllGropsReady()) {
-          result.familiar = $familiar`Patriotic Eagle`;
-        } else if (args.minor.jellies) {
+        if (args.minor.jellies) {
           result.familiar = $familiar`Space Jellyfish`;
         }
         return result;
-      },
-      prepare: () => {
-        if (oopsAllGropsReady() && myMp() < 30) customRestoreMp(30 - myMp());
       },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
       combat: new CombatStrategy()
         .kill()
-        .macro(Macro.trySkill($skill`Extract Jelly`))
-        .macro(() => {
-          if (oopsAllGropsReady())
-            return Macro.trySkill($skill`%fn, Release the Patriotic Screech!`).trySkill(
-              $skill`Gallapagosian Mating Call`
-            );
-          return new Macro();
-        }, $monster`Green Ops Soldier`),
-      map_the_monster: () => {
-        if (oopsAllGropsReady()) return $monster`Green Ops Soldier`;
-        return $monster`none`;
-      },
+        .macro(Macro.trySkill($skill`Extract Jelly`)),
       limit: { tries: 30 },
     },
     {
@@ -774,18 +757,6 @@ export const WarQuest: Quest = {
     },
   ],
 };
-
-function oopsAllGropsReady(): boolean {
-  return (
-    get("hippiesDefeated") >= 400 &&
-    have($familiar`Patriotic Eagle`) &&
-    get("screechCombats") === 0 &&
-    !get("banishedPhyla").includes("hippy") &&
-    have($skill`Gallapagosian Mating Call`) &&
-    have($skill`Map the Monsters`) &&
-    get("_monstersMapped") < 3
-  );
-}
 
 export function councilSafe(): boolean {
   // Check if it is safe to visit the council without making the war outfit worse
