@@ -306,6 +306,13 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
     }
   }
 
+  // If I figure out how to add to combat macro:
+
+  /* if(modifier.includes("item"))
+    if(get("everfullDartPerks").includes("Butt awareness"))
+      // eslint-disable-next-line libram/verify-constants
+      outfit.addBonus($item`Everfull Dart Holster`, 30) */
+
   if (outfit.skipDefaults) return;
 
   if (modifier.includes("-combat")) outfit.equip($familiar`Disgeist`); // low priority

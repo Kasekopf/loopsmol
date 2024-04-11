@@ -2,6 +2,7 @@ import {
   buy,
   cliExecute,
   Effect,
+  equip,
   Familiar,
   familiarWeight,
   getFuel,
@@ -27,6 +28,7 @@ import {
   totalTurnsPlayed,
   use,
   useFamiliar,
+  useSkill,
   visitUrl,
 } from "kolmafia";
 import {
@@ -39,7 +41,9 @@ import {
   $location,
   $monster,
   $skill,
+  AprilingBandHelmet,
   AsdonMartin,
+  CinchoDeMayo,
   Counter,
   get,
   getActiveEffects,
@@ -58,12 +62,12 @@ import {
   step,
 } from "grimoire-kolmafia";
 import { atLevel } from "../lib";
-import { Task } from "./task";
 import { args } from "../args";
 import { killMacro } from "./combat";
 import { BanishState } from "./state";
 import { customRestoreMp } from "./moods";
 import { oresNeeded } from "../tasks/level8";
+import { Task } from "./task";
 
 export interface Resource {
   name: string;
@@ -79,12 +83,12 @@ export type CombatResource = Resource & BaseCombatResource;
 export type BanishSource = CombatResource &
   (
     | {
-        do: Item | Skill;
-      }
+      do: Item | Skill;
+    }
     | {
-        do: Macro;
-        tracker: Item | Skill;
-      }
+      do: Macro;
+      tracker: Item | Skill;
+    }
   );
 
 function getTracker(source: BanishSource): Item | Skill {
@@ -547,8 +551,8 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
     bestFamiliar !== undefined
       ? bestFamiliar
       : altFamiliar === true
-      ? $familiar`Comma Chameleon`
-      : false;
+        ? $familiar`Comma Chameleon`
+        : false;
 
   if (chosenFamiliar) {
     const goalWeight = 5 * (1 + get("_banderRunaways"));
@@ -783,6 +787,39 @@ export const forceNCSources: ForceNCSorce[] = [
 export function forceNCPossible(): boolean {
   return forceNCSources.find((s) => s.available()) !== undefined;
 }
+
+/* export interface Resource {
+  name: string;
+  available: () => boolean;
+  prepare?: () => void;
+  equip?: Item | Familiar | OutfitSpec | OutfitSpec[];
+  effect?: Effect;
+  chance?: () => number;
+} */
+
+// eslint-disable-next-line libram/verify-constants
+const tuba = $item`Apriling Band Tuba`;
+
+export const nonCombatForceNCSources: Task[] = [
+  {
+    name: "Apriling Helm Tuba",
+    ready: () =>
+      (have(tuba) || (AprilingBandHelmet.have() && AprilingBandHelmet.canJoinSection())) && get("_aprilBandTubaUses") < 3,
+    completed: () => get("noncombatForcerActive"),
+    prepare: (): void => { if (!have(tuba)) AprilingBandHelmet.joinSection(tuba) },
+    do: () => AprilingBandHelmet.play(tuba),
+    limit: { tries: 50 },
+  },
+  {
+    name: "Cincho",
+    ready: () =>
+      CinchoDeMayo.have() && CinchoDeMayo.currentCinch() >= 60,
+    completed: () => get("noncombatForcerActive"),
+    prepare: () => equip($item`Cincho de Mayo`),
+    do: () => useSkill($skill`Cincho: Fiesta Exit`),
+    limit: { tries: 50 },
+  }
+]
 
 export type BackupTarget = {
   monster: Monster;
