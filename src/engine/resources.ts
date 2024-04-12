@@ -2,7 +2,6 @@ import {
   buy,
   cliExecute,
   Effect,
-  equip,
   Familiar,
   familiarWeight,
   getFuel,
@@ -788,38 +787,45 @@ export function forceNCPossible(): boolean {
   return forceNCSources.find((s) => s.available()) !== undefined;
 }
 
-/* export interface Resource {
-  name: string;
+type ForceNCSource = {
   available: () => boolean;
-  prepare?: () => void;
-  equip?: Item | Familiar | OutfitSpec | OutfitSpec[];
-  effect?: Effect;
-  chance?: () => number;
-} */
+  do: () => void;
+}
 
-// eslint-disable-next-line libram/verify-constants
-const tuba = $item`Apriling Band Tuba`;
+const tuba = $item`Apriling band tuba`;
 
-export const nonCombatForceNCSources: Task[] = [
+export const noncombatForceNCSources: ForceNCSource[] = [
   {
-    name: "Apriling Helm Tuba",
-    ready: () =>
-      (have(tuba) || (AprilingBandHelmet.have() && AprilingBandHelmet.canJoinSection())) && get("_aprilBandTubaUses") < 3,
-    completed: () => get("noncombatForcerActive"),
-    prepare: (): void => { if (!have(tuba)) AprilingBandHelmet.joinSection(tuba) },
-    do: () => AprilingBandHelmet.play(tuba),
-    limit: { tries: 50 },
+    available: () => (AprilingBandHelmet.canJoinSection() || have(tuba)) && tuba.dailyusesleft > 0,
+    do: () => AprilingBandHelmet.play(tuba, true),
   },
   {
-    name: "Cincho",
-    ready: () =>
-      CinchoDeMayo.have() && CinchoDeMayo.currentCinch() >= 60,
-    completed: () => get("noncombatForcerActive"),
-    prepare: () => equip($item`Cincho de Mayo`),
-    do: () => useSkill($skill`Cincho: Fiesta Exit`),
-    limit: { tries: 50 },
+    available: () => CinchoDeMayo.totalAvailableCinch() >= 60,
+    do: () => useSkill($skill`Cincho: Fiesta Exit`)
+  },
+];
+
+export function tryForceNC(): boolean {
+  if (get("noncombatForcerActive")) return true;
+  noncombatForceNCSources.find((source) => source.available())?.do();
+  return get("noncombatForcerActive");
+}
+
+export function tryPlayApriling(modifier: string): void {
+  if (!AprilingBandHelmet.have()) return;
+
+  if (modifier.includes("+combat")) {
+    AprilingBandHelmet.conduct("Apriling Band Battle Cadence")
   }
-]
+
+  if (modifier.includes("-combat")) {
+    AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
+  }
+
+  if (modifier.includes("food") || modifier.includes("booze")) {
+    AprilingBandHelmet.conduct("Apriling Band Celebration Bop")
+  }
+}
 
 export type BackupTarget = {
   monster: Monster;

@@ -38,6 +38,7 @@ import { atLevel, haveFlorest, haveLoathingIdolMicrophone } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
 import { ensureWithMPSwaps, fillHp } from "../engine/moods";
+import { tryPlayApriling } from "../engine/resources";
 
 function tuneCape(): void {
   if (
@@ -73,6 +74,7 @@ const Alcove: Task[] = [
         if (myClass() === $class`Seal Clubber`) ensureWithMPSwaps($effects`Silent Hunting`);
         else ensureWithMPSwaps($effects`Nearly Silent Hunting`);
       }
+      tryPlayApriling("-combat");
 
       if (
         have($item`designer sweatpants`) &&
@@ -138,6 +140,7 @@ const Cranny: Task[] = [
       tuneCape();
       changeMcd(10);
       fillHp();
+      tryPlayApriling("-combat");
     },
     post: () => {
       if (currentMcd() > 0) changeMcd(0);

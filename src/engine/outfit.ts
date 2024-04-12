@@ -33,7 +33,6 @@ import {
   $slot,
   $slots,
   $stat,
-  AprilingBandHelmet,
   clamp,
   DaylightShavings,
   get,
@@ -191,18 +190,6 @@ export function yellowSubmarinePossible(assumePulls = false) {
 
 export function equipInitial(outfit: Outfit): void {
   const modifier = getModifiersFrom(outfit);
-
-  if (modifier.includes("+combat")) {
-    if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Battle Cadence")
-  }
-
-  if (modifier.includes("-combat")) {
-    if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
-  }
-
-  if (modifier.includes("food") || modifier.includes("booze")) {
-    if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Celebration Bop")
-  }
 
   if (modifier.includes("item")) {
     outfit.equip($familiar`Jill-of-All-Trades`);

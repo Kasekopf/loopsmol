@@ -18,7 +18,7 @@ import { Quest } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
-import { forceItemPossible } from "../engine/resources";
+import { forceItemPossible, tryForceNC, tryPlayApriling } from "../engine/resources";
 
 export const GiantQuest: Quest = {
   name: "Giant",
@@ -69,6 +69,7 @@ export const GiantQuest: Quest = {
     {
       name: "Airship YR Healer",
       after: ["Grow Beanstalk"],
+      prepare: () => tryPlayApriling("-combat"),
       completed: () => have($item`amulet of extreme plot significance`),
       do: $location`The Penultimate Fantasy Airship`,
       choices: () => {
@@ -140,6 +141,10 @@ export const GiantQuest: Quest = {
           $location`The Castle in the Clouds in the Sky (Basement)`.noncombatQueue,
           "Mess Around with Gym"
         ) || step("questL10Garbage") >= 8,
+      prepare: () => {
+        tryForceNC()
+        tryPlayApriling("-combat");
+      },
       do: $location`The Castle in the Clouds in the Sky (Basement)`,
       outfit: () => {
         if (!have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)) {
@@ -166,6 +171,7 @@ export const GiantQuest: Quest = {
     {
       name: "Ground",
       after: ["Basement Finish"],
+      prepare: () => tryPlayApriling("-combat"),
       completed: () => step("questL10Garbage") >= 9,
       do: $location`The Castle in the Clouds in the Sky (Ground Floor)`,
       choices: { 672: 3, 673: 3, 674: 3, 1026: 2 },
@@ -194,6 +200,7 @@ export const GiantQuest: Quest = {
     {
       name: "Top Floor",
       after: ["Ground"],
+      prepare: () => tryPlayApriling("-combat"),
       completed: () => step("questL10Garbage") >= 10,
       do: $location`The Castle in the Clouds in the Sky (Top Floor)`,
       outfit: { equip: $items`Mohawk wig`, modifier: "-combat" },
