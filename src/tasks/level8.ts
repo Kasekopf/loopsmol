@@ -8,7 +8,6 @@ import {
   $monster,
   $monsters,
   $skill,
-  AprilingBandHelmet,
   Counter,
   ensureEffect,
   get,
@@ -110,7 +109,6 @@ export const McLargeHugeQuest: Quest = {
         step("questL08Trapper") >= 3,
       prepare: () => {
         fillHp();
-        if (AprilingBandHelmet.have()) AprilingBandHelmet.conduct("Apriling Band Battle Cadence");
         tryPlayApriling("+combat");
       },
       ready: () => !get("noncombatForcerActive"),
