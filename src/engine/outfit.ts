@@ -304,11 +304,6 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
 
   if (modifier.includes("-combat")) outfit.equip($familiar`Disgeist`); // low priority
 
-  if (args.minor.profitFamiliar) {
-    outfit.equip(profitFamiliar());
-    if (profitFamiliar() === $familiar`Chest Mimic` && have($item`tiny stillsuit`)) outfit.equip($item`tiny stillsuit`);
-  }
-
   if (!noFightingFamiliars) {
     if (args.minor.profitFamiliar) {
       outfit.equip(profitFamiliar());

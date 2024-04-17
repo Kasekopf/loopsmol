@@ -800,7 +800,7 @@ export const noncombatForceNCSources: ForceNCSource[] = [
     do: () => AprilingBandHelmet.play(tuba, true),
   },
   {
-    available: () => CinchoDeMayo.totalAvailableCinch() >= 60,
+    available: () => CinchoDeMayo.currentCinch() >= 60,
     do: () => useSkill($skill`Cincho: Fiesta Exit`)
   },
 ];
