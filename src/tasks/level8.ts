@@ -24,6 +24,7 @@ import { fillHp } from "../engine/moods";
 import { summonStrategy } from "./summons";
 import { coldPlanner } from "../engine/outfit";
 import { trainSetAvailable } from "./misc";
+import { tryPlayApriling } from "../engine/resources";
 
 export const McLargeHugeQuest: Quest = {
   name: "McLargeHuge",
@@ -108,6 +109,7 @@ export const McLargeHugeQuest: Quest = {
         step("questL08Trapper") >= 3,
       prepare: () => {
         fillHp();
+        tryPlayApriling("+combat");
       },
       ready: () => !get("noncombatForcerActive"),
       do: $location`Lair of the Ninja Snowmen`,

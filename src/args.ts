@@ -44,6 +44,10 @@ export const args = Args.create(
         help: "Use your Space Jellyfish to get stench jellies during the war (this may reduce your goose familiar exp).",
         default: false,
       }),
+      profitFamiliar: Args.flag({
+        help: "Use free familiar turns for familiar related profits.",
+        default: false,
+      }),
       pvp: Args.flag({
         help: "Break your hippy stone at the start of the run.",
         default: false,
@@ -63,6 +67,10 @@ export const args = Args.create(
       savelocket: Args.number({
         help: "Number of uses of the combat lover's locket to save.",
         default: 0,
+      }),
+      savetuba: Args.flag({
+        help: "Don't use Apriling Band Helmet's Tuba summon.",
+        default: false,
       }),
       luck: Args.number({
         help: 'Multiply the threshold for stopping execution when "you may just be unlucky". Increasing this can be dangerous and cause the script to waste more adventures; use at your own risk.',

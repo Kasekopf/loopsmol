@@ -35,11 +35,15 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel, debug, haveLoathingIdolMicrophone } from "../lib";
 import { councilSafe } from "./level12";
 import { customRestoreMp } from "../engine/moods";
+import { tryPlayApriling } from "../engine/resources";
 
 const Diary: Task[] = [
   {
     name: "Forest",
     after: ["Start"],
+    prepare: () => {
+      tryPlayApriling("+combat");
+    },
     completed: () => step("questL11Black") >= 2,
     do: $location`The Black Forest`,
     post: () => {
@@ -396,7 +400,7 @@ const Pyramid: Task[] = [
     },
     outfit: () => {
       if (!have($item`Pick-O-Matic lockpicks`)) return { familiar: $familiar`Gelatinous Cubeling` }; // Ensure we get equipment
-      return {};
+      else return {};
     },
     combat: new CombatStrategy().killHard(),
     limit: { tries: 1 },

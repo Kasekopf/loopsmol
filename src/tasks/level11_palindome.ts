@@ -38,6 +38,7 @@ import { ensureWithMPSwaps, fillHp } from "../engine/moods";
 import { globalStateCache } from "../engine/state";
 import { tuneSnapper } from "../lib";
 import { Priorities } from "../engine/priority";
+import { tryPlayApriling } from "../engine/resources";
 
 function shenItem(item: Item) {
   return (
@@ -146,6 +147,7 @@ const Copperhead: Task[] = [
       (myDaycount() === 1 && step("questL11Shen") > 3),
     prepare: () => {
       restoreHp(myMaxhp());
+      tryPlayApriling("+combat");
     },
     do: $location`Lair of the Ninja Snowmen`,
     outfit: () => {

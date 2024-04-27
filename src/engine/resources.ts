@@ -27,6 +27,7 @@ import {
   totalTurnsPlayed,
   use,
   useFamiliar,
+  useSkill,
   visitUrl,
 } from "kolmafia";
 import {
@@ -39,7 +40,9 @@ import {
   $location,
   $monster,
   $skill,
+  AprilingBandHelmet,
   AsdonMartin,
+  CinchoDeMayo,
   Counter,
   get,
   getActiveEffects,
@@ -58,12 +61,12 @@ import {
   step,
 } from "grimoire-kolmafia";
 import { atLevel } from "../lib";
-import { Task } from "./task";
 import { args } from "../args";
 import { killMacro } from "./combat";
 import { BanishState } from "./state";
 import { customRestoreMp } from "./moods";
 import { oresNeeded } from "../tasks/level8";
+import { Task } from "./task";
 
 export interface Resource {
   name: string;
@@ -79,12 +82,12 @@ export type CombatResource = Resource & BaseCombatResource;
 export type BanishSource = CombatResource &
   (
     | {
-        do: Item | Skill;
-      }
+      do: Item | Skill;
+    }
     | {
-        do: Macro;
-        tracker: Item | Skill;
-      }
+      do: Macro;
+      tracker: Item | Skill;
+    }
   );
 
 function getTracker(source: BanishSource): Item | Skill {
@@ -547,8 +550,8 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
     bestFamiliar !== undefined
       ? bestFamiliar
       : altFamiliar === true
-      ? $familiar`Comma Chameleon`
-      : false;
+        ? $familiar`Comma Chameleon`
+        : false;
 
   if (chosenFamiliar) {
     const goalWeight = 5 * (1 + get("_banderRunaways"));
@@ -782,6 +785,46 @@ export const forceNCSources: ForceNCSorce[] = [
 
 export function forceNCPossible(): boolean {
   return forceNCSources.find((s) => s.available()) !== undefined;
+}
+
+type ForceNCSource = {
+  available: () => boolean;
+  do: () => void;
+}
+
+const tuba = $item`Apriling band tuba`;
+
+export const noncombatForceNCSources: ForceNCSource[] = [
+  {
+    available: () => (AprilingBandHelmet.canJoinSection() || have(tuba)) && tuba.dailyusesleft > 0,
+    do: () => AprilingBandHelmet.play(tuba, true),
+  },
+  {
+    available: () => CinchoDeMayo.currentCinch() >= 60,
+    do: () => useSkill($skill`Cincho: Fiesta Exit`)
+  },
+];
+
+export function tryForceNC(): boolean {
+  if (get("noncombatForcerActive")) return true;
+  noncombatForceNCSources.find((source) => source.available())?.do();
+  return get("noncombatForcerActive");
+}
+
+export function tryPlayApriling(modifier: string): void {
+  if (!AprilingBandHelmet.have()) return;
+
+  if (modifier.includes("+combat")) {
+    AprilingBandHelmet.conduct("Apriling Band Battle Cadence")
+  }
+
+  if (modifier.includes("-combat")) {
+    AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
+  }
+
+  if (modifier.includes("food") || modifier.includes("booze")) {
+    AprilingBandHelmet.conduct("Apriling Band Celebration Bop")
+  }
 }
 
 export type BackupTarget = {

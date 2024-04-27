@@ -6,6 +6,7 @@ import {
   myInebriety,
   myLevel,
   numericModifier,
+  restoreMp,
   use,
   visitUrl,
 } from "kolmafia";
@@ -31,6 +32,7 @@ import { Modes, OutfitSpec, step } from "grimoire-kolmafia";
 import { CombatStrategy, killMacro } from "../engine/combat";
 import { Priorities } from "../engine/priority";
 import { tuneSnapper } from "../lib";
+import { tryPlayApriling } from "../engine/resources";
 
 const Manor1: Task[] = [
   {
@@ -57,6 +59,8 @@ const Manor1: Task[] = [
     prepare: () => {
       if (have($item`handful of hand chalk`) && have($item`pool cue`))
         ensureEffect($effect`Chalky Hand`);
+      tryPlayApriling("-combat");
+
     },
     ready: () => myInebriety() <= 15 && (myInebriety() === 1 || myDaycount() > 1), // Nonnegative contribution
     do: $location`The Haunted Billiards Room`,
@@ -276,6 +280,7 @@ const ManorBasement: Task[] = [
   {
     name: "Wine Cellar",
     after: ["Learn Recipe"],
+    prepare: () => tryPlayApriling("booze"),
     completed: () =>
       have($item`bottle of Chateau de Vinegar`) ||
       have($item`unstable fulminate`) ||
@@ -299,6 +304,7 @@ const ManorBasement: Task[] = [
   {
     name: "Laundry Room",
     after: ["Learn Recipe"],
+    prepare: () => tryPlayApriling("food"),
     completed: () =>
       have($item`blasting soda`) ||
       have($item`unstable fulminate`) ||
@@ -335,6 +341,7 @@ const ManorBasement: Task[] = [
     prepare: () => {
       if (numericModifier("Monster Level") < 81) changeMcd(10);
       tuneSnapper($phylum`constructs`);
+      restoreMp(200);
     },
     post: () => {
       if (currentMcd() > 0) changeMcd(0);

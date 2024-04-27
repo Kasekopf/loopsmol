@@ -6,6 +6,7 @@ import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
 import { Quest } from "../engine/task";
 import { step } from "grimoire-kolmafia";
+import { tryForceNC, tryPlayApriling } from "../engine/resources";
 
 export const FriarQuest: Quest = {
   name: "Friar",
@@ -46,6 +47,10 @@ export const FriarQuest: Quest = {
     {
       name: "Neck",
       after: ["Start"],
+      prepare: () => {
+        tryForceNC()
+        tryPlayApriling("-combat");
+      },
       completed: () => have($item`dodecagram`) || step("questL06Friar") === 999,
       do: $location`The Dark Neck of the Woods`,
       outfit: { modifier: "-combat" },
