@@ -74,7 +74,9 @@ export const DietQuest: Quest = {
       priority: () => Priorities.Free,
       after: ["Summon/War Frat 151st Infantryman"],
       completed: () =>
-        get("_universeCalculated") >= get("skillLevel144") || get("_universeCalculated") >= 3,
+        // When you use 3 casts of numberology in ronin,
+        // it locks you out of all your remaining casts once you break ronin
+        get("_universeCalculated") >= get("skillLevel144") || get("_universeCalculated") >= 2,
       ready: () => myAdventures() > 0 && Object.keys(reverseNumberology()).includes("69"),
       do: (): void => {
         customRestoreMp(1);
