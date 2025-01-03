@@ -48,7 +48,7 @@ export const FriarQuest: Quest = {
       name: "Neck",
       after: ["Start"],
       prepare: () => {
-        tryForceNC()
+        tryForceNC();
         tryPlayApriling("-combat");
       },
       completed: () => have($item`dodecagram`) || step("questL06Friar") === 999,

@@ -79,7 +79,6 @@ export const routing: string[] = [
   "Giant/Grow Beanstalk",
   "Bat/Use Sonar 3", // Reveal more delay
   "Palindome/Cold Snake",
-  "McLargeHuge/Climb",
 
   // Get and use clovers
   "Misc/Hermit Clover",
@@ -92,6 +91,7 @@ export const routing: string[] = [
   "Crypt/Cranny",
   "Giant/Basement Finish",
   "Giant/Unlock HITS",
+  "McLargeHuge/Climb",
 
   // The following 3 tasks should always stay in this order
   "Macguffin/Oasis", // Get ultrahydrated as soon as needed

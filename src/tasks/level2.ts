@@ -37,7 +37,7 @@ export const MosquitoQuest: Quest = {
       name: "Mosquito",
       after: ["Burn Delay"],
       prepare: () => {
-        tryForceNC()
+        tryForceNC();
         tryPlayApriling("-combat");
       },
       completed: () => step("questL02Larva") >= 1,

@@ -99,13 +99,13 @@ const standardFamiliars: ValueFamiliar[] = [
     value: () =>
       garboAverageValue(...$items`Polka Pop, BitterSweetTarts, Piddles`) / 6 +
       (1 / 3 + (have($effect`Jingle Jangle Jingle`) ? 0.1 : 0)) *
-      (familiarWeight($familiar`Stocking Mimic`) + weightAdjustment()),
+        (familiarWeight($familiar`Stocking Mimic`) + weightAdjustment()),
   },
   {
     familiar: $familiar`Shorter-Order Cook`,
     value: () =>
       garboAverageValue(
-        ...$items`short beer, short stack of pancakes, short stick of butter, short glass of water, short white`,
+        ...$items`short beer, short stack of pancakes, short stick of butter, short glass of water, short white`
       ) / 11, // 9 with blue plate
   },
   {
@@ -122,21 +122,18 @@ const standardFamiliars: ValueFamiliar[] = [
   },
   {
     familiar: $familiar`Rockin' Robin`,
-    value: () =>
-      garboValue($item`robin's egg`) /
-      clamp(30 - get("rockinRobinProgress"), 1, 30),
+    value: () => garboValue($item`robin's egg`) / clamp(30 - get("rockinRobinProgress"), 1, 30),
   },
   {
     familiar: $familiar`Optimistic Candle`,
     value: () =>
-      garboValue($item`glob of melted wax`) /
-      clamp(30 - get("optimisticCandleProgress"), 1, 30),
+      garboValue($item`glob of melted wax`) / clamp(30 - get("optimisticCandleProgress"), 1, 30),
   },
   {
     familiar: $familiar`Garbage Fire`,
     value: () =>
       garboAverageValue(
-        ...$items`burning newspaper, extra-toasted half sandwich, mulled hobo wine`,
+        ...$items`burning newspaper, extra-toasted half sandwich, mulled hobo wine`
       ) / clamp(30 - get("garbageFireProgress"), 1, 30),
   },
   {
@@ -144,26 +141,28 @@ const standardFamiliars: ValueFamiliar[] = [
     value: () =>
       (3 *
         garboAverageValue(
-          ...$items`Vegetable of Jarlsberg, Yeast of Boris, St. Sneaky Pete's Whey`,
+          ...$items`Vegetable of Jarlsberg, Yeast of Boris, St. Sneaky Pete's Whey`
         )) /
       11,
   },
   {
     familiar: $familiar`Patriotic Eagle`,
     value: () =>
-      holiday().includes("Dependence Day")
-        ? 0.05 * garboValue($item`souvenir flag`)
-        : 0,
+      holiday().includes("Dependence Day") ? 0.05 * garboValue($item`souvenir flag`) : 0,
   },
   {
     familiar: $familiar`Chest Mimic`,
-    value: () => (get("valueOfAdventure") * get("garbo_embezzlerMultiplier", 2.68)) / 50 * (numericModifier("Familiar Exp") + 1)
+    value: () =>
+      ((get("valueOfAdventure") * get("garbo_embezzlerMultiplier", 2.68)) / 50) *
+      (numericModifier("Familiar Exp") + 1),
   },
 ];
 
-
 function profitFamiliar(): Familiar {
-  return maxBy(standardFamiliars.filter(({ familiar }) => have(familiar)), ({ value }) => value()).familiar;
+  return maxBy(
+    standardFamiliars.filter(({ familiar }) => have(familiar)),
+    ({ value }) => value()
+  ).familiar;
 }
 
 export function getModifiersFrom(outfit: OutfitSpec | Outfit | undefined): string {
@@ -239,8 +238,8 @@ export function equipCharging(
 
   const need_bowling_balls =
     get("hiddenBowlingAlleyProgress") +
-    itemAmount($item`bowling ball`) +
-    closetAmount($item`bowling ball`) <
+      itemAmount($item`bowling ball`) +
+      closetAmount($item`bowling ball`) <
     5;
   const need_star_key =
     (itemAmount($item`star`) < 8 || itemAmount($item`line`) < 7) &&
@@ -307,9 +306,9 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
   if (!noFightingFamiliars) {
     if (args.minor.profitFamiliar) {
       outfit.equip(profitFamiliar());
-      if (profitFamiliar() === $familiar`Chest Mimic` && have($item`tiny stillsuit`)) outfit.equip($item`tiny stillsuit`);
-    }
-    else outfit.equip($familiar`Jill-of-All-Trades`);
+      if (profitFamiliar() === $familiar`Chest Mimic` && have($item`tiny stillsuit`))
+        outfit.equip($item`tiny stillsuit`);
+    } else outfit.equip($familiar`Jill-of-All-Trades`);
   }
 
   outfit.equip($familiar`Blood-Faced Volleyball`); // default

@@ -60,7 +60,6 @@ const Manor1: Task[] = [
       if (have($item`handful of hand chalk`) && have($item`pool cue`))
         ensureEffect($effect`Chalky Hand`);
       tryPlayApriling("-combat");
-
     },
     ready: () => myInebriety() <= 15 && (myInebriety() === 1 || myDaycount() > 1), // Nonnegative contribution
     do: $location`The Haunted Billiards Room`,

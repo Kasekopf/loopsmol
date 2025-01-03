@@ -1,4 +1,4 @@
-import { Item, itemAmount, numericModifier, use, visitUrl } from "kolmafia";
+import { equippedAmount, Item, itemAmount, numericModifier, use, visitUrl } from "kolmafia";
 import {
   $effect,
   $familiar,
@@ -15,16 +15,14 @@ import {
   Macro,
 } from "libram";
 import { Quest } from "../engine/task";
-import { OutfitSpec, step } from "grimoire-kolmafia";
+import { step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { councilSafe } from "./level12";
-import { fillHp } from "../engine/moods";
 import { summonStrategy } from "./summons";
 import { coldPlanner } from "../engine/outfit";
 import { trainSetAvailable } from "./misc";
-import { tryPlayApriling } from "../engine/resources";
 
 export const McLargeHugeQuest: Quest = {
   name: "McLargeHuge",
@@ -102,57 +100,72 @@ export const McLargeHugeQuest: Quest = {
       freeaction: true,
     },
     {
-      name: "Ninja",
-      after: ["Trapper Return", "Palindome/Cold Snake"],
+      name: "Extreme Outfit",
+      after: ["Trapper Return"],
+      // eslint-disable-next-line libram/verify-constants
       completed: () =>
-        (have($item`ninja rope`) && have($item`ninja carabiner`) && have($item`ninja crampons`)) ||
+        haveHugeLarge() ||
+        (have($item`eXtreme mittens`) &&
+          have($item`snowboarder pants`) &&
+          have($item`eXtreme scarf`)) ||
         step("questL08Trapper") >= 3,
-      prepare: () => {
-        fillHp();
-        tryPlayApriling("+combat");
-      },
-      ready: () => !get("noncombatForcerActive"),
-      do: $location`Lair of the Ninja Snowmen`,
-      outfit: () => {
-        const spec: OutfitSpec = {
-          modifier: "50 combat, init",
-          skipDefaults: true,
-          familiar: $familiar`Jumpsuited Hound Dog`,
-          avoid: $items`miniature crystal ball`,
+      do: $location`The eXtreme Slope`,
+      outfit: { equip: $items`candy cane sword cane`, modifier: "item, -combat" },
+      choices: () => {
+        return {
+          575:
+            equippedAmount($item`candy cane sword cane`) > 0 &&
+            (!have($item`snowboarder pants`) || !have($item`eXtreme mittens`))
+              ? 5
+              : 1,
+          15: have($item`eXtreme mittens`) ? 2 : 1,
+          16: have($item`snowboarder pants`) ? 2 : 1,
+          17: have($item`eXtreme mittens`) ? 2 : 1,
         };
-        if (have($familiar`Trick-or-Treating Tot`) && !have($item`li'l ninja costume`))
-          spec.familiar = $familiar`Trick-or-Treating Tot`;
-        if (
-          have($item`latte lovers member's mug`) &&
-          get("latteModifier").includes("Combat Rate: 10")
-        ) {
-          // Ensure kramco does not override +combat
-          spec.offhand = $item`latte lovers member's mug`;
-        }
-        return spec;
       },
-      limit: { soft: 20 },
-      combat: new CombatStrategy().killHard([
-        $monster`Frozen Solid Snake`,
-        $monster`ninja snowman assassin`,
-      ]),
-      orbtargets: () => undefined, // no assassins in orbs
+      combat: new CombatStrategy().killItem(),
+      limit: { soft: 30 },
+    },
+    {
+      name: "Extreme Snowboard",
+      after: ["Trapper Return", "Extreme Outfit"],
+      completed: () => get("currentExtremity") >= 3 || step("questL08Trapper") >= 3,
+      do: $location`The eXtreme Slope`,
+      outfit: () => {
+        if (haveHugeLarge())
+          return {
+            // eslint-disable-next-line libram/verify-constants
+            equip: $items`McHugeLarge left pole, McHugeLarge right pole, McHugeLarge left ski, McHugeLarge right ski, McHugeLarge duffel bag`,
+            modifier: "-combat",
+          };
+        return {
+          equip: $items`eXtreme mittens, snowboarder pants, eXtreme scarf`,
+          modifier: "-combat",
+        };
+      },
+      limit: { soft: 30 },
     },
     {
       name: "Climb",
-      after: ["Trapper Return", "Ninja"],
+      after: ["Trapper Return", "Extreme Snowboard"],
       completed: () => step("questL08Trapper") >= 3,
-      ready: () => coldPlanner.maximumPossible(true) >= 5,
-      prepare: () => {
-        if (numericModifier("cold resistance") < 5) ensureEffect($effect`Red Door Syndrome`);
-        if (numericModifier("cold resistance") < 5)
-          throw `Unable to ensure cold res for The Icy Peak`;
-      },
       do: (): void => {
         visitUrl("place.php?whichplace=mclargehuge&action=cloudypeak");
       },
-      outfit: () => coldPlanner.outfitFor(5),
+      outfit: () => {
+        if (haveHugeLarge())
+          return {
+            // eslint-disable-next-line libram/verify-constants
+            equip: $items`McHugeLarge left pole, McHugeLarge right pole, McHugeLarge left ski, McHugeLarge right ski, McHugeLarge duffel bag`,
+            modifier: "-combat",
+          };
+        return {
+          equip: $items`eXtreme mittens, snowboarder pants, eXtreme scarf`,
+          modifier: "-combat",
+        };
+      },
       limit: { tries: 1 },
+      freeaction: true,
     },
     {
       name: "Peak",
@@ -212,4 +225,19 @@ export function oresNeeded(): number {
 
   if (get("spookyVHSTapeMonster") === $monster`mountain man`) ore_needed -= 2;
   return Math.max(ore_needed, 0);
+}
+
+function haveHugeLarge() {
+  return (
+    // eslint-disable-next-line libram/verify-constants
+    have($item`McHugeLarge left pole`) &&
+    // eslint-disable-next-line libram/verify-constants
+    have($item`McHugeLarge right pole`) &&
+    // eslint-disable-next-line libram/verify-constants
+    have($item`McHugeLarge left ski`) &&
+    // eslint-disable-next-line libram/verify-constants
+    have($item`McHugeLarge right ski`) &&
+    // eslint-disable-next-line libram/verify-constants
+    have($item`McHugeLarge duffel bag`)
+  );
 }

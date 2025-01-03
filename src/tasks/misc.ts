@@ -1303,8 +1303,7 @@ export const MiscQuest: Quest = {
     {
       name: "Acquire Tuba",
       priority: () => Priorities.Free,
-      ready: () =>
-        !args.minor.savetuba && AprilingBandHelmet.canJoinSection(),
+      ready: () => !args.minor.savetuba && AprilingBandHelmet.canJoinSection(),
       completed: () => have($item`Apriling band tuba`),
       do: () => AprilingBandHelmet.joinSection($item`Apriling band tuba`),
       limit: { tries: 1 },

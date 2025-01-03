@@ -82,12 +82,12 @@ export type CombatResource = Resource & BaseCombatResource;
 export type BanishSource = CombatResource &
   (
     | {
-      do: Item | Skill;
-    }
+        do: Item | Skill;
+      }
     | {
-      do: Macro;
-      tracker: Item | Skill;
-    }
+        do: Macro;
+        tracker: Item | Skill;
+      }
   );
 
 function getTracker(source: BanishSource): Item | Skill {
@@ -550,8 +550,8 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
     bestFamiliar !== undefined
       ? bestFamiliar
       : altFamiliar === true
-        ? $familiar`Comma Chameleon`
-        : false;
+      ? $familiar`Comma Chameleon`
+      : false;
 
   if (chosenFamiliar) {
     const goalWeight = 5 * (1 + get("_banderRunaways"));
@@ -790,7 +790,7 @@ export function forceNCPossible(): boolean {
 type ForceNCSource = {
   available: () => boolean;
   do: () => void;
-}
+};
 
 const tuba = $item`Apriling band tuba`;
 
@@ -801,7 +801,7 @@ export const noncombatForceNCSources: ForceNCSource[] = [
   },
   {
     available: () => CinchoDeMayo.currentCinch() >= 60,
-    do: () => useSkill($skill`Cincho: Fiesta Exit`)
+    do: () => useSkill($skill`Cincho: Fiesta Exit`),
   },
 ];
 
@@ -815,15 +815,15 @@ export function tryPlayApriling(modifier: string): void {
   if (!AprilingBandHelmet.have()) return;
 
   if (modifier.includes("+combat")) {
-    AprilingBandHelmet.conduct("Apriling Band Battle Cadence")
+    AprilingBandHelmet.conduct("Apriling Band Battle Cadence");
   }
 
   if (modifier.includes("-combat")) {
-    AprilingBandHelmet.conduct("Apriling Band Patrol Beat")
+    AprilingBandHelmet.conduct("Apriling Band Patrol Beat");
   }
 
   if (modifier.includes("food") || modifier.includes("booze")) {
-    AprilingBandHelmet.conduct("Apriling Band Celebration Bop")
+    AprilingBandHelmet.conduct("Apriling Band Celebration Bop");
   }
 }
 
