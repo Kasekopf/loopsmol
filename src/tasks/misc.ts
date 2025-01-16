@@ -657,7 +657,8 @@ export const MiscQuest: Quest = {
       after: [],
       priority: () => Priorities.Free,
       ready: () =>
-        get("_coldMedicineConsults") >= 5 && getWorkshed() === $item`cold medicine cabinet`,
+        (get("_coldMedicineConsults") >= 5 && getWorkshed() === $item`cold medicine cabinet`) ||
+        (get("_pirateDinghyUsed") && getWorkshed() === $item`TakerSpace letter of Marque`),
       completed: () =>
         !have(args.major.swapworkshed) || get("_workshedItemUsed") || myTurncount() >= 1000,
       do: () => use(args.major.swapworkshed),
