@@ -165,6 +165,22 @@ export const MiscQuest: Quest = {
       limit: { tries: 5 },
     },
     {
+      name: "Unlock Island Takerspace",
+      priority: () => Priorities.Free,
+      ready: () => getWorkshed() === $item`TakerSpace letter of Marque`,
+      completed: () =>
+        get("_pirateDinghyUsed") ||
+        get("takerSpaceAnchor") < 1 ||
+        get("takerSpaceMast") < 1 ||
+        get("takerSpaceSilk") < 1,
+      do: () => {
+        retrieveItem($item`pirate dinghy`);
+        use($item`pirate dinghy`);
+      },
+      limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
       name: "Unlock Island",
       after: ["Island Scrip"],
       ready: () =>
