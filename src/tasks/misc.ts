@@ -146,7 +146,8 @@ export const MiscQuest: Quest = {
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
-        have($item`yellow submarine`),
+        have($item`yellow submarine`) ||
+        get("_pirateDinghyUsed"),
       do: $location`The Shore, Inc. Travel Agency`,
       outfit: () => {
         if (!get("candyCaneSwordShore")) return { equip: $items`candy cane sword cane` };
