@@ -475,6 +475,7 @@ const Bowling: Task[] = [
       return $monster`none`;
     },
     choices: { 788: 1 },
+    parachute: $monster`pygmy bowler`,
     limit: { soft: 25 },
   },
   {

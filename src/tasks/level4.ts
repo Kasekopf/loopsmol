@@ -34,6 +34,78 @@ export const BatQuest: Quest = {
       freeaction: true,
     },
     {
+      name: "Bat Wings Sonar 1",
+      priority: () => Priorities.Free,
+      after: [],
+      ready: () => have($item`bat wings`),
+      completed: () => get("batWingsBatHoleEntrance", false),
+      do: $location`The Bat Hole Entrance`,
+      prepare: () => {
+        if (numericModifier("stench resistance") < 1) ensureEffect($effect`Red Door Syndrome`);
+        if (numericModifier("stench resistance") < 1)
+          throw `Unable to ensure stench res for guano junction`;
+      },
+      post: () => {
+        if (have($item`sonar-in-a-biscuit`)) use($item`sonar-in-a-biscuit`);
+      },
+      outfit: { modifier: "10 stench res", equip: $items`bat wings` },
+      limit: { tries: 1 },
+    },
+    {
+      name: "Bat Wings Sonar 2",
+      priority: () => Priorities.Free,
+      after: ["Bat Wings Sonar 1"],
+      ready: () => have($item`bat wings`),
+      completed: () => get("batWingsGuanoJunction", false),
+      do: $location`Guano Junction`,
+      prepare: () => {
+        if (numericModifier("stench resistance") < 1) ensureEffect($effect`Red Door Syndrome`);
+        if (numericModifier("stench resistance") < 1)
+          throw `Unable to ensure stench res for guano junction`;
+      },
+      post: () => {
+        if (have($item`sonar-in-a-biscuit`)) use($item`sonar-in-a-biscuit`);
+      },
+      outfit: { modifier: "10 stench res", equip: $items`bat wings` },
+      limit: { tries: 1 },
+    },
+    {
+      name: "Bat Wings Sonar 3",
+      priority: () => Priorities.Free,
+      after: ["Bat Wings Sonar 2"],
+      ready: () => have($item`bat wings`),
+      completed: () => get("batWingsBatratBurrow", false),
+      do: $location`The Batrat and Ratbat Burrow`,
+      prepare: () => {
+        if (numericModifier("stench resistance") < 1) ensureEffect($effect`Red Door Syndrome`);
+        if (numericModifier("stench resistance") < 1)
+          throw `Unable to ensure stench res for guano junction`;
+      },
+      post: () => {
+        if (have($item`sonar-in-a-biscuit`)) use($item`sonar-in-a-biscuit`);
+      },
+      outfit: { modifier: "10 stench res", equip: $items`bat wings` },
+      limit: { tries: 1 },
+    },
+    {
+      name: "Bat Wings Bean",
+      priority: () => Priorities.Free,
+      after: ["Bat Wings Sonar 3"],
+      ready: () => have($item`bat wings`),
+      completed: () => get("batWingsBeanbatChamber", false),
+      do: $location`The Beanbat Chamber`,
+      prepare: () => {
+        if (numericModifier("stench resistance") < 1) ensureEffect($effect`Red Door Syndrome`);
+        if (numericModifier("stench resistance") < 1)
+          throw `Unable to ensure stench res for guano junction`;
+      },
+      post: () => {
+        if (have($item`sonar-in-a-biscuit`)) use($item`sonar-in-a-biscuit`);
+      },
+      outfit: { modifier: "10 stench res", equip: $items`bat wings` },
+      limit: { tries: 1 },
+    },
+    {
       name: "Get Sonar 1",
       after: [],
       completed: () => step("questL04Bat") + itemAmount($item`sonar-in-a-biscuit`) >= 1,
@@ -80,8 +152,8 @@ export const BatQuest: Quest = {
       completed: () => step("questL04Bat") + itemAmount($item`sonar-in-a-biscuit`) >= 2,
       priority: () =>
         step("questL11Shen") === 999 ||
-        have($item`The Stankara Stone`) ||
-        (myDaycount() === 1 && step("questL11Shen") > 1)
+          have($item`The Stankara Stone`) ||
+          (myDaycount() === 1 && step("questL11Shen") > 1)
           ? Priorities.None
           : Priorities.BadMood,
       prepare: () => {

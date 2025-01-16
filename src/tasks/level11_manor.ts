@@ -202,6 +202,7 @@ const Manor2: Task[] = [
       )
       .ignore($monster`tumbleweed`),
     delay: () => (have($item`Lord Spookyraven's spectacles`) ? 5 : 0),
+    parachute: $monster`animated ornate nightstand`,
     limit: { soft: 20 },
   },
   {
@@ -393,6 +394,7 @@ const ManorBasement: Task[] = [
     combat: new CombatStrategy()
       .kill($monster`monstrous boiler`)
       .banish($monsters`coaltergeist, steam elemental`),
+    parachute: $monster`monstrous boiler`,
     limit: { soft: 10 },
   },
   {

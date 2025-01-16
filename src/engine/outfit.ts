@@ -99,7 +99,7 @@ const standardFamiliars: ValueFamiliar[] = [
     value: () =>
       garboAverageValue(...$items`Polka Pop, BitterSweetTarts, Piddles`) / 6 +
       (1 / 3 + (have($effect`Jingle Jangle Jingle`) ? 0.1 : 0)) *
-        (familiarWeight($familiar`Stocking Mimic`) + weightAdjustment()),
+      (familiarWeight($familiar`Stocking Mimic`) + weightAdjustment()),
   },
   {
     familiar: $familiar`Shorter-Order Cook`,
@@ -238,8 +238,8 @@ export function equipCharging(
 
   const need_bowling_balls =
     get("hiddenBowlingAlleyProgress") +
-      itemAmount($item`bowling ball`) +
-      closetAmount($item`bowling ball`) <
+    itemAmount($item`bowling ball`) +
+    closetAmount($item`bowling ball`) <
     5;
   const need_star_key =
     (itemAmount($item`star`) < 8 || itemAmount($item`line`) < 7) &&
@@ -301,7 +301,10 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
 
   if (outfit.skipDefaults) return;
 
-  if (modifier.includes("-combat")) outfit.equip($familiar`Disgeist`); // low priority
+  if (modifier.includes("-combat")) {
+    outfit.equip($familiar`Peace Turkey`);
+    outfit.equip($familiar`Disgeist`);
+  }  // low priority
 
   if (!noFightingFamiliars) {
     if (args.minor.profitFamiliar) {
@@ -358,14 +361,18 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
       outfit.equip($item`fresh coat of paint`);
     }
     outfit.equip($item`familiar scrapbook`);
-    outfit.equip($item`protonic accelerator pack`);
+    if (have($item`bat wings`) && get("_batWingsFreeFights", 0) < 5) {
+      outfit.equip($item`bat wings`);
+    } else {
+      outfit.equip($item`protonic accelerator pack`);
+      outfit.equip($item`bat wings`);
+    }
     outfit.equip($item`unwrapped knock-off retro superhero cape`);
     outfit.equip($item`designer sweatpants`);
     outfit.equip($item`warbear long johns`);
     outfit.equip($item`square sponge pants`);
     outfit.equip($item`Cargo Cultist Shorts`);
     outfit.equip($item`lucky gold ring`);
-    // eslint-disable-next-line libram/verify-constants
     outfit.equip($item`Everfull Dart Holster`);
 
     if (

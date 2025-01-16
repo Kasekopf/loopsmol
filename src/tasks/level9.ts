@@ -334,6 +334,22 @@ export const ChasmQuest: Quest = {
       freeaction: true,
     },
     {
+      name: "Bat Wings Bridge Parts",
+      after: ["Start"],
+      priority: () => Priorities.Free,
+      ready: () =>
+        have($item`bat wings`) && get("chasmBridgeProgress") >= 25,
+      completed: () => step("questL09Topping") >= 1,
+      do: () => {
+        visitUrl(`place.php?whichplace=orc_chasm&action=bridge${get("chasmBridgeProgress")}`); // use existing materials
+        visitUrl("place.php?whichplace=orc_chasm&action=bridge_jump");
+        visitUrl("place.php?whichplace=highlands&action=highlands_dude");
+      },
+      outfit: { equip: $items`bat wings` },
+      freeaction: true,
+      limit: { tries: 30, unready: true },
+    },
+    {
       name: "Bridge",
       after: ["Start", "Macguffin/Forest"], // Wait for black paint
       priority: (): Priority => {

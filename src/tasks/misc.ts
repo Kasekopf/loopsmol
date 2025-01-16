@@ -69,6 +69,7 @@ import {
   have,
   haveInCampground,
   Macro,
+  MayamCalendar,
   Robortender,
   set,
   undelay,
@@ -108,6 +109,29 @@ export const MiscQuest: Quest = {
       },
       outfit: { equip: $items`designer sweatpants` },
       limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Mayam Calendar",
+      after: ["Robot/Equip Top Initial"],
+      priority: () => Priorities.Free,
+      completed: () => !MayamCalendar.have() || MayamCalendar.remainingUses() === 0,
+      do: () => {
+        cliExecute("mayam rings fur lightning eyepatch yam");
+        cliExecute("mayam rings chair wood cheese clock");
+        cliExecute("mayam rings eye meat wall explosion");
+      },
+      outfit: () => {
+        if (
+          myTurncount() <= 10 &&
+          (!have($item`closed-circuit pay phone`) ||
+            !get("neverendingPartyAlways") ||
+            !get("snojoAvailable"))
+        )
+          return { familiar: $familiar`Grey Goose` };
+        else return { familiar: $familiar`Chest Mimic` };
+      },
+      limit: { tries: 2 },
       freeaction: true,
     },
     {
