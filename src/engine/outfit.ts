@@ -156,6 +156,12 @@ const standardFamiliars: ValueFamiliar[] = [
       ((get("valueOfAdventure") * get("garbo_embezzlerMultiplier", 2.68)) / 50) *
       (numericModifier("Familiar Exp") + 1),
   },
+  {
+    familiar: $familiar`Peace Turkey`,
+    value: () =>
+      garboAverageValue(...$items`peace shooter, whirled peas, piece of cake`) *
+      (0.24 + Math.sqrt(familiarWeight($familiar`Peace Turkey`))),
+  },
 ];
 
 function profitFamiliar(): Familiar {
