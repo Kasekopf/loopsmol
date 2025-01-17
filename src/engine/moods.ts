@@ -77,6 +77,13 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
   )
     result["-combat"].push($effect`Silent Running`);
 
+  if (
+    have($item`Clan VIP Lounge key`) &&
+    (get("_photoBoothEffects", 0) < 3 || have($effect`Wild and Westy!`)) &&
+    have($item`Talisman o' Namsilat`)
+  )
+    result["-combat"].push($effect`Wild and Westy!`);
+
   if (have($skill`Emotionally Chipped`) && get("_feelLonelyUsed") < 3)
     result["-combat"].push($effect`Feeling Lonely`);
 
