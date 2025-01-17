@@ -85,6 +85,11 @@ export const pulls: PullSpec[] = [
     price: 200000,
   },
   {
+    pull: $item`Bowl of Infinite Jelly`,
+    useful: () => myFullness() === 0,
+    optional: true,
+  },
+  {
     pull: $item`milk of magnesium`,
     useful: () => {
       if (args.minor.skipmilk) return false;
