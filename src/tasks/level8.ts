@@ -103,7 +103,6 @@ export const McLargeHugeQuest: Quest = {
     {
       name: "Extreme Outfit",
       after: ["Trapper Return"],
-      // eslint-disable-next-line libram/verify-constants
       completed: () =>
         haveHugeLarge() ||
         (have($item`eXtreme mittens`) &&
@@ -113,12 +112,11 @@ export const McLargeHugeQuest: Quest = {
       do: $location`The eXtreme Slope`,
       outfit: { equip: $items`candy cane sword cane`, modifier: "item, -combat" },
       choices: () => {
+        const candyCaneUseful =
+          equippedAmount($item`candy cane sword cane`) > 0 &&
+          (!have($item`snowboarder pants`) || !have($item`eXtreme mittens`));
         return {
-          575:
-            equippedAmount($item`candy cane sword cane`) > 0 &&
-            (!have($item`snowboarder pants`) || !have($item`eXtreme mittens`))
-              ? 5
-              : 1,
+          575: candyCaneUseful ? 5 : 1,
           15: have($item`eXtreme mittens`) ? 2 : 1,
           16: have($item`snowboarder pants`) ? 2 : 1,
           17: have($item`eXtreme mittens`) ? 2 : 1,
@@ -135,7 +133,6 @@ export const McLargeHugeQuest: Quest = {
       outfit: () => {
         if (haveHugeLarge())
           return {
-            // eslint-disable-next-line libram/verify-constants
             equip: $items`McHugeLarge left pole, McHugeLarge right pole, McHugeLarge left ski, McHugeLarge right ski, McHugeLarge duffel bag`,
             modifier: "-combat",
           };
@@ -156,7 +153,6 @@ export const McLargeHugeQuest: Quest = {
       outfit: () => {
         if (haveHugeLarge())
           return {
-            // eslint-disable-next-line libram/verify-constants
             equip: $items`McHugeLarge left pole, McHugeLarge right pole, McHugeLarge left ski, McHugeLarge right ski, McHugeLarge duffel bag`,
             modifier: "-combat",
           };
@@ -230,15 +226,10 @@ export function oresNeeded(): number {
 
 function haveHugeLarge() {
   return (
-    // eslint-disable-next-line libram/verify-constants
     have($item`McHugeLarge left pole`) &&
-    // eslint-disable-next-line libram/verify-constants
     have($item`McHugeLarge right pole`) &&
-    // eslint-disable-next-line libram/verify-constants
     have($item`McHugeLarge left ski`) &&
-    // eslint-disable-next-line libram/verify-constants
     have($item`McHugeLarge right ski`) &&
-    // eslint-disable-next-line libram/verify-constants
     have($item`McHugeLarge duffel bag`)
   );
 }

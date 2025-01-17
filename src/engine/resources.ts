@@ -79,17 +79,14 @@ export interface Resource {
 
 export type CombatResource = Resource & BaseCombatResource;
 
-export type BanishSource = CombatResource &
-  (
-    | {
-        do: Item | Skill;
-      }
-    | {
-        do: Macro;
-        tracker: Item | Skill;
-      }
-  );
-
+type BanishSimpleDo = CombatResource & {
+  do: Item | Skill;
+};
+type BanishMacroDo = CombatResource & {
+  do: Macro;
+  tracker: Item | Skill;
+};
+export type BanishSource = BanishSimpleDo | BanishMacroDo;
 function getTracker(source: BanishSource): Item | Skill {
   if ("tracker" in source) return source.tracker;
   return source.do;
@@ -547,11 +544,7 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
       getProperty("_commaRunDone"));
 
   const chosenFamiliar =
-    bestFamiliar !== undefined
-      ? bestFamiliar
-      : altFamiliar === true
-      ? $familiar`Comma Chameleon`
-      : false;
+    bestFamiliar ?? (altFamiliar === true ? $familiar`Comma Chameleon` : false);
 
   if (chosenFamiliar) {
     const goalWeight = 5 * (1 + get("_banderRunaways"));

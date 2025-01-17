@@ -96,10 +96,13 @@ const standardFamiliars: ValueFamiliar[] = [
   },
   {
     familiar: $familiar`Stocking Mimic`,
-    value: () =>
-      garboAverageValue(...$items`Polka Pop, BitterSweetTarts, Piddles`) / 6 +
-      (1 / 3 + (have($effect`Jingle Jangle Jingle`) ? 0.1 : 0)) *
-        (familiarWeight($familiar`Stocking Mimic`) + weightAdjustment()),
+    value: () => {
+      const weight = familiarWeight($familiar`Stocking Mimic`) + weightAdjustment();
+      return (
+        garboAverageValue(...$items`Polka Pop, BitterSweetTarts, Piddles`) / 6 +
+        (1 / 3 + (have($effect`Jingle Jangle Jingle`) ? 0.1 : 0)) * weight
+      );
+    },
   },
   {
     familiar: $familiar`Shorter-Order Cook`,
@@ -242,11 +245,11 @@ export function equipCharging(
     }
   }
 
-  const need_bowling_balls =
+  const bowling_ball_count =
     get("hiddenBowlingAlleyProgress") +
-      itemAmount($item`bowling ball`) +
-      closetAmount($item`bowling ball`) <
-    5;
+    itemAmount($item`bowling ball`) +
+    closetAmount($item`bowling ball`);
+  const need_bowling_balls = bowling_ball_count < 5;
   const need_star_key =
     (itemAmount($item`star`) < 8 || itemAmount($item`line`) < 7) &&
     !have($item`Richard's star key`) &&
@@ -302,7 +305,6 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
 
   /* if(modifier.includes("item"))
     if(get("everfullDartPerks").includes("Butt awareness"))
-      // eslint-disable-next-line libram/verify-constants
       outfit.addBonus($item`Everfull Dart Holster`, 30) */
 
   if (outfit.skipDefaults) return;

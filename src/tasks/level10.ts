@@ -95,15 +95,15 @@ export const GiantQuest: Quest = {
           };
       },
       combat: new CombatStrategy()
-        .macro(
-          () =>
+        .macro(() => {
+          if (
             have($item`Mohawk wig`) ||
             !have($skill`Emotionally Chipped`) ||
             get("_feelEnvyUsed") >= 3
-              ? new Macro()
-              : Macro.skill($skill`Feel Envy`).step(killMacro()),
-          $monster`Burly Sidekick`
-        )
+          )
+            return new Macro();
+          return Macro.skill($skill`Feel Envy`).step(killMacro());
+        }, $monster`Burly Sidekick`)
         .forceItems($monster`Quiet Healer`),
     },
     {

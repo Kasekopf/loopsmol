@@ -150,12 +150,15 @@ export const BatQuest: Quest = {
       name: "Get Sonar 2",
       after: ["Use Sonar 1"],
       completed: () => step("questL04Bat") + itemAmount($item`sonar-in-a-biscuit`) >= 2,
-      priority: () =>
-        step("questL11Shen") === 999 ||
-        have($item`The Stankara Stone`) ||
-        (myDaycount() === 1 && step("questL11Shen") > 1)
-          ? Priorities.None
-          : Priorities.BadMood,
+      priority: () => {
+        if (
+          step("questL11Shen") === 999 ||
+          have($item`The Stankara Stone`) ||
+          (myDaycount() === 1 && step("questL11Shen") > 1)
+        )
+          return Priorities.None;
+        return Priorities.BadMood;
+      },
       prepare: () => {
         if (numericModifier("stench resistance") < 1) ensureEffect($effect`Red Door Syndrome`);
         if (numericModifier("stench resistance") < 1)

@@ -159,20 +159,15 @@ function listTasks(engine: Engine, show_phyla = false): void {
       if (task.do instanceof Location) {
         if (task.combat?.can("banish")) {
           for (const monster of getMonsters(task.do)) {
-            debug(
-              `  * ${
-                task.combat.currentStrategy(monster) ?? task.combat.getDefaultAction() ?? "ignore"
-              } ${monster.name} ${monster.phylum}`
-            );
+            const strat =
+              task.combat.currentStrategy(monster) ?? task.combat.getDefaultAction() ?? "ignore";
+            debug(`  * ${strat} ${monster.name} ${monster.phylum}`);
           }
         } else {
           for (const monster of getMonsters(task.do)) {
-            debug(
-              `  * ${
-                task.combat?.currentStrategy(monster) ?? task.combat?.getDefaultAction() ?? "ignore"
-              } ${monster.name} ${monster.phylum}`,
-              "grey"
-            );
+            const strat =
+              task.combat?.currentStrategy(monster) ?? task.combat?.getDefaultAction() ?? "ignore";
+            debug(`  * ${strat} ${monster.name} ${monster.phylum}`, "grey");
           }
         }
       }
