@@ -72,9 +72,6 @@ export const GiantQuest: Quest = {
       prepare: () => tryPlayApriling("-combat"),
       completed: () => have($item`amulet of extreme plot significance`),
       do: $location`The Penultimate Fantasy Airship`,
-      choices: () => {
-        return { 178: 2, 182: have($item`model airship`) ? 1 : 4 };
-      },
       post: () => {
         if (have($effect`Temporary Amnesia`)) cliExecute("uneffect Temporary Amnesia");
       },
@@ -101,8 +98,8 @@ export const GiantQuest: Quest = {
         .macro(
           () =>
             have($item`Mohawk wig`) ||
-            !have($skill`Emotionally Chipped`) ||
-            get("_feelEnvyUsed") >= 3
+              !have($skill`Emotionally Chipped`) ||
+              get("_feelEnvyUsed") >= 3
               ? new Macro()
               : Macro.skill($skill`Feel Envy`).step(killMacro()),
           $monster`Burly Sidekick`
@@ -114,9 +111,6 @@ export const GiantQuest: Quest = {
       after: ["Airship YR Healer"],
       completed: () => have($item`S.O.C.K.`),
       do: $location`The Penultimate Fantasy Airship`,
-      choices: () => {
-        return { 178: 2, 182: have($item`model airship`) ? 1 : 4 };
-      },
       post: () => {
         if (have($effect`Temporary Amnesia`)) cliExecute("uneffect Temporary Amnesia");
       },

@@ -7,6 +7,7 @@ const worksheds = [
   [$item`model train set`, "Swap to model train set"],
   [$item`cold medicine cabinet`, "Swap to cold medicine cabinet"],
   [$item`Asdon Martin keyfob (on ring)`, "Swap to asdon martin keyfob"],
+  [$item`TakerSpace letter of Marque`, "Swap to TakerSpace letter of Marque"]
 ] as [Item, string][];
 
 export const args = Args.create(
@@ -62,6 +63,10 @@ export const args = Args.create(
       }),
       skipbackups: Args.flag({
         help: "Don't use any Backup Camera Backups.",
+        default: false,
+      }),
+      saveember: Args.flag({
+        help: "Don't use sept-ember censer.",
         default: false,
       }),
       savelocket: Args.number({

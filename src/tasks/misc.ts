@@ -69,6 +69,7 @@ import {
   have,
   haveInCampground,
   Macro,
+  MayamCalendar,
   Robortender,
   set,
   undelay,
@@ -111,6 +112,28 @@ export const MiscQuest: Quest = {
       freeaction: true,
     },
     {
+      name: "Mayam Calendar",
+      priority: () => Priorities.Free,
+      completed: () => !MayamCalendar.have() || MayamCalendar.remainingUses() === 0,
+      do: () => {
+        cliExecute("mayam rings fur lightning eyepatch yam");
+        cliExecute("mayam rings chair wood cheese clock");
+        cliExecute("mayam rings eye meat wall explosion");
+      },
+      outfit: () => {
+        if (
+          myTurncount() <= 10 &&
+          (!have($item`closed-circuit pay phone`) ||
+            !get("neverendingPartyAlways") ||
+            !get("snojoAvailable"))
+        )
+          return { familiar: $familiar`Grey Goose` };
+        else return { familiar: $familiar`Chest Mimic` };
+      },
+      limit: { tries: 2 },
+      freeaction: true,
+    },
+    {
       name: "Island Scrip",
       after: ["Unlock Beach", "Acquire Red Rocket"],
       ready: () =>
@@ -123,7 +146,8 @@ export const MiscQuest: Quest = {
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
-        have($item`yellow submarine`),
+        have($item`yellow submarine`) ||
+        get("_pirateDinghyUsed"),
       do: $location`The Shore, Inc. Travel Agency`,
       outfit: () => {
         if (!get("candyCaneSwordShore")) return { equip: $items`candy cane sword cane` };
@@ -140,6 +164,22 @@ export const MiscQuest: Quest = {
         return { 793: swordReady ? 5 : statChoice };
       },
       limit: { tries: 5 },
+    },
+    {
+      name: "Unlock Island Takerspace",
+      priority: () => Priorities.Free,
+      ready: () => getWorkshed() === $item`TakerSpace letter of Marque`,
+      completed: () =>
+        get("_pirateDinghyUsed") ||
+        get("takerSpaceAnchor") < 1 ||
+        get("takerSpaceMast") < 1 ||
+        get("takerSpaceSilk") < 1,
+      do: () => {
+        retrieveItem($item`pirate dinghy`);
+        use($item`pirate dinghy`);
+      },
+      limit: { tries: 1 },
+      freeaction: true,
     },
     {
       name: "Unlock Island",
@@ -618,7 +658,8 @@ export const MiscQuest: Quest = {
       after: [],
       priority: () => Priorities.Free,
       ready: () =>
-        get("_coldMedicineConsults") >= 5 && getWorkshed() === $item`cold medicine cabinet`,
+        (get("_coldMedicineConsults") >= 5 && getWorkshed() === $item`cold medicine cabinet`) ||
+        (get("_pirateDinghyUsed") && getWorkshed() === $item`TakerSpace letter of Marque`),
       completed: () =>
         !have(args.major.swapworkshed) || get("_workshedItemUsed") || myTurncount() >= 1000,
       do: () => use(args.major.swapworkshed),

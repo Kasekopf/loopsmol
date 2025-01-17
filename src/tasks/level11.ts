@@ -189,6 +189,7 @@ const Desert: Task[] = [
       cliExecute("use * desert sightseeing pamphlet");
       if (have($item`worm-riding hooks`) && have($item`drum machine`)) use($item`drum machine`);
     },
+    parachute: $monster`blur`,
   },
   {
     name: "Milestone",

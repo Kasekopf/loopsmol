@@ -49,6 +49,7 @@ import {
   $path,
   $skill,
   $slot,
+  CrepeParachute,
   get,
   getTodaysHolidayWanderers,
   have,
@@ -721,6 +722,17 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     const beaten_turns = haveEffect($effect`Beaten Up`);
     const start_advs = myAdventures();
 
+    // Consider crepe paper parachute cape if available
+    const parachuteTarget = undelay(task.parachute);
+    if (parachuteTarget && !task.active_priority?.has(Priorities.GoodOrb)) {
+      const baseDo = task.do;
+      task.do = () => {
+        if (CrepeParachute.fight(parachuteTarget)) return;
+        if (baseDo instanceof Location) return baseDo;
+        return baseDo();
+      };
+    }
+
     // Copy grimoire Engine.do in order to add Map the Monsters
     const result = typeof task.do === "function" ? task.do() : task.do;
     if (result instanceof Location) {
@@ -804,7 +816,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       autoAbortThreshold: "-0.05",
       recoveryScript: "",
       removeMalignantEffects: false,
-      choiceAdventureScript: "loopsmol_choice.ash",
+      choiceAdventureScript: "loopsmol_choice.js",
       mpAutoRecoveryItems: ensureRecovery(
         "mpAutoRecoveryItems",
         ["black cherry soda", "doc galaktik's invigorating tonic"],

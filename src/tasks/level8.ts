@@ -96,6 +96,7 @@ export const McLargeHugeQuest: Quest = {
       ready: () => get("trapperOre") !== "" && itemAmount(Item.get(get("trapperOre"))) >= 3, // Checked here since there is no task for Trainset ores
       completed: () => step("questL08Trapper") >= 2,
       do: () => visitUrl("place.php?whichplace=mclargehuge&action=trappercabin"),
+      parachute: $monster`dairy goat`,
       limit: { tries: 1 },
       freeaction: true,
     },
@@ -115,7 +116,7 @@ export const McLargeHugeQuest: Quest = {
         return {
           575:
             equippedAmount($item`candy cane sword cane`) > 0 &&
-            (!have($item`snowboarder pants`) || !have($item`eXtreme mittens`))
+              (!have($item`snowboarder pants`) || !have($item`eXtreme mittens`))
               ? 5
               : 1,
           15: have($item`eXtreme mittens`) ? 2 : 1,
