@@ -99,7 +99,7 @@ const standardFamiliars: ValueFamiliar[] = [
     value: () =>
       garboAverageValue(...$items`Polka Pop, BitterSweetTarts, Piddles`) / 6 +
       (1 / 3 + (have($effect`Jingle Jangle Jingle`) ? 0.1 : 0)) *
-      (familiarWeight($familiar`Stocking Mimic`) + weightAdjustment()),
+        (familiarWeight($familiar`Stocking Mimic`) + weightAdjustment()),
   },
   {
     familiar: $familiar`Shorter-Order Cook`,
@@ -244,8 +244,8 @@ export function equipCharging(
 
   const need_bowling_balls =
     get("hiddenBowlingAlleyProgress") +
-    itemAmount($item`bowling ball`) +
-    closetAmount($item`bowling ball`) <
+      itemAmount($item`bowling ball`) +
+      closetAmount($item`bowling ball`) <
     5;
   const need_star_key =
     (itemAmount($item`star`) < 8 || itemAmount($item`line`) < 7) &&
@@ -310,7 +310,7 @@ export function equipDefaults(outfit: Outfit, noFightingFamiliars: boolean): voi
   if (modifier.includes("-combat")) {
     outfit.equip($familiar`Peace Turkey`);
     outfit.equip($familiar`Disgeist`);
-  }  // low priority
+  } // low priority
 
   if (!noFightingFamiliars) {
     if (args.minor.profitFamiliar) {

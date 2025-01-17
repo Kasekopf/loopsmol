@@ -116,7 +116,7 @@ export const McLargeHugeQuest: Quest = {
         return {
           575:
             equippedAmount($item`candy cane sword cane`) > 0 &&
-              (!have($item`snowboarder pants`) || !have($item`eXtreme mittens`))
+            (!have($item`snowboarder pants`) || !have($item`eXtreme mittens`))
               ? 5
               : 1,
           15: have($item`eXtreme mittens`) ? 2 : 1,
