@@ -1350,8 +1350,7 @@ export const MiscQuest: Quest = {
       name: "Open McHugeLarge Bag",
       after: [],
       priority: () => Priorities.Free,
-      completed: () =>
-        !have($item`McHugeLarge duffel bag`) || have($item`McHugeLarge right pole`),
+      completed: () => !have($item`McHugeLarge duffel bag`) || have($item`McHugeLarge right pole`),
       do: () => visitUrl("inventory.php?action=skiduffel&pwd"),
       freeaction: true,
       limit: { tries: 1 },
