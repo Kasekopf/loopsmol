@@ -75,14 +75,6 @@ export const pulls: PullSpec[] = [
     optional: true,
   },
   {
-    pull: $item`crepe paper parachute cape`,
-    optional: true,
-  },
-  {
-    pull: $item`Bowl of Infinite Jelly`,
-    optional: true,
-  },
-  {
     pull: $item`Frosty's frosty mug`,
     useful: () => {
       if (args.minor.skipmug) return false;
