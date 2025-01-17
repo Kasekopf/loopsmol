@@ -75,6 +75,20 @@ export const pulls: PullSpec[] = [
     optional: true,
   },
   {
+    pull: $item`Ol' Scratch's salad fork`,
+    useful: () => {
+      if (args.minor.skipfork) return false;
+      if (myFullness() >= 1) return false;
+      if (myDaycount() > 1 && myAdventures() > 5) return undefined;
+      return true;
+    },
+    optional: true,
+  },
+  {
+    pull: $item`crepe paper parachute cape`,
+    optional: true,
+  },
+  {
     pull: $item`Frosty's frosty mug`,
     useful: () => {
       if (args.minor.skipmug) return false;
