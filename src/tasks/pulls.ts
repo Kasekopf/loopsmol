@@ -68,7 +68,11 @@ export const pulls: PullSpec[] = [
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;
     },
-    price: 300000,
+    price: 400000,
+  },
+  {
+    pull: $item`crepe paper parachute cape`,
+    optional: true,
   },
   {
     pull: $item`Ol' Scratch's salad fork`,
@@ -97,6 +101,11 @@ export const pulls: PullSpec[] = [
       return true;
     },
     price: 200000,
+  },
+  {
+    pull: $item`Bowl of Infinite Jelly`,
+    useful: () => myFullness() === 0,
+    optional: true,
   },
   {
     pull: $item`milk of magnesium`,

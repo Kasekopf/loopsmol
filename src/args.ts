@@ -7,7 +7,7 @@ const worksheds = [
   [$item`model train set`, "Swap to model train set"],
   [$item`cold medicine cabinet`, "Swap to cold medicine cabinet"],
   [$item`Asdon Martin keyfob (on ring)`, "Swap to asdon martin keyfob"],
-  [$item`TakerSpace letter of Marque`, "Swap to TakerSpace letter of Marque"]
+  [$item`TakerSpace letter of Marque`, "Swap to TakerSpace letter of Marque"],
 ] as [Item, string][];
 
 export const args = Args.create(

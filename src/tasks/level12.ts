@@ -209,13 +209,6 @@ const Junkyard: Task[] = [
     acquire: [{ item: $item`seal tooth` }],
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
-      familiar: have($familiar`Reagnimated Gnome`)
-        ? $familiar`Reagnimated Gnome`
-        : have($familiar`Cookbookbat`)
-        ? $familiar`Cookbookbat`
-        : have($familiar`Nosy Nose`)
-        ? $familiar`Nosy Nose`
-        : undefined,
     },
     do: $location`Next to that Barrel with Something Burning in it`,
     orbtargets: () => $monsters`batwinged gremlin, batwinged gremlin (tool)`,
@@ -249,13 +242,6 @@ const Junkyard: Task[] = [
     acquire: [{ item: $item`seal tooth` }],
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
-      familiar: have($familiar`Reagnimated Gnome`)
-        ? $familiar`Reagnimated Gnome`
-        : have($familiar`Cookbookbat`)
-        ? $familiar`Cookbookbat`
-        : have($familiar`Nosy Nose`)
-        ? $familiar`Nosy Nose`
-        : undefined,
     },
     do: $location`Over Where the Old Tires Are`,
     orbtargets: () => $monsters`erudite gremlin, erudite gremlin (tool)`,
@@ -288,13 +274,6 @@ const Junkyard: Task[] = [
     completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
-      familiar: have($familiar`Reagnimated Gnome`)
-        ? $familiar`Reagnimated Gnome`
-        : have($familiar`Cookbookbat`)
-        ? $familiar`Cookbookbat`
-        : have($familiar`Nosy Nose`)
-        ? $familiar`Nosy Nose`
-        : undefined,
     },
     do: $location`Near an Abandoned Refrigerator`,
     orbtargets: () => $monsters`spider gremlin, spider gremlin (tool)`,
@@ -328,13 +307,6 @@ const Junkyard: Task[] = [
     acquire: [{ item: $item`seal tooth` }],
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
-      familiar: have($familiar`Reagnimated Gnome`)
-        ? $familiar`Reagnimated Gnome`
-        : have($familiar`Cookbookbat`)
-        ? $familiar`Cookbookbat`
-        : have($familiar`Nosy Nose`)
-        ? $familiar`Nosy Nose`
-        : undefined,
     },
     do: $location`Out by that Rusted-Out Car`,
     orbtargets: () => $monsters`vegetable gremlin, vegetable gremlin (tool)`,
@@ -362,13 +334,6 @@ const Junkyard: Task[] = [
     completed: () => get("sidequestJunkyardCompleted") !== "none",
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
-      familiar: have($familiar`Reagnimated Gnome`)
-        ? $familiar`Reagnimated Gnome`
-        : have($familiar`Cookbookbat`)
-        ? $familiar`Cookbookbat`
-        : have($familiar`Nosy Nose`)
-        ? $familiar`Nosy Nose`
-        : undefined,
     },
     do: (): void => {
       visitUrl("bigisland.php?action=junkman&pwd");

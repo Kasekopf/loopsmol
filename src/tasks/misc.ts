@@ -121,14 +121,8 @@ export const MiscQuest: Quest = {
         cliExecute("mayam rings eye meat wall explosion");
       },
       outfit: () => {
-        if (
-          myTurncount() <= 10 &&
-          (!have($item`closed-circuit pay phone`) ||
-            !get("neverendingPartyAlways") ||
-            !get("snojoAvailable"))
-        )
-          return { familiar: $familiar`Grey Goose` };
-        else return { familiar: $familiar`Chest Mimic` };
+        if (have($familiar`Chest Mimic`)) return { familiar: $familiar`Chest Mimic` };
+        return { familiar: $familiar`Grey Goose` };
       },
       limit: { tries: 2 },
       freeaction: true,
@@ -168,14 +162,14 @@ export const MiscQuest: Quest = {
     {
       name: "Unlock Island Takerspace",
       priority: () => Priorities.Free,
-      ready: () => getWorkshed() === $item`TakerSpace letter of Marque`,
+      ready: () =>
+        getWorkshed() === $item`TakerSpace letter of Marque` || have($item`pirate dinghy`),
       completed: () =>
         get("_pirateDinghyUsed") ||
-        get("takerSpaceAnchor") < 1 ||
-        get("takerSpaceMast") < 1 ||
-        get("takerSpaceSilk") < 1,
+        (!have($item`pirate dinghy`) &&
+          (get("takerSpaceAnchor") < 1 || get("takerSpaceMast") < 1 || get("takerSpaceSilk") < 1)),
       do: () => {
-        retrieveItem($item`pirate dinghy`);
+        if (!have($item`pirate dinghy`)) retrieveItem($item`pirate dinghy`);
         use($item`pirate dinghy`);
       },
       limit: { tries: 1 },
@@ -191,7 +185,8 @@ export const MiscQuest: Quest = {
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
-        have($item`yellow submarine`),
+        have($item`yellow submarine`) ||
+        get("_pirateDinghyUsed"),
       do: () => {
         retrieveItem($item`dingy planks`);
         retrieveItem($item`dinghy plans`);
@@ -213,7 +208,8 @@ export const MiscQuest: Quest = {
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
-        have($item`yellow submarine`),
+        have($item`yellow submarine`) ||
+        get("_pirateDinghyUsed"),
       do: () => {
         retrieveItem($item`yellow submarine`);
       },
@@ -1356,10 +1352,7 @@ export const MiscQuest: Quest = {
       name: "Open McHugeLarge Bag",
       after: [],
       priority: () => Priorities.Free,
-      completed: () =>
-        // eslint-disable-next-line libram/verify-constants
-        !have($item`McHugeLarge duffel bag`) || have($item`McHugeLarge right pole`),
-      // eslint-disable-next-line libram/verify-constants
+      completed: () => !have($item`McHugeLarge duffel bag`) || have($item`McHugeLarge right pole`),
       do: () => visitUrl("inventory.php?action=skiduffel&pwd"),
       freeaction: true,
       limit: { tries: 1 },

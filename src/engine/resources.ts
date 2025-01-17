@@ -79,17 +79,14 @@ export interface Resource {
 
 export type CombatResource = Resource & BaseCombatResource;
 
-export type BanishSource = CombatResource &
-  (
-    | {
-        do: Item | Skill;
-      }
-    | {
-        do: Macro;
-        tracker: Item | Skill;
-      }
-  );
-
+type BanishSimpleDo = CombatResource & {
+  do: Item | Skill;
+};
+type BanishMacroDo = CombatResource & {
+  do: Macro;
+  tracker: Item | Skill;
+};
+export type BanishSource = BanishSimpleDo | BanishMacroDo;
 function getTracker(source: BanishSource): Item | Skill {
   if ("tracker" in source) return source.tracker;
   return source.do;
@@ -547,11 +544,7 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
       getProperty("_commaRunDone"));
 
   const chosenFamiliar =
-    bestFamiliar !== undefined
-      ? bestFamiliar
-      : altFamiliar === true
-      ? $familiar`Comma Chameleon`
-      : false;
+    bestFamiliar ?? (altFamiliar === true ? $familiar`Comma Chameleon` : false);
 
   if (chosenFamiliar) {
     const goalWeight = 5 * (1 + get("_banderRunaways"));
@@ -780,6 +773,17 @@ export const forceNCSources: ForceNCSorce[] = [
       get("_spikolodonSpikeUses") + args.minor.saveparka < 5,
     equip: { equip: $items`Jurassic Parka`, modes: { parka: "spikolodon" } },
     do: Macro.skill($skill`Launch spikolodon spikes`),
+  },
+  {
+    name: "McHugeLarge",
+    available: () => have($item`McHugeLarge left ski`) && get("_mcHugeLargeAvalancheUses", 0) < 3,
+    equip: [
+      { equip: $items`McHugeLarge left ski, designer sweatpants` },
+      { equip: $items`McHugeLarge left ski` },
+    ],
+    do: Macro.trySkill($skill`Summon Love Gnats`)
+      .externalIf(!get("lovebugsUnlocked"), Macro.trySkill($skill`Sweat Flood`))
+      .skill($skill`McHugeLarge Avalanche`),
   },
 ];
 
