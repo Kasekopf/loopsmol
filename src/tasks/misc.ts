@@ -172,6 +172,7 @@ export const MiscQuest: Quest = {
           (get("takerSpaceAnchor") < 1 || get("takerSpaceMast") < 1 || get("takerSpaceSilk") < 1)),
       do: () => {
         if (!have($item`pirate dinghy`)) retrieveItem($item`pirate dinghy`);
+        if (!have($item`deft pirate hook`)) retrieveItem($item`deft pirate hook`);
         use($item`pirate dinghy`);
       },
       limit: { tries: 1 },

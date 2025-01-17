@@ -122,8 +122,8 @@ const Temple: Task[] = [
     do: $location`The Hidden Temple`,
     outfit: () => {
       if (have($item`industrial fire extinguisher`) && get("_fireExtinguisherCharge") >= 10)
-        return { equip: $items`industrial fire extinguisher`, modifier: "+combat" };
-      else return { familiar: $familiar`Grey Goose`, modifier: "+combat, item" };
+        return { equip: $items`industrial fire extinguisher, deft pirate hook`, modifier: "+combat" };
+      else return { familiar: $familiar`Grey Goose`, equip: $items`deft pirate hook`, modifier: "+combat, item" };
     },
     combat: new CombatStrategy()
       .macro(
@@ -207,7 +207,7 @@ const Apartment: Task[] = [
       else return [$monster`pygmy shaman`, $monster`pygmy witch accountant`];
     },
     post: makeCompleteFile,
-    outfit: { equip: $items`miniature crystal ball` },
+    outfit: { equip: $items`miniature crystal ball, deft pirate hook` },
     limit: { soft: 9 },
     choices: { 780: 1 },
   },
@@ -233,8 +233,8 @@ const Apartment: Task[] = [
     post: makeCompleteFile,
     outfit: () => {
       if (have($effect`Twice-Cursed`) && $location`The Hidden Apartment Building`.turnsSpent === 8)
-        return { equip: $items`candy cane sword cane, miniature crystal ball` };
-      return { equip: $items`miniature crystal ball` };
+        return { equip: $items`candy cane sword cane, miniature crystal ball, deft pirate hook` };
+      return { equip: $items`miniature crystal ball, deft pirate hook` };
     },
     choices: { 780: 1 },
     limit: { soft: 9 },
@@ -448,7 +448,7 @@ const Bowling: Task[] = [
       .banish($monster`pygmy orderlies`),
     outfit: () => {
       const result: OutfitSpec = {
-        equip: $items`nurse's hat`,
+        equip: $items`nurse's hat, deft pirate hook`,
         modifier: "item",
         avoid: $items`broken champagne bottle`,
       };

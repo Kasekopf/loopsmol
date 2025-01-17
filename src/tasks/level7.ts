@@ -289,7 +289,7 @@ const Nook: Task[] = [
         };
       else
         return {
-          equip: tryCape($item`antique machete`, $item`gravy boat`),
+          equip: tryCape($item`antique machete`, $item`gravy boat`, $item`deft pirate hook`),
           modifier: "item 500max",
         };
     },
