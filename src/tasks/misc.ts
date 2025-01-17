@@ -162,14 +162,14 @@ export const MiscQuest: Quest = {
     {
       name: "Unlock Island Takerspace",
       priority: () => Priorities.Free,
-      ready: () => getWorkshed() === $item`TakerSpace letter of Marque`,
+      ready: () =>
+        getWorkshed() === $item`TakerSpace letter of Marque` || have($item`pirate dinghy`),
       completed: () =>
         get("_pirateDinghyUsed") ||
-        get("takerSpaceAnchor") < 1 ||
-        get("takerSpaceMast") < 1 ||
-        get("takerSpaceSilk") < 1,
+        (!have($item`pirate dinghy`) &&
+          (get("takerSpaceAnchor") < 1 || get("takerSpaceMast") < 1 || get("takerSpaceSilk") < 1)),
       do: () => {
-        retrieveItem($item`pirate dinghy`);
+        if (!have($item`pirate dinghy`)) retrieveItem($item`pirate dinghy`);
         use($item`pirate dinghy`);
       },
       limit: { tries: 1 },
@@ -184,7 +184,8 @@ export const MiscQuest: Quest = {
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
-        have($item`yellow submarine`),
+        have($item`yellow submarine`) ||
+        get("_pirateDinghyUsed"),
       do: () => {
         retrieveItem($item`dingy planks`);
         retrieveItem($item`dinghy plans`);
@@ -205,7 +206,8 @@ export const MiscQuest: Quest = {
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
-        have($item`yellow submarine`),
+        have($item`yellow submarine`) ||
+        get("_pirateDinghyUsed"),
       do: () => {
         retrieveItem($item`yellow submarine`);
       },
