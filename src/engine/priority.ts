@@ -2,7 +2,7 @@
  * Temporary priorities that override the routing.
  */
 
-import { getCounter, Location, Monster } from "kolmafia";
+import { getCounter, Location, Monster, myLocation } from "kolmafia";
 import {
   $effect,
   $item,
@@ -36,9 +36,11 @@ export class Priorities {
   };
   static CosmicBowlingBall: Priority = { score: 11, reason: "Use cosmic bowling ball" };
   static GoodYR: Priority = { score: 10, reason: "Yellow ray" };
+  static GoodCleaver: Priority = { score: 5, reason: "Cleaver is ready" };
   static GoodAutumnaton: Priority = { score: 4, reason: "Setup Autumnaton" };
   static GoodCamel: Priority = { score: 3, reason: "Melodramedary is ready" };
   static MinorEffect: Priority = { score: 2, reason: "Useful minor effect" };
+  static GoodLocation: Priority = { score: 1.5, reason: "Last location is useful" };
   static GoodBanish3: Priority = { score: 0.7, reason: "3+ banishes committed" };
   static GoodBanish2: Priority = { score: 0.6, reason: "2 banishes committed" };
   static GoodBanish: Priority = { score: 0.5, reason: "1 banish committed" };
@@ -187,6 +189,28 @@ export class Prioritization {
       }
     }
 
+    // Prioritize the parachute
+    const parachuteTarget = undelay(task.parachute);
+    if (
+      parachuteTarget &&
+      have($item`crepe paper parachute cape`) &&
+      !have($effect`Everything looks Beige`)
+    ) {
+      // Consider using the June cleaver noncombat to prepare the right zone
+      if (
+        have($item`June cleaver`) &&
+        get("_juneCleaverFightsLeft") === 0 &&
+        // Needing the Saber to force items is more important
+        (!task.combat?.can("forceItems") ||
+          !have($item`Fourth of May Cosplay Saber`) ||
+          get("_saberForceUses") >= 5)
+      )
+        result.priorities.add(Priorities.GoodCleaver);
+
+      // Prefer parachute if the last location is set correctly
+      if (task.do instanceof Location && task.do === myLocation())
+        result.priorities.add(Priorities.GoodLocation);
+    }
     return result;
   }
 

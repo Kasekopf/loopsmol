@@ -36,7 +36,7 @@ export const BatQuest: Quest = {
     {
       name: "Bat Wings Sonar 1",
       priority: () => Priorities.Free,
-      after: [],
+      after: ["Start"],
       ready: () => have($item`bat wings`),
       completed: () => get("batWingsBatHoleEntrance", false),
       do: $location`The Bat Hole Entrance`,
@@ -72,7 +72,7 @@ export const BatQuest: Quest = {
     {
       name: "Bat Wings Sonar 3",
       priority: () => Priorities.Free,
-      after: ["Bat Wings Sonar 2"],
+      after: ["Bat Wings Sonar 2", "Use Sonar 2"],
       ready: () => have($item`bat wings`),
       completed: () => get("batWingsBatratBurrow", false),
       do: $location`The Batrat and Ratbat Burrow`,
@@ -90,7 +90,7 @@ export const BatQuest: Quest = {
     {
       name: "Bat Wings Bean",
       priority: () => Priorities.Free,
-      after: ["Bat Wings Sonar 3"],
+      after: ["Bat Wings Sonar 3", "Use Sonar 3"],
       ready: () => have($item`bat wings`),
       completed: () => get("batWingsBeanbatChamber", false),
       do: $location`The Beanbat Chamber`,
@@ -150,12 +150,15 @@ export const BatQuest: Quest = {
       name: "Get Sonar 2",
       after: ["Use Sonar 1"],
       completed: () => step("questL04Bat") + itemAmount($item`sonar-in-a-biscuit`) >= 2,
-      priority: () =>
-        step("questL11Shen") === 999 ||
+      priority: () => {
+        if (
+          step("questL11Shen") === 999 ||
           have($item`The Stankara Stone`) ||
           (myDaycount() === 1 && step("questL11Shen") > 1)
-          ? Priorities.None
-          : Priorities.BadMood,
+        )
+          return Priorities.None;
+        return Priorities.BadMood;
+      },
       prepare: () => {
         if (numericModifier("stench resistance") < 1) ensureEffect($effect`Red Door Syndrome`);
         if (numericModifier("stench resistance") < 1)

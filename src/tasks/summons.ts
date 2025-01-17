@@ -200,13 +200,16 @@ const summonSources: SummonSource[] = [
   },
   {
     name: "Fax",
-    available: () =>
-      args.minor.fax &&
-      !underStandard() &&
-      !get("_photocopyUsed") &&
-      have($item`Clan VIP Lounge key`)
-        ? 1
-        : 0,
+    available: () => {
+      if (
+        args.minor.fax &&
+        !underStandard() &&
+        !get("_photocopyUsed") &&
+        have($item`Clan VIP Lounge key`)
+      )
+        return 1;
+      return 0;
+    },
     canFight: (mon: Monster) => canFaxbot(mon),
     summon: (mon: Monster) => {
       // Default to CheeseFax unless EasyFax is the only faxbot online
@@ -217,10 +220,11 @@ const summonSources: SummonSource[] = [
         wait(10 + i);
         if (checkFax(mon)) break;
       }
-      if (!checkFax(mon))
-        throw `Failed to acquire photocopied ${mon.name}.${
-          !isOnline(faxbot) ? `Faxbot ${faxbot} appears to be offline.` : ""
-        }`;
+      if (!checkFax(mon)) {
+        if (!isOnline(faxbot))
+          throw `Failed to acquire photocopied ${mon.name}. Faxbot ${faxbot} appears to be offline.`;
+        throw `Failed to acquire photocopied ${mon.name} but ${faxbot} is online.`;
+      }
       use($item`photocopied monster`);
     },
   },
