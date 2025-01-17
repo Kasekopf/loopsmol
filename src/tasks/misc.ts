@@ -121,14 +121,8 @@ export const MiscQuest: Quest = {
         cliExecute("mayam rings eye meat wall explosion");
       },
       outfit: () => {
-        if (
-          myTurncount() <= 10 &&
-          (!have($item`closed-circuit pay phone`) ||
-            !get("neverendingPartyAlways") ||
-            !get("snojoAvailable"))
-        )
-          return { familiar: $familiar`Grey Goose` };
-        else return { familiar: $familiar`Chest Mimic` };
+        if (have($familiar`Chest Mimic`)) return { familiar: $familiar`Chest Mimic` };
+        return { familiar: $familiar`Grey Goose` };
       },
       limit: { tries: 2 },
       freeaction: true,
