@@ -187,6 +187,7 @@ export const MiscQuest: Quest = {
       ready: () =>
         (myMeat() >= meatBuffer + 400 || have($item`dingy planks`)) && !yellowSubmarinePossible(),
       completed: () =>
+        get("_pirateDinghyUsed") ||
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
@@ -208,6 +209,7 @@ export const MiscQuest: Quest = {
         itemAmount($item`blue pixel`) >= 5 &&
         itemAmount($item`green pixel`) >= 5,
       completed: () =>
+        get("_pirateDinghyUsed") ||
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
