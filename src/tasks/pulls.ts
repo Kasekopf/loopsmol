@@ -68,17 +68,7 @@ export const pulls: PullSpec[] = [
       if (myDaycount() > 1 && myAdventures() > 5) return undefined;
       return true;
     },
-    price: 300000,
-  },
-  {
-    pull: $item`Ol' Scratch's salad fork`,
-    useful: () => {
-      if (args.minor.skipfork) return false;
-      if (myFullness() >= 1) return false;
-      if (myDaycount() > 1 && myAdventures() > 5) return undefined;
-      return true;
-    },
-    optional: true,
+    price: 400000,
   },
   {
     pull: $item`crepe paper parachute cape`,
