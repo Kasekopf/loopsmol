@@ -122,8 +122,16 @@ const Temple: Task[] = [
     do: $location`The Hidden Temple`,
     outfit: () => {
       if (have($item`industrial fire extinguisher`) && get("_fireExtinguisherCharge") >= 10)
-        return { equip: $items`industrial fire extinguisher, deft pirate hook`, modifier: "+combat" };
-      else return { familiar: $familiar`Grey Goose`, equip: $items`deft pirate hook`, modifier: "+combat, item" };
+        return {
+          equip: $items`industrial fire extinguisher, deft pirate hook`,
+          modifier: "+combat",
+        };
+      else
+        return {
+          familiar: $familiar`Grey Goose`,
+          equip: $items`deft pirate hook`,
+          modifier: "+combat, item",
+        };
     },
     combat: new CombatStrategy()
       .macro(
