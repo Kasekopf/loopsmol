@@ -5,12 +5,10 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "yarn run build:types && yarn run build:js",
-    "build:types": "tsc",
-    "build:js": "webpack",
+    "build": "node --no-warnings --loader ts-node/esm/transpile-only ./build.mjs",
+    "check": "tsc",
     "lint": "eslint src && prettier --check .",
-    "lint:fix": "eslint src --fix && prettier --check --write .",
-    "watch": "webpack --watch --progress"
+    "lint:fix": "eslint src --fix && prettier --check --write ."
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
@@ -19,21 +17,20 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.14.7",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
+    "@types/node": "^20.6.1",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
-    "babel-loader": "^8.2.2",
+    "esbuild": "^0.24.2",
+    "esbuild-plugin-babel": "^0.2.3",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-libram": "^0.4.21",
     "prettier": "^2.3.2",
     "typescript": "^4.4.2",
-    "webpack": "^5.51.1",
-    "webpack-cli": "^4.8.0"
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
     "core-js": "^3.16.4",
-    "esbuild": "^0.24.2",
-    "esbuild-plugin-babel": "^0.2.3",
     "garbo-lib": "^0.0.6",
     "grimoire-kolmafia": "^0.3.26",
     "kolmafia": "^5.27921.0",
@@ -53,6 +50,5 @@
     "url": "https://github.com/Kasekopf/loopsmol/issues"
   },
   "homepage": "https://github.com/Kasekopf/loopsmol",
-  "private": true,
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "private": true
 }

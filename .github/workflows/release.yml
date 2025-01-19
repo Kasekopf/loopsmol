@@ -33,14 +33,12 @@ jobs:
           git config user.email "<>"
           git fetch --all
           SHA=$(git rev-parse --short HEAD)
-          cp KoLmafia/scripts/loopsmol/loopsmol_choice.ash KoLmafia/scripts/loopsmol/choice.ash 
           git switch release
           rm -rf scripts/
           rm -rf ccs/
           rm -rf relay/
-          mv KoLmafia/scripts/loopsmol/choice.ash KoLmafia/scripts/loopsmol/loopsmol_choice.ash
-          mv KoLmafia/* ./
-          rm -rf KoLmafia
+          mv dist/KoLmafia/* ./
+          rm -rf dist
           git add scripts/
           git add relay/
           git commit -m "Build Mafia files for commit $SHA"
