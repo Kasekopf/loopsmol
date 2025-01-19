@@ -46,6 +46,14 @@ export function flyersDone(): boolean {
   return get("flyeredML") >= 10000;
 }
 
+const warHeroes = [
+  $monster`C.A.R.N.I.V.O.R.E. Operative`,
+  $monster`Glass of Orange Juice`,
+  $monster`Neil`,
+  $monster`Slow Talkin' Elliot`,
+  $monster`Zim Merman`,
+];
+
 const Flyers: Task[] = [
   {
     name: "Flyers Start",
@@ -665,6 +673,7 @@ export const WarQuest: Quest = {
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
       combat: new CombatStrategy()
+        .killHard(warHeroes)
         .kill()
         .macro(
           Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`).trySkill(
@@ -689,7 +698,10 @@ export const WarQuest: Quest = {
           familiar: args.minor.jellies ? $familiar`Space Jellyfish` : undefined,
         },
       do: $location`The Battlefield (Frat Uniform)`,
-      combat: new CombatStrategy().kill().macro(Macro.trySkill($skill`Extract Jelly`)),
+      combat: new CombatStrategy()
+        .kill()
+        .killHard(warHeroes)
+        .macro(Macro.trySkill($skill`Extract Jelly`)),
       limit: { tries: 9 },
     },
     ...Nuns,
@@ -713,7 +725,10 @@ export const WarQuest: Quest = {
       },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
-      combat: new CombatStrategy().kill().macro(Macro.trySkill($skill`Extract Jelly`)),
+      combat: new CombatStrategy()
+        .kill()
+        .killHard(warHeroes)
+        .macro(Macro.trySkill($skill`Extract Jelly`)),
       limit: { tries: 30 },
     },
     {
