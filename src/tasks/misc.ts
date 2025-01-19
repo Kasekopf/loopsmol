@@ -166,6 +166,10 @@ export const MiscQuest: Quest = {
       ready: () =>
         getWorkshed() === $item`TakerSpace letter of Marque` || have($item`pirate dinghy`),
       completed: () =>
+        have($item`dingy dinghy`) ||
+        have($item`junk junk`) ||
+        have($item`skeletal skiff`) ||
+        have($item`yellow submarine`) ||
         get("_pirateDinghyUsed") ||
         (!have($item`pirate dinghy`) &&
           (get("takerSpaceAnchor") < 1 || get("takerSpaceMast") < 1 || get("takerSpaceSilk") < 1)),
@@ -656,7 +660,15 @@ export const MiscQuest: Quest = {
       priority: () => Priorities.Free,
       ready: () =>
         (get("_coldMedicineConsults") >= 5 && getWorkshed() === $item`cold medicine cabinet`) ||
-        (get("_pirateDinghyUsed") && getWorkshed() === $item`TakerSpace letter of Marque`),
+        ((get("_pirateDinghyUsed") ||
+          get("takerSpaceAnchor") < 1 ||
+          get("takerSpaceMast") < 1 ||
+          get("takerSpaceSilk") < 1 ||
+          have($item`dingy dinghy`) ||
+          have($item`junk junk`) ||
+          have($item`skeletal skiff`) ||
+          have($item`yellow submarine`)) &&
+          getWorkshed() === $item`TakerSpace letter of Marque`),
       completed: () =>
         !have(args.major.swapworkshed) || get("_workshedItemUsed") || myTurncount() >= 1000,
       do: () => use(args.major.swapworkshed),
