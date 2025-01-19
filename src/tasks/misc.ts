@@ -5,6 +5,7 @@ import {
   cliExecute,
   equippedAmount,
   familiarWeight,
+  floristAvailable,
   fullnessLimit,
   gamedayToInt,
   getCampground,
@@ -1354,6 +1355,15 @@ export const MiscQuest: Quest = {
       do: () => visitUrl("inventory.php?action=skiduffel&pwd"),
       freeaction: true,
       limit: { tries: 1 },
+    },
+    {
+      name: "Check Florist",
+      after: ["Mosquito/Start"],
+      priority: () => Priorities.Free,
+      completed: () => get("floristFriarChecked"),
+      do: () => floristAvailable(),
+      freeaction: true,
+      limit: { completed: true },
     },
   ],
 };
