@@ -1373,7 +1373,10 @@ export const MiscQuest: Quest = {
       after: ["Mosquito/Start"],
       priority: () => Priorities.Free,
       completed: () => get("floristFriarChecked"),
-      do: () => floristAvailable(),
+      do: () => {
+        floristAvailable();
+        cliExecute("ash florist_available()");
+      },
       freeaction: true,
       limit: { completed: true },
     },
