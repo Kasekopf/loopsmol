@@ -113,6 +113,10 @@ export const args = Args.create(
       tune: Args.string({
         help: "Use your hewn moon-rune spoon to retune to this sign after dieting.",
       }),
+      warProfiteering: Args.flag({
+        help: "Once we have 20 gauze garters, convert war items into items that autosell for meat",
+        default: false,
+      }),
     }),
     debug: Args.group("Debug Options", {
       actions: Args.number({

@@ -662,6 +662,20 @@ export const WarQuest: Quest = {
       completed: () => get("hippiesDefeated") >= 64,
       outfit: () => {
         const jelly = args.minor.jellies ? $familiar`Space Jellyfish` : undefined;
+        if (
+          have($item`Sheriff moustache`) &&
+          have($item`Sheriff badge`) &&
+          have($item`Sheriff pistol`) &&
+          get("_assertYourAuthorityCast", 0) < 3
+        ) {
+          return {
+            equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin, Sheriff moustache, Sheriff badge, Sheriff pistol`,
+            familiar:
+              !have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)
+                ? $familiar`Patriotic Eagle`
+                : jelly,
+          };
+        }
         return {
           equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
           familiar:
@@ -674,6 +688,7 @@ export const WarQuest: Quest = {
       post: dimesForGarters,
       combat: new CombatStrategy()
         .killHard(warHeroes)
+        .trySkill($skill`Assert your Authority`)
         .kill()
         .macro(
           Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`).trySkill(
@@ -768,12 +783,15 @@ export function councilSafe(): boolean {
 }
 
 function dimesForGarters(): void {
-  if (itemAmount($item`gauze garter`) >= 20) return;
   if (myTurncount() >= 1000) return;
   const to_sell = $items`pink clay bead, purple clay bead, green clay bead, communications windchimes, bullet-proof corduroys, round purple sunglasses, reinforced beaded headband`;
   for (const it of to_sell) {
     if (itemAmount(it) > 0) sell(it.buyer, itemAmount(it), it);
   }
 
-  if ($coinmaster`Quartersmaster`.availableTokens >= 2) cliExecute("make * gauze garter");
+  if (itemAmount($item`gauze garter`) < 20) {
+    if ($coinmaster`Quartersmaster`.availableTokens >= 2) cliExecute(`make * gauze garter`);
+  } else if (args.minor.warProfiteering)
+    if ($coinmaster`Quartersmaster`.availableTokens >= 5)
+      cliExecute("make * commemorative war stein");
 }
