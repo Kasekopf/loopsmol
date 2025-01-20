@@ -34800,7 +34800,8 @@ var MiscQuest = {
       return get("floristFriarChecked");
     },
     do: function() {
-      return (0, import_kolmafia98.floristAvailable)();
+      (0, import_kolmafia98.floristAvailable)();
+      (0, import_kolmafia98.cliExecute)("ash florist_available()");
     },
     freeaction: true,
     limit: {
@@ -35578,7 +35579,7 @@ var DigitalQuest = {
   name: "Digital",
   tasks: [{
     name: "Open",
-    after: ["Mosquito/Start"],
+    after: ["Mosquito/Start", "Misc/Check Florist"],
     completed: function() {
       return have($item(_templateObject5317 || (_templateObject5317 = _taggedTemplateLiteral88(["continuum transfunctioner"]))));
     },
@@ -45882,7 +45883,7 @@ function checkRequirements() {
 }
 
 // src/_git_commit.ts
-var lastCommitHash = "6809de5";
+var lastCommitHash = "ee84d92";
 
 // src/main.ts
 var _templateObject1090;
