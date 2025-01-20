@@ -50,6 +50,7 @@ const summonTargets: SummonTarget[] = [
     outfit: {
       equip: $items`unwrapped knock-off retro superhero cape`,
       modes: { retrocape: ["heck", "hold"] },
+      avoid: $items`carnivorous potted plant`,
     },
     combat: new CombatStrategy().yellowRay(),
   },
@@ -69,6 +70,7 @@ const summonTargets: SummonTarget[] = [
         return {
           equip: $items`unwrapped knock-off retro superhero cape`,
           modes: { retrocape: ["heck", "hold"] },
+          avoid: $items`carnivorous potted plant`,
         };
       else
         return {
@@ -138,7 +140,12 @@ const summonTargets: SummonTarget[] = [
       have($item`Richard's star key`) ||
       get("nsTowerDoorKeysUsed").includes("Richard's star key"),
     outfit: () => {
-      if (get("camelSpit") === 100) return { modifier: "item", familiar: $familiar`Melodramedary` };
+      if (get("camelSpit") === 100)
+        return {
+          modifier: "item",
+          familiar: $familiar`Melodramedary`,
+          avoid: $items`carnivorous potted plant`,
+        };
       return { modifier: "item" };
     },
     combat: new CombatStrategy().macro(Macro.trySkill($skill`%fn, spit on them!`)).killItem(),

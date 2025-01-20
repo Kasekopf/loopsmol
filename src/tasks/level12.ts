@@ -46,6 +46,14 @@ export function flyersDone(): boolean {
   return get("flyeredML") >= 10000;
 }
 
+const warHeroes = [
+  $monster`C.A.R.N.I.V.O.R.E. Operative`,
+  $monster`Glass of Orange Juice`,
+  $monster`Neil`,
+  $monster`Slow Talkin' Elliot`,
+  $monster`Zim Merman`,
+];
+
 const Flyers: Task[] = [
   {
     name: "Flyers Start",
@@ -209,6 +217,7 @@ const Junkyard: Task[] = [
     acquire: [{ item: $item`seal tooth` }],
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      avoid: $items`carnivorous potted plant`,
     },
     do: $location`Next to that Barrel with Something Burning in it`,
     orbtargets: () => $monsters`batwinged gremlin, batwinged gremlin (tool)`,
@@ -242,6 +251,7 @@ const Junkyard: Task[] = [
     acquire: [{ item: $item`seal tooth` }],
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      avoid: $items`carnivorous potted plant`,
     },
     do: $location`Over Where the Old Tires Are`,
     orbtargets: () => $monsters`erudite gremlin, erudite gremlin (tool)`,
@@ -274,6 +284,7 @@ const Junkyard: Task[] = [
     completed: () => have($item`molybdenum pliers`) || get("sidequestJunkyardCompleted") !== "none",
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      avoid: $items`carnivorous potted plant`,
     },
     do: $location`Near an Abandoned Refrigerator`,
     orbtargets: () => $monsters`spider gremlin, spider gremlin (tool)`,
@@ -307,6 +318,7 @@ const Junkyard: Task[] = [
     acquire: [{ item: $item`seal tooth` }],
     outfit: {
       equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin`,
+      avoid: $items`carnivorous potted plant`,
     },
     do: $location`Out by that Rusted-Out Car`,
     orbtargets: () => $monsters`vegetable gremlin, vegetable gremlin (tool)`,
@@ -674,11 +686,15 @@ export const WarQuest: Quest = {
       },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
-      combat: new CombatStrategy().kill().macro(
-        Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`)
-          .trySkill($skill`Extract Jelly`)
-          .trySkill($skill`Assert your Authority`)
-      ),
+      combat: new CombatStrategy()
+        .killHard(warHeroes)
+        .trySkill($skill`Assert your Authority`)
+        .kill()
+        .macro(
+          Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`).trySkill(
+            $skill`Extract Jelly`
+          )
+        ),
       limit: { tries: 10 },
     },
     ...Orchard,
@@ -697,7 +713,10 @@ export const WarQuest: Quest = {
           familiar: args.minor.jellies ? $familiar`Space Jellyfish` : undefined,
         },
       do: $location`The Battlefield (Frat Uniform)`,
-      combat: new CombatStrategy().kill().macro(Macro.trySkill($skill`Extract Jelly`)),
+      combat: new CombatStrategy()
+        .kill()
+        .killHard(warHeroes)
+        .macro(Macro.trySkill($skill`Extract Jelly`)),
       limit: { tries: 9 },
     },
     ...Nuns,
@@ -721,7 +740,10 @@ export const WarQuest: Quest = {
       },
       do: $location`The Battlefield (Frat Uniform)`,
       post: dimesForGarters,
-      combat: new CombatStrategy().kill().macro(Macro.trySkill($skill`Extract Jelly`)),
+      combat: new CombatStrategy()
+        .kill()
+        .killHard(warHeroes)
+        .macro(Macro.trySkill($skill`Extract Jelly`)),
       limit: { tries: 30 },
     },
     {
