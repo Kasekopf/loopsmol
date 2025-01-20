@@ -87,7 +87,7 @@ export const GiantQuest: Quest = {
       delay: () =>
         have($item`Plastic Wrap Immateria`) ? 25 : have($item`Gauze Immateria`) ? 20 : 15, // After that, just look for noncombats
       outfit: () => {
-        if (forceItemPossible()) return { modifier: "-combat", equip: $items`bat wings`, };
+        if (forceItemPossible()) return { modifier: "-combat", equip: $items`bat wings` };
         else
           return {
             modifier: "-combat, item",
