@@ -77,6 +77,7 @@ export const McLargeHugeQuest: Quest = {
         modifier: "item",
         avoid: $items`broken champagne bottle`,
         familiar: $familiar`Grey Goose`,
+        equip: $items`deft pirate hook`,
       },
       combat: new CombatStrategy()
         .macro(() => {

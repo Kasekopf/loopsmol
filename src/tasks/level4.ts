@@ -55,7 +55,7 @@ export const BatQuest: Quest = {
       name: "Bat Wings Sonar 2",
       priority: () => Priorities.Free,
       after: ["Bat Wings Sonar 1"],
-      ready: () => have($item`bat wings`),
+      ready: () => have($item`bat wings`) && atLevel(4),
       completed: () => get("batWingsGuanoJunction", false),
       do: $location`Guano Junction`,
       prepare: () => {
@@ -73,7 +73,7 @@ export const BatQuest: Quest = {
       name: "Bat Wings Sonar 3",
       priority: () => Priorities.Free,
       after: ["Bat Wings Sonar 2", "Use Sonar 2"],
-      ready: () => have($item`bat wings`),
+      ready: () => have($item`bat wings`) && atLevel(4),
       completed: () => get("batWingsBatratBurrow", false),
       do: $location`The Batrat and Ratbat Burrow`,
       prepare: () => {

@@ -342,6 +342,7 @@ const Pyramid: Task[] = [
       const result: OutfitSpec = { modifier: "item", equip: [] };
       if (have($item`Lil' Doctor™ bag`) && get("_otoscopeUsed") < 3)
         result.equip?.push($item`Lil' Doctor™ bag`);
+      else result.equip?.push($item`deft pirate hook`);
       if (DaylightShavings.nextBuff() === $effect`Spectacle Moustache`)
         result.equip?.push($item`Daylight Shavings Helmet`);
       return result;

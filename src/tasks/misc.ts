@@ -9,6 +9,7 @@ import {
   fullnessLimit,
   gamedayToInt,
   getCampground,
+  getClanName,
   getWorkshed,
   haveEquipped,
   hermit,
@@ -61,6 +62,7 @@ import {
   byClass,
   byStat,
   CinchoDeMayo,
+  Clan,
   ClosedCircuitPayphone,
   CursedMonkeyPaw,
   DaylightShavings,
@@ -77,7 +79,7 @@ import {
   uneffect,
 } from "libram";
 import { Quest, Task } from "../engine/task";
-import { Guards, Outfit, OutfitSpec, step } from "grimoire-kolmafia";
+import { Args, Guards, Outfit, OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { Engine, wanderingNCs } from "../engine/engine";
 import { Keys, keyStrategy } from "./keys";
@@ -175,6 +177,7 @@ export const MiscQuest: Quest = {
           (get("takerSpaceAnchor") < 1 || get("takerSpaceMast") < 1 || get("takerSpaceSilk") < 1)),
       do: () => {
         if (!have($item`pirate dinghy`)) retrieveItem($item`pirate dinghy`);
+        if (!have($item`deft pirate hook`)) retrieveItem($item`deft pirate hook`);
         use($item`pirate dinghy`);
       },
       limit: { tries: 1 },
@@ -186,6 +189,7 @@ export const MiscQuest: Quest = {
       ready: () =>
         (myMeat() >= meatBuffer + 400 || have($item`dingy planks`)) && !yellowSubmarinePossible(),
       completed: () =>
+        get("_pirateDinghyUsed") ||
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
@@ -208,6 +212,7 @@ export const MiscQuest: Quest = {
         itemAmount($item`blue pixel`) >= 5 &&
         itemAmount($item`green pixel`) >= 5,
       completed: () =>
+        get("_pirateDinghyUsed") ||
         have($item`dingy dinghy`) ||
         have($item`junk junk`) ||
         have($item`skeletal skiff`) ||
@@ -1380,8 +1385,42 @@ export const MiscQuest: Quest = {
       freeaction: true,
       limit: { completed: true },
     },
+    {
+      name: "Clan Photo Booth Free Kill",
+      after: [],
+      priority: () => Priorities.Free,
+      completed: () =>
+        get(toTempPref("photoBoothChecked"), false) ||
+        (have($item`Sheriff moustache`) &&
+          have($item`Sheriff badge`) &&
+          have($item`Sheriff pistol`)) ||
+        get("_photoBoothEquipment", 0) >= 3,
+      do: (): void => {
+        set(toTempPref("photoBoothChecked"), true);
+        if (getClanName() !== "Bonus Adventures from Hell") {
+          const clanWL = Clan.getWhitelisted();
+          const bafhWL =
+            clanWL.find((c) => c.name === getClanName()) !== undefined &&
+            clanWL.find((c) => c.name === "Bonus Adventures from Hell") !== undefined;
+          if (!bafhWL) return;
+        }
+
+        Clan.with("Bonus Adventures from Hell", () => {
+          cliExecute("photobooth item moustache");
+          cliExecute("photobooth item badge");
+          cliExecute("photobooth item pistol");
+        });
+      },
+      freeaction: true,
+      limit: { tries: 3 },
+    },
   ],
 };
+
+const scriptName = Args.getMetadata(args).scriptName;
+export function toTempPref(name: string) {
+  return `_${scriptName}_${name}`;
+}
 
 export const WandQuest: Quest = {
   name: "Wand",
