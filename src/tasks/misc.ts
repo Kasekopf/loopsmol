@@ -1383,7 +1383,7 @@ export const MiscQuest: Quest = {
         cliExecute("ash florist_available()");
       },
       freeaction: true,
-      limit: { completed: true },
+      limit: { tries: 1 },
     },
     {
       name: "Clan Photo Booth Free Kill",
