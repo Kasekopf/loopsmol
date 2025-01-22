@@ -688,12 +688,11 @@ export const WarQuest: Quest = {
       post: dimesForGarters,
       combat: new CombatStrategy()
         .killHard(warHeroes)
-        .trySkill($skill`Assert your Authority`)
         .kill()
         .macro(
-          Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`).trySkill(
-            $skill`Extract Jelly`
-          )
+          Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`)
+            .trySkill($skill`Extract Jelly`)
+            .trySkill($skill`Assert your Authority`)
         ),
       limit: { tries: 10 },
     },
