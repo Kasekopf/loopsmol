@@ -2150,10 +2150,10 @@ keyv@^4.5.3:
   dependencies:
     json-buffer "3.0.1"
 
-kolmafia@^5.27921.0:
-  version "5.28288.0"
-  resolved "https://registry.yarnpkg.com/kolmafia/-/kolmafia-5.28288.0.tgz#eacd277c1cdce72285619e90404dcd8e7a8d6b6f"
-  integrity sha512-52EAu73j8h6Je1GyqMTg0abfsa+0Npbi1NPoK6qYZi5SpQLOKFVNV6VNIxjkYGOnefV6+PYGkwNbTLIl99EnCQ==
+kolmafia@^5.28301.0:
+  version "5.28301.0"
+  resolved "https://registry.yarnpkg.com/kolmafia/-/kolmafia-5.28301.0.tgz#07574b2c087851a237ffa58e5e5fb677df80d084"
+  integrity sha512-yJWQFssLXr/sOAsUClc1kv/LBKL5Bhy9s+2iy2UMfA5WbeT9ebK8hi5bBj5lqeEzV7ISRljha+rtR8r5/aVyrA==
 
 levn@^0.4.1:
   version "0.4.1"
