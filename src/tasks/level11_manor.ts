@@ -203,7 +203,6 @@ const Manor2: Task[] = [
       )
       .ignore($monster`tumbleweed`),
     delay: () => (have($item`Lord Spookyraven's spectacles`) ? 5 : 0),
-    parachute: $monster`animated ornate nightstand`,
     limit: { soft: 20 },
   },
   {
@@ -228,6 +227,7 @@ const Manor2: Task[] = [
         $monsters`animated mahogany nightstand, animated rustic nightstand, Wardröb nightstand, elegant animated nightstand`
       )
       .ignore($monster`tumbleweed`),
+    parachute: $monster`animated ornate nightstand`,
     limit: { soft: 10 },
   },
   {
