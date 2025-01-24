@@ -448,9 +448,10 @@ const Bowling: Task[] = [
       .macro(() => {
         if (myFamiliar() === $familiar`Melodramedary` && get("camelSpit") === 100)
           return Macro.trySkill($skill`%fn, spit on them!`).tryItem($item`cosmic bowling ball`);
-        return Macro.tryItem($item`Spooky VHS Tape`).trySkill(
-          $skill`Emit Matter Duplicating Drones`
-        );
+        return Macro.externalIf(
+          get("spookyVHSTapeMonster") === $monster`none`,
+          Macro.tryItem($item`Spooky VHS Tape`)
+        ).trySkill($skill`Emit Matter Duplicating Drones`);
       }, $monster`pygmy bowler`)
       .banish($monster`pygmy janitor`)
       .banish($monster`pygmy orderlies`),
