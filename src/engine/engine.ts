@@ -98,7 +98,7 @@ import {
   yellowRaySources,
 } from "./resources";
 import { Priorities, Prioritization } from "./priority";
-import { args } from "../args";
+import { args, toTempPref } from "../args";
 import { flyersDone } from "../tasks/level12";
 import { globalStateCache } from "./state";
 import { removeTeleportitis, teleportitisTask } from "../tasks/misc";
@@ -893,7 +893,7 @@ function autosellJunk(): void {
 
 function getExtros(): void {
   // Mafia doesn't always notice the workshed
-  if (!get("_loopsmol_checkworkshed", false)) {
+  if (!get(toTempPref("checkWorkshed"), false)) {
     const workshed = visitUrl("campground.php?action=workshed");
     if (
       workshed.includes("Cold Medicine Cabinet") &&
@@ -901,7 +901,7 @@ function getExtros(): void {
     ) {
       throw `Mafia is not detecting your cold medicine cabinet; consider visiting manually`;
     }
-    set("_loopsmol_checkworkshed", true);
+    set(toTempPref("checkWorkshed"), true);
   }
 
   if (get("_coldMedicineConsults") >= 5) return;

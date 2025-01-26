@@ -79,12 +79,12 @@ import {
   uneffect,
 } from "libram";
 import { Quest, Task } from "../engine/task";
-import { Args, Guards, Outfit, OutfitSpec, step } from "grimoire-kolmafia";
+import { Guards, Outfit, OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { Engine, wanderingNCs } from "../engine/engine";
 import { Keys, keyStrategy } from "./keys";
 import { atLevel, haveLoathingIdolMicrophone, primestatId, underStandard } from "../lib";
-import { args } from "../args";
+import { args, toTempPref } from "../args";
 import { coldPlanner, yellowSubmarinePossible } from "../engine/outfit";
 import {
   getTrainsetConfiguration,
@@ -240,15 +240,15 @@ export const MiscQuest: Quest = {
       ready: () =>
         have($familiar`Reagnimated Gnome`) &&
         !have($item`gnomish housemaid's kgnee`) &&
-        !get("_loopcasual_checkedGnome", false),
+        !get(toTempPref("checkedGnome"), false),
       completed: () =>
         !have($familiar`Reagnimated Gnome`) ||
         have($item`gnomish housemaid's kgnee`) ||
-        get("_loopcasual_checkedGnome", false),
+        get(toTempPref("checkedGnome"), false),
       do: () => {
         visitUrl("arena.php");
         runChoice(4);
-        set("_loopcasual_checkedGnome", true);
+        set(toTempPref("checkedGnome"), true);
       },
       outfit: { familiar: $familiar`Reagnimated Gnome` },
       freeaction: true,
@@ -574,10 +574,10 @@ export const MiscQuest: Quest = {
       priority: () => Priorities.Free,
       completed: () =>
         familiarWeight($familiar`Grey Goose`) >= 9 ||
-        get("_loopsmol_chef_goose") === "true" ||
+        get(toTempPref("chefGoose")) === "true" ||
         !have($familiar`Shorter-Order Cook`),
       do: () => {
-        set("_loopsmol_chef_goose", "true");
+        set(toTempPref("chefGoose"), "true");
       },
       outfit: { familiar: $familiar`Grey Goose` },
       limit: { tries: 1 },
@@ -587,10 +587,10 @@ export const MiscQuest: Quest = {
       name: "Hermit Clover",
       after: ["Hidden City/Open Temple", "Acquire Red Rocket"],
       ready: () => myMeat() >= meatBuffer + 1000,
-      completed: () => get("_loopsmol_clovers") === "true",
+      completed: () => get(toTempPref("clovers")) === "true",
       do: () => {
         hermit($item`11-leaf clover`, 3);
-        set("_loopsmol_clovers", "true");
+        set(toTempPref("clovers"), "true");
       },
       outfit: { equip: $items`designer sweatpants` },
       freeaction: true,
@@ -1416,11 +1416,6 @@ export const MiscQuest: Quest = {
     },
   ],
 };
-
-const scriptName = Args.getMetadata(args).scriptName;
-export function toTempPref(name: string) {
-  return `_${scriptName}_${name}`;
-}
 
 export const WandQuest: Quest = {
   name: "Wand",

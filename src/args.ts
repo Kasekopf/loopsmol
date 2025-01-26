@@ -161,3 +161,8 @@ export const args = Args.create(
     defaultGroupName: "Commands",
   }
 );
+
+const scriptName = Args.getMetadata(args).scriptName;
+export function toTempPref(name: string) {
+  return `_${scriptName}_${name}`;
+}

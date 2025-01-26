@@ -17,7 +17,7 @@ import {
   visitUrl,
 } from "kolmafia";
 import { $familiar, $item, $items, $skill, get, have, set } from "libram";
-import { args } from "../args";
+import { args, toTempPref } from "../args";
 import { Priorities } from "../engine/priority";
 import { Quest, Task } from "../engine/task";
 import { step } from "grimoire-kolmafia";
@@ -359,7 +359,7 @@ class Pull {
       if (!isUnrestricted(item) && underStandard()) continue;
       if (storageAmount(item) > 0 || buyUsingStorage(1, item, this.price ?? 100000)) {
         cliExecute(`pull ${item.name}`);
-        set("_loopsmol_pulls_used", get("_loopsmol_pulls_used", 0) + 1);
+        set(toTempPref("pullsUsed"), get(toTempPref("pullsUsed"), 0) + 1);
         return;
       }
     }
