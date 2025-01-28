@@ -89,6 +89,7 @@ export const McLargeHugeQuest: Quest = {
         }, $monster`dairy goat`)
         .killItem($monster`dairy goat`)
         .banish($monsters`drunk goat, sabre-toothed goat`),
+      parachute: $monster`dairy goat`,
       limit: { soft: 15 },
     },
     {
@@ -97,7 +98,6 @@ export const McLargeHugeQuest: Quest = {
       ready: () => get("trapperOre") !== "" && itemAmount(Item.get(get("trapperOre"))) >= 3, // Checked here since there is no task for Trainset ores
       completed: () => step("questL08Trapper") >= 2,
       do: () => visitUrl("place.php?whichplace=mclargehuge&action=trappercabin"),
-      parachute: $monster`dairy goat`,
       limit: { tries: 1 },
       freeaction: true,
     },
