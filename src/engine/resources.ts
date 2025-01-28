@@ -42,6 +42,7 @@ import {
   $skill,
   AprilingBandHelmet,
   AsdonMartin,
+  AutumnAton,
   CinchoDeMayo,
   Counter,
   get,
@@ -853,6 +854,17 @@ export const backupTargets: BackupTarget[] = [
     completed: () => oresNeeded() === 0 || args.minor.skipbackups,
     outfit: { modifier: "item" },
     limit_tries: 2,
+  },
+  {
+    monster: $monster`lobsterfrogman`,
+    completed: () =>
+      itemAmount($item`barrel of gunpowder`) >= 5 ||
+      get("sidequestLighthouseCompleted") !== "none" ||
+      !have($item`backup camera`) ||
+      AutumnAton.have() ||
+      (have($item`Fourth of May Cosplay Saber`) &&
+        (get("_saberForceUses") < 5 || get("_saberForceMonsterCount") > 0)),
+    limit_tries: 4,
   },
   {
     monster: $monster`Eldritch Tentacle`,

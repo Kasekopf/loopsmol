@@ -99,17 +99,11 @@ const Flyers: Task[] = [
 ];
 
 const Lighthouse: Task[] = [
-  // Saber into more lobsterfrogmen
-  // Or backup into the Boss Bat's lair
   {
     name: "Lighthouse",
     after: ["Enrage"],
-    ready: () => step("questL04Bat") >= 3 || have($item`Fourth of May Cosplay Saber`),
     completed: () =>
-      itemAmount($item`barrel of gunpowder`) >= 5 ||
-      get("sidequestLighthouseCompleted") !== "none" ||
-      !have($item`backup camera`) ||
-      !have($item`Fourth of May Cosplay Saber`),
+      itemAmount($item`barrel of gunpowder`) >= 5 || get("sidequestLighthouseCompleted") !== "none",
     priority: (): Priority => {
       if (AutumnAton.have()) {
         if ($location`Sonofa Beach`.turnsSpent === 0) return Priorities.GoodAutumnaton;
@@ -156,7 +150,7 @@ const Lighthouse: Task[] = [
     expectbeatenup: () => get("lastEncounter") === "Zerg Rush",
     choices: { 1387: 2 },
     limit: {
-      tries: 20,
+      soft: 40,
       guard: Guards.create(
         () => itemAmount($item`figurine of a sleek seal`),
         (sleek) =>
@@ -168,27 +162,8 @@ const Lighthouse: Task[] = [
     },
   },
   {
-    name: "Lighthouse Basic",
-    after: ["Enrage", "Lighthouse"],
-    priority: (): Priority => {
-      if (AutumnAton.have()) {
-        if ($location`Sonofa Beach`.turnsSpent === 0) return Priorities.GoodAutumnaton;
-        else return Priorities.BadAutumnaton;
-      }
-      return Priorities.None;
-    },
-    completed: () =>
-      itemAmount($item`barrel of gunpowder`) >= 5 || get("sidequestLighthouseCompleted") !== "none",
-    do: $location`Sonofa Beach`,
-    outfit: { modifier: "+combat" },
-    combat: new CombatStrategy().kill($monster`lobsterfrogman`),
-    orbtargets: () => undefined,
-    expectbeatenup: () => get("lastEncounter") === "Zerg Rush",
-    limit: { soft: 40 },
-  },
-  {
     name: "Lighthouse End",
-    after: ["Lighthouse Basic"],
+    after: ["Lighthouse"],
     completed: () => get("sidequestLighthouseCompleted") !== "none",
     outfit: { equip: $items`beer helmet, distressed denim pants, bejeweled pledge pin` },
     do: (): void => {
