@@ -206,7 +206,7 @@ export const BatQuest: Quest = {
     },
     {
       name: "Boss Bat",
-      after: ["Bat/Use Sonar 3", "Lobsterfrogman Drop"],
+      after: ["Bat/Use Sonar 3"],
       completed: () => step("questL04Bat") >= 4,
       do: $location`The Boss Bat's Lair`,
       combat: new CombatStrategy().killHard($monster`Boss Bat`).ignore(),
