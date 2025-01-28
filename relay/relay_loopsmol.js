@@ -838,7 +838,7 @@ var Args = /* @__PURE__ */ function() {
      */
   }, {
     key: "create",
-    value: function create(scriptName, scriptHelp, args2, options) {
+    value: function create(scriptName2, scriptHelp, args2, options) {
       _traverse(args2, function(keySpec, key) {
         if (key === "help" || keySpec.key === "help") throw "help is a reserved argument name";
       });
@@ -848,7 +848,7 @@ var Args = /* @__PURE__ */ function() {
           setting: ""
         })
       });
-      var res = _objectSpread(_objectSpread({}, _loadDefaultValues(argsWithHelp)), {}, _defineProperty(_defineProperty(_defineProperty(_defineProperty({}, specSymbol, argsWithHelp), scriptSymbol, scriptName), scriptHelpSymbol, scriptHelp), optionsSymbol, options !== null && options !== void 0 ? options : {}));
+      var res = _objectSpread(_objectSpread({}, _loadDefaultValues(argsWithHelp)), {}, _defineProperty(_defineProperty(_defineProperty(_defineProperty({}, specSymbol, argsWithHelp), scriptSymbol, scriptName2), scriptHelpSymbol, scriptHelp), optionsSymbol, options !== null && options !== void 0 ? options : {}));
       if (options === null || options === void 0 ? void 0 : options.positionalArgs) {
         var keys = [];
         var metadata = Args2.getMetadata(res);
@@ -921,8 +921,8 @@ var Args = /* @__PURE__ */ function() {
      */
   }, {
     key: "parse",
-    value: function parse(scriptName, scriptHelp, spec, command, options) {
-      var args2 = this.create(scriptName, scriptHelp, spec, options);
+    value: function parse(scriptName2, scriptHelp, spec, command, options) {
+      var args2 = this.create(scriptName2, scriptHelp, spec, options);
       this.fill(args2, command);
       return args2;
     }
@@ -6557,6 +6557,7 @@ var args = Args.create("loopsmol", 'This is a script to complete Shrunken Advent
 }, {
   defaultGroupName: "Commands"
 });
+var scriptName = Args.getMetadata(args).scriptName;
 
 // src/relay.ts
 function _slicedToArray7(arr, i2) {
