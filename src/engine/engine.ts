@@ -37,7 +37,7 @@ import {
   useSkill,
   visitUrl,
 } from "kolmafia";
-import { Task } from "./task";
+import { hasDelay, Task } from "./task";
 import {
   $effect,
   $effects,
@@ -69,7 +69,6 @@ import {
 import { CombatActions, MyActionDefaults } from "./combat";
 import {
   cacheDress,
-  canEquipResource,
   equipCharging,
   equipDefaults,
   equipFirst,
@@ -81,19 +80,17 @@ import {
 import { cliExecute, equippedAmount, itemAmount, runChoice } from "kolmafia";
 import { debug } from "../lib";
 import {
-  BackupTarget,
-  backupTargets,
   canChargeVoid,
   CombatResource,
   forceItemSources,
   forceNCPossible,
   forceNCSources,
   freekillSources,
+  getActiveBackupTarget,
   getRunawaySources,
   refillLatte,
   shouldFinishLatte,
   unusedBanishes,
-  WandererSource,
   wandererSources,
   yellowRaySources,
 } from "./resources";
@@ -124,8 +121,6 @@ export const wanderingNCs = new Set<string>([
 ]);
 
 type ActiveTask = Task & {
-  wanderer?: WandererSource;
-  backup?: BackupTarget;
   active_priority?: Prioritization;
   other_effects?: Effect[];
 };
@@ -156,12 +151,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     }
   }
 
-  public hasDelay(task: Task): boolean {
-    if (!task.delay) return false;
-    if (!(task.do instanceof Location)) return false;
-    return task.do.turnsSpent < undelay(task.delay);
-  }
-
   public getNextTask(): ActiveTask | undefined {
     this.updatePlan();
     const available_tasks = this.tasks.filter((task) => this.available(task));
@@ -178,80 +167,6 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         };
       }
       return { ...teleportitis, active_priority: Prioritization.fixed(Priorities.Always) };
-    }
-
-    // First, check for any heavily prioritized tasks
-    const priority = available_tasks.find((task) => {
-      const priority = task.priority?.();
-      return priority === Priorities.LastCopyableMonster || priority === Priorities.Free;
-    });
-    if (priority !== undefined) {
-      return {
-        ...priority,
-      };
-    }
-
-    // If a backup target is up try to place it in a useful location
-    const backup = backupTargets.find(
-      (target) => !target.completed() && target.monster === get("lastCopyableMonster")
-    );
-    if (backup && have($item`backup camera`)) {
-      const backup_outfit = undelay(backup.outfit) ?? {};
-      if ("equip" in backup_outfit) backup_outfit.equip?.push($item`backup camera`);
-      else backup_outfit.equip = [$item`backup camera`];
-
-      const possible_locations = available_tasks.filter(
-        (task) => this.hasDelay(task) && this.createOutfit(task).canEquip(backup_outfit)
-      );
-      if (possible_locations.length > 0) {
-        if (args.debug.verbose) {
-          printHtml(
-            `A backup target (${backup.monster}) is available to place in a delay zone. Available zones:`
-          );
-          for (const task of possible_locations) {
-            printHtml(`${task.name}`);
-          }
-        }
-        return {
-          ...possible_locations[0],
-          active_priority: Prioritization.fixed(Priorities.Wanderer),
-          backup: backup,
-        };
-      } else {
-        logprint(`Backup ${backup.monster} is ready but no tasks have delay`);
-        if (backup.monster !== $monster`Eldritch Tentacle`)
-          return {
-            name: `Backup ${backup.monster}`,
-            completed: () => false,
-            do: $location`Noob Cave`,
-            limit: { tries: backup.limit_tries },
-          };
-      }
-    }
-
-    // If a wanderer is up try to place it in a useful location
-    const wanderer = wandererSources.find((source) => source.available() && source.chance() === 1);
-    if (wanderer) {
-      const possible_locations = available_tasks.filter(
-        (task) => this.hasDelay(task) && canEquipResource(this.createOutfit(task), wanderer)
-      );
-      if (possible_locations.length > 0) {
-        if (args.debug.verbose) {
-          printHtml(
-            `A wanderer (${wanderer.name}) is available to place in a delay zone. Available zones:`
-          );
-          for (const task of possible_locations) {
-            printHtml(`${task.name}`);
-          }
-        }
-        return {
-          ...possible_locations[0],
-          active_priority: Prioritization.fixed(Priorities.Wanderer),
-          wanderer: wanderer,
-        };
-      } else {
-        logprint(`Wanderer ${wanderer.name} is ready but no tasks have delay`);
-      }
     }
 
     // Finally, choose from all available tasks
@@ -318,27 +233,34 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     combat: CombatStrategy<CombatActions>,
     resources: CombatResources<CombatActions>
   ): void {
-    const wanderers = task.wanderer ? [task.wanderer] : [];
-    for (const wanderer of wanderers) {
-      if (!equipFirst(outfit, [wanderer]))
-        throw `Wanderer equipment ${wanderer.equip} conflicts with ${task.name}`;
+    if (undelay(task.freeaction)) {
+      // Prepare only as requested by the task
+      return;
     }
 
-    // Setup a backup
-    if (task.backup && args.minor.skipbackups !== true) {
+    // Setup forced wanderers
+    const wanderers = [];
+    if (task.active_priority?.has(Priorities.Wanderer)) {
+      const prioritizedWanderer = wandererSources.find(
+        (source) => source.available() && source.chance() === 1
+      );
+      if (!prioritizedWanderer) throw `Wanderer prioritized but no wanderer found`;
+      if (!equipFirst(outfit, [prioritizedWanderer]))
+        throw `Wanderer equipment ${prioritizedWanderer.equip} conflicts with ${task.name}`;
+    }
+
+    // Setup forced backups
+    if (task.active_priority?.has(Priorities.LastCopyableMonster)) {
+      const backup = getActiveBackupTarget();
+      if (!backup) throw `Backup requested but lastCopyableMonster changed?`;
       if (!outfit.equip($item`backup camera`)) throw `Cannot force backup camera on ${task.name}`;
-      if (task.backup.outfit && !outfit.equip(undelay(task.backup.outfit)))
-        throw `Cannot match equip for backup ${task.backup.monster} on ${task.name}`;
+      if (backup.outfit && !outfit.equip(undelay(backup.outfit)))
+        throw `Cannot match equip for backup ${backup.monster} on ${task.name}`;
       outfit.equip({ avoid: $items`carnivorous potted plant` });
       combat.startingMacro(
         Macro.if_("!monsterid 49", Macro.trySkill($skill`Back-Up to your Last Enemy`))
       );
       combat.action("killHard");
-    }
-
-    if (undelay(task.freeaction)) {
-      // Prepare only as requested by the task
-      return;
     }
 
     // Equip initial equipment
@@ -512,14 +434,14 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
 
     if (
       wanderers.length === 0 &&
-      this.hasDelay(task) &&
+      hasDelay(task) &&
       !get("noncombatForcerActive") &&
-      !task.backup
+      !task.active_priority?.has(Priorities.LastCopyableMonster)
     )
       wanderers.push(...equipUntilCapped(outfit, wandererSources));
 
     const mightKillSomething =
-      task.wanderer !== undefined ||
+      task.active_priority?.has(Priorities.Wanderer) ||
       task.combat?.can("kill") ||
       task.combat?.can("killHard") ||
       task.combat?.can("killItem") ||

@@ -94,6 +94,7 @@ import {
 } from "./trainrealm";
 import { ROUTE_WAIT_TO_NCFORCE } from "../route";
 import { fillHp } from "../engine/moods";
+import { getActiveBackupTarget } from "../engine/resources";
 
 const meatBuffer = 1000;
 
@@ -1486,6 +1487,19 @@ export const WandQuest: Quest = {
       do: () => use($item`dead mimic`),
       freeaction: true,
       limit: { tries: 1 },
+    },
+    {
+      // The ultimate location to put needed backups
+      name: `Backup Monster`,
+      completed: () => false,
+      ready: () => {
+        if (!have($item`backup camera`)) return false;
+        const target = getActiveBackupTarget();
+        return target !== undefined && target.monster !== $monster`Eldritch Tentacle`;
+      },
+      do: $location`Noob Cave`,
+      delay: 11,
+      limit: { tries: 11 },
     },
   ],
 };

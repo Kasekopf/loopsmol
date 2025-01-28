@@ -1,6 +1,7 @@
-import { Item, Monster } from "kolmafia";
+import { Item, Location, Monster } from "kolmafia";
 import { Quest as BaseQuest, Task as BaseTask, Limit } from "grimoire-kolmafia";
 import { CombatActions, CombatStrategy } from "./combat";
+import { undelay } from "libram";
 
 export type AcquireItem = {
   item: Item;
@@ -38,3 +39,9 @@ export type Priority = {
   score: number;
   reason?: string;
 };
+
+export function hasDelay(task: Task): boolean {
+  if (!task.delay) return false;
+  if (!(task.do instanceof Location)) return false;
+  return task.do.turnsSpent < undelay(task.delay);
+}

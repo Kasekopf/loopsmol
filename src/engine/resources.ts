@@ -838,7 +838,7 @@ export type BackupTarget = {
   outfit?: OutfitSpec | (() => OutfitSpec);
   limit_tries: number;
 };
-export const backupTargets: BackupTarget[] = [
+const backupTargets: BackupTarget[] = [
   {
     monster: $monster`Camel's Toe`,
     completed: () =>
@@ -872,3 +872,9 @@ export const backupTargets: BackupTarget[] = [
     limit_tries: 11,
   },
 ];
+
+export function getActiveBackupTarget() {
+  return backupTargets.find(
+    (target) => !target.completed() && target.monster === get("lastCopyableMonster")
+  );
+}

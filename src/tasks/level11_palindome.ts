@@ -108,7 +108,7 @@ const Copperhead: Task[] = [
         get("_feelEnvyUsed") < 3 &&
         get("_feelNostalgicUsed") < 3
       )
-        return Priorities.Wanderer;
+        return Priorities.GoodFeelEnvy;
       else return Priorities.None;
     },
     completed: () =>
