@@ -169,7 +169,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       return { ...teleportitis, active_priority: Prioritization.fixed(Priorities.Always) };
     }
 
-    // Finally, choose from all available tasks
+    // Otherwise, choose from all available tasks
     const task_priorities = available_tasks.map((task) => {
       return { ...task, active_priority: Prioritization.from(task) };
     });
