@@ -247,6 +247,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       if (!prioritizedWanderer) throw `Wanderer prioritized but no wanderer found`;
       if (!equipFirst(outfit, [prioritizedWanderer]))
         throw `Wanderer equipment ${prioritizedWanderer.equip} conflicts with ${task.name}`;
+      wanderers.push(prioritizedWanderer);
     }
 
     // Setup forced backups
