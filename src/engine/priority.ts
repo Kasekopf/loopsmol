@@ -21,13 +21,12 @@ import { forceItemSources, forceNCPossible, yellowRaySources } from "./resources
 import { getModifiersFrom } from "./outfit";
 
 export class Priorities {
-  static Wanderer: Priority = { score: 20000, reason: "Wanderer" };
-  static Always: Priority = { score: 10000, reason: "Forced" };
-  static GoodForceNC: Priority = { score: 8000, reason: "Forcing NC" };
-  static Free: Priority = { score: 1000, reason: "Free action" };
+  static Always: Priority = { score: 20000, reason: "Forced" };
+  static Free: Priority = { score: 8000, reason: "Free action" };
+  static LastCopyableMonster: Priority = { score: 4000, reason: "Copy last monster" };
+  static Wanderer: Priority = { score: 2000, reason: "Wanderer" };
+  static GoodForceNC: Priority = { score: 1000, reason: "Forcing NC" };
   static Start: Priority = { score: 900, reason: "Initial tasks" };
-  static NeedAdv: Priority = { score: 200, reason: "Low on adventures" };
-  static LastCopyableMonster: Priority = { score: 100, reason: "Copy last monster" };
   static Effect: Priority = { score: 20, reason: "Useful effect" };
   static GoodOrb: Priority = { score: 15, reason: "Target orb monster" };
   static BestCosmicBowlingBall: Priority = {
