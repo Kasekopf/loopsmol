@@ -484,7 +484,16 @@ const Bowling: Task[] = [
       return $monster`none`;
     },
     choices: { 788: 1 },
-    parachute: $monster`pygmy bowler`,
+    parachute: () => {
+      if (
+        have($skill`Map the Monsters`) &&
+        get("_monstersMapped") < 3 &&
+        have($familiar`Melodramedary`)
+      ) {
+        return $monster`none`;
+      }
+      return $monster`pygmy bowler`;
+    },
     limit: { soft: 25 },
   },
   {
