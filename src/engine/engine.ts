@@ -311,6 +311,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       have($item`red rocket`) &&
       myFullness() === 0 &&
       myTurncount() > 1 &&
+      myLevel() < 12 &&
       !have($effect`Everything Looks Red`)
     ) {
       combat.macro(new Macro().tryItem($item`red rocket`), undefined, true);

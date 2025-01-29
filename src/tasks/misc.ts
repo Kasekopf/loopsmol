@@ -5,6 +5,7 @@ import {
   cliExecute,
   equippedAmount,
   familiarWeight,
+  floor,
   floristAvailable,
   fullnessLimit,
   gamedayToInt,
@@ -553,14 +554,15 @@ export const MiscQuest: Quest = {
     },
     {
       name: "Acquire Red Rocket",
-      after: ["Sewer Accordion", "Sewer Totem", "Sewer Saucepan"],
+      after: ["Sewer Accordion", "Sewer Totem", "Sewer Saucepan", "Acquire Mouthwash", "Mouthwash"],
       priority: () => Priorities.Free,
       ready: () => myMeat() >= meatBuffer + 250,
       completed: () =>
         have($item`red rocket`) ||
         !have($item`Clan VIP Lounge key`) ||
         have($effect`Ready to Eat`) ||
-        myFullness() > 0,
+        myFullness() > 0 ||
+        myLevel() >= 12,
       do: () => {
         visitUrl("clan_viplounge.php");
         visitUrl("clan_viplounge.php?action=fwshop&whichfloor=2");
@@ -1234,9 +1236,10 @@ export const MiscQuest: Quest = {
           ensureEffect($effect`Super Skill`); // after GAP are equipped
         }
         cliExecute("uneffect ode to booze");
+        cliExecute("uneffect scarysauce");
         fillHp();
       },
-      completed: () => get("_snojoFreeFights") >= 10 || myLevel() >= 13,
+      completed: () => get("_snojoFreeFights") >= 10,
       do: $location`The X-32-F Combat Training Snowman`,
       post: (): void => {
         if (get("_snojoFreeFights") === 10) cliExecute("hottub"); // Clean -stat effects
@@ -1414,6 +1417,86 @@ export const MiscQuest: Quest = {
       },
       freeaction: true,
       limit: { tries: 3 },
+    },
+    {
+      name: "Acquire Mouthwash",
+      priority: () => Priorities.Start,
+      completed: () =>
+        !have($item`Sept-Ember Censer`) ||
+        (get("availableSeptEmbers", 0) < 1 && get("_septEmbersCollected", false)) ||
+        args.minor.saveember,
+      do: (): void => {
+        // Grab Embers
+        visitUrl("shop.php?whichshop=september");
+        set("_septEmbersCollected", true);
+
+        // Grab Bembershoot
+        if (!have($item`bembershoot`))
+          visitUrl(`shop.php?whichshop=september&action=buyitem&quantity=1&whichrow=1516&pwd`);
+
+        // Grab Mouthwashes
+        const mouthwashes = floor(get("availableSeptEmbers", 0) / 2);
+        visitUrl(
+          `shop.php?whichshop=september&action=buyitem&quantity=${mouthwashes}&whichrow=1512&pwd`
+        );
+      },
+      limit: { tries: 1 },
+      freeaction: true,
+    },
+    {
+      name: "Cut Melodramedary",
+      after: [],
+      priority: () => Priorities.Start,
+      completed: () =>
+        get("_entauntaunedToday") ||
+        !have($familiar`Melodramedary`) ||
+        !have($item`Fourth of May Cosplay Saber`) ||
+        !have($familiar`Shorter-Order Cook`),
+      do: () => {
+        visitUrl("main.php?action=camel");
+        runChoice(1);
+      },
+      outfit: {
+        familiar: $familiar`Melodramedary`,
+        weapon: $item`Fourth of May Cosplay Saber`,
+      },
+      freeaction: true,
+      limit: { tries: 1 },
+    },
+    {
+      name: "Mouthwash",
+      after: ["Cloud Talk", "Cut Melodramedary", "Acquire Mouthwash", "Sewer Saucepan"],
+      priority: () => Priorities.Start,
+      completed: () => !have($item`Mmm-brr! brand mouthwash`),
+      do: () => {
+        // Use potions for cold resistance
+        if (have($item`rainbow glitter candle`)) use($item`rainbow glitter candle`);
+        if (have($item`pec oil`)) use($item`pec oil`);
+        if (have($skill`Emotionally Chipped`) && get("_feelPeacefulUsed") < 3)
+          ensureEffect($effect`Feeling Peaceful`);
+        if (have($item`MayDay™ supply package`)) use($item`MayDay™ supply package`);
+        if (have($item`scroll of Protection from Bad Stuff`))
+          use($item`scroll of Protection from Bad Stuff`);
+        if (have($item`bottle of antifreeze`)) use($item`bottle of antifreeze`);
+        if (have($item`recording of Rolando's Rondo of Resisto`))
+          use($item`recording of Rolando's Rondo of Resisto`);
+        if (have($item`saucepan`) && have($skill`Scarysauce`)) ensureEffect($effect`Scarysauce`);
+
+        use($item`Mmm-brr! brand mouthwash`);
+      },
+      outfit: () => {
+        if (have($familiar`Trick-or-Treating Tot`) && have($item`li'l candy corn costume`))
+          return {
+            familiar: $familiar`Trick-or-Treating Tot`,
+            modifier: "cold res",
+          };
+        return {
+          familiar: $familiar`Exotic Parrot`,
+          modifier: "cold res",
+        };
+      },
+      limit: { tries: 4 },
+      freeaction: true,
     },
   ],
 };

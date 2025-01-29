@@ -1,4 +1,4 @@
-import { haveEquipped, Location, Monster, myAdventures } from "kolmafia";
+import { haveEquipped, Location, Monster, myAdventures, myLevel } from "kolmafia";
 import { $item, $skill, Macro } from "libram";
 import { ActionDefaults, CombatStrategy as BaseCombatStrategy } from "grimoire-kolmafia";
 
@@ -69,7 +69,8 @@ export class MyActionDefaults implements ActionDefaults<CombatActions> {
 export function killMacro(): Macro {
   if (haveEquipped($item`June cleaver`)) {
     if (haveEquipped($item`Everfull Dart Holster`)) {
-      if (myAdventures() > 50) {
+      if (myLevel() >= 12) {
+        // Only once we don't need Ready to Eat for leveling
         return new Macro()
           .trySkill($skill`Darts: Aim for the Bullseye`)
           .trySkill($skill`Darts: Throw at %part1`)

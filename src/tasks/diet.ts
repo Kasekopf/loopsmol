@@ -5,6 +5,7 @@ import {
   myAdventures,
   myFullness,
   myInebriety,
+  myLevel,
   mySign,
   reverseNumberology,
   use,
@@ -28,7 +29,7 @@ export const DietQuest: Quest = {
         ((!get("pizzaOfLegendEaten") && have($item`Pizza of Legend`)) ||
           (!get("calzoneOfLegendEaten") && have($item`Calzone of Legend`)) ||
           (!get("deepDishOfLegendEaten") && have($item`Deep Dish of Legend`))) &&
-        have($effect`Ready to Eat`),
+        (have($effect`Ready to Eat`) || myLevel() >= 12),
       completed: () => myFullness() > 0,
       do: () => {
         customRestoreMp(20);
