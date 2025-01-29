@@ -79,8 +79,7 @@ function getRelevantEffects(): { [modifier: string]: Effect[] } {
 
   if (
     have($item`Clan VIP Lounge key`) &&
-    (get("_photoBoothEffects", 0) < 3 || have($effect`Wild and Westy!`)) &&
-    have($item`Talisman o' Namsilat`)
+    (get("_photoBoothEffects", 0) < 3 || have($effect`Wild and Westy!`))
   )
     result["-combat"].push($effect`Wild and Westy!`);
 
