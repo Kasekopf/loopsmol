@@ -1,4 +1,4 @@
-import { haveEquipped, Location, Monster, myAdventures, myLevel } from "kolmafia";
+import { haveEquipped, Location, Monster, myLevel } from "kolmafia";
 import { $item, $skill, Macro } from "libram";
 import { ActionDefaults, CombatStrategy as BaseCombatStrategy } from "grimoire-kolmafia";
 
@@ -30,11 +30,12 @@ export class MyActionDefaults implements ActionDefaults<CombatActions> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   kill(target?: Monster | Location) {
-    return killMacro();
+    return killMacro(false);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   killHard(target?: Monster | Location) {
-    return this.kill(target);
+    return killMacro(true);
   }
 
   ignoreNoBanish(target?: Monster | Location) {
@@ -66,45 +67,20 @@ export class MyActionDefaults implements ActionDefaults<CombatActions> {
   }
 }
 
-export function killMacro(): Macro {
-  if (haveEquipped($item`June cleaver`)) {
-    if (haveEquipped($item`Everfull Dart Holster`)) {
-      if (myLevel() >= 12) {
-        // Only once we don't need Ready to Eat for leveling
-        return new Macro()
-          .trySkill($skill`Darts: Aim for the Bullseye`)
-          .trySkill($skill`Darts: Throw at %part1`)
-          .attack()
-          .repeat();
-      } else {
-        return new Macro()
-          .trySkill($skill`Darts: Throw at %part1`)
-          .attack()
-          .repeat();
-      }
-    }
-    return new Macro().attack().repeat();
-  }
+export function killMacro(hard?: boolean): Macro {
+  const result = new Macro();
 
   if (haveEquipped($item`Everfull Dart Holster`)) {
-    if (myAdventures() > 50) {
-      return new Macro()
-        .trySkill($skill`Darts: Aim for the Bullseye`)
-        .trySkill($skill`Darts: Throw at %part1`)
-        .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
-        .attack()
-        .repeat();
-    } else {
-      return new Macro()
-        .trySkill($skill`Darts: Throw at %part1`)
-        .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
-        .attack()
-        .repeat();
+    if (!hard && myLevel() >= 12) {
+      // Only once we don't need Ready to Eat for leveling
+      result.trySkill($skill`Darts: Aim for the Bullseye`);
     }
+    result.trySkill($skill`Darts: Throw at %part1`);
   }
 
-  return new Macro()
-    .while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`))
-    .attack()
-    .repeat();
+  if (!haveEquipped($item`June cleaver`)) {
+    result.while_("!mpbelow 6", new Macro().skill($skill`Saucestorm`));
+  }
+
+  return result.attack().repeat();
 }
