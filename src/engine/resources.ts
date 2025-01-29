@@ -19,6 +19,7 @@ import {
   myMaxmp,
   myMeat,
   myMp,
+  mySign,
   myTurncount,
   numericModifier,
   retrieveItem,
@@ -554,6 +555,7 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
     // Include passive skills
     if (have($skill`Crimbo Training: Concierge`)) attainableWeight += 1;
     if (have($skill`Amphibian Sympathy`)) attainableWeight += 5;
+    if (mySign() === "Platypus") attainableWeight += 5;
 
     // Include active effects
     for (const effect of getActiveEffects())
