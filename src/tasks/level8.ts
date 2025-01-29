@@ -4,6 +4,7 @@ import {
   Item,
   itemAmount,
   myFamiliar,
+  myLocation,
   numericModifier,
   use,
   visitUrl,
@@ -77,6 +78,18 @@ export const McLargeHugeQuest: Quest = {
     {
       name: "Goatlet",
       after: ["Trapper Request"],
+      priority: () => {
+        if (
+          have($item`crepe paper parachute cape`) &&
+          !have($effect`Everything looks Beige`) &&
+          ((have($item`June cleaver`) && get("_juneCleaverFightsLeft") === 0) ||
+            myLocation() === $location`The Goatlet`)
+        ) {
+          // Trigger this parachute as one of the first things to do
+          return Priorities.Start;
+        }
+        return Priorities.None;
+      },
       ready: () =>
         Counter.get("Spooky VHS Tape Monster") === 0 ||
         get("spookyVHSTapeMonster") !== $monster`dairy goat`,
