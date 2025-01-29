@@ -1225,7 +1225,9 @@ export const MiscQuest: Quest = {
         have($item`Greatest American Pants`) &&
         have($skill`Flavour of Magic`) &&
         have($skill`Cannelloni Cannon`) &&
-        have($skill`Saucegeyser`),
+        have($skill`Saucegeyser`) &&
+        // Wait until bowling ball is thrown
+        !have($item`cosmic bowling ball`),
       priority: () => Priorities.Start,
       prepare: (): void => {
         if (get("snojoSetting") === null) {
