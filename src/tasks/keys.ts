@@ -374,7 +374,11 @@ export const DigitalQuest: Quest = {
       completed: () => getScore() >= 10000,
       ready: () => get("8BitColor", "black") === "red",
       do: $location`The Fungus Plains`,
-      outfit: { modifier: "meat", equip: $items`continuum transfunctioner` },
+      outfit: {
+        modifier: "meat",
+        equip: $items`continuum transfunctioner`,
+        avoid: $items`Roman Candelabra`,
+      },
       combat: new CombatStrategy().kill(),
       limit: { soft: 16 },
     },
@@ -413,11 +417,13 @@ export const DigitalQuest: Quest = {
             modifier: "init",
             equip: $items`continuum transfunctioner, backup camera`,
             modes: { backupcamera: "init" },
+            avoid: $items`Roman Candelabra`,
           };
         return {
           modifier: "init",
           equip: $items`continuum transfunctioner, backup camera, rocket boots`,
           modes: { backupcamera: "init" },
+          avoid: $items`Roman Candelabra`,
         };
       },
       combat: new CombatStrategy().kill(),
@@ -441,8 +447,14 @@ export const DigitalQuest: Quest = {
           return {
             modifier: "DA",
             equip: $items`continuum transfunctioner, Greatest American Pants`,
+            avoid: $items`Roman Candelabra`,
           };
-        else return { modifier: "DA", equip: $items`continuum transfunctioner` };
+        else
+          return {
+            modifier: "DA",
+            equip: $items`continuum transfunctioner`,
+            avoid: $items`Roman Candelabra`,
+          };
       },
       combat: new CombatStrategy().kill(),
       limit: { soft: 16 },
@@ -465,6 +477,7 @@ export const DigitalQuest: Quest = {
             modifier: "item",
             familiar: $familiar`Trick-or-Treating Tot`,
             equip: $items`continuum transfunctioner, li'l ninja costume`,
+            avoid: $items`Roman Candelabra`,
           };
         else return { modifier: "item", equip: $items`continuum transfunctioner` };
       },

@@ -43,10 +43,11 @@ const Manor1: Task[] = [
       if (have($item`rainbow glitter candle`)) use($item`rainbow glitter candle`);
     },
     do: $location`The Haunted Kitchen`,
-    outfit: { modifier: "stench res, hot res" },
+    outfit: { modifier: "stench res, hot res", avoid: $items`Roman Candelabra` },
     choices: { 893: 2 },
     combat: new CombatStrategy().kill(),
     limit: { soft: 21 },
+    delay: 7,
   },
   {
     name: "Billiards",

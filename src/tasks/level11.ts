@@ -229,11 +229,13 @@ const Desert: Task[] = [
         return {
           equip: $items`survival knife, industrial fire extinguisher, UV-resistant compass, dromedary drinking helmet`,
           familiar: $familiar`Melodramedary`,
+          avoid: $items`Roman Candelabra, backup camera`,
         };
       else
         return {
           equip: $items`survival knife, UV-resistant compass, dromedary drinking helmet`,
           familiar: $familiar`Melodramedary`,
+          avoid: $items`Roman Candelabra, backup camera`,
         };
     },
     combat: new CombatStrategy()
