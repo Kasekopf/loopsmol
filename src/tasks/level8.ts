@@ -4,6 +4,7 @@ import {
   Item,
   itemAmount,
   myFamiliar,
+  myLevel,
   myLocation,
   numericModifier,
   use,
@@ -80,6 +81,7 @@ export const McLargeHugeQuest: Quest = {
       after: ["Trapper Request"],
       priority: () => {
         if (
+          myLevel() >= 12 &&
           have($item`crepe paper parachute cape`) &&
           !have($effect`Everything looks Beige`) &&
           ((have($item`June cleaver`) && get("_juneCleaverFightsLeft") === 0) ||
@@ -95,11 +97,16 @@ export const McLargeHugeQuest: Quest = {
         get("spookyVHSTapeMonster") !== $monster`dairy goat`,
       completed: () => itemAmount($item`goat cheese`) >= 3 || step("questL08Trapper") >= 2,
       do: $location`The Goatlet`,
-      outfit: {
-        modifier: "item",
-        avoid: $items`broken champagne bottle`,
-        familiar: $familiar`Grey Goose`,
-        equip: $items`deft pirate hook`,
+      outfit: () => {
+        const equip = $items`deft pirate hook`;
+        if (myLevel() >= 12 && !have($effect`Everything Looks Red`))
+          equip.push($item`Everfull Dart Holster`);
+        return {
+          modifier: "item",
+          avoid: $items`broken champagne bottle`,
+          familiar: $familiar`Grey Goose`,
+          equip: equip,
+        };
       },
       combat: new CombatStrategy()
         .macro(() => {
