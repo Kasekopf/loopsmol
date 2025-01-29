@@ -552,8 +552,8 @@ function planRunawayFamiliar(): RunawayFamiliarSpec {
     let attainableWeight = familiarWeight(chosenFamiliar);
 
     // Include passive skills
-    if (have($skill`Crimbo Training: Concierge`)) attainableWeight += 5;
-    if (have($skill`Amphibian Sympathy`)) attainableWeight += 1;
+    if (have($skill`Crimbo Training: Concierge`)) attainableWeight += 1;
+    if (have($skill`Amphibian Sympathy`)) attainableWeight += 5;
 
     // Include active effects
     for (const effect of getActiveEffects())
