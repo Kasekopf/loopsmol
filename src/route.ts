@@ -39,25 +39,25 @@ export const routing: string[] = [
   "Misc/Unlock Island Submarine",
   "Misc/Unlock Island",
 
-  // Grind tasks until level 11
+  // Initial tasks for delay
   "Manor/Kitchen",
+  "Macguffin/Forest", // Start before -combat buffs
   "Mosquito/Burn Delay",
   "Macguffin/Compass", // Unlock desert for ultrahydrated use
+  "Manor/Start Floor2",
 
   // First -combat group
   "War/Enrage", // Open the War ASAP for Yellow rays
   "War/Flyers Start", // Start the war and get flyers
   "War/Flyers End", // End the flyers quest ASAP in case of tracking errors
+  "Giant/Basement Finish", // Nice big delay zone before manor is opened
+
   "Hidden City/Forest Coin", // First to get meat
   "Hidden City/Forest Map",
   "Hidden City/Forest Fertilizer",
   "Hidden City/Forest Sapling", // Last to sell bar skins
-  "Manor/Billiards",
-  "Friar/Finish",
-
-  // Open delay
-  "Manor/Start Floor2",
-  "Palindome/Copperhead",
+  "Mosquito/Finish",
+  "Crypt/Cranny",
 
   // Do summons when ready
   "Summon/Mountain Man",
@@ -75,24 +75,18 @@ export const routing: string[] = [
   "Hidden City/Open Apartment",
 
   // Setup additional -combats
+  "Palindome/Copperhead",
   "Manor/Bedroom",
   "Palindome/Bat Snake",
-  "Giant/Grow Beanstalk",
   "Bat/Use Sonar 3", // Reveal more delay
   "Palindome/Cold Snake",
+  "McLargeHuge/Climb",
+  "Hidden City/Banish Janitors",
 
   // Get and use clovers
   "Misc/Hermit Clover",
   "McLargeHuge/Trapper Return",
   "Palindome/Protesters",
-
-  // Second -combat group
-  "Hidden City/Banish Janitors",
-  "Mosquito/Finish",
-  "Crypt/Cranny",
-  "Giant/Basement Finish",
-  "Giant/Unlock HITS",
-  "McLargeHuge/Climb",
 
   // The following 3 tasks should always stay in this order
   "Macguffin/Oasis", // Get ultrahydrated as soon as needed
@@ -100,6 +94,7 @@ export const routing: string[] = [
   "Macguffin/Desert", // charge camel for protestors
 
   // Finish remaining quests
+  "Giant/Unlock HITS",
   "Crypt/Alcove",
 
   // Hidden City
@@ -150,6 +145,9 @@ export const routing: string[] = [
   "Bat/Finish",
   "Misc/Eldritch Tentacle",
   "Knob/King",
+
+  // Leave open a while for remaining runaways
+  "Friar/Finish",
 
   // Finish last keys
   "Keys/All Heroes",
