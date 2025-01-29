@@ -159,14 +159,8 @@ const Manor2: Task[] = [
     completed: () => have($item`Lady Spookyraven's powder puff`) || step("questM21Dance") >= 2,
     do: $location`The Haunted Bathroom`,
     choices: { 881: 1, 105: 1, 892: 1 },
-    outfit: () => {
-      if (!have($effect`Citizen of a Zone`) && have($familiar`Patriotic Eagle`)) {
-        return { modifier: "-combat", familiar: $familiar`Patriotic Eagle` };
-      }
-      return { modifier: "-combat" };
-    },
+    outfit: { modifier: "-combat" },
     combat: new CombatStrategy()
-      .startingMacro(Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`))
       .killHard($monster`cosmetics wraith`)
       .macro(() => {
         if (have($item`genie bottle`)) return new Macro();
@@ -202,7 +196,16 @@ const Manor2: Task[] = [
         $monsters`animated mahogany nightstand, animated rustic nightstand, Wardröb nightstand`
       )
       .ignore($monster`tumbleweed`),
-    delay: () => (have($item`Lord Spookyraven's spectacles`) ? 5 : 0),
+    delay: () => {
+      if (!have($item`Lord Spookyraven's spectacles`)) return 0;
+      if (
+        !have($item`disposable instant camera`) &&
+        !have($item`photograph of a dog`) &&
+        step("questL11Palindome") < 3
+      )
+        return 0;
+      return 5;
+    },
     limit: { soft: 20 },
   },
   {

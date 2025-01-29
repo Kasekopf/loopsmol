@@ -346,7 +346,7 @@ export const ChasmQuest: Quest = {
       },
       outfit: { equip: $items`bat wings` },
       freeaction: true,
-      limit: { tries: 30, unready: true },
+      limit: { tries: 1 },
     },
     {
       name: "Bridge",

@@ -280,7 +280,11 @@ const Zepplin: Task[] = [
         useSkill($skill`Aug. 2nd: Find an Eleven-Leaf Clover Day`);
       if (itemAmount($item`11-leaf clover`) > cloversToSave() && !have($effect`Lucky!`))
         use($item`11-leaf clover`);
-      if (have($item`pocket wish`) && !have($effect`Dirty Pear`))
+      if (
+        !have($item`candy cane sword cane`) &&
+        have($item`pocket wish`) &&
+        !have($effect`Dirty Pear`)
+      )
         cliExecute("genie effect dirty pear");
       if (have($skill`Bend Hell`) && !get("_bendHellUsed"))
         ensureWithMPSwaps([$effect`Bendin' Hell`]);
@@ -304,18 +308,17 @@ const Zepplin: Task[] = [
       };
     },
     outfit: () => {
-      const sleazeitems = $items`candy cane sword cane, deck of lewd playing cards`;
-      if (have($item`designer sweatpants`)) sleazeitems.push($item`designer sweatpants`);
-      else if (have($item`transparent pants`)) sleazeitems.push($item`transparent pants`);
-
+      const sleazeitems = $items`candy cane sword cane, deck of lewd playing cards, June cleaver, designer sweatpants, Jurassic Parka, transparent pants`;
       if (itemAmount($item`11-leaf clover`) > cloversToSave() || have($effect`Lucky!`))
         return {
           modifier: "sleaze dmg, sleaze spell dmg",
           equip: sleazeitems,
+          modes: { parka: "dilophosaur" },
         };
       return {
         modifier: "-combat, sleaze dmg, sleaze spell dmg",
         equip: sleazeitems,
+        modes: { parka: "dilophosaur" },
       };
     },
     freeaction: () => itemAmount($item`11-leaf clover`) > cloversToSave() || have($effect`Lucky!`),

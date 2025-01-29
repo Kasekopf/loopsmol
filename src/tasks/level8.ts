@@ -1,4 +1,13 @@
-import { equippedAmount, Item, itemAmount, numericModifier, use, visitUrl } from "kolmafia";
+import {
+  equippedAmount,
+  familiarWeight,
+  Item,
+  itemAmount,
+  myFamiliar,
+  numericModifier,
+  use,
+  visitUrl,
+} from "kolmafia";
 import {
   $effect,
   $familiar,
@@ -85,6 +94,14 @@ export const McLargeHugeQuest: Quest = {
             return Macro.trySkill($skill`Emit Matter Duplicating Drones`).tryItem(
               $item`Spooky VHS Tape`
             );
+          if (itemAmount($item`goat cheese`) === 1) {
+            if (
+              myFamiliar() === $familiar`Grey Goose` &&
+              familiarWeight($familiar`Grey Goose`) >= 6
+            )
+              return Macro.trySkill($skill`Emit Matter Duplicating Drones`);
+            else return Macro.tryItem($item`Spooky VHS Tape`).trySkill($skill`Swoop like a Bat`);
+          }
           return new Macro();
         }, $monster`dairy goat`)
         .killItem($monster`dairy goat`)
