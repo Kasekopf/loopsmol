@@ -1,5 +1,5 @@
 import { visitUrl } from "kolmafia";
-import { $item, $location, get, have } from "libram";
+import { $effect, $item, $items, $location, get, have } from "libram";
 import { atLevel } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
@@ -29,6 +29,11 @@ export const MosquitoQuest: Quest = {
         get("ghostLocation") !== $location`The Spooky Forest`,
       completed: () => $location`The Spooky Forest`.turnsSpent >= 5 || step("questL02Larva") >= 1,
       do: $location`The Spooky Forest`,
+      outfit: () => {
+        // Maintain this buff during snojo
+        if (have($effect`Super Skill`)) return { equip: $items`Greatest American Pants` };
+        return {};
+      },
       choices: { 502: 2, 505: 1, 334: 1 },
       limit: { tries: 5 },
       delay: 5,
