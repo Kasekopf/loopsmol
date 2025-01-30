@@ -60,6 +60,7 @@ export const GiantQuest: Quest = {
     {
       name: "Grow Beanstalk",
       after: ["Start", "Get Bean"],
+      priority: () => Priorities.Free,
       completed: () => step("questL10Garbage") >= 1,
       do: () => use($item`enchanted bean`),
       outfit: { equip: $items`spring shoes` },
@@ -72,6 +73,8 @@ export const GiantQuest: Quest = {
       prepare: () => tryPlayApriling("-combat"),
       completed: () => have($item`amulet of extreme plot significance`),
       do: $location`The Penultimate Fantasy Airship`,
+      // Other options (bat wings) are sometimes chosen by choice script
+      choices: { 182: 1 },
       post: () => {
         if (have($effect`Temporary Amnesia`)) cliExecute("uneffect Temporary Amnesia");
       },
@@ -112,6 +115,8 @@ export const GiantQuest: Quest = {
       after: ["Airship YR Healer"],
       completed: () => have($item`S.O.C.K.`),
       do: $location`The Penultimate Fantasy Airship`,
+      // Other options (bat wings) are sometimes chosen by choice script
+      choices: { 182: 1 },
       post: () => {
         if (have($effect`Temporary Amnesia`)) cliExecute("uneffect Temporary Amnesia");
       },

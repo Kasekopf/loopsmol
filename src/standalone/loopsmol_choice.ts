@@ -33,8 +33,6 @@ export function main(choice: number, page: string) {
     } else if (options[6]) {
       // Bat Wings Skip
       runChoice(6);
-    } else {
-      runChoice(1);
     }
   }
   // Everfull dart handling
