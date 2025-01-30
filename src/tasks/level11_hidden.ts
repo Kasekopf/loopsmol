@@ -490,7 +490,7 @@ const Bowling: Task[] = [
         get("_monstersMapped") < 3 &&
         have($familiar`Melodramedary`)
       ) {
-        return $monster`none`;
+        return undefined;
       }
       return $monster`pygmy bowler`;
     },
