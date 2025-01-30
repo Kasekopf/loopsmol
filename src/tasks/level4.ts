@@ -47,7 +47,7 @@ export const BatQuest: Quest = {
       post: () => {
         if (have($item`sonar-in-a-biscuit`)) use($item`sonar-in-a-biscuit`);
       },
-      outfit: { modifier: "10 stench res", equip: $items`bat wings` },
+      outfit: { modifier: "10 stench res", equip: $items`bat wings`, avoid: $items`June cleaver` },
       limit: { tries: 1 },
     },
     {
@@ -65,7 +65,7 @@ export const BatQuest: Quest = {
       post: () => {
         if (have($item`sonar-in-a-biscuit`)) use($item`sonar-in-a-biscuit`);
       },
-      outfit: { modifier: "10 stench res", equip: $items`bat wings` },
+      outfit: { modifier: "10 stench res", equip: $items`bat wings`, avoid: $items`June cleaver` },
       limit: { tries: 1 },
     },
     {
@@ -83,7 +83,7 @@ export const BatQuest: Quest = {
       post: () => {
         if (have($item`sonar-in-a-biscuit`)) use($item`sonar-in-a-biscuit`);
       },
-      outfit: { modifier: "10 stench res", equip: $items`bat wings` },
+      outfit: { modifier: "10 stench res", equip: $items`bat wings`, avoid: $items`June cleaver` },
       limit: { tries: 1 },
     },
     {
@@ -101,7 +101,7 @@ export const BatQuest: Quest = {
       post: () => {
         if (have($item`sonar-in-a-biscuit`)) use($item`sonar-in-a-biscuit`);
       },
-      outfit: { modifier: "10 stench res", equip: $items`bat wings` },
+      outfit: { modifier: "10 stench res", equip: $items`bat wings`, avoid: $items`June cleaver` },
       limit: { tries: 1 },
     },
     {
