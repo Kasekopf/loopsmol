@@ -1704,7 +1704,7 @@ function getDesiredTrainsetConfig(): TrainsetPiece[] {
   config.push(TrainsetPiece.DOUBLE_NEXT_STATION);
   if (!have($item`designer sweatpants`)) {
     config.push(TrainsetPiece.EFFECT_MP);
-  } else if (myLevel() < 5) {
+  } else if (myLevel() < 5 && (!have($item`Sept-Ember Censer`) || args.minor.saveember)) {
     config.push(statPiece);
   }
 
