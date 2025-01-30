@@ -97,8 +97,6 @@ function main(choice, page) {
       (0, import_kolmafia.runChoice)(4);
     } else if (options[6]) {
       (0, import_kolmafia.runChoice)(6);
-    } else {
-      (0, import_kolmafia.runChoice)(1);
     }
   } else if (choice === 1525) {
     var priority = {
