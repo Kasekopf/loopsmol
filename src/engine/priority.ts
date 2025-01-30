@@ -32,7 +32,7 @@ export class Priorities {
   static Always: Priority = { score: 20000, reason: "Forced" };
   static Free: Priority = { score: 10000, reason: "Free action" };
   static LastCopyableMonster: Priority = { score: 4000, reason: "Copy last monster" };
-  static GoodFeelEnvy: Priority = { score: 3999, reason: "Feel Envy is ready" };
+  static GoodFeelNostalgia: Priority = { score: 3999, reason: "Feel Nostalgia is ready" };
   static Wanderer: Priority = { score: 2000, reason: "Wanderer" };
   static GoodForceNC: Priority = { score: 1000, reason: "Forcing NC" };
   static Start: Priority = { score: 900, reason: "Initial tasks" };
