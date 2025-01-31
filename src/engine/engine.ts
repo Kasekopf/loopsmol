@@ -37,7 +37,7 @@ import {
   useSkill,
   visitUrl,
 } from "kolmafia";
-import { hasDelay, Task } from "./task";
+import { hasDelay, NCForce, Task } from "./task";
 import {
   $effect,
   $effects,
@@ -103,7 +103,7 @@ import { summonStrategy } from "../tasks/summons";
 import { pullStrategy } from "../tasks/pulls";
 import { keyStrategy } from "../tasks/keys";
 import { applyEffects, customRestoreMp } from "./moods";
-import { ROUTE_WAIT_TO_NCFORCE } from "../route";
+import { ROUTE_WAIT_TO_EVENTUALLY_NCFORCE, ROUTE_WAIT_TO_NCFORCE } from "../route";
 
 export const wanderingNCs = new Set<string>([
   "Wooof! Wooooooof!",
@@ -416,14 +416,16 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
         force_item_source?.equip !== $item`Fourth of May Cosplay Saber` &&
         !get("noncombatForcerActive")
       ) {
+        const allowableNCForce: (NCForce | undefined)[] = [];
+        if (myTurncount() >= ROUTE_WAIT_TO_NCFORCE) allowableNCForce.push(NCForce.Yes);
+        if (myTurncount() >= ROUTE_WAIT_TO_EVENTUALLY_NCFORCE)
+          allowableNCForce.push(NCForce.Eventually);
         if (
-          myTurncount() >= ROUTE_WAIT_TO_NCFORCE &&
           this.tasks.find(
             (t) =>
-              t.ncforce !== undefined &&
+              allowableNCForce.includes(undelay(t.ncforce)) &&
               this.available(t) &&
-              t.name !== task.name &&
-              undelay(t.ncforce)
+              t.name !== task.name
           ) !== undefined
         ) {
           const ncforcer = equipFirst(outfit, forceNCSources);

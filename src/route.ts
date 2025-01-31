@@ -1,7 +1,8 @@
 import { orderByRoute } from "grimoire-kolmafia";
 import { Task } from "./engine/task";
 
-export const ROUTE_WAIT_TO_NCFORCE = 120;
+export const ROUTE_WAIT_TO_NCFORCE = 55;
+export const ROUTE_WAIT_TO_EVENTUALLY_NCFORCE = 200;
 
 export const routing: string[] = [
   // Break pvp stone ASAP
@@ -51,13 +52,13 @@ export const routing: string[] = [
   "War/Flyers Start", // Start the war and get flyers
   "War/Flyers End", // End the flyers quest ASAP in case of tracking errors
   "Giant/Basement Finish", // Nice big delay zone before manor is opened
+  "Crypt/Cranny",
 
   "Hidden City/Forest Coin", // First to get meat
   "Hidden City/Forest Map",
   "Hidden City/Forest Fertilizer",
   "Hidden City/Forest Sapling", // Last to sell bar skins
   "Mosquito/Finish",
-  "Crypt/Cranny",
 
   // Do summons when ready
   "Summon/Mountain Man",

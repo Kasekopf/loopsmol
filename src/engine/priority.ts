@@ -15,7 +15,7 @@ import {
 } from "libram";
 import { CombatStrategy } from "./combat";
 import { moodCompatible } from "./moods";
-import { hasDelay, Priority, Task } from "./task";
+import { hasDelay, NCForce, Priority, Task } from "./task";
 import { globalStateCache } from "./state";
 import {
   forceItemSources,
@@ -140,7 +140,8 @@ export class Prioritization {
     }
 
     // Handle potential NC forcers in a zone
-    if (undelay(task.ncforce)) {
+    const ncforce = undelay(task.ncforce);
+    if (ncforce === NCForce.Yes || ncforce === NCForce.Eventually) {
       if (get("noncombatForcerActive")) {
         result.priorities.add(Priorities.GoodForceNC);
       } else if (forceNCPossible()) {

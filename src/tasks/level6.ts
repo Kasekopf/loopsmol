@@ -4,9 +4,9 @@ import { CombatStrategy } from "../engine/combat";
 import { atLevel } from "../lib";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
-import { Quest } from "../engine/task";
+import { NCForce, Quest } from "../engine/task";
 import { step } from "grimoire-kolmafia";
-import { tryForceNC, tryPlayApriling } from "../engine/resources";
+import { tryPlayApriling } from "../engine/resources";
 
 export const FriarQuest: Quest = {
   name: "Friar",
@@ -34,6 +34,9 @@ export const FriarQuest: Quest = {
         else return Priorities.None;
       },
       completed: () => have($item`box of birthday candles`) || step("questL06Friar") === 999,
+      prepare: () => {
+        tryPlayApriling("-combat");
+      },
       do: $location`The Dark Heart of the Woods`,
       outfit: () => {
         if (have($item`latte lovers member's mug`) && !get("latteUnlocks").includes("wing")) {
@@ -41,21 +44,20 @@ export const FriarQuest: Quest = {
         }
         return { modifier: "-combat" };
       },
-      ncforce: true,
+      ncforce: NCForce.Eventually,
       limit: { tries: 24 },
     },
     {
       name: "Neck",
       after: ["Start"],
+      completed: () => have($item`dodecagram`) || step("questL06Friar") === 999,
       prepare: () => {
-        tryForceNC();
         tryPlayApriling("-combat");
       },
-      completed: () => have($item`dodecagram`) || step("questL06Friar") === 999,
       do: $location`The Dark Neck of the Woods`,
       outfit: { modifier: "-combat" },
       choices: { 1428: 2 },
-      ncforce: true,
+      ncforce: NCForce.Eventually,
       limit: { tries: 24 },
     },
     {
@@ -71,6 +73,9 @@ export const FriarQuest: Quest = {
         else return Priorities.None;
       },
       completed: () => have($item`eldritch butterknife`) || step("questL06Friar") === 999,
+      prepare: () => {
+        tryPlayApriling("-combat");
+      },
       do: $location`The Dark Elbow of the Woods`,
       outfit: () => {
         if (have($item`latte lovers member's mug`) && !get("latteUnlocks").includes("vitamins")) {
@@ -78,7 +83,7 @@ export const FriarQuest: Quest = {
         }
         return { modifier: "-combat" };
       },
-      ncforce: true,
+      ncforce: NCForce.Eventually,
       limit: { tries: 24 },
     },
     {

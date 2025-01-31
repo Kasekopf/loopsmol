@@ -33,7 +33,7 @@ import {
   set,
   uneffect,
 } from "libram";
-import { Priority, Quest, Task } from "../engine/task";
+import { NCForce, Priority, Quest, Task } from "../engine/task";
 import { Guards, OutfitSpec, step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { CombatStrategy } from "../engine/combat";
@@ -625,6 +625,12 @@ export const WarQuest: Quest = {
         if (haveEquipped($item`candy cane sword cane`))
           return { 139: 4, 140: 4, 141: 3, 142: 3, 143: 3, 144: 3, 145: 1, 146: 3, 1433: 3 };
         else return { 139: 3, 140: 3, 141: 3, 142: 3, 143: 3, 144: 3, 145: 1, 146: 3, 1433: 3 };
+      },
+      ncforce: () => {
+        if (have($item`candy cane sword cane`) || have($skill`Comprehensive Cartography`)) {
+          return NCForce.Yes;
+        }
+        return NCForce.No;
       },
       limit: { soft: 20 },
     },
