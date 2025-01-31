@@ -14,11 +14,11 @@ import {
 } from "libram";
 import { CombatStrategy, killMacro } from "../engine/combat";
 import { atLevel } from "../lib";
-import { NCForce, Quest } from "../engine/task";
+import { Quest } from "../engine/task";
 import { step } from "grimoire-kolmafia";
 import { Priorities } from "../engine/priority";
 import { councilSafe } from "./level12";
-import { forceItemPossible, tryPlayApriling } from "../engine/resources";
+import { forceItemPossible, tryForceNC, tryPlayApriling } from "../engine/resources";
 
 export const GiantQuest: Quest = {
   name: "Giant",
@@ -142,6 +142,7 @@ export const GiantQuest: Quest = {
           "Mess Around with Gym"
         ) || step("questL10Garbage") >= 8,
       prepare: () => {
+        tryForceNC();
         tryPlayApriling("-combat");
       },
       do: $location`The Castle in the Clouds in the Sky (Basement)`,
@@ -155,7 +156,6 @@ export const GiantQuest: Quest = {
         Macro.trySkill($skill`%fn, let's pledge allegiance to a Zone`)
       ),
       choices: { 670: 5, 669: 1, 671: 4 },
-      ncforce: NCForce.Yes,
       limit: { soft: 20 },
     },
     {
