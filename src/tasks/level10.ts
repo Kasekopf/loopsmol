@@ -198,7 +198,7 @@ export const GiantQuest: Quest = {
     },
     {
       name: "Top Floor",
-      after: ["Ground"],
+      after: ["Ground", "Palindome/Hot Snake Precastle"],
       prepare: () => tryPlayApriling("-combat"),
       completed: () => step("questL10Garbage") >= 10,
       do: $location`The Castle in the Clouds in the Sky (Top Floor)`,
