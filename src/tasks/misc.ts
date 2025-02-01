@@ -1055,9 +1055,10 @@ export const MiscQuest: Quest = {
       name: "Cloud Talk",
       after: [],
       priority: () => Priorities.Free,
-      ready: () => get("getawayCampsiteUnlocked"),
       completed: () =>
-        have($effect`That's Just Cloud-Talk, Man`) || get("_campAwayCloudBuffs", 0) > 0,
+        have($effect`That's Just Cloud-Talk, Man`) ||
+        get("_campAwayCloudBuffs", 0) > 0 ||
+        !get("getawayCampsiteUnlocked"),
       do: () => visitUrl("place.php?whichplace=campaway&action=campaway_sky"),
       freeaction: true,
       limit: { tries: 1 },
