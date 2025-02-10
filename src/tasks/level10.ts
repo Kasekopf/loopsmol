@@ -135,7 +135,7 @@ export const GiantQuest: Quest = {
     },
     {
       name: "Basement Search",
-      after: ["Airship"],
+      after: ["Airship", "Airship YR Healer"],
       completed: () =>
         containsText(
           $location`The Castle in the Clouds in the Sky (Basement)`.noncombatQueue,
