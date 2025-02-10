@@ -407,7 +407,7 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
       const nc_blacklist = new Set<Location>(
         $locations`The Enormous Greater-Than Sign, The Copperhead Club, The Black Forest`
       );
-      const nc_task_blacklist = new Set<string>([]);
+      const nc_task_blacklist = new Set<string>(["Misc/Protonic Ghost"]);
       if (
         forceNCPossible() &&
         !(task.do instanceof Location && nc_blacklist.has(task.do)) &&
