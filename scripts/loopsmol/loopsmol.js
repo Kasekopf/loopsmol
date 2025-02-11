@@ -32274,7 +32274,7 @@ var Engine2 = /* @__PURE__ */ function(_BaseEngine) {
           resources.provide("killFree", equipFirst(outfit2, freekillSources));
         }
         var nc_blacklist = new Set($locations(_templateObject3018 || (_templateObject3018 = _taggedTemplateLiteral85(["The Enormous Greater-Than Sign, The Copperhead Club, The Black Forest"]))));
-        var nc_task_blacklist = /* @__PURE__ */ new Set([]);
+        var nc_task_blacklist = /* @__PURE__ */ new Set(["Misc/Protonic Ghost"]);
         if (forceNCPossible() && !(task.do instanceof import_kolmafia96.Location && nc_blacklist.has(task.do)) && !nc_task_blacklist.has(task.name) && !have($effect(_templateObject3143 || (_templateObject3143 = _taggedTemplateLiteral85(["Teleportitis"])))) && ((_force_item_source = force_item_source) === null || _force_item_source === void 0 ? void 0 : _force_item_source.equip) !== $item(_templateObject3220 || (_templateObject3220 = _taggedTemplateLiteral85(["Fourth of May Cosplay Saber"]))) && !get("noncombatForcerActive")) {
           var allowableNCForce = [];
           if ((0, import_kolmafia96.myTurncount)() >= ROUTE_WAIT_TO_NCFORCE) allowableNCForce.push(NCForce.Yes);
@@ -41376,7 +41376,7 @@ var GiantQuest = {
     }, $monster(_templateObject4025 || (_templateObject4025 = _taggedTemplateLiteral102(["Burly Sidekick"]))))
   }, {
     name: "Basement Search",
-    after: ["Airship"],
+    after: ["Airship", "Airship YR Healer"],
     completed: function() {
       return (0, import_kolmafia114.containsText)($location(_templateObject4149 || (_templateObject4149 = _taggedTemplateLiteral102(["The Castle in the Clouds in the Sky (Basement)"]))).noncombatQueue, "Mess Around with Gym") || step("questL10Garbage") >= 8;
     },
@@ -46079,7 +46079,7 @@ function checkRequirements() {
 }
 
 // src/_git_commit.ts
-var lastCommitHash = "abcf514";
+var lastCommitHash = "e7800ef";
 
 // src/main.ts
 var _templateObject1090;
