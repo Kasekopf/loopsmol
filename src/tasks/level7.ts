@@ -380,7 +380,7 @@ export const CryptQuest: Quest = {
       choices: { 527: 1 },
       combat: new CombatStrategy().killHard(),
       boss: true,
-      limit: { tries: 2 },
+      limit: { tries: 4 },
     },
     {
       name: "Finish",
