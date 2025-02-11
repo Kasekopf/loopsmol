@@ -1501,6 +1501,19 @@ export const MiscQuest: Quest = {
       limit: { tries: 4 },
       freeaction: true,
     },
+    {
+      // The ultimate location to put needed backups
+      name: `Backup Monster`,
+      completed: () => false,
+      ready: () => {
+        if (!have($item`backup camera`)) return false;
+        const target = getActiveBackupTarget();
+        return target !== undefined && target.monster !== $monster`Eldritch Tentacle`;
+      },
+      do: $location`Noob Cave`,
+      delay: 11,
+      limit: { tries: 11 },
+    },
   ],
 };
 
@@ -1573,19 +1586,6 @@ export const WandQuest: Quest = {
       do: () => use($item`dead mimic`),
       freeaction: true,
       limit: { tries: 1 },
-    },
-    {
-      // The ultimate location to put needed backups
-      name: `Backup Monster`,
-      completed: () => false,
-      ready: () => {
-        if (!have($item`backup camera`)) return false;
-        const target = getActiveBackupTarget();
-        return target !== undefined && target.monster !== $monster`Eldritch Tentacle`;
-      },
-      do: $location`Noob Cave`,
-      delay: 11,
-      limit: { tries: 11 },
     },
   ],
 };
