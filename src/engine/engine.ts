@@ -16,6 +16,7 @@ import {
   Location,
   logprint,
   myAdventures,
+  myFamiliar,
   myFullness,
   myHp,
   myLevel,
@@ -555,8 +556,10 @@ export class Engine extends BaseEngine<CombatActions, ActiveTask> {
     const equipped = [...new Set(Slot.all().map((slot) => equippedItem(slot)))];
     if (args.debug.verboseequip) {
       print(`Equipped: ${equipped.join(", ")}`);
+      print(`Familiar: ${myFamiliar()}`);
     } else {
       logprint(`Equipped: ${equipped.join(", ")}`);
+      print(`Familiar: ${myFamiliar()}`);
     }
     logModifiers(outfit);
 
