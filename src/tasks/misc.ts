@@ -76,6 +76,7 @@ import {
   MayamCalendar,
   Robortender,
   set,
+  TrainSet,
   undelay,
   uneffect,
 } from "libram";
@@ -87,15 +88,10 @@ import { Keys, keyStrategy } from "./keys";
 import { atLevel, haveLoathingIdolMicrophone, primestatId, underStandard } from "../lib";
 import { args, toTempPref } from "../args";
 import { coldPlanner, yellowSubmarinePossible } from "../engine/outfit";
-import {
-  getTrainsetConfiguration,
-  getTrainsetPositionsUntilConfigurable,
-  setTrainsetConfiguration,
-  TrainsetPiece,
-} from "./trainrealm";
 import { ROUTE_WAIT_TO_NCFORCE } from "../route";
 import { fillHp } from "../engine/moods";
 import { getActiveBackupTarget } from "../engine/resources";
+import { Station } from "libram/dist/resources/2022/TrainSet";
 
 const meatBuffer = 1000;
 
@@ -839,10 +835,9 @@ export const MiscQuest: Quest = {
       name: "Trainset",
       after: [],
       priority: () => Priorities.Free,
-      ready: () =>
-        getWorkshed() === $item`model train set` && getTrainsetPositionsUntilConfigurable() === 0,
+      ready: () => getWorkshed() === $item`model train set` && TrainSet.canConfigure(),
       completed: () => {
-        const config = getTrainsetConfiguration();
+        const config = TrainSet.cycle();
         const desiredConfig = getDesiredTrainsetConfig();
         for (let i = 0; i < 8; i++) {
           if (config[i] !== desiredConfig[i]) return false;
@@ -850,7 +845,7 @@ export const MiscQuest: Quest = {
         return true;
       },
       do: () => {
-        setTrainsetConfiguration(getDesiredTrainsetConfig());
+        TrainSet.setConfiguration(getDesiredTrainsetConfig());
       },
       limit: { tries: 20, unready: true },
       freeaction: true,
@@ -1694,37 +1689,37 @@ export function trainSetAvailable() {
   return false;
 }
 
-function getDesiredTrainsetConfig(): TrainsetPiece[] {
+function getDesiredTrainsetConfig(): TrainSet.Cycle {
   const statPiece = byStat({
-    Muscle: TrainsetPiece.MUS_STATS,
-    Mysticality: TrainsetPiece.MYS_STATS,
-    Moxie: TrainsetPiece.MOXIE_STATS,
+    Muscle: Station.BRAWN_SILO,
+    Mysticality: Station.BRAIN_SILO,
+    Moxie: Station.GROIN_SILO,
   });
 
-  const config: TrainsetPiece[] = [];
-  config.push(TrainsetPiece.DOUBLE_NEXT_STATION);
+  const config: Station[] = [];
+  config.push(Station.COAL_HOPPER);
   if (!have($item`designer sweatpants`)) {
-    config.push(TrainsetPiece.EFFECT_MP);
+    config.push(Station.TOWER_FIZZY);
   } else if (myLevel() < 5 && (!have($item`Sept-Ember Censer`) || args.minor.saveember)) {
     config.push(statPiece);
   }
 
-  config.push(TrainsetPiece.SMUT_BRIDGE_OR_STATS);
-  config.push(TrainsetPiece.GAIN_MEAT);
+  config.push(Station.LOGGING_MILL);
+  config.push(Station.GAIN_MEAT);
 
   if (myLevel() < 12 && !config.includes(statPiece)) {
     config.push(statPiece);
   }
 
-  if (!config.includes(TrainsetPiece.EFFECT_MP)) {
-    config.push(TrainsetPiece.EFFECT_MP);
+  if (!config.includes(Station.TOWER_FIZZY)) {
+    config.push(Station.TOWER_FIZZY);
   }
-  if (!haveOre()) config.push(TrainsetPiece.ORE);
+  if (!haveOre()) config.push(Station.ORE_HOPPER);
 
-  config.push(TrainsetPiece.HOT_RES_COLD_DMG);
-  config.push(TrainsetPiece.STENCH_RES_SPOOKY_DMG);
-  config.push(TrainsetPiece.DROP_LAST_FOOD_OR_RANDOM);
-  config.push(TrainsetPiece.RANDOM_BOOZE);
-  config.push(TrainsetPiece.CANDY);
-  return config.slice(0, 8);
+  config.push(Station.TOWER_FROZEN);
+  config.push(Station.SPOOKY_GRAVEYARD);
+  config.push(Station.TRACKSIDE_DINER);
+  config.push(Station.GRAIN_SILO);
+  config.push(Station.CANDY_FACTORY);
+  return config.slice(0, 8) as TrainSet.Cycle;
 }
