@@ -1465,7 +1465,7 @@ export const MiscQuest: Quest = {
       name: "Mouthwash",
       after: ["Cloud Talk", "Cut Melodramedary", "Acquire Mouthwash", "Sewer Saucepan"],
       priority: () => Priorities.Start,
-      completed: () => !have($item`Mmm-brr! brand mouthwash`),
+      completed: () => !have($item`Mmm-brr! brand mouthwash`) || atLevel(12),
       do: () => {
         // Use potions for cold resistance
         if (have($item`rainbow glitter candle`)) use($item`rainbow glitter candle`);
